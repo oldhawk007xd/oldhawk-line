@@ -153,7 +153,7 @@ check("alerts: baseline, then flag and trigger alerts; zone alert only 2+ points
 });
 check("alerts: same state twice sends nothing", () => assert.equal(alertsFor(a2.state, rH).messages.length, 0));
 
-import { weeklyFrom, liveCandle, basketSeries, weekStart } from "../lib/engine.mjs";
+import { weeklyFrom, liveCandle, basketSeries, basketCharts, weekStart } from "../lib/engine.mjs";
 {
   const D = 86400000, mon = Date.UTC(2026, 9, 19);
   const pts = [[mon, 10], [mon + D, 12], [mon + 2 * D, 9], [mon + 6 * D, 11], [mon + 7 * D, 11.5], [mon + 8 * D, 13]];
@@ -163,6 +163,16 @@ import { weeklyFrom, liveCandle, basketSeries, weekStart } from "../lib/engine.m
   const w2 = liveCandle(w, mon + 9 * D, 14), w3 = liveCandle(w2, mon + 14 * D, 12);
   check("live candle: same week moves high and close, a new week opens at the last close", () => { assert.deepEqual(w2[1], { t: mon + 7 * D, o: 11.5, h: 14, l: 11.5, c: 14 }); assert.deepEqual(w3[2], { t: mon + 14 * D, o: 14, h: 14, l: 12, c: 12 }); });
   check("basket series sums coins per day and ignores repeats in a day", () => assert.deepEqual(basketSeries([{ caps: [[mon, 1], [mon + 3600000, 5], [mon + D, 2]] }, { caps: [[mon, 3]] }]), [[mon, 4], [mon + D, 2]]));
+  {
+    /* a coin that fails is skipped and listed; three failures in a row at the start stop the asking */
+    const json = (body, status = 200) => ({ ok: status < 400, status, json: async () => body });
+    const caps = { market_caps: [[mon, 1], [mon + D, 2]] };
+    const some = await basketCharts({ ids: ["a", "b", "c"], gapMs: 0, retryWaitMs: 0, fetchImpl: async (u) => (u.includes("/b/") ? json({}, 404) : json(caps)) });
+    check("basket skips a coin that fails and keeps the rest", () => { assert.deepEqual(some.map((c) => c.id), ["a", "c"]); assert.equal(some.failed.length, 1); assert.equal(some.failed[0].id, "b"); });
+    let asked = 0;
+    const none = await basketCharts({ ids: ["a", "b", "c", "d", "e"], gapMs: 0, retryWaitMs: 0, fetchImpl: async () => { asked++; return json({}, 401); } });
+    check("basket stops asking after three failures at the start", () => { assert.equal(none.length, 0); assert.equal(asked, 3); assert.equal(none.failed.length, 5); });
+  }
 }
 for (const [s, n, m] of results) console.log(`${s.padEnd(4)} ${n}${m ? "  >> " + m : ""}`);
 console.log(`\nToday: Line ${r.line} (${r.lineExact}) ${r.zone.name} · ladder ${L.counts.join("/")} · new this week ${L.newWeekCount} · bytes ${JSON.stringify(r).length}`);

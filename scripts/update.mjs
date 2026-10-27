@@ -72,16 +72,20 @@ if (memeMC && !hasWeeks(weekly)) {
   try {
     const ids = basketIds(raw, 15);
     const charts = await basketCharts({ cgKey: process.env.COINGECKO_DEMO_KEY || "", ids, gapMs: process.env.CG_GAP_MS ? Number(process.env.CG_GAP_MS) : undefined });
+    if (charts.failed.length) console.log("weekly backfill: skipped", charts.failed.map((f) => `${f.id} (${f.error})`).join(", "));
     const series = basketSeries(charts);
     const last = series.length ? series[series.length - 1][1] : 0;
-    if (series.length >= 30 && last > 0) {
+    /* at least two thirds of the basket, or it waits for a run where CoinGecko answers */
+    if (charts.length >= Math.ceil(ids.length * 2 / 3) && series.length >= 30 && last > 0) {
+      const from = charts.map((c) => c.id);
       const k = memeMC / last;
       weekly = {
         v: 1, unit: "$B", basis: "CoinGecko Meme category market cap",
-        estimated: { from: ids, scale: Number(k.toFixed(4)), until: reading.at, note: "Weeks before launch: the 15 biggest memes, scaled to the category total" },
+        estimated: { from, scale: Number(k.toFixed(4)), until: reading.at, note: `Weeks before launch: the ${from.length} biggest memes, scaled to the category total` },
         weeks: weeklyFrom(series.map(([t, x]) => [t, Number((x * k / 1e9).toFixed(3))]))
       };
-    } else console.log("weekly backfill: not enough history", series.length);
+      console.log(`weekly backfill: ${weekly.weeks.length} weeks from ${from.length} coins`);
+    } else console.log(`weekly backfill: ${charts.length} of ${ids.length} coins answered, tried again on the next run`);
   } catch (e) { console.log("weekly backfill failed:", e.message); }
 }
 if (hasWeeks(weekly) && memeMC) {
