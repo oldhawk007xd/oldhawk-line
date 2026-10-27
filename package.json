@@ -1,0 +1,15 @@
+{
+  "name": "oldhawk-line",
+  "version": "2.4.0",
+  "private": true,
+  "type": "module",
+  "description": "Oldhawk Line: a live memecoin cycle index. Static site on GitHub Pages plus a 30-minute GitHub Action that writes data/ and publishes the site.",
+  "scripts": {
+    "update": "node scripts/update.mjs",
+    "test": "node test/engine.test.mjs && node test/backtest.test.mjs",
+    "site": "node scripts/site.mjs _site"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

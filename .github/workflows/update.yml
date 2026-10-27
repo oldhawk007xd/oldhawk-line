@@ -1,0 +1,112 @@
+name: Oldhawk Line update
+
+on:
+  schedule:
+    - cron: "7,37 * * * *"
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths-ignore:
+      - "data/**"
+
+concurrency:
+  group: oldhawk-line-update
+  cancel-in-progress: false
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      # The on-chain snapshot from Codex, carried between runs (refreshed every 2 hours, see scripts/update.mjs)
+      - name: Restore the on-chain snapshot
+        uses: actions/cache/restore@v4
+        with:
+          path: .cache
+          key: codex-${{ github.run_id }}-${{ github.run_attempt }}
+          restore-keys: codex-
+
+      - name: Pull live sources and compute the Line
+        id: update
+        run: node scripts/update.mjs
+        env:
+          COINGECKO_DEMO_KEY: ${{ secrets.COINGECKO_DEMO_KEY }}
+          CODEX_API_KEY: ${{ secrets.CODEX_API_KEY }}
+          CODEX_MAX_PAGES: ${{ vars.CODEX_MAX_PAGES }}
+          CODEX_EVERY_MIN: ${{ vars.CODEX_EVERY_MIN }}
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          SITE_URL: ${{ vars.SITE_URL }}
+
+      - name: Keep the on-chain snapshot
+        if: steps.update.outputs.codex == 'fresh'
+        continue-on-error: true
+        uses: actions/cache/save@v4
+        with:
+          path: .cache
+          key: codex-${{ github.run_id }}-${{ github.run_attempt }}
+
+      - name: Commit the reading
+        run: |
+          git config user.name "oldhawk-line-bot"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data
+          if git diff --cached --quiet; then
+            echo "No change"
+            exit 0
+          fi
+          MSG=$(node -e 'const r=JSON.parse(require("fs").readFileSync("data/latest.json","utf8"));console.log(`Line ${r.line ?? "none"} · ${r.zone ? r.zone.name : "no reading"} · ${r.at.slice(0,16)}Z`)')
+          git commit -m "$MSG"
+          git pull --rebase --autostash
+          git push
+
+  # Publishes the site with the fresh data on GitHub Pages (Settings > Pages > Source: GitHub Actions).
+  # Hosting somewhere else? Add the repository variable PAGES = off.
+  deploy:
+    needs: update
+    if: ${{ vars.PAGES != 'off' }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 6
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.ref_name }}
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - id: pages
+        uses: actions/configure-pages@v5
+
+      # Today's share card for X. If it fails, the fixed og.jpg is used instead.
+      - name: Draw the share card
+        continue-on-error: true
+        run: |
+          npm install --no-save --no-audit --no-fund @resvg/resvg-js@2.6.2 @expo-google-fonts/instrument-serif@0.4.1 @expo-google-fonts/jetbrains-mono@0.4.1
+          node scripts/card.mjs card.png "${{ vars.SITE_URL || steps.pages.outputs.base_url }}"
+
+      - name: Build the site folder
+        run: node scripts/site.mjs _site "${{ github.repository }}" "${{ vars.SITE_URL || steps.pages.outputs.base_url }}"
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+
+      - id: deployment
+        uses: actions/deploy-pages@v4
