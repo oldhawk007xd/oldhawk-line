@@ -1,0 +1,4 @@
+{
+  "about": "Coins the scans miss. Add each one as {\"chain\": \"sol\", \"address\": \"its contract address\"}. Chains: sol, bsc, base, eth, monad, hood. Market cap, volume and holders still come live from Codex, and a coin counts once it has $10M and real trading.",
+  "coins": []
+}

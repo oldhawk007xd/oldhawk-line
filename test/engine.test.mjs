@@ -1,5 +1,5 @@
 import assert from "node:assert/strict";
-import { collect, compute, toDaily, alertsFor, blank, INPUTS, deepEnough, cloneGroups, cloneLeads } from "../lib/engine.mjs";
+import { collect, compute, toDaily, alertsFor, blank, INPUTS, deepEnough, cloneGroups, cloneLeads, watchIds } from "../lib/engine.mjs";
 import { fakeFetch, NOW } from "./fixtures.mjs";
 
 const results = [];
@@ -102,6 +102,30 @@ check("blank: same bytes every run, so the file only changes with the method", (
 check("blank: no dashes", () => assert.ok(!/[\u2013\u2014]/.test(JSON.stringify(B1))));
 
 /* 2. No Codex key: ladder from CoinGecko only, Codex marked off, not failed */
+{
+  /* the watchlist: chain names to Codex ids, one call, counted once, small coins left out */
+  check("watchlist ids from chain names and address:network", () => assert.deepEqual(watchIds([{ chain: "base", address: "0xWATCH" }, { chain: "SOL", address: "SmallAddr" }, "FARTCOINAddr1399811149:1399811149", { chain: "tron", address: "x" }, { chain: "base", address: "0xWATCH" }]), ["0xWATCH:8453", "SmallAddr:1399811149", "FARTCOINAddr1399811149:1399811149"]));
+  const wc = [];
+  const watch = watchIds([{ chain: "base", address: "0xWATCH" }, { chain: "sol", address: "SmallAddr" }, { chain: "sol", address: "FARTCOINAddr1399811149" }]);
+  const rawW = await collect({ fetchImpl: fakeFetch({ calls: wc }), codexKey: "k", watch, ...fast });
+  const LW = compute(rawW, { now: NOW }).ladder;
+  check("watchlist: one Codex call more, DEMOW counted, the small one and the listed one not", () => {
+    assert.equal(wc.filter((c) => c.route === "codex" && /query Watch/.test(JSON.parse(c.body).query)).length, 1);
+    const w = LW.runners.filter((x) => x.s === "DEMOW");
+    assert.equal(w.length, 1); assert.equal(w[0].w, 1); assert.equal(w[0].c, "base"); assert.equal(w[0].ad, "0xWATCH");
+    assert.ok(!LW.runners.some((x) => x.s === "DEMOS"));
+    assert.equal(LW.runners.filter((x) => x.s === "FARTCOIN").length, 1);
+    assert.equal(LW.onchain.watched, 1);
+  });
+  const snapW = { at: rawW.at, codex: rawW.codex.data, codexRadar: rawW.codexRadar.data, codexPinned: rawW.codexPinned.data, codexWatch: rawW.codexWatch.data, watchKey: rawW.watchKey };
+  const wc2 = [];
+  await collect({ fetchImpl: fakeFetch({ calls: wc2 }), codexKey: "k", watch, codexCache: snapW, ...fast });
+  check("watchlist unchanged: rides on the snapshot, no Codex call", () => assert.equal(wc2.filter((c) => c.route === "codex").length, 0));
+  const wc3 = [];
+  await collect({ fetchImpl: fakeFetch({ calls: wc3 }), codexKey: "k", watch: [...watch, "NEWAddr:1399811149"], codexCache: snapW, ...fast });
+  check("watchlist changed: asked at once, one call", () => assert.equal(wc3.filter((c) => c.route === "codex").length, 1));
+}
+
 const rawNo = await collect({ fetchImpl: fakeFetch(), ...fast });
 const rNo = compute(rawNo, { now: NOW });
 check("no key: no Codex call, status off", () => { assert.equal(rNo.ladder.onchain.status, "off"); const s = rNo.sources.find((x) => x.id === "codex"); assert.equal(s.off, true); });

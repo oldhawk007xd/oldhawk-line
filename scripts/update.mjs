@@ -2,7 +2,7 @@
    Pulls the live sources, writes data/latest.json, keeps one close per UTC day in data/history.json,
    logs alerts in data/alerts.json and, if a Telegram bot is set up, posts them to the channel. */
 import { readFile, writeFile, mkdir, appendFile } from "node:fs/promises";
-import { collect, compute, toDaily, alertsFor, blank, basketIds, basketCharts, basketSeries, weeklyFrom, liveCandle, slimCodex } from "../lib/engine.mjs";
+import { collect, compute, toDaily, alertsFor, blank, basketIds, basketCharts, basketSeries, weeklyFrom, liveCandle, slimCodex, watchIds } from "../lib/engine.mjs";
 
 const DATA = new URL("../data/", import.meta.url);
 const read = async (name, fallback) => {
@@ -28,9 +28,15 @@ try { codexCache = JSON.parse(await readFile(new URL("codex.json", CACHE), "utf8
 const cacheAge = codexCache && codexCache.at ? (Date.now() - Date.parse(codexCache.at)) / 60000 : Infinity;
 const useCache = Boolean(CODEX_KEY && codexCache && cacheAge < CODEX_EVERY - 5);
 
+/* watchlist.json: coins the scans miss, added by hand by chain and contract address */
+let watch = [];
+try { watch = watchIds(JSON.parse(await readFile(new URL("../watchlist.json", import.meta.url), "utf8")).coins); } catch { watch = []; }
+if (watch.length) console.log(`watchlist: ${watch.length} coin${watch.length === 1 ? "" : "s"}`);
+
 const raw = await collect({
   cgKey: process.env.COINGECKO_DEMO_KEY || "",
   codexKey: CODEX_KEY,
+  watch,
   codexPages: Number(process.env.CODEX_MAX_PAGES || 2),
   codexCache: useCache ? codexCache : null,
   log: (m) => console.log("source failed:", m)
@@ -40,7 +46,7 @@ if (CODEX_KEY) {
   if (useCache) console.log(`codex: snapshot from ${Math.round(cacheAge)} min ago, next refresh in about ${Math.max(0, Math.round(CODEX_EVERY - cacheAge))} min`);
   else if (["codex", "codexRadar", "codexPinned"].every((k) => raw[k] && raw[k].ok)) {
     await mkdir(CACHE, { recursive: true });
-    await writeFile(new URL("codex.json", CACHE), JSON.stringify({ at: raw.at, codex: slimCodex(raw.codex.data), codexRadar: slimCodex(raw.codexRadar.data), codexPinned: slimCodex(raw.codexPinned.data) }));
+    await writeFile(new URL("codex.json", CACHE), JSON.stringify({ at: raw.at, codex: slimCodex(raw.codex.data), codexRadar: slimCodex(raw.codexRadar.data), codexPinned: slimCodex(raw.codexPinned.data), codexWatch: raw.codexWatch && raw.codexWatch.ok ? slimCodex(raw.codexWatch.data) : null, watchKey: raw.watchKey }));
     if (process.env.GITHUB_OUTPUT) await appendFile(process.env.GITHUB_OUTPUT, "codex=fresh\n");
     console.log("codex: refreshed");
   } else console.log("codex: a call failed, it is tried again on the next run");

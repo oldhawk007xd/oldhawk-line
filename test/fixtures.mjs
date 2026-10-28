@@ -166,6 +166,15 @@ export function codexResults(variant = "today") {
   ];
 }
 
+/* coins on the hand-kept watchlist: one runner the scans miss, one too small to count, one already listed */
+export function watchResults() {
+  return [
+    cx("DEMOW", "Demo Watch", 8453, 44e6, { lp: "None", age: 300, addr: "0xWATCH" }),
+    cx("DEMOS", "Demo Small", 1399811149, 4e6, { lp: "None", age: 20, addr: "SmallAddr" }),
+    cx("FARTCOIN", "Fartcoin", 1399811149, 201e6, { lp: "Pump.fun", age: 700, liq: 12e6 })
+  ];
+}
+
 export function radarResults(variant = "today") {
   const k = variant === "hot" ? 8 : 1;
   return [
@@ -218,6 +227,11 @@ export function fakeFetch({ variant = "today", fail = [], calls = [] } = {}) {
       if (!init.headers || !init.headers.authorization) return { ok: false, status: 401, json: async () => ({}) };
       const body = JSON.parse(init.body);
       if (fail.includes("codexGraphql")) return { ok: true, status: 200, json: async () => ({ data: null, errors: [{ message: "Cannot query field \"holders\" on type \"TokenFilterResult\"." }] }) };
+      if (/query Watch/.test(body.query)) {
+        const want = body.variables.tokens || [];
+        const list = watchResults(variant).filter((x) => want.includes(`${x.token.address}:${x.token.networkId}`));
+        return { ok: true, status: 200, json: async () => ({ data: { filterTokens: { results: JSON.parse(JSON.stringify(list)) } } }) };
+      }
       if (/query Radar/.test(body.query)) {
         if (fail.includes("codexRadar")) return { ok: true, status: 200, json: async () => ({ data: null, errors: [{ message: "Field \"tokenCreatedAt\" is not defined by type \"TokenFilters\"." }] }) };
         const pads = body.variables.filters.launchpadName || [];
