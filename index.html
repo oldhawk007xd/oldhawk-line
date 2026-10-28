@@ -3186,7 +3186,7 @@ section.band.numbers > .wrap { padding-block: 64px 84px; }
     const oc = L.onchain;
     const base = "Listed memes: CoinGecko Meme category without launchpad tokens, meme-branded L1s and bridged copies. Circulating market cap, never FDV. A runner needs 24h volume of at least $25K and 0.1% of its market cap.";
     const ocText = oc.status === "live"
-      ? `On-chain memes: Codex, launchpad tokens on Solana, BNB Chain, Base, Ethereum, Monad and Robinhood Chain with at least $50K of liquidity${oc.at ? `, snapshot from ${ago(oc.at)}` : ""}. ${oc.added} came only from on-chain data, ${oc.matched} were matched to listed coins.${oc.truncated ? " The list is capped at the biggest coins." : ""}`
+      ? `On-chain memes: Codex, launchpad tokens on Solana, BNB Chain, Base, Ethereum, Monad and Robinhood Chain with at least $50K of liquidity${oc.at ? `, snapshot from ${ago(oc.at)}` : ""}. ${oc.added} came only from on-chain data, ${oc.matched} were matched to listed coins.${oc.left ? ` ${oc.left} look-alike token${oc.left === 1 ? " was" : "s were"} left out: less than one holder per $8,000 of market cap, or one ticker launched over and over.` : ""}${oc.truncated ? " The list is capped at the biggest coins." : ""}`
       : oc.status === "offline" ? "On-chain data did not answer on the last update, so launchpad coins that are not listed are left out this time."
       : "On-chain runners from Codex are not switched on yet, so this counts listed memes only.";
     $("srcNote").textContent = `${ocText} ${base}`;

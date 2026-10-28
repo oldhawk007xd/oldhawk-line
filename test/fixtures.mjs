@@ -130,7 +130,7 @@ export function apps(variant = "today") {
 function cx(symbol, name, networkId, mc, o = {}) {
   return {
     circulatingMarketCap: String(mc), marketCap: String(mc * 1.02), liquidity: String(o.liq ?? mc * 0.05), volume24: String(o.vol ?? mc * 0.08),
-    holders: o.holders ?? 12000, isScam: Boolean(o.scam), change24: String(o.ch ?? (d24of(symbol + networkId) / 100)),
+    holders: o.holders ?? Math.max(12000, Math.round(mc / 2500)), isScam: Boolean(o.scam), change24: String(o.ch ?? (d24of(symbol + networkId) / 100)),
     token: { address: o.addr ?? `${symbol}Addr${networkId}`, networkId, name, symbol, createdAt: Math.floor((NOW - (o.age ?? 400) * DAY) / 1000), launchpad: { launchpadName: o.lp ?? "Pump.fun", migrated: true, completed: true } }
   };
 }
@@ -156,7 +156,13 @@ export function codexResults(variant = "today") {
     cx("DEMOC", "Demo C", 56, 18e6, { lp: "Four.meme", age: 3 }),
     cx("DEMOF", "Demo F", 143, 15e6, { lp: "Nad.Fun", age: 20 }),
     cx("DEMOE", "Demo E", 4663, 12e6, { lp: "BAGS", age: 2 }),
-    cx("DEMOG", "Demo G", 1399811149, 11e6, { lp: "StonkFun", age: 60 })
+    cx("DEMOG", "Demo G", 1399811149, 11e6, { lp: "StonkFun", age: 60 }),
+    /* a wave of look-alikes: big market caps, a few thousand wallets, one ticker launched three times */
+    cx("OILX", "Oil Dividend", 1399811149, 260e6, { age: 1, holders: 2900, addr: "OILX1" }),
+    cx("OILX", "Oil Dividend", 1399811149, 140e6, { age: 0.5, holders: 3100, addr: "OILX2" }),
+    cx("OILX", "", 1399811149, 40e6, { age: 2, holders: 2600, addr: "OILX3" }),
+    cx("DEEPX", "Deep Fund", 1399811149, 190e6, { age: 2, holders: 2500 }),
+    cx("PNUT", "Not Peanut", 8453, 12e6, { age: 3, holders: 900 })
   ];
 }
 

@@ -1,5 +1,5 @@
 import assert from "node:assert/strict";
-import { collect, compute, toDaily, alertsFor, blank, INPUTS } from "../lib/engine.mjs";
+import { collect, compute, toDaily, alertsFor, blank, INPUTS, deepEnough, cloneGroups, cloneLeads } from "../lib/engine.mjs";
 import { fakeFetch, NOW } from "./fixtures.mjs";
 
 const results = [];
@@ -52,6 +52,26 @@ check("FARTCOIN counted once and tagged Solana, Pump.fun", () => { const f = L.r
 check("币安人生 linked to BNB, Four.meme", () => { const f = L.runners.filter((x) => x.s === "币安人生"); assert.equal(f.length, 1); assert.equal(f[0].c, "bsc"); assert.equal(f[0].lp, "Four.meme"); });
 check("scam, unknown chain and quiet tokens kept out", () => ["DEMOX", "DEMOR", "DEMOQ"].forEach((s) => assert.ok(!L.runners.some((x) => x.s === s), s)));
 check("on-chain status live, 8 added, 3 linked", () => { assert.equal(L.onchain.status, "live"); assert.equal(L.onchain.added, 8); assert.equal(L.onchain.matched, 3); });
+check("look-alikes left out: shallow coins, a ticker launched three times, a copy of a listed ticker", () => {
+  assert.equal(L.onchain.left, 4, "the two OILX launches with one name count once");
+  for (const t of ["OILX", "DEEPX"]) assert.ok(!L.runners.some((x) => x.s === t), `${t} should not be a runner`);
+  assert.ok(!L.runners.some((x) => x.s === "PNUT" && x.ad), "an on-chain PNUT copy should not be a runner");
+});
+check("depth: one holder per $8,000 of market cap", () => {
+  assert.equal(deepEnough({ m: 80e6, h: 10000 }), true);
+  assert.equal(deepEnough({ m: 300e6, h: 2972 }), false);
+  assert.equal(deepEnough({ m: 50e6, lq: 1.2e6 }), true, "no holder count: liquidity of 2% will do");
+  assert.equal(deepEnough({ m: 50e6, lq: 0.4e6 }), false);
+});
+check("clones: only a clear leader of a ticker survives", () => {
+  const g = cloneGroups([{ s: "CAT", address: "a", h: 60000 }, { s: "C A T", address: "b", h: 3000 }, { s: "DOG", address: "c", h: 5000 }]);
+  assert.equal(g.size, 1);
+  assert.equal(cloneLeads({ s: "CAT", address: "a", h: 60000 }, g, 20000), true);
+  assert.equal(cloneLeads({ s: "CAT", address: "b", h: 3000 }, g, 20000), false);
+  assert.equal(cloneLeads({ s: "DOG", address: "c", h: 5000 }, g, 20000), true, "a single launch is not a clone");
+  const even = cloneGroups([{ s: "OIL", address: "x", h: 3000 }, { s: "OIL", address: "y", h: 2900 }]);
+  assert.equal(cloneLeads({ s: "OIL", address: "x", h: 3000 }, even, 2000), false, "no leader, none kept");
+});
 check("new this week: DEMOB, DEMOC, DEMOE", () => { assert.equal(L.newWeekCount, 3); assert.deepEqual(L.newWeek.map((x) => x.s).sort(), ["DEMOB", "DEMOC", "DEMOE"]); });
 check("by chain includes Robinhood and Monad", () => { assert.equal(L.byChain.find((x) => x.id === "hood").count, 1); assert.equal(L.byChain.find((x) => x.id === "monad").count, 1); assert.equal(L.byChain.find((x) => x.id === "listed").count, 56); });
 check("by launchpad lists Pump.fun first or tied", () => assert.ok(L.byLaunchpad.length >= 5));
