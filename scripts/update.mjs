@@ -26,7 +26,8 @@ const CACHE = new URL("../.cache/", import.meta.url);
 let codexCache = null;
 try { codexCache = JSON.parse(await readFile(new URL("codex.json", CACHE), "utf8")); } catch { codexCache = null; }
 const cacheAge = codexCache && codexCache.at ? (Date.now() - Date.parse(codexCache.at)) / 60000 : Infinity;
-const useCache = Boolean(CODEX_KEY && codexCache && cacheAge < CODEX_EVERY - 5);
+/* v2 snapshots carry the trader and holder fields; an older one is refreshed */
+const useCache = Boolean(CODEX_KEY && codexCache && codexCache.v === 2 && cacheAge < CODEX_EVERY - 5);
 
 /* watchlist.json: coins the scans miss, added by hand by chain and contract address */
 let watch = [];
@@ -46,7 +47,7 @@ if (CODEX_KEY) {
   if (useCache) console.log(`codex: snapshot from ${Math.round(cacheAge)} min ago, next refresh in about ${Math.max(0, Math.round(CODEX_EVERY - cacheAge))} min`);
   else if (["codex", "codexRadar", "codexPinned"].every((k) => raw[k] && raw[k].ok)) {
     await mkdir(CACHE, { recursive: true });
-    await writeFile(new URL("codex.json", CACHE), JSON.stringify({ at: raw.at, codex: slimCodex(raw.codex.data), codexRadar: slimCodex(raw.codexRadar.data), codexPinned: slimCodex(raw.codexPinned.data), codexWatch: raw.codexWatch && raw.codexWatch.ok ? slimCodex(raw.codexWatch.data) : null, watchKey: raw.watchKey }));
+    await writeFile(new URL("codex.json", CACHE), JSON.stringify({ v: 2, at: raw.at, codex: slimCodex(raw.codex.data), codexRadar: slimCodex(raw.codexRadar.data), codexPinned: slimCodex(raw.codexPinned.data), codexWatch: raw.codexWatch && raw.codexWatch.ok ? slimCodex(raw.codexWatch.data) : null, watchKey: raw.watchKey }));
     if (process.env.GITHUB_OUTPUT) await appendFile(process.env.GITHUB_OUTPUT, "codex=fresh\n");
     console.log("codex: refreshed");
   } else console.log("codex: a call failed, it is tried again on the next run");
