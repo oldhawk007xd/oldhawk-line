@@ -240,6 +240,17 @@ section.band > .wrap { padding-block: 96px; }
 .rowi small { display: block; color: var(--dim); font-size: 13px; }
 .rowi .r { text-align: right; }
 .cdot { display: inline-block; width: 8px; height: 8px; border-radius: 50%; margin-right: 7px; vertical-align: 1px; }
+/* coin logos: the project's own image, or its first letter in its chain's colour when there is none */
+.lg { display: inline-grid; place-items: center; width: 28px; height: 28px; border-radius: 50%; flex: none; object-fit: cover; background: #0d1020; box-shadow: 0 0 0 1px rgba(237,237,237,0.10); font-style: normal; overflow: hidden; }
+.lg.mono { --c: #ededed; color: var(--c); background: color-mix(in srgb, var(--c) 16%, #0a0c16); box-shadow: 0 0 0 1px color-mix(in srgb, var(--c) 45%, transparent); font: 600 12px/1 var(--mono); }
+.lg.mono::before { content: attr(data-m); }
+.lg.s { width: 22px; height: 22px; } .lg.s.mono { font-size: 10.5px; }
+.cw { display: flex; align-items: center; gap: 12px; min-width: 0; }
+.cw > span { min-width: 0; }
+.panel.wide { grid-column: span 2; }
+.tgrid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: 28px; }
+.rowi .xl { color: var(--soft); text-decoration: none; }
+.rowi .xl:hover { color: var(--green); }
 .empty { color: var(--dim); font-size: 14.5px; padding: 6px 0; }
 .srcnote { margin-top: 18px; font-size: 13.5px; color: var(--dim); max-width: 92ch; }
 
@@ -367,6 +378,10 @@ figcaption { margin-top: 10px; font-size: 13px; color: var(--dim); }
   .chips { flex-wrap: wrap; }
   .chips button { padding: 0 10px; font-size: 11.5px; }
 }
+@media (max-width: 379px) {
+  .chips { gap: 5px; }
+  .chips button { padding: 0 8px; font-size: 11px; letter-spacing: 0.02em; }
+}
 
 /* ---------- Log ---------- */
 .log { width: 100%; border-collapse: collapse; font-size: 14px; font-variant-numeric: tabular-nums; min-width: 620px; }
@@ -438,7 +453,7 @@ section.band.numbers > .wrap { padding-block: 64px 84px; }
 .tick-track { position: relative; flex: 1 1 auto; min-width: 0; overflow: hidden; -webkit-mask-image: linear-gradient(90deg, rgba(0,0,0,0), #000 3%, #000 94%, rgba(0,0,0,0)); mask-image: linear-gradient(90deg, rgba(0,0,0,0), #000 3%, #000 94%, rgba(0,0,0,0)); }
 .tick-row { display: flex; width: max-content; padding: 12px 0 12px 22px; font-size: 14px; white-space: nowrap; }
 .tick-set { display: flex; gap: 34px; padding-right: 34px; }
-.tick-row a, .tick-row .ti { color: var(--ink); text-decoration: none; display: inline-flex; gap: 8px; align-items: baseline; }
+.tick-row a, .tick-row .ti { color: var(--ink); text-decoration: none; display: inline-flex; gap: 8px; align-items: center; }
 .tick-row a:hover b { color: var(--green); }
 .tick-row b { font-weight: 800; }
 .tick-row .up { color: var(--green); } .tick-row .down { color: #ff8da0; }
@@ -508,6 +523,8 @@ section.band.numbers > .wrap { padding-block: 64px 84px; }
 @media (max-width: 699px) {
   .panels, .verdicts, .kills { grid-template-columns: minmax(0, 1fr); }
   .panels > :last-child, .verdicts > :last-child, .kills > :last-child { grid-column: auto; }
+  .panel.wide { grid-column: auto; }
+  .tgrid { grid-template-columns: minmax(0, 1fr); }
 }
 @media (max-width: 1100px) {
   .tiers { grid-template-columns: repeat(4, minmax(0, 1fr)); }
@@ -758,7 +775,7 @@ section.band.numbers > .wrap { padding-block: 64px 84px; }
 
 <section class="band numbers glow" id="numbers" aria-labelledby="numbers-h">
   <div class="tick" id="tick" hidden>
-    <span class="tick-label"><i class="tick-dot"></i>Running now</span>
+    <span class="tick-label"><i class="tick-dot"></i>Trending now</span>
     <div class="tick-track" data-marquee><div class="tick-row" id="tickRow"></div></div>
   </div>
   <div class="wrap">
@@ -784,7 +801,7 @@ section.band.numbers > .wrap { padding-block: 64px 84px; }
     <div class="list" id="runList">
       <div class="list-head">
         <h3>Every runner, by name</h3>
-        <p>Ticker, name, chain, market cap and the last 24 hours, biggest first. Tap a ticker to check the coin on CoinGecko or DexScreener.</p>
+        <p>Ticker, name, chain, market cap and the last 24 hours, biggest first. Tap a ticker to check the coin on CoinGecko or DexScreener. A coin younger than 10 days is counted but not named.</p>
       </div>
       <div class="list-tools" id="listTools">
         <input id="listQ" type="search" placeholder="Search a ticker or a name" aria-label="Search a ticker or a name" autocomplete="off" spellcheck="false">
@@ -792,7 +809,7 @@ section.band.numbers > .wrap { padding-block: 64px 84px; }
           <button type="button" data-f="0" aria-pressed="true">All</button>
           <button type="button" data-f="2" aria-pressed="false">$100M+</button>
           <button type="button" data-f="gain" aria-pressed="false">Gainers</button>
-          <button type="button" data-f="new" aria-pressed="false">New</button>
+          <button type="button" data-f="trend" aria-pressed="false">Trending</button>
         </div>
       </div>
       <div class="tbox" id="listBox"><table class="runs" id="listTable"></table></div>
@@ -800,14 +817,13 @@ section.band.numbers > .wrap { padding-block: 64px 84px; }
       <div class="list-foot" id="listFoot"><button type="button" class="btn" id="listMore" hidden>Show all</button><span id="listCount"></span></div>
     </div>
     <div class="panels">
-      <div class="panel reveal"><h3>New this week</h3><p class="sub">Launched in the last 7 days, now above $10M.</p><div id="newWeek"></div></div>
+      <div class="panel wide reveal" id="trendPanel"><h3>Trending now</h3><p class="sub">Over 10 days old and above $10M, with an X account of their own that posted in the last 14 days and has 1,000 followers or more. Biggest 24h gainers first, then the most traded.</p><div id="trendList"></div></div>
       <div class="panel reveal"><h3>On the edge</h3><p class="sub">Close to the next floor, or just above their own.</p><div id="edge"></div></div>
-      <div class="panel reveal"><h3>Hottest launches</h3><p class="sub">Born in the last 7 days, already above $1M, hottest first.</p><div id="launchpads"></div></div>
     </div>
     <div class="lpads" id="lpads">
       <div class="list-head">
         <h3>Launchpads this week</h3>
-        <p>Runners above $10M, launches of the last 7 days that reached $1M, and the hottest coin on each. StonkFun and pons are always on the board.</p>
+        <p>Runners above $10M, launches of the last 7 days that reached $1M, and the hottest coin on each that passes the trending checks. StonkFun and pons are always on the board.</p>
       </div>
       <div class="tbox" id="lpBox"><table class="runs lp" id="lpTable"></table></div>
       <p class="empty" id="lpEmpty" hidden></p>
@@ -2288,6 +2304,22 @@ section.band.numbers > .wrap { padding-block: 64px 84px; }
     return null;
   }
   const chainInfo = (id) => (R && R.chains ? R.chains.find((c) => c.id === id) : null) || { id, name: id, color: "#ededed" };
+  /* a coin's logo: the image the project gave CoinGecko or its launchpad, or its first letter in its chain's colour */
+  const initial = (x) => esc(([...String((x && x.s) || "?")][0] || "?").toUpperCase());
+  const logo = (x, cls = "") => (x && x.i
+    ? `<img class="lg${cls ? ` ${cls}` : ""}" src="${esc(x.i)}" alt="" width="28" height="28" loading="lazy" decoding="async" referrerpolicy="no-referrer" style="--c:${chainInfo(x.c).color}" data-m="${initial(x)}">`
+    : `<i class="lg mono${cls ? ` ${cls}` : ""}" style="--c:${chainInfo(x && x.c).color}" data-m="${initial(x)}" aria-hidden="true"></i>`);
+  /* a logo that does not load gives way to the letter */
+  document.addEventListener("error", (e) => {
+    const t = e.target;
+    if (!t || t.tagName !== "IMG" || !t.classList.contains("lg")) return;
+    const i = document.createElement("i");
+    i.className = `${t.className} mono`;
+    i.setAttribute("style", t.getAttribute("style") || "");
+    i.setAttribute("aria-hidden", "true");
+    i.dataset.m = t.dataset.m || "?";
+    t.replaceWith(i);
+  }, true);
   /* chains in the order people know them, not in the order of their network ids */
   const CHAIN_ORDER = ["sol", "bsc", "base", "eth", "monad", "hood", "listed"];
   const byChainOrder = (a, b) => CHAIN_ORDER.indexOf(a.id) - CHAIN_ORDER.indexOf(b.id);
@@ -2861,10 +2893,11 @@ section.band.numbers > .wrap { padding-block: 64px 84px; }
   /* point at a star, the moon, the lighthouse or a boat to read it */
   const tip = $("skytip");
   function skyTipText(h) {
+    if (h.kind === "star" && h.d.y) return `<b>A coin under 10 days old</b><small>${usd(h.d.m)}${SEP}counted, named once it is 10 days old</small>`;
     if (h.kind === "star") { const x = h.d; return `<b>${esc(x.s)}</b>${x.n ? `${SEP}${esc(x.n)}` : ""}<small>${usd(x.m)}${x.d != null ? `${SEP}${pct(x.d)} in 24h` : ""}${SEP}one star per memecoin from $10M</small>`; }
     if (h.kind === "moon") { const n = Math.round(h.f * 8); return `<b>The moon: ${n} of 8 bottom signs</b><small>Full at 8. From 5 the buy zone is open.</small>`; }
     if (h.kind === "lighthouse") return h.light ? `<b>The lighthouse: ${h.light === "sell" ? "red, sell now" : h.light === "nobuys" ? "amber, no new buys" : "green, quiet"}</b><small>It shows the sell signals: amber at 1, red at 3.</small>` : "<b>The lighthouse</b><small>Shows the sell signals once there is a reading.</small>";
-    if (h.kind === "boat") { const x = h.d; return `<b>${esc(x.s)}</b>${x.n ? `${SEP}${esc(x.n)}` : ""}<small>${usd(x.m)}${x.lp ? `${SEP}${esc(x.lp)}` : ""}${x.a != null ? `${SEP}${x.a < 1 ? "launched today" : `${Math.round(x.a)} days old`}` : ""}</small>`; }
+    if (h.kind === "boat") { const x = h.d; return `<b>A launch of this week</b><small>${usd(x.m)}${x.lp ? `${SEP}${esc(x.lp)}` : ""}${x.a != null ? `${SEP}${x.a < 1 ? "launched today" : `${Math.round(x.a)} days old`}` : ""}${SEP}counted, not named</small>`; }
     return "";
   }
   function showSkyTip(e) {
@@ -2963,7 +2996,8 @@ section.band.numbers > .wrap { padding-block: 64px 84px; }
     const run = L ? L.runners : [];
     const withD = run.filter((x) => x.d != null);
     const nUp = withD.filter((x) => x.d > 0).length, nDown = withD.filter((x) => x.d < 0).length;
-    const best = withD.slice().sort((a, b) => b.d - a.d)[0];
+    /* the top gainer named here passes the trending checks, so a fresh pump never heads the numbers */
+    const best = ((L && L.trending && L.trending.coins) || []).filter((x) => x.d != null && x.d > 0)[0];
     const pumpIn = R.inputs.find((x) => x.id === "3.1");
     const dd = m.drawdown;
     const radar = L && L.radar && L.radar.status === "live" ? L.radar.tokens : null;
@@ -2973,7 +3007,7 @@ section.band.numbers > .wrap { padding-block: 64px 84px; }
       { key: "mc", k: "Meme market cap", v: m.memeMC || null, f: "usd", s: ch != null ? `<span class="${ch > 0 ? "up" : ch < 0 ? "down" : ""}">${pct(ch)}</span> in the last 24 hours.` : "CoinGecko Meme category." },
       { key: "dd", k: dd != null && dd < 0 ? "Above the last top" : "Below the last top", v: dd != null ? Math.abs(dd) * 100 : null, f: "p0", s: "The top was $150.6B, on December 9, 2024." },
       { key: "n10", k: "Runners from $10M", v: L ? L.counts[0] : null, f: "int", s: L ? `${L.counts[2]} above $100M, ${L.counts[4]} above $1B.` : na },
-      { key: "best", k: "Top gainer, 24h", v: best && best.d > 0 ? best.d : null, f: "sp1", cls: "up", s: best && best.d > 0 ? `${esc(best.s)}${best.n ? `${SEP}${esc(best.n)}` : ""}${SEP}${usd(best.m)}` : withD.length ? "No runner is up over 24 hours." : na },
+      { key: "best", k: "Top trending gainer", v: best ? best.d : null, f: "sp1", cls: "up", s: best ? `${esc(best.s)}${best.n ? `${SEP}${esc(best.n)}` : ""}${SEP}${usd(best.m)}` : L && L.trending ? "No trending coin is up over 24 hours." : na },
       { key: "breadth", k: "Runners up, 24h", v: withD.length ? nUp / withD.length * 100 : null, f: "p0", s: withD.length ? `${nUp} up and ${nDown} down in the last 24 hours.` : na },
       { key: "nw", k: "New this week", v: L ? L.newWeekCount : null, f: "int", s: L ? `Above $10M and under 7 days old.${radar ? ` ${radar.length >= 40 ? "40 or more" : radar.length} launch${radar.length === 1 ? "" : "es"} of the week already above $1M.` : ""}` : na },
       { key: "pump", k: "pump.fun revenue", v: pumpIn && pumpIn.status === "live" ? pumpIn.x : null, f: "m2", s: pumpIn && pumpIn.status === "live" ? "A day, 7-day average, from DefiLlama." : na },
@@ -2997,25 +3031,18 @@ section.band.numbers > .wrap { padding-block: 64px 84px; }
   }
   const tickAgo = () => { const el = $("numAgo"); if (el && R && R.at) el.textContent = ago(R.at); };
 
-  /* ---------- running now: the hottest launches and the biggest movers, by name ---------- */
+  /* ---------- trending now: only coins over 10 days and $10M with a live X account of their own ---------- */
   function renderTicker() {
     const L = R && R.ladder;
     const tick = $("tick"), row = $("tickRow");
-    const items = [], keys = new Set();
-    const add = (x, fresh) => { const k = `${x.s}|${x.c}`; if (!keys.has(k)) { keys.add(k); items.push(Object.assign({ fresh }, x)); } };
-    if (L) {
-      if (L.radar && L.radar.status === "live") L.radar.tokens.slice(0, 10).forEach((x) => add(x, true));
-      L.runners.filter((x) => x.d != null && x.d > 0).sort((a, b) => b.d - a.d).slice(0, 14).forEach((x) => add(x, false));
-      if (items.length < 8) L.runners.slice(0, 12).forEach((x) => add(x, false));
-    }
+    const items = L && L.trending && Array.isArray(L.trending.coins) ? L.trending.coins : [];
     tick.hidden = items.length < 3;
     row.classList.remove("go");
     if (tick.hidden) { row.innerHTML = ""; return; }
     const one = (x, dup) => {
       const href = coinHref(x), ci = chainInfo(x.c);
       const where = x.c === "listed" ? "" : (x.lp || ci.name);
-      const age = x.fresh && x.a != null ? (x.a < 1 ? "new today" : `${Math.round(x.a)}d old`) : "";
-      const body = `<b>${esc(x.s)}</b>${x.d != null ? `<span class="${x.d > 0 ? "up" : x.d < 0 ? "down" : ""}">${pct(x.d)}</span>` : ""}<small>${[usd(x.m), where, age].filter(Boolean).map(esc).join(SEP)}</small>`;
+      const body = `${logo(x, "s")}<b>${esc(x.s)}</b>${x.d != null ? `<span class="${x.d > 0 ? "up" : x.d < 0 ? "down" : ""}">${pct(x.d)}</span>` : ""}<small>${[usd(x.m), where].filter(Boolean).map(esc).join(SEP)}</small>`;
       return href ? `<a href="${esc(href)}" target="_blank" rel="noopener"${dup ? ' tabindex="-1"' : ""}>${body}</a>` : `<span class="ti">${body}</span>`;
     };
     row.innerHTML = `<div class="tick-set">${items.map((x) => one(x, false)).join("")}</div><div class="tick-set dup" aria-hidden="true">${items.map((x) => one(x, true)).join("")}</div>`;
@@ -3052,8 +3079,8 @@ section.band.numbers > .wrap { padding-block: 64px 84px; }
     const chg = (d) => (d != null ? `${SEP}<span class="${d > 0 ? "up" : d < 0 ? "down" : ""}">${pct(d)}</span>` : "");
     $("lpTable").innerHTML = `<thead><tr><th>Launchpad</th><th class="num rn">Runners $10M+</th><th class="num">New this week</th><th class="num vol">Their volume, 24h</th><th class="hotc">Hottest now</th></tr></thead><tbody>${L.launch.map((x) => {
       const chains = (x.chains || []).map((c) => chainInfo(c).name).join(", ");
-      const h = x.hot || x.top;
-      const hot = h ? `<b>${esc(h.s)}</b><small>${usd(h.m)}${chg(h.d)}</small>` : `<small>Nothing above $1M this week</small>`;
+      const h = x.hot;
+      const hot = h ? `<span class="cw">${logo(Object.assign({ c: (x.chains || [])[0] }, h), "s")}<span><b>${esc(h.s)}</b><small>${usd(h.m)}${chg(h.d)}</small></span></span>` : `<small>${x.runners ? "None passes the checks yet" : "Nothing above $10M yet"}</small>`;
       return `<tr class="${x.pinned ? "pin" : ""}"><td class="lpn"><b>${esc(x.id)}</b><small>${chains ? esc(chains) : "No coin above $1M yet"}</small></td><td class="num rn">${x.runners}</td><td class="num">${radarLive ? x.fresh : "n/a"}</td><td class="num vol">${radarLive && x.vol ? usd(x.vol) : "n/a"}</td><td class="hotc">${hot}</td></tr>`;
     }).join("")}</tbody>`;
   }
@@ -3117,13 +3144,13 @@ section.band.numbers > .wrap { padding-block: 64px 84px; }
     const dots = [], rings = [];
     placed.forEach((p) => {
       const r = p.d, ci = chainInfo(r.c);
-      const tip = `${r.s}${r.n ? ` (${r.n})` : ""}: ${usd(r.m)}, ${ci.name}${r.lp ? `, ${r.lp}` : ""}${r.a != null ? `, ${r.a} days old` : ""}`;
+      const tip = r.y ? `A coin under 10 days old: ${usd(r.m)}, ${ci.name}${r.lp ? `, ${r.lp}` : ""}. Counted, named once it is 10 days old.` : `${r.s}${r.n ? ` (${r.n})` : ""}: ${usd(r.m)}, ${ci.name}${r.lp ? `, ${r.lp}` : ""}${r.a != null ? `, ${r.a} days old` : ""}`;
       dots.push(`<circle cx="${p.x.toFixed(1)}" cy="${p.y.toFixed(1)}" r="${p.r}" fill="${ci.color}" fill-opacity="${r.t >= 2 ? 0.95 : 0.75}"><title>${esc(tip)}</title></circle>`);
       if (r.f && r.f.includes("N")) rings.push(`<circle class="pulse" cx="${p.x.toFixed(1)}" cy="${p.y.toFixed(1)}" r="${p.r + 1}" fill="none" stroke="#14F195" stroke-width="1.5"></circle>`);
     });
     /* Names for the biggest coins, each in the first free spot around its dot, or none */
     const labels = [];
-    placed.filter((p) => p.d.m >= 500e6).slice(0, 18).forEach((p) => {
+    placed.filter((p) => p.d.m >= 500e6 && !p.d.y).slice(0, 18).forEach((p) => {
       const w = textW(p.d.s, 11.5), h = 13;
       const cands = [[0, -(p.r + 5), "middle"], [0, p.r + 14, "middle"], [p.r + 5, 4, "start"], [-(p.r + 5), 4, "end"], [p.r + 3, -(p.r + 4), "start"], [-(p.r + 3), -(p.r + 4), "end"], [p.r + 3, p.r + 13, "start"], [-(p.r + 3), p.r + 13, "end"]];
       for (const [dx, dy, anc] of cands) {
@@ -3157,7 +3184,7 @@ section.band.numbers > .wrap { padding-block: 64px 84px; }
       $("stripNote").textContent = blank ? (PREVIEW ? "No coins in this preview: the dots are drawn from the live data only." : "The dots appear with the first reading.") : "No dots this time: the runner list needs CoinGecko.";
       $("legend").innerHTML = (R.chains || []).slice().sort(byChainOrder).map((c) => `<span><i style="background:${c.color}"></i>${esc(c.name)}</span>`).join("");
       const msg = `<div class="empty">${blank ? "Appears with the first live reading." : "Not counted on this update."}</div>`;
-      ["newWeek", "edge", "launchpads"].forEach((id) => { $(id).innerHTML = msg; });
+      ["trendList", "edge"].forEach((id) => { $(id).innerHTML = msg; });
       $("srcNote").textContent = "Listed memes: CoinGecko Meme category without launchpad tokens, meme-branded L1s and bridged copies. On-chain memes: Codex, launchpad tokens on Solana, BNB Chain, Base, Ethereum, Monad and Robinhood Chain with at least $50K of liquidity. Circulating market cap, never FDV. A runner needs 24h volume of at least $25K and 0.1% of its market cap.";
       return;
     }
@@ -3169,29 +3196,31 @@ section.band.numbers > .wrap { padding-block: 64px 84px; }
     if (waiting("tiers")) onView($("tiers"), "tiers", () => countIn($("tiers")));
     drawStrip();
     $("legend").innerHTML = L.byChain.map((c) => { const ci = chainInfo(c.id); return `<span><i style="background:${ci.color}"></i>${esc(ci.name)} ${c.count}</span>`; }).join("") + (L.newWeekCount ? `<span><i style="background:transparent;border:1.5px solid #14F195"></i>New this week ${L.newWeekCount}</span>` : "");
-    const where = (x) => [chainInfo(x.c).name, x.lp].filter(Boolean).map(esc).join(SEP);
-    $("newWeek").innerHTML = L.newWeek.length
-      ? L.newWeek.slice(0, 8).map((x) => `<div class="rowi"><span><b><i class="cdot" style="background:${chainInfo(x.c).color}"></i>${esc(x.s)}</b><small>${where(x)}</small></span><span class="r">${usd(x.m)}<small>${x.a < 1 ? "launched today" : `${Math.round(x.a)} day${Math.round(x.a) === 1 ? "" : "s"} old`}</small></span></div>`).join("")
-      : `<div class="empty">${L.onchain.status === "live" ? "No coin younger than 7 days is above $10M. In a season this list fills up first." : "Needs on-chain data: shows up once the Codex key is set."}</div>`;
+    const tk = (x) => { const href = coinHref(x); return href ? `<a href="${esc(href)}" target="_blank" rel="noopener">${esc(x.s)}</a>` : esc(x.s); };
     const edgeRows = [
-      ...L.near.slice(0, 4).map((x) => `<div class="rowi"><span><b>${esc(x.s)}</b><small>${x.n ? `${esc(x.n)}${SEP}` : ""}${x.m != null ? `${usd(x.m)} now, ` : ""}needs +${(x.toNext * 100).toFixed(1)}% to reach ${esc(x.next)}</small></span><span class="r"><span class="chip up">↑ ${esc(x.next)}</span></span></div>`),
-      ...L.edge.slice(0, 4).map((x) => `<div class="rowi"><span><b>${esc(x.s)}</b><small>${x.n ? `${esc(x.n)}${SEP}` : ""}${x.m != null ? `${usd(x.m)} now, ` : ""}${(x.cushion * 100).toFixed(1)}% above ${esc(x.floor)}</small></span><span class="r"><span class="chip down">↓ ${esc(x.floor)}</span></span></div>`)
+      ...L.near.slice(0, 4).map((x) => `<div class="rowi"><span class="cw">${logo(x, "s")}<span><b>${esc(x.s)}</b><small>${x.n ? `${esc(x.n)}${SEP}` : ""}${x.m != null ? `${usd(x.m)} now, ` : ""}needs +${(x.toNext * 100).toFixed(1)}% to reach ${esc(x.next)}</small></span></span><span class="r"><span class="chip up">↑ ${esc(x.next)}</span></span></div>`),
+      ...L.edge.slice(0, 4).map((x) => `<div class="rowi"><span class="cw">${logo(x, "s")}<span><b>${esc(x.s)}</b><small>${x.n ? `${esc(x.n)}${SEP}` : ""}${x.m != null ? `${usd(x.m)} now, ` : ""}${(x.cushion * 100).toFixed(1)}% above ${esc(x.floor)}</small></span></span><span class="r"><span class="chip down">↓ ${esc(x.floor)}</span></span></div>`)
     ];
     $("edge").innerHTML = edgeRows.length ? edgeRows.join("") : `<div class="empty">No coin is within 10% of the next floor or 5% above its own.</div>`;
-    /* born in the last 7 days, already above $1M, hottest first: names from the launch radar */
-    const rd = L.radar || { status: "off", tokens: [] };
-    $("launchpads").innerHTML = rd.status === "live" && rd.tokens.length
-      ? rd.tokens.slice(0, 6).map((x) => {
-        const href = coinHref(x), ci = chainInfo(x.c);
-        const tk = href ? `<a href="${esc(href)}" target="_blank" rel="noopener">${esc(x.s)}</a>` : esc(x.s);
-        const age = x.a < 1 ? "launched today" : `${Math.round(x.a)} day${Math.round(x.a) === 1 ? "" : "s"} old`;
-        return `<div class="rowi"><span><b><i class="cdot" style="background:${ci.color}"></i>${tk}</b><small>${[x.n, x.lp || ci.name].filter(Boolean).map(esc).join(SEP)}</small></span><span class="r">${usd(x.m)}<small>${x.d != null ? `<span class="${x.d > 0 ? "up" : x.d < 0 ? "down" : ""}">${pct(x.d)}</span>${age ? SEP : ""}` : ""}${age}</small></span></div>`;
-      }).join("")
-      : `<div class="empty">${rd.status === "live" ? "No launch of the last 7 days has reached $1M with real trading yet." : rd.status === "offline" ? "The launch radar did not answer on the last update." : "Needs on-chain data: shows up once the Codex key is set."}</div>`;
-    /* rigged launches never make the list; say how many, so the empty spots are not a mystery */
-    if (rd.status === "live" && rd.left) $("launchpads").insertAdjacentHTML("beforeend", `<p class="sub left-out">${rd.left} more left out as rigged or look-alike: insiders holding the supply, a bundled launch, buyers who do not sell, or a few wallets trading with themselves.</p>`);
+    /* trending now: coins over 10 days and $10M whose X account of their own posted in the last 14 days */
+    const tr = L.trending || null;
+    const postAgo = (d) => (d < 1 ? "posted today" : `posted ${Math.round(d)} day${Math.round(d) === 1 ? "" : "s"} ago`);
+    const trRow = (x) => {
+      const where = [x.c === "listed" ? "Exchanges" : chainInfo(x.c).name, x.lp].filter(Boolean).map(esc).join(SEP);
+      const xl = x.x ? `<a class="xl" href="https://x.com/${encodeURIComponent(x.x)}" target="_blank" rel="noopener">@${esc(x.x)}</a>${x.xd != null ? `${SEP}${postAgo(x.xd)}` : ""}` : "";
+      return `<div class="rowi"><span class="cw">${logo(x)}<span><b>${tk(x)}</b><small>${x.n ? `${esc(x.n)}${SEP}` : ""}${where}</small><small>${xl}</small></span></span><span class="r">${usd(x.m)}<small>${x.d != null ? `<span class="${x.d > 0 ? "up" : x.d < 0 ? "down" : ""}">${pct(x.d)}</span>` : "n/a"}</small></span></div>`;
+    };
+    $("trendList").innerHTML = tr && tr.coins.length
+      ? `<div class="tgrid">${tr.coins.slice(0, 8).map(trRow).join("")}</div>`
+      : `<div class="empty">${!tr ? "Appears with the next update." : tr.at ? "No coin passes the checks right now." : "The X accounts are being checked: the list fills within the hour."}</div>`;
+    /* what keeps the others out, counted, so the empty spots are not a mystery */
+    const WHY = [["young", "younger than 10 days"], ["nox", "no X account of their own"], ["xquiet", "no post on X in 14 days"], ["xgone", "X account suspended or deleted"], ["xsmall", "fewer than 1,000 followers on X"], ["xborrowed", "linked to a famous account that is not theirs"], ["xwait", "X account not checked yet"]];
+    if (tr && tr.left) {
+      const parts = WHY.filter(([k]) => tr.why && tr.why[k]).map(([k, t]) => `${tr.why[k]} ${t}`);
+      $("trendList").insertAdjacentHTML("beforeend", `<p class="sub left-out">${tr.pool} coin${tr.pool === 1 ? "" : "s"} from $10M pass${tr.pool === 1 ? "es" : ""} the checks${tr.coins.length < tr.pool ? `, the top ${Math.min(8, tr.coins.length)} are shown` : ""}. ${tr.left} left out: ${parts.join(", ")}.</p>`);
+    }
     const oc = L.onchain;
-    const base = "Listed memes: CoinGecko Meme category without launchpad tokens, meme-branded L1s and bridged copies. Circulating market cap, never FDV. A runner needs 24h volume of at least $25K and 0.1% of its market cap.";
+    const base = "Listed memes: CoinGecko Meme category without launchpad tokens, meme-branded L1s and bridged copies. Circulating market cap, never FDV. A runner needs 24h volume of at least $25K and 0.1% of its market cap. Logos: CoinGecko for listed coins, the launchpad's own image through Codex for on-chain coins. Trending: over 10 days old and above $10M, with an X account of its own (from its CoinGecko page or its launchpad) that posted in the last 14 days and has 1,000 followers or more, read through FxTwitter. A coin younger than 10 days is counted but never named.";
     const ocText = oc.status === "live"
       ? `On-chain memes: Codex, launchpad tokens on Solana, BNB Chain, Base, Ethereum, Monad and Robinhood Chain with at least $50K of liquidity${oc.at ? `, snapshot from ${ago(oc.at)}` : ""}. ${oc.added} came only from on-chain data, ${oc.matched} were matched to listed coins.${oc.watched ? ` ${oc.watched} more come from the watchlist kept by hand, with live numbers from Codex.` : ""}${oc.left ? ` ${oc.left} look-alike or rigged token${oc.left === 1 ? " was" : "s were"} left out: less than one holder per $8,000 of market cap, one ticker launched over and over, 20% or more of the supply with insiders, snipers, bundlers or the dev, a launch Codex marks as bundled, buyers who do not sell, or a few wallets trading with themselves. A coin younger than a day shows no 24h move.` : ""}${oc.truncated ? " The list is capped at the biggest coins." : ""}`
       : oc.status === "offline" ? "On-chain data did not answer on the last update, so launchpad coins that are not listed are left out this time."
@@ -3558,8 +3587,13 @@ section.band.numbers > .wrap { padding-block: 64px 84px; }
       return;
     }
     const q = listQ.trim().toLowerCase();
-    let rows = L.runners.map((x, i) => Object.assign({ rk: i + 1 }, x));
-    if (listF === "new") rows = rows.filter((x) => x.f && x.f.includes("N"));
+    /* coins younger than 10 days are counted in the numbers, never named */
+    const young = L.runners.filter((x) => x.y).length;
+    let rows = L.runners.filter((x) => !x.y).map((x, i) => Object.assign({ rk: i + 1 }, x));
+    if (listF === "trend") {
+      const order = new Map(((L.trending && L.trending.coins) || []).map((x, i) => [`${x.s}|${x.c}`, i]));
+      rows = rows.filter((x) => order.has(`${x.s}|${x.c}`)).sort((a, b) => order.get(`${a.s}|${a.c}`) - order.get(`${b.s}|${b.c}`));
+    }
     else if (listF === "gain") rows = rows.filter((x) => x.d != null && x.d > 0).sort((a, b) => b.d - a.d);
     else rows = rows.filter((x) => x.t >= Number(listF));
     if (q) rows = rows.filter((x) => x.s.toLowerCase().includes(q) || (x.n || "").toLowerCase().includes(q));
@@ -3570,12 +3604,12 @@ section.band.numbers > .wrap { padding-block: 64px 84px; }
         const tick = href ? `<a href="${esc(href)}" target="_blank" rel="noopener">${esc(x.s)}</a>` : `<b>${esc(x.s)}</b>`;
         const where = [x.c === "listed" ? "Exchanges" : ci.name, x.lp].filter(Boolean).map(esc).join(SEP);
         const age = x.a != null ? `<small>${x.a < 1 ? "launched today" : `${x.a} day${x.a === 1 ? "" : "s"} old`}</small>` : "";
-        return `<tr><td class="rk">${x.rk}</td><td class="coin"><i class="cdot" style="background:${ci.color}"></i>${tick}${x.n ? `<small>${esc(x.n)}</small>` : ""}</td><td class="w">${where}${age}</td><td class="num">${usd(x.m)}</td><td class="chg ${x.d > 0 ? "up" : x.d < 0 ? "down" : ""}">${pct(x.d)}</td><td class="fl"><span class="chip ${x.t >= 2 ? "yes" : "no"}">${esc(L.tiers[x.t].label)}+</span></td></tr>`;
-      }).join("") : `<tr><td colspan="6" class="empty">${listF === "new" ? "No coin younger than 7 days is above $10M right now." : listF === "gain" ? "No coin is up over the last 24 hours." : "No coin matches."}</td></tr>`
+        return `<tr><td class="rk">${x.rk}</td><td class="coin"><span class="cw">${logo(x)}<span>${tick}${x.n ? `<small>${esc(x.n)}</small>` : ""}</span></span></td><td class="w">${where}${age}</td><td class="num">${usd(x.m)}</td><td class="chg ${x.d > 0 ? "up" : x.d < 0 ? "down" : ""}">${pct(x.d)}</td><td class="fl"><span class="chip ${x.t >= 2 ? "yes" : "no"}">${esc(L.tiers[x.t].label)}+</span></td></tr>`;
+      }).join("") : `<tr><td colspan="6" class="empty">${listF === "trend" ? "No coin passes the trending checks right now." : listF === "gain" ? "No coin is up over the last 24 hours." : "No coin matches."}</td></tr>`
     }</tbody>`;
     $("listMore").hidden = Boolean(listAll || q || total <= 25);
     $("listMore").textContent = `Show all ${total}`;
-    $("listCount").textContent = `${Math.min(cut.length, total)} of ${total} shown`;
+    $("listCount").textContent = `${Math.min(cut.length, total)} of ${total} shown${young && listF === "0" && !q ? `, ${young} under 10 days counted, not named` : ""}`;
   }
   $("listQ").addEventListener("input", (e) => { listQ = e.target.value; renderList(); });
   $("listChips").addEventListener("click", (e) => {
@@ -3644,7 +3678,7 @@ section.band.numbers > .wrap { padding-block: 64px 84px; }
     const L = R.ladder, live = Boolean(c && !c.ghost);
     const turn = R.inputs.find((m) => m.id === "4.2");
     return {
-      stars: L ? L.runners.map((x) => ({ key: `${x.s}:${x.c}`, m: x.m, s: x.s, n: x.n, c: x.c, d: x.d })) : [],
+      stars: L ? L.runners.map((x) => ({ key: `${x.s}:${x.c}`, m: x.m, s: x.s, n: x.n, c: x.c, d: x.d, y: x.y })) : [],
       moon: live && R.boards ? R.boards.bottom.hits / 8 : null,
       light: live && R.boards ? (R.boards.top.lit >= 3 ? "sell" : R.boards.top.lit >= 1 ? "nobuys" : "quiet") : null,
       boats: L && L.radar && L.radar.status === "live" ? L.radar.tokens : [],

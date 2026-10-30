@@ -131,7 +131,9 @@ function cx(symbol, name, networkId, mc, o = {}) {
   return {
     circulatingMarketCap: String(mc), marketCap: String(mc * 1.02), liquidity: String(o.liq ?? mc * 0.05), volume24: String(o.vol ?? mc * 0.08),
     holders: o.holders ?? Math.max(12000, Math.round(mc / 2500)), isScam: Boolean(o.scam), ...(o.q || {}), change24: String(o.ch ?? (d24of(symbol + networkId) / 100)),
-    token: { address: o.addr ?? `${symbol}Addr${networkId}`, networkId, name, symbol, createdAt: Math.floor((NOW - (o.age ?? 400) * DAY) / 1000), launchpad: { launchpadName: o.lp ?? "Pump.fun", migrated: true, completed: true } }
+    token: { address: o.addr ?? `${symbol}Addr${networkId}`, networkId, name, symbol, createdAt: Math.floor((NOW - (o.age ?? 400) * DAY) / 1000), launchpad: { launchpadName: o.lp ?? "Pump.fun", migrated: true, completed: true },
+      info: { imageSmallUrl: o.img !== undefined ? o.img : `https://token-media.defined.fi/${networkId}_${o.addr ?? `${symbol}Addr${networkId}`}_small_0a1b2c.png` },
+      socialLinks: { twitter: o.tw ?? null, website: null, telegram: null } }
   };
 }
 
@@ -142,21 +144,21 @@ export function codexResults(variant = "today") {
     return out;
   }
   return [
-    cx("币安人生", "币安人生", 56, 514e6, { lp: "Four.meme", age: 380 }),
-    cx("USELESS", "Useless Coin", 1399811149, 208e6, { lp: "Bonk", age: 470 }),
-    cx("FARTCOIN", "Fartcoin", 1399811149, 201e6, { lp: "Pump.fun", age: 700, liq: 12e6 }),
+    cx("币安人生", "币安人生", 56, 514e6, { lp: "Four.meme", age: 380, tw: "https://x.com/BinanceLife_" }),
+    cx("USELESS", "Useless Coin", 1399811149, 208e6, { lp: "Bonk", age: 470, tw: "https://x.com/theuselesscoin" }),
+    cx("FARTCOIN", "Fartcoin", 1399811149, 201e6, { lp: "Pump.fun", age: 700, liq: 12e6, tw: "https://x.com/FartCoinOfSOL" }),
     cx("FARTCOIN", "Fartcoin", 8453, 199e6, { lp: "Clanker", age: 200, liq: 90e3 }),
-    cx("DEMOH", "Demo H", 1, 85e6, { lp: "Printr", age: 30 }),
-    cx("DEMOA", "Demo A", 1399811149, 62e6, { lp: "Pump.fun", age: 40 }),
+    cx("DEMOH", "Demo H", 1, 85e6, { lp: "Printr", age: 30, tw: "https://x.com/demoh_coin" }),
+    cx("DEMOA", "Demo A", 1399811149, 62e6, { lp: "Pump.fun", age: 40, tw: "https://x.com/i/communities/1880000000000000000" }),
     cx("DEMOX", "Demo Scam", 1399811149, 50e6, { lp: "Pump.fun", age: 9, scam: true }),
-    cx("DEMOB", "Demo B", 1399811149, 33e6, { lp: "Bonk", age: 5 }),
+    cx("DEMOB", "Demo B", 1399811149, 33e6, { lp: "Bonk", age: 5, tw: "https://x.com/demob_bonk" }),
     cx("DEMOQ", "Demo Quiet", 1399811149, 30e6, { lp: "Pump.fun", age: 100, vol: 10e3 }),
-    cx("DEMOD", "Demo D", 8453, 27e6, { lp: "Clanker", age: 120 }),
+    cx("DEMOD", "Demo D", 8453, 27e6, { lp: "Clanker", age: 120, tw: "https://x.com/RockstarGames" }),
     cx("DEMOR", "Demo Arb", 42161, 25e6, { lp: "Printr", age: 50 }),
     cx("DEMOC", "Demo C", 56, 18e6, { lp: "Four.meme", age: 3 }),
-    cx("DEMOF", "Demo F", 143, 15e6, { lp: "Nad.Fun", age: 20 }),
+    cx("DEMOF", "Demo F", 143, 15e6, { lp: "Nad.Fun", age: 20, tw: "https://twitter.com/demof_monad", img: null }),
     cx("DEMOE", "Demo E", 4663, 12e6, { lp: "BAGS", age: 2 }),
-    cx("DEMOG", "Demo G", 1399811149, 11e6, { lp: "StonkFun", age: 60 }),
+    cx("DEMOG", "Demo G", 1399811149, 11e6, { lp: "StonkFun", age: 60, tw: "https://x.com/demog_stonk/status/1880000000000000001" }),
     /* a wave of look-alikes: big market caps, a few thousand wallets, one ticker launched three times */
     cx("OILX", "Oil Dividend", 1399811149, 260e6, { age: 1, holders: 2900, addr: "OILX1" }),
     cx("OILX", "Oil Dividend", 1399811149, 140e6, { age: 0.5, holders: 3100, addr: "OILX2" }),
@@ -173,7 +175,7 @@ export function codexResults(variant = "today") {
 /* coins on the hand-kept watchlist: one runner the scans miss, one too small to count, one already listed */
 export function watchResults() {
   return [
-    cx("DEMOW", "Demo Watch", 8453, 44e6, { lp: "None", age: 300, addr: "0xWATCH" }),
+    cx("DEMOW", "Demo Watch", 8453, 44e6, { lp: "None", age: 300, addr: "0xWATCH", tw: "@demowatch" }),
     cx("DEMOS", "Demo Small", 1399811149, 4e6, { lp: "None", age: 20, addr: "SmallAddr" }),
     cx("FARTCOIN", "Fartcoin", 1399811149, 201e6, { lp: "Pump.fun", age: 700, liq: 12e6 })
   ];
@@ -196,6 +198,26 @@ export function radarResults(variant = "today") {
     cx("DEMOTINY", "Demo Tiny", 1399811149, 400e3, { lp: "Pump.fun", age: 1 })
   ];
 }
+
+/* CoinGecko coin pages: the X account each listed coin gives (tail coins: tail0x, tail1x, ...) */
+export const CG_X = {
+  dogecoin: "dogecoin", "shiba-inu": "Shibtoken", pepe: "pepecoineth", "binance-life": "BinanceLife_", "pudgy-penguins": "pudgypenguins",
+  "official-trump": "GetTrumpMemes", spx6900: "spx6900", bonk: "bonk_inu", apepe: "apepeofficial", floki: "realflokiinu", dogwifcoin: "dogwifcoin",
+  "useless-3": "", fartcoin: "FartCoinOfSOL", npc: "NonPlayableCoin", "build-on": "BUILDonBsc_AI", cashcat: "cashcat_token"
+};
+/* X accounts as FxTwitter shows them: days since each own post, followers. flaky: the posts call answers 404 once;
+   reposts: only posts of other accounts; gone: suspended. Unknown handles of the tail coins post daily. */
+export const X_WORLD = {
+  dogecoin: { posts: [2, 9], fol: 4359057 }, shibtoken: { posts: [1, 4], fol: 3848267 }, pepecoineth: { posts: [3, 6], fol: 734807, flaky: true },
+  binancelife_: { gone: "User is suspended" }, pudgypenguins: { posts: [0.5], fol: 227659 }, gettrumpmemes: { posts: [1], fol: 900000 },
+  spx6900: { posts: [2], fol: 6523 }, bonk_inu: { posts: [20, 30], fol: 449793 }, apepeofficial: { posts: [0.4], fol: 553927 },
+  realflokiinu: { posts: [], fol: 2058, reposts: true }, dogwifcoin: { posts: [0.7], fol: 144146 }, fartcoinofsol: { posts: [], fol: 83128 },
+  nonplayablecoin: { posts: [0.9], fol: 43481 }, buildonbsc_ai: { posts: [8.2], fol: 19273 }, cashcat_token: { posts: [0.1], fol: 26365 },
+  theuselesscoin: { posts: [1.5], fol: 61000 }, demoh_coin: { posts: [0.3], fol: 2400 }, rockstargames: { posts: [0.1], fol: 23676440 },
+  demof_monad: { posts: [30], fol: 5100 }, demowatch: { posts: [1], fol: 420 }, demob_bonk: { posts: [0.2], fol: 9000 },
+  emptyline: { posts: [1, 2], fol: 5000, emptyTimeline: true }
+};
+const xWorld = (h) => X_WORLD[h] || (/^tail\d+x$/.test(h) ? { posts: [1, 3], fol: Number(h.slice(4, -1)) % 5 === 0 ? 400 : 5000 + Number(h.slice(4, -1)) * 10 } : null);
 
 /* One year of daily market caps for a basket coin */
 export function chart365(id) {
@@ -220,14 +242,40 @@ export function fakeFetch({ variant = "today", fail = [], calls = [] } = {}) {
     ["fng", /api\.alternative\.me\/fng\/\?limit=1$/, () => fng(variant)],
     ["apps", /rss\.applemarketingtools\.com\/api\/v2\/us\/apps\/top-free\/100\/apps\.json$/, () => apps(variant)],
     ["appsLegacy", /itunes\.apple\.com\/us\/rss\/topfreeapplications/, () => ({ feed: { entry: [] } })],
-    ["codex", /^https:\/\/graph\.codex\.io\/graphql$/, null]
+    ["codex", /^https:\/\/graph\.codex\.io\/graphql$/, null],
+    ["cgPage", /api\.coingecko\.com\/api\/v3\/coins\/([a-z0-9%._-]+)\?localization=false&tickers=false&market_data=false/, null],
+    ["xPosts", /^https:\/\/api\.fxtwitter\.com\/2\/profile\/([^/?#]+)\/statuses$/, null],
+    ["xProfile", /^https:\/\/api\.fxtwitter\.com\/([^/?#]+)$/, null]
   ];
+  const asked = {};
   return async (url, init = {}) => {
     const r = routes.find(([, re]) => re.test(url));
     calls.push({ url, method: init.method || "GET", headers: init.headers || {}, body: init.body || null, route: r ? r[0] : null });
     if (!r) return { ok: false, status: 404, json: async () => ({}) };
     if (r[0] === "hl" && (init.method !== "POST" || JSON.parse(init.body).type !== "metaAndAssetCtxs")) return { ok: false, status: 422, json: async () => ({}) };
     if (fail.includes(r[0]) || (fail.includes("coingecko") && r[0].startsWith("cg"))) return { ok: false, status: 429, json: async () => ({ status: { error_code: 429 } }) };
+    if (r[0] === "cgPage") {
+      if (fail.includes("cgPage")) return { ok: false, status: 429, json: async () => ({}) };
+      const id = decodeURIComponent(url.match(r[1])[1]);
+      const x = id in CG_X ? CG_X[id] : /^tail-\d+$/.test(id) ? `tail${id.slice(5)}x` : null;
+      if (x == null) return { ok: false, status: 404, json: async () => ({ error: "coin not found" }) };
+      return { ok: true, status: 200, json: async () => ({ id, symbol: id, links: { homepage: [""], twitter_screen_name: x, telegram_channel_identifier: "" }, image: {} }) };
+    }
+    if (r[0] === "xPosts" || r[0] === "xProfile") {
+      const h = decodeURIComponent(url.match(r[1])[1]), k = h.toLowerCase(), w = fail.includes("fx") ? null : xWorld(k);
+      const json = (status, body) => ({ ok: status < 400, status, json: async () => body });
+      if (!w) return json(404, { code: 404, message: "User not found" });
+      if (w.gone) return json(404, { code: 404, message: w.gone });
+      if (r[0] === "xProfile") return json(200, { code: 200, message: "OK", user: { screen_name: h, followers: w.fol, tweets: w.posts.length } });
+      asked[k] = (asked[k] || 0) + 1;
+      if (w.flaky && asked[k] === 1) return json(404, { code: 404, message: "User not found" });
+      const author = { screen_name: h, followers: w.fol };
+      const results = w.emptyTimeline ? [] : w.posts.map((d, i) => ({ type: "status", id: `${k}${i}`, created_timestamp: Math.floor((NOW - d * DAY) / 1000), author }));
+      /* a repost of a famous account sits in every timeline, newer than anything: it must not count */
+      results.unshift({ type: "status", id: "famous", created_timestamp: Math.floor(NOW / 1000) - 600, author: { screen_name: "famous_account", followers: 200e6 } });
+      if (w.reposts) results.push({ type: "status", id: "famous2", created_timestamp: Math.floor(NOW / 1000) - 3600, author: { screen_name: "another_famous", followers: 90e6 } });
+      return json(200, { code: 200, results });
+    }
     if (r[0] === "codex") {
       if (!init.headers || !init.headers.authorization) return { ok: false, status: 401, json: async () => ({}) };
       const body = JSON.parse(init.body);

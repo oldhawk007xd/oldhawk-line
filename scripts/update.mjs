@@ -2,7 +2,7 @@
    Pulls the live sources, writes data/latest.json, keeps one close per UTC day in data/history.json,
    logs alerts in data/alerts.json and, if a Telegram bot is set up, posts them to the channel. */
 import { readFile, writeFile, mkdir, appendFile } from "node:fs/promises";
-import { collect, compute, toDaily, alertsFor, blank, basketIds, basketCharts, basketSeries, weeklyFrom, liveCandle, slimCodex, watchIds } from "../lib/engine.mjs";
+import { collect, compute, toDaily, alertsFor, blank, basketIds, basketCharts, basketSeries, weeklyFrom, liveCandle, slimCodex, watchIds, NEEDS, refreshSocials } from "../lib/engine.mjs";
 
 const DATA = new URL("../data/", import.meta.url);
 const read = async (name, fallback) => {
@@ -26,8 +26,8 @@ const CACHE = new URL("../.cache/", import.meta.url);
 let codexCache = null;
 try { codexCache = JSON.parse(await readFile(new URL("codex.json", CACHE), "utf8")); } catch { codexCache = null; }
 const cacheAge = codexCache && codexCache.at ? (Date.now() - Date.parse(codexCache.at)) / 60000 : Infinity;
-/* v2 snapshots carry the trader and holder fields; an older one is refreshed */
-const useCache = Boolean(CODEX_KEY && codexCache && codexCache.v === 2 && cacheAge < CODEX_EVERY - 5);
+/* v3 snapshots carry the trader and holder fields, the logos and the X links; an older one is refreshed */
+const useCache = Boolean(CODEX_KEY && codexCache && codexCache.v === 3 && cacheAge < CODEX_EVERY - 5);
 
 /* watchlist.json: coins the scans miss, added by hand by chain and contract address */
 let watch = [];
@@ -47,12 +47,26 @@ if (CODEX_KEY) {
   if (useCache) console.log(`codex: snapshot from ${Math.round(cacheAge)} min ago, next refresh in about ${Math.max(0, Math.round(CODEX_EVERY - cacheAge))} min`);
   else if (["codex", "codexRadar", "codexPinned"].every((k) => raw[k] && raw[k].ok)) {
     await mkdir(CACHE, { recursive: true });
-    await writeFile(new URL("codex.json", CACHE), JSON.stringify({ v: 2, at: raw.at, codex: slimCodex(raw.codex.data), codexRadar: slimCodex(raw.codexRadar.data), codexPinned: slimCodex(raw.codexPinned.data), codexWatch: raw.codexWatch && raw.codexWatch.ok ? slimCodex(raw.codexWatch.data) : null, watchKey: raw.watchKey }));
+    await writeFile(new URL("codex.json", CACHE), JSON.stringify({ v: 3, at: raw.at, codex: slimCodex(raw.codex.data), codexRadar: slimCodex(raw.codexRadar.data), codexPinned: slimCodex(raw.codexPinned.data), codexWatch: raw.codexWatch && raw.codexWatch.ok ? slimCodex(raw.codexWatch.data) : null, watchKey: raw.watchKey }));
     if (process.env.GITHUB_OUTPUT) await appendFile(process.env.GITHUB_OUTPUT, "codex=fresh\n");
     console.log("codex: refreshed");
   } else console.log("codex: a call failed, it is tried again on the next run");
 }
-const reading = compute(raw, { history: history.days });
+/* X accounts (data/socials.json): each coin's account from its CoinGecko page or its launchpad, and the date of
+   its newest post. compute() lists what is due; it is asked for within limits, then the reading is made again. */
+let socials = await read("socials.json", null);
+let reading = compute(raw, { history: history.days, socials });
+const needs = reading[NEEDS];
+if (reading.ladder && needs && (needs.pages.length || needs.handles.length)) {
+  try {
+    const out = await refreshSocials(socials, needs, { cgKey: process.env.COINGECKO_DEMO_KEY || "", log: (m) => console.log("x check:", m) });
+    socials = out.socials;
+    const st = out.stats;
+    console.log(`x check: ${st.pages} coin pages${st.pageFails ? ` (${st.pageFails} failed)` : ""}, ${st.checks} accounts asked, ${st.answered} answered, ${st.gone} gone, ${st.fails} no answer; ${Math.max(0, needs.pages.length - st.pages - st.pageFails)} pages and ${Math.max(0, needs.handles.length - st.checks)} accounts left for the next runs`);
+    reading = compute(raw, { history: history.days, socials });
+  } catch (e) { console.log("x check failed:", e.message); }
+}
+if (socials) await write("socials.json", socials);
 
 /* No reading this run: keep the last good one visible, clearly marked */
 if (reading.line == null) {
