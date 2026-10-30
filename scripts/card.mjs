@@ -1,6 +1,6 @@
 /* Draws the share card that X and other sites show for the link: today's Line over its own sky.
    Runs in the deploy job, so the picture is never committed. Needs, installed with --no-save:
-   @resvg/resvg-js, @expo-google-fonts/instrument-serif, @expo-google-fonts/jetbrains-mono.
+   @resvg/resvg-js, @expo-google-fonts/ibm-plex-sans, @expo-google-fonts/ibm-plex-mono.
    Usage: node scripts/card.mjs <out.png> [site address] */
 import { readFile, writeFile } from "node:fs/promises";
 import { createRequire } from "node:module";
@@ -13,10 +13,12 @@ const reading = r.line != null ? { line: r.line, zone: r.zone, ghost: false } : 
 if (!reading || !reading.zone) { console.log("card: no reading yet, keeping the fixed picture"); process.exit(0); }
 
 const pkgDir = (name) => path.dirname(require.resolve(`${name}/package.json`));
+const SANS = pkgDir("@expo-google-fonts/ibm-plex-sans"), MONO = pkgDir("@expo-google-fonts/ibm-plex-mono");
 const FONTS = [
-  path.join(pkgDir("@expo-google-fonts/instrument-serif"), "400Regular_Italic/InstrumentSerif_400Regular_Italic.ttf"),
-  path.join(pkgDir("@expo-google-fonts/jetbrains-mono"), "400Regular/JetBrainsMono_400Regular.ttf"),
-  path.join(pkgDir("@expo-google-fonts/jetbrains-mono"), "800ExtraBold/JetBrainsMono_800ExtraBold.ttf")
+  path.join(SANS, "400Regular/IBMPlexSans_400Regular.ttf"),
+  path.join(SANS, "600SemiBold/IBMPlexSans_600SemiBold.ttf"),
+  path.join(SANS, "700Bold/IBMPlexSans_700Bold.ttf"),
+  path.join(MONO, "500Medium/IBMPlexMono_500Medium.ttf")
 ];
 const { Resvg } = require("@resvg/resvg-js");
 
@@ -39,11 +41,12 @@ const headline = tone === 3 && r.season && r.season.on ? "Sunrise. The season is
 const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", "\"": "&quot;" }[c]));
 const usd = (n) => (n >= 1e12 ? `$${(n / 1e12).toFixed(2)}T` : n >= 1e9 ? `$${(n / 1e9).toFixed(1)}B` : `$${Math.round(n / 1e6)}M`);
 const m = r.market || {};
+/* the facts sit apart by a gap, no separator marks */
 const stats = [
-  m.memeMC ? `Memes <tspan font-weight="800">${usd(m.memeMC)}</tspan>` : "",
-  m.drawdown != null ? (m.drawdown >= 0 ? `<tspan font-weight="800">${Math.round(m.drawdown * 100)}%</tspan> below the last top` : `<tspan font-weight="800">${Math.round(-m.drawdown * 100)}%</tspan> above the last top`) : "",
-  r.ladder ? `<tspan font-weight="800">${r.ladder.counts[0]}</tspan> runners from $10M` : ""
-].filter(Boolean).join("  ·  ");
+  m.memeMC ? `Memes <tspan font-weight="700">${usd(m.memeMC)}</tspan>` : "",
+  m.drawdown != null ? (m.drawdown >= 0 ? `<tspan font-weight="700">${Math.round(m.drawdown * 100)}%</tspan> below the last top` : `<tspan font-weight="700">${Math.round(-m.drawdown * 100)}%</tspan> above the last top`) : "",
+  r.ladder ? `<tspan font-weight="700">${r.ladder.counts[0]}</tspan> runners from $10M` : ""
+].filter(Boolean).map((x, i) => (i ? `<tspan dx="34">${x}</tspan>` : x)).join("");
 const when = new Date(r.lastGood && reading.ghost ? r.lastGood.at : r.at);
 const stamp = `${when.toLocaleDateString("en-GB", { day: "numeric", month: "short", year: "numeric", timeZone: "UTC" })}, ${when.toISOString().slice(11, 16)} UTC`;
 const host = site ? site.replace(/^https?:\/\//, "").replace(/\/+$/, "") : "";
@@ -52,8 +55,8 @@ const host = site ? site.replace(/^https?:\/\//, "").replace(/\/+$/, "") : "";
 const HZ = 430;
 const sunY = L <= 45 ? HZ + (45 - L) * 2.2 : HZ - (L - 45) * 4.9;
 const sunX = 985;
-/* the number sits on the left margin; the hour and zone start right after its last digit */
-const zx = 64 + String(L).length * 102 + 24;
+/* the number sits on the left margin (IBM Plex Mono, every digit 0.6 em wide); the hour and zone start right after its last digit */
+const zx = 66 + String(L).length * 120 + 30;
 const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
 <defs>
   <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">${SKY.map(([o, c]) => `<stop offset="${o}" stop-color="${c}"/>`).join("")}</linearGradient>
@@ -73,18 +76,18 @@ const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" v
 <rect y="${HZ}" width="1200" height="${630 - HZ}" fill="url(#sea)"/>
 ${sunY < HZ + 40 ? `<rect x="${sunX - 85}" y="${HZ + 2}" width="170" height="160" fill="url(#road)" mask="url(#roadM)"/>` : ""}
 <rect y="${HZ - 1.5}" width="1200" height="3" fill="url(#line)"/>
-<text x="72" y="84" font-family="JetBrains Mono" font-weight="800" font-size="19" letter-spacing="4" fill="#14F195">OLDHAWK LINE${reading.ghost ? " · LAST GOOD READING" : " · LIVE"}</text>
-<text x="58" y="320" font-family="Instrument Serif" font-style="italic" font-size="220" fill="#ffffff">${L}</text>
-<text x="${zx}" y="236" font-family="JetBrains Mono" font-weight="800" font-size="21" letter-spacing="3" fill="${ZONE_INK}">${esc(z.hour.toUpperCase())}</text>
-<text x="${zx}" y="272" font-family="JetBrains Mono" font-size="21" letter-spacing="3" fill="#ededed">${esc(z.name.toUpperCase())}</text>
-<text x="${zx}" y="318" font-family="JetBrains Mono" font-size="26" fill="#c9cfdc">/ 100</text>
-<text x="72" y="396" font-family="Instrument Serif" font-style="italic" font-size="56" fill="#ffffff">${esc(headline)}</text>
-<text x="72" y="488" font-family="JetBrains Mono" font-size="21" fill="#c9cfdc">Season starts when the sun crosses the Line at 45.</text>
-${stats ? `<text x="72" y="528" font-family="JetBrains Mono" font-size="21" fill="#ededed">${stats}</text>` : ""}
-<text x="72" y="594" font-family="JetBrains Mono" font-size="17" fill="#a3abc0">${esc(stamp)}</text>
-<text x="1128" y="594" text-anchor="end" font-family="JetBrains Mono" font-size="17" fill="#a3abc0">${esc([host, "@oldhawksol"].filter(Boolean).join("  ·  "))}</text>
+<text x="72" y="84" font-family="IBM Plex Sans" font-weight="700" font-size="19" letter-spacing="4" fill="#14F195">OLDHAWK LINE<tspan dx="22">${reading.ghost ? "LAST GOOD READING" : "LIVE"}</tspan></text>
+<text x="62" y="320" font-family="IBM Plex Mono" font-weight="500" font-size="200" fill="#ffffff">${L}</text>
+<text x="${zx}" y="236" font-family="IBM Plex Sans" font-weight="700" font-size="21" letter-spacing="3" fill="${ZONE_INK}">${esc(z.hour.toUpperCase())}</text>
+<text x="${zx}" y="272" font-family="IBM Plex Sans" font-size="21" letter-spacing="3" fill="#ededed">${esc(z.name.toUpperCase())}</text>
+<text x="${zx}" y="318" font-family="IBM Plex Mono" font-weight="500" font-size="26" fill="#c9cfdc">/ 100</text>
+<text x="72" y="396" font-family="IBM Plex Sans" font-weight="600" font-size="52" letter-spacing="-1" fill="#ffffff">${esc(headline)}</text>
+<text x="72" y="488" font-family="IBM Plex Sans" font-size="23" fill="#c9cfdc">Season starts when the sun crosses the Line at 45.</text>
+${stats ? `<text x="72" y="528" font-family="IBM Plex Sans" font-size="23" fill="#ededed">${stats}</text>` : ""}
+<text x="72" y="594" font-family="IBM Plex Sans" font-size="18" fill="#a3abc0">${esc(stamp)}</text>
+<text x="1128" y="594" text-anchor="end" font-family="IBM Plex Sans" font-size="18" fill="#a3abc0">${[host, "@oldhawksol"].filter(Boolean).map((x, i) => (i ? `<tspan dx="26">${esc(x)}</tspan>` : esc(x))).join("")}</text>
 </svg>`;
 
-const png = new Resvg(svg, { fitTo: { mode: "width", value: 1200 }, font: { fontFiles: FONTS, loadSystemFonts: false, defaultFontFamily: "JetBrains Mono" } }).render().asPng();
+const png = new Resvg(svg, { fitTo: { mode: "width", value: 1200 }, font: { fontFiles: FONTS, loadSystemFonts: false, defaultFontFamily: "IBM Plex Sans" } }).render().asPng();
 await writeFile(out, png);
 console.log(`card: ${out}, Line ${L}, ${z.hour}, ${png.length} bytes`);

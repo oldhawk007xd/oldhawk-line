@@ -123,4 +123,4 @@ if (token && chat && messages.length) {
 }
 
 const okCount = reading.sources.filter((s) => s.ok).length;
-console.log(`Line ${reading.line ?? "none"} (${reading.lineExact ?? "-"}) · ${reading.zone ? reading.zone.name : "no zone"} · coverage ${Math.round(reading.coverage * 100)}% · sources ok ${okCount}/${reading.sources.length} · alerts ${messages.length}`);
+console.log(`Line ${reading.line ?? "none"} (${reading.lineExact ?? "-"}), ${reading.zone ? reading.zone.name : "no zone"}, coverage ${Math.round(reading.coverage * 100)}%, sources ok ${okCount}/${reading.sources.length}, alerts ${messages.length}`);

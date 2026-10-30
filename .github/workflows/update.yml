@@ -63,7 +63,7 @@ jobs:
             echo "No change"
             exit 0
           fi
-          MSG=$(node -e 'const r=JSON.parse(require("fs").readFileSync("data/latest.json","utf8"));console.log(`Line ${r.line ?? "none"} · ${r.zone ? r.zone.name : "no reading"} · ${r.at.slice(0,16)}Z`)')
+          MSG=$(node -e 'const r=JSON.parse(require("fs").readFileSync("data/latest.json","utf8"));console.log(`Line ${r.line ?? "none"}, ${r.zone ? r.zone.name : "no reading"}, ${r.at.slice(0,16)}Z`)')
           git commit -m "$MSG"
           git pull --rebase --autostash
           git push
@@ -98,7 +98,7 @@ jobs:
       - name: Draw the share card
         continue-on-error: true
         run: |
-          npm install --no-save --no-audit --no-fund @resvg/resvg-js@2.6.2 @expo-google-fonts/instrument-serif@0.4.1 @expo-google-fonts/jetbrains-mono@0.4.1
+          npm install --no-save --no-audit --no-fund @resvg/resvg-js@2.6.2 @expo-google-fonts/ibm-plex-sans@0.4.1 @expo-google-fonts/ibm-plex-mono@0.4.1
           node scripts/card.mjs card.png "${{ vars.SITE_URL || steps.pages.outputs.base_url }}"
 
       - name: Build the site folder

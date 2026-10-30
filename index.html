@@ -35,7 +35,7 @@
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500;700;800&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
 <style>
 :root {
   /* Layout: the reading is a sky. Text on the left, a sun dial on the right whose center sits on the Line.
@@ -43,24 +43,25 @@
   --bg: #05060d; --ink: #ededed; --dim: #a3abc0; --soft: #c9cfdc;
   --rule: rgba(237,237,237,0.1); --rule2: rgba(237,237,237,0.18);
   --green: #14F195; --amber: #ffb020; --red: #ff3b5c; --cyan: #00d4ff; --purple: #9945FF; --violet: #c4a8ff;
-  --serif: "Instrument Serif", Georgia, "Times New Roman", serif;
-  --mono: "JetBrains Mono", ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
+  --display: "IBM Plex Sans", "Helvetica Neue", Arial, sans-serif;
+  --text: "IBM Plex Sans", "Helvetica Neue", Arial, sans-serif;
+  --mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
   --heroInk: #ededed; --heroDim: #a3abc0; --zoneInk: #4fd1ff; --pathInk: rgba(237,237,237,0.62); --lineLab: #14F195; --pressFg: #05060d;
   color-scheme: dark;
 }
 * { box-sizing: border-box; }
 html { scroll-behavior: smooth; }
-body { margin: 0; background: var(--bg); color: var(--ink); font-family: var(--mono); font-size: 15px; line-height: 1.55; -webkit-font-smoothing: antialiased; }
+body { margin: 0; background: var(--bg); color: var(--ink); font-family: var(--text); font-size: 16px; line-height: 1.55; font-variant-numeric: tabular-nums; -webkit-font-smoothing: antialiased; }
 a { color: var(--green); }
 a:hover { color: var(--ink); }
 a:focus-visible, button:focus-visible, summary:focus-visible { outline: 2px solid var(--green); outline-offset: 3px; border-radius: 4px; }
 dialog:focus, dialog:focus-visible { outline: none; }
 [hidden] { display: none !important; }
 .wrap { max-width: 1240px; margin: 0 auto; padding-left: max(20px, env(safe-area-inset-left, 0px)); padding-right: max(20px, env(safe-area-inset-right, 0px)); }
-.serif { font-family: var(--serif); font-style: italic; font-weight: 400; }
+.serif { font-family: var(--display); font-weight: 600; letter-spacing: -0.02em; }
 h2.serif { margin: 0; font-size: clamp(40px, 5vw, 64px); line-height: 1; text-wrap: balance; }
 .lead { margin: 0; color: var(--soft); max-width: 52ch; text-wrap: pretty; }
-.btn { min-height: 48px; display: inline-flex; align-items: center; justify-content: center; gap: 8px; padding: 0 20px; border-radius: 12px; border: 1px solid rgba(237,237,237,0.4); background: transparent; color: var(--ink); text-decoration: none; font-family: var(--mono); font-size: 12.5px; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; cursor: pointer; transition: border-color .2s ease, color .2s ease, transform .2s ease; }
+.btn { min-height: 48px; display: inline-flex; align-items: center; justify-content: center; gap: 8px; padding: 0 20px; border-radius: 12px; border: 1px solid rgba(237,237,237,0.4); background: transparent; color: var(--ink); text-decoration: none; font-family: var(--text); font-size: 13.5px; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; cursor: pointer; transition: border-color .2s ease, color .2s ease, transform .2s ease; }
 .btn:hover { border-color: var(--ink); color: var(--ink); }
 .btn.go { background: var(--green); color: #03140b; border-color: var(--green); box-shadow: 0 0 34px rgba(20,241,149,0.35); }
 .btn.go:hover { color: #03140b; transform: translateY(-1px); box-shadow: 0 0 44px rgba(20,241,149,0.5); }
@@ -70,9 +71,9 @@ section.band > .wrap { padding-block: 96px; }
 .head-row > * { min-width: 0; }
 
 /* Preview notice: in the flow, never on top of anything */
-.notice { background: #160f04; color: #ffd9a0; border-bottom: 1px solid rgba(255,176,32,0.3); font-size: 13px; line-height: 1.45; }
+.notice { background: #160f04; color: #ffd9a0; border-bottom: 1px solid rgba(255,176,32,0.3); font-size: 14px; line-height: 1.45; }
 .notice .wrap { padding-block: 10px; display: flex; flex-wrap: wrap; gap: 4px 12px; align-items: baseline; }
-.notice b { color: var(--amber); font-size: 11.5px; letter-spacing: 0.14em; text-transform: uppercase; }
+.notice b { color: var(--amber); font-size: 12.5px; letter-spacing: 0.14em; text-transform: uppercase; }
 
 /* ---------- Hero: the sky ---------- */
 .hero { --hyF: calc(100% - 340px); position: relative; overflow: hidden; overflow: clip; isolation: isolate; color: var(--heroInk); transition: color 1.2s ease; }
@@ -88,12 +89,12 @@ section.band > .wrap { padding-block: 96px; }
 .stars { transition: transform .9s ease-out; }
 /* wider than the hero, so the pointer parallax never shows the layer's clipped edge */
 .clouds { position: absolute; left: -48px; right: -48px; top: 0; height: var(--hy, var(--hyF)); overflow: hidden; overflow: clip; transition: transform 1.2s ease-out; }
-.skytip { position: absolute; z-index: 6; left: 0; top: 0; max-width: 250px; padding: 7px 10px 6px; border-radius: 10px; background: rgba(4,5,11,0.9); border: 1px solid rgba(237,237,237,0.18); color: #ededed; font-size: 12px; line-height: 1.45; pointer-events: none; white-space: normal; }
+.skytip { position: absolute; z-index: 6; left: 0; top: 0; max-width: 250px; padding: 7px 10px 6px; border-radius: 10px; background: rgba(4,5,11,0.9); border: 1px solid rgba(237,237,237,0.18); color: #ededed; font-size: 13px; line-height: 1.45; pointer-events: none; white-space: normal; }
 .skytip b { color: #fff; }
-.skytip small { display: block; color: #a3abc0; font-size: 11.5px; }
+.skytip small { display: block; color: #a3abc0; font-size: 12.5px; }
 /* how to read the sky: every detail in the painting is a number */
-.skykey { display: grid; grid-template-columns: repeat(3, minmax(0, max-content)); gap: 6px 18px; max-width: 640px; font-size: 12.5px; line-height: 1.4; color: #cdd3e0; }
-.skykey .kh { grid-column: 1 / -1; font-size: 11px; font-weight: 800; letter-spacing: 0.14em; text-transform: uppercase; color: #a3abc0; }
+.skykey { display: grid; grid-template-columns: repeat(3, minmax(0, max-content)); gap: 6px 18px; max-width: 640px; font-size: 13.5px; line-height: 1.4; color: #cdd3e0; }
+.skykey .kh { grid-column: 1 / -1; font-size: 12px; font-weight: 800; letter-spacing: 0.14em; text-transform: uppercase; color: #a3abc0; }
 .skykey .ki { display: flex; align-items: flex-start; gap: 8px; min-width: 0; }
 .skykey .ki > span { min-width: 0; }
 .skykey svg { flex: none; width: 15px; height: 15px; margin-top: 1px; }
@@ -121,10 +122,10 @@ section.band > .wrap { padding-block: 96px; }
 /* Header sits on the sky */
 .top { position: absolute; left: 0; right: 0; top: 0; z-index: 5; }
 .top .wrap { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px 24px; padding-block: 18px; }
-.brand { font-family: var(--serif); font-style: italic; font-size: 30px; line-height: 1; color: var(--heroInk); text-decoration: none; text-shadow: 0 0 12px var(--halo); transition: color 1.2s ease; }
+.brand { font-family: var(--display); font-weight: 600; letter-spacing: -0.02em; font-size: 30px; line-height: 1; color: var(--heroInk); text-decoration: none; text-shadow: 0 0 12px var(--halo); transition: color 1.2s ease; }
 .nav { display: flex; flex-wrap: wrap; align-items: center; gap: 2px; }
-.nav a { color: var(--heroInk); text-decoration: none; font-size: 12px; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; padding: 14px 10px; text-shadow: 0 0 4px var(--halo), 0 0 12px var(--halo); transition: color 1.2s ease; }
-.nav button { min-height: 44px; margin-left: 6px; padding: 0 18px; border-radius: 999px; border: 1px solid var(--heroInk); background: var(--btnBack, rgba(3,6,18,0.3)); text-shadow: 0 0 4px var(--halo), 0 0 12px var(--halo); color: var(--heroInk); font-family: var(--mono); font-size: 12px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; cursor: pointer; transition: color 1.2s ease, border-color 1.2s ease; }
+.nav a { color: var(--heroInk); text-decoration: none; font-size: 13px; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; padding: 14px 10px; text-shadow: 0 0 4px var(--halo), 0 0 12px var(--halo); transition: color 1.2s ease; }
+.nav button { min-height: 44px; margin-left: 6px; padding: 0 18px; border-radius: 999px; border: 1px solid var(--heroInk); background: var(--btnBack, rgba(3,6,18,0.3)); text-shadow: 0 0 4px var(--halo), 0 0 12px var(--halo); color: var(--heroInk); font-family: var(--text); font-size: 13px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; cursor: pointer; transition: color 1.2s ease, border-color 1.2s ease; }
 
 /* Text column and dial column */
 .hero-grid { position: relative; z-index: 3; display: grid; grid-template-columns: minmax(0, 560px) minmax(0, 1fr); grid-template-rows: auto minmax(340px, auto); column-gap: 56px; padding-top: 96px; }
@@ -150,8 +151,8 @@ section.band > .wrap { padding-block: 96px; }
 /* a light that runs up the part of the road already travelled */
 .dial-svg .comet { fill: none; stroke: #fff6dc; stroke-width: 4.5; stroke-linecap: round; stroke-dasharray: 0 2000; opacity: 0; }
 .dial-svg .xpt { fill: var(--green); }
-.dlab { position: absolute; left: 0; top: 0; transform: translate(-50%, -50%); font-size: 12px; font-weight: 500; line-height: 1.2; letter-spacing: 0.12em; text-transform: uppercase; color: var(--labInk); white-space: nowrap; pointer-events: none; text-shadow: 0 0 3px var(--halo), 0 0 9px var(--halo), 0 0 16px var(--halo); transition: opacity .3s linear, color 1.2s ease, background 1.2s ease; }
-.dlab.line { font-size: 12px; font-weight: 800; letter-spacing: 0.16em; color: #14F195; text-shadow: none; background: rgba(3,6,18,0.86); border: 1px solid rgba(20,241,149,0.4); border-radius: 999px; padding: 4px 10px 3px; }
+.dlab { position: absolute; left: 0; top: 0; transform: translate(-50%, -50%); font-size: 13px; font-weight: 500; line-height: 1.2; letter-spacing: 0.12em; text-transform: uppercase; color: var(--labInk); white-space: nowrap; pointer-events: none; text-shadow: 0 0 3px var(--halo), 0 0 9px var(--halo), 0 0 16px var(--halo); transition: opacity .3s linear, color 1.2s ease, background 1.2s ease; }
+.dlab.line { font-size: 13px; font-weight: 800; letter-spacing: 0.16em; color: #14F195; text-shadow: none; background: rgba(3,6,18,0.86); border: 1px solid rgba(20,241,149,0.4); border-radius: 999px; padding: 4px 10px 3px; }
 /* the numbers sit on a soft pill of their own halo, so the painted sky behind them never takes their contrast */
 .dlab.ink-l { color: #f2f3f7; --halo: rgba(3,5,16,0.92); background: rgba(3,6,18,0.42); border-radius: 6px; padding: 1px 5px 0; }
 .dlab.ink-d { color: #1a0c06; --halo: rgba(255,244,226,0.95); background: rgba(255,246,230,0.5); border-radius: 6px; padding: 1px 5px 0; }
@@ -170,8 +171,8 @@ section.band > .wrap { padding-block: 96px; }
 .dial.dk .dread .of span:first-child { color: #3a1c0a; }
 .dial.dk .dread .zone { color: var(--zoneInkDk); }
 .dread.none .num, .dread.none .of span:first-child { display: none; }
-.dread .num { font-family: var(--serif); font-size: clamp(40px, calc(var(--S) * 0.17), 106px); line-height: 0.82; font-variant-numeric: tabular-nums; transition: opacity .4s ease; }
-.dread .of { display: flex; align-items: baseline; gap: 10px; font-size: 12px; letter-spacing: 0.12em; padding: 4px 11px 3px; border-radius: 999px; background: rgba(3,6,18,0.8); transition: background 1.2s ease; }
+.dread .num { font-family: var(--mono); font-weight: 500; letter-spacing: -0.04em; font-size: clamp(40px, calc(var(--S) * 0.17), 106px); line-height: 0.82; font-variant-numeric: tabular-nums; transition: opacity .4s ease; }
+.dread .of { display: flex; align-items: baseline; gap: 10px; font-size: 13px; letter-spacing: 0.12em; padding: 4px 11px 3px; border-radius: 999px; background: rgba(3,6,18,0.8); transition: background 1.2s ease; }
 .dread .of span { text-shadow: none !important; }
 .dial.dk .dread .of { background: rgba(255,246,230,0.86); }
 .dread .of span:first-child { color: #c9cfdc; transition: color 1.2s ease; }
@@ -181,65 +182,66 @@ section.band > .wrap { padding-block: 96px; }
 .sunhandle:focus-visible { outline: 2px dashed var(--lineLab); outline-offset: -6px; border-radius: 50%; }
 .sunhandle::after { content: ""; position: absolute; inset: 14px; border-radius: 50%; border: 1.5px solid rgba(255,255,255,0.75); opacity: 0; }
 
-.live { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 10px; font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--heroDim); text-shadow: 0 0 10px var(--halo); transition: color 1.2s ease; }
-.live .back { min-height: 32px; padding: 0 12px; border-radius: 999px; border: 1px solid var(--heroInk); background: transparent; color: var(--heroInk); font-family: var(--mono); font-size: 11px; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; cursor: pointer; }
+.live { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 10px; font-size: 13px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--heroDim); text-shadow: 0 0 10px var(--halo); transition: color 1.2s ease; }
+.live .back { min-height: 32px; padding: 0 12px; border-radius: 999px; border: 1px solid var(--heroInk); background: transparent; color: var(--heroInk); font-family: var(--text); font-size: 12px; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; cursor: pointer; }
 .dot { position: relative; width: 8px; height: 8px; border-radius: 50%; background: var(--green); box-shadow: 0 0 10px var(--green); flex: none; }
 .dot.late { background: var(--amber); box-shadow: 0 0 10px var(--amber); }
 .dot.stale { background: var(--red); box-shadow: 0 0 10px var(--red); }
 .dot.what { background: var(--violet); box-shadow: 0 0 10px var(--violet); }
 .dot::after { content: ""; position: absolute; inset: -4px; border-radius: 50%; border: 1.5px solid var(--green); opacity: 0; }
 .dot.late::after { border-color: var(--amber); } .dot.stale::after { border-color: var(--red); } .dot.what::after { border-color: var(--violet); }
-.hero h1 { margin: 16px 0 0; font-family: var(--serif); font-style: italic; font-weight: 400; font-size: clamp(44px, 5.3vw, 76px); line-height: 1; letter-spacing: -0.01em; text-wrap: balance; }
+.hero h1 { margin: 16px 0 0; font-family: var(--display); font-weight: 600; font-size: clamp(40px, 4.7vw, 68px); line-height: 1.02; letter-spacing: -0.02em; text-wrap: balance; }
 .hero h1 .w { display: inline-block; }
 .num.ghost { opacity: .45; }
 .num.what { color: transparent; -webkit-text-stroke: 1.5px var(--heroInk); }
-.zone { font-size: 12.5px; font-weight: 800; letter-spacing: 0.16em; text-transform: uppercase; color: var(--zoneInk); transition: color 1.2s ease; }
+.zone { font-size: 13.5px; font-weight: 800; letter-spacing: 0.16em; text-transform: uppercase; color: var(--zoneInk); transition: color 1.2s ease; }
 .explain { margin: 24px 0 0; font-size: 17px; line-height: 1.6; max-width: 54ch; text-wrap: pretty; }
-.rules-say { margin: 12px 0 0; font-size: 14.5px; color: var(--heroDim); max-width: 56ch; transition: color 1.2s ease; }
+.rules-say { margin: 12px 0 0; font-size: 15.5px; color: var(--heroDim); max-width: 56ch; transition: color 1.2s ease; }
 .rules-say b { color: var(--heroInk); transition: color 1.2s ease; }
 .cta-row { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 26px; }
 .hero .btn.ghostbtn { border-color: var(--heroInk); color: var(--heroInk); transition: color 1.2s ease, border-color 1.2s ease; }
 .toggle { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
-.toggle span { font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; color: #a3abc0; margin-right: 6px; }
-.toggle button { min-height: 44px; padding: 0 16px; border-radius: 999px; border: 1px solid rgba(237,237,237,0.7); background: transparent; color: #ededed; font-family: var(--mono); font-size: 12px; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; cursor: pointer; transition: background .3s ease, color .3s ease; }
+.toggle span { font-size: 13px; letter-spacing: 0.12em; text-transform: uppercase; color: #a3abc0; margin-right: 6px; }
+.toggle button { min-height: 44px; padding: 0 16px; border-radius: 999px; border: 1px solid rgba(237,237,237,0.7); background: transparent; color: #ededed; font-family: var(--text); font-size: 12px; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; cursor: pointer; transition: background .3s ease, color .3s ease; }
 .toggle button:hover { border-color: #ededed; }
 .toggle button[aria-pressed="true"] { background: #ededed; color: #05060d; }
-.toggle-note { margin-top: -6px; font-size: 12.5px; color: #a3abc0; }
+.toggle-note { margin-top: -6px; font-size: 13.5px; color: #a3abc0; }
 
 /* Stats on the sea, under the text column */
 .sea-in { position: relative; z-index: 2; grid-column: 1; grid-row: 2; min-width: 0; padding-block: 30px 30px; display: flex; flex-direction: column; align-items: flex-start; gap: 16px; }
-.sea-row { display: flex; flex-wrap: wrap; gap: 8px 30px; font-size: 13.5px; color: #cdd3e0; }
+.sea-row { display: flex; flex-wrap: wrap; gap: 8px 30px; font-size: 14.5px; color: #cdd3e0; }
 .sea-row b { color: #fff; }
-.scrollcue { color: #a3abc0; text-decoration: none; font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; padding: 12px 0; }
+.scrollcue { color: #a3abc0; text-decoration: none; font-size: 13px; letter-spacing: 0.14em; text-transform: uppercase; padding: 12px 0; }
 .scrollcue:hover { color: #ededed; }
 
 /* ---------- Runners ---------- */
 #runners { background: linear-gradient(180deg, #02030a 0%, var(--bg) 100%); }
 .tiers { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 10px; margin-bottom: 28px; }
 .tier { border: 1px solid var(--rule2); border-radius: 14px; padding: 14px 14px 12px; display: flex; flex-direction: column; gap: 4px; min-width: 0; }
-.tier .n { font-family: var(--serif); font-size: 46px; line-height: 0.9; }
-.tier .l { font-size: 12px; letter-spacing: 0.1em; color: var(--dim); }
-.tier .h { font-size: 11.5px; color: var(--dim); }
+.tier .n { font-family: var(--display); font-weight: 600; letter-spacing: -0.02em; font-size: 46px; line-height: 0.9; }
+.tier .l { font-size: 13px; letter-spacing: 0.1em; color: var(--dim); }
+.tier .h { font-size: 12.5px; color: var(--dim); }
 .tier.scored { border-color: rgba(20,241,149,0.35); }
 .strip-box { overflow-x: auto; border: 1px solid var(--rule); border-radius: 16px; background: radial-gradient(60% 80% at 80% 0%, rgba(153,69,255,0.10), rgba(153,69,255,0) 70%), #04050b; }
 .strip-box svg { display: block; }
-.strip-note { margin: 12px 0 0; font-size: 13px; color: var(--soft); }
-.legend { display: flex; flex-wrap: wrap; gap: 8px 18px; margin-top: 14px; font-size: 12.5px; color: var(--soft); }
+.strip-note { margin: 12px 0 0; font-size: 14px; color: var(--soft); }
+.legend { display: flex; flex-wrap: wrap; gap: 8px 18px; margin-top: 14px; font-size: 13.5px; color: var(--soft); }
 .legend i { display: inline-block; width: 10px; height: 10px; border-radius: 50%; margin-right: 6px; vertical-align: -1px; }
 .panels { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); column-gap: 16px; row-gap: 16px; margin-top: 28px; }
 .panel { display: grid; grid-row: span 3; grid-template-rows: subgrid; row-gap: 0; align-content: start; border: 1px solid var(--rule2); border-radius: 16px; padding: 20px; min-width: 0; }
-.panel h3 { margin: 0; font-family: var(--serif); font-style: italic; font-weight: 400; font-size: 28px; line-height: 1; }
-.panel .sub { margin: 6px 0 12px; font-size: 12px; color: var(--dim); }
+.panel h3 { margin: 0; font-family: var(--display); font-weight: 600; letter-spacing: -0.02em; font-size: 28px; line-height: 1; }
+.panel .sub { margin: 6px 0 12px; font-size: 13px; color: var(--dim); }
+.sep { display: inline-block; width: 0.85em; }
 .panel .sub.left-out { margin: 12px 0 0; }
 .panel > h3 { align-self: end; }
-.rowi { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 4px 12px; padding: 10px 0; border-top: 1px solid var(--rule); font-size: 13.5px; align-items: center; }
+.rowi { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 4px 12px; padding: 10px 0; border-top: 1px solid var(--rule); font-size: 14.5px; align-items: center; }
 .rowi > span { min-width: 0; }
 .rowi b { overflow-wrap: anywhere; }
-.rowi small { display: block; color: var(--dim); font-size: 12px; }
+.rowi small { display: block; color: var(--dim); font-size: 13px; }
 .rowi .r { text-align: right; }
 .cdot { display: inline-block; width: 8px; height: 8px; border-radius: 50%; margin-right: 7px; vertical-align: 1px; }
-.empty { color: var(--dim); font-size: 13.5px; padding: 6px 0; }
-.srcnote { margin-top: 18px; font-size: 12.5px; color: var(--dim); max-width: 92ch; }
+.empty { color: var(--dim); font-size: 14.5px; padding: 6px 0; }
+.srcnote { margin-top: 18px; font-size: 13.5px; color: var(--dim); max-width: 92ch; }
 
 /* ---------- Hours ---------- */
 /* seven hours: one row of 7 on wide screens, else 4 or 2 columns with Noon spanning two, so no card sits alone */
@@ -254,10 +256,10 @@ section.band > .wrap { padding-block: 96px; }
 .mini .w { position: absolute; left: 0; right: 0; top: 70%; bottom: 0; background: rgba(2,3,9,0.7); }
 .mini .l { position: absolute; left: 0; right: 0; top: 70%; height: 1px; background: var(--green); }
 .hour .nm { display: flex; justify-content: space-between; align-items: flex-end; gap: 8px; }
-.hour .nm span:first-child { font-family: var(--serif); font-style: italic; font-size: 26px; line-height: 1; }
+.hour .nm span:first-child { font-family: var(--display); font-weight: 600; letter-spacing: -0.02em; font-size: 26px; line-height: 1; }
 .tag { font-size: 10.5px; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; color: #03140b; background: var(--green); border-radius: 4px; padding: 3px 6px; }
-.hour .z { font-size: 11.5px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--dim); }
-.hour .a { font-size: 14px; line-height: 1.5; color: var(--soft); }
+.hour .z { font-size: 12.5px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--dim); }
+.hour .a { font-size: 15px; line-height: 1.5; color: var(--soft); }
 .hour.now .a { color: var(--ink); }
 
 /* ---------- Proof ---------- */
@@ -267,16 +269,16 @@ section.band > .wrap { padding-block: 96px; }
 .proof figure { flex: 1.4 1 520px; min-width: 0; margin: 0; }
 .trio { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
 .trio div { display: flex; flex-direction: column; gap: 4px; min-width: 0; }
-.trio b { font-family: var(--serif); font-weight: 400; font-size: 48px; line-height: 1; color: var(--amber); }
-.trio span { font-size: 12px; color: var(--dim); }
-.risk { margin: 8px 0 0; font-size: 13px; color: var(--dim); border-top: 1px solid var(--rule); padding-top: 14px; max-width: 54ch; }
+.trio b { font-family: var(--display); font-weight: 600; letter-spacing: -0.02em; font-size: clamp(32px, 10vw, 48px); line-height: 1; color: var(--amber); }
+.trio span { font-size: 13px; color: var(--dim); }
+.risk { margin: 8px 0 0; font-size: 14px; color: var(--dim); border-top: 1px solid var(--rule); padding-top: 14px; max-width: 54ch; }
 #cycleChart svg { display: block; width: 100%; height: auto; }
-figcaption { margin-top: 10px; font-size: 12px; color: var(--dim); }
+figcaption { margin-top: 10px; font-size: 13px; color: var(--dim); }
 
 /* ---------- Signals: verdicts first, then the readings, then the exits ---------- */
 .oneline { margin: 0 0 24px; display: flex; flex-direction: column; gap: 6px; max-width: 70ch; }
-.oneline span { font-size: 11.5px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--dim); }
-.oneline b { font-family: var(--serif); font-style: italic; font-weight: 400; font-size: clamp(24px, 2.6vw, 32px); line-height: 1.15; color: var(--ink); text-wrap: balance; }
+.oneline span { font-size: 12.5px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--dim); }
+.oneline b { font-family: var(--display); font-weight: 600; letter-spacing: -0.02em; font-size: clamp(24px, 2.6vw, 32px); line-height: 1.15; color: var(--ink); text-wrap: balance; }
 .verdicts { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); column-gap: 16px; row-gap: 16px; }
 /* the five parts of each card share rows, so status, count, rule and list start level in every card */
 .vd { display: grid; grid-row: span 5; grid-template-rows: subgrid; row-gap: 10px; align-content: start; border: 1px solid var(--rule2); border-radius: 16px; padding: 20px; min-width: 0; }
@@ -284,40 +286,40 @@ figcaption { margin-top: 10px; font-size: 12px; color: var(--dim); }
 .vd.good { border-color: rgba(20,241,149,0.5); background: rgba(20,241,149,0.04); }
 .vd.warn { border-color: rgba(255,176,32,0.5); background: rgba(255,176,32,0.04); }
 .vd.bad { border-color: rgba(255,59,92,0.6); background: rgba(255,59,92,0.06); }
-.vd-k { font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--dim); }
-.vd-s { font-family: var(--serif); font-style: italic; font-size: 42px; line-height: 1; color: var(--ink); }
+.vd-k { font-size: 13px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--dim); }
+.vd-s { font-family: var(--display); font-weight: 600; letter-spacing: -0.02em; font-size: 42px; line-height: 1; color: var(--ink); }
 .vd.good .vd-s, .vd.good .dots { color: var(--green); }
 .vd.warn .vd-s, .vd.warn .dots { color: var(--amber); }
 .vd.bad .vd-s, .vd.bad .dots { color: #ff8da0; }
-.vd-c { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 12px; font-size: 13px; color: var(--soft); }
+.vd-c { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 12px; font-size: 14px; color: var(--soft); }
 .dots { display: inline-flex; gap: 5px; color: var(--soft); }
 .dots i { width: 9px; height: 9px; border-radius: 50%; border: 1.5px solid rgba(163,171,192,0.6); }
 .dots i.on { background: currentColor; border-color: currentColor; }
-.vd-r { margin: 0; font-size: 13px; line-height: 1.5; color: var(--soft); }
+.vd-r { margin: 0; font-size: 14px; line-height: 1.5; color: var(--soft); }
 .rules { list-style: none; margin: 2px 0 0; padding: 0; }
-.rules li { display: grid; grid-template-columns: 20px minmax(0, 1fr); column-gap: 8px; padding: 9px 0; border-top: 1px solid var(--rule); font-size: 13px; line-height: 1.45; }
+.rules li { display: grid; grid-template-columns: 20px minmax(0, 1fr); column-gap: 8px; padding: 9px 0; border-top: 1px solid var(--rule); font-size: 14px; line-height: 1.45; }
 .rules .mk { display: flex; justify-content: center; padding-top: 4px; }
 .rules .mk svg { display: block; width: 12px; height: 12px; }
 .mk-yes { color: var(--green); } .mk-no { color: var(--dim); } .mk-na, .mk-off { color: rgba(163,171,192,0.6); } .mk-live { color: #ff6b84; }
-.rules small { grid-column: 2; display: block; margin-top: 2px; color: var(--dim); font-size: 12px; }
+.rules small { grid-column: 2; display: block; margin-top: 2px; color: var(--dim); font-size: 13px; }
 .sig-h { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-end; gap: 8px 32px; margin: 60px 0 20px; }
-.sig-h h3 { margin: 0; font-family: var(--serif); font-style: italic; font-weight: 400; font-size: clamp(28px, 3.4vw, 40px); line-height: 1.05; }
-.sig-h p { margin: 0; font-size: 13px; color: var(--dim); max-width: 62ch; }
+.sig-h h3 { margin: 0; font-family: var(--display); font-weight: 600; letter-spacing: -0.02em; font-size: clamp(28px, 3.4vw, 40px); line-height: 1.05; }
+.sig-h p { margin: 0; font-size: 14px; color: var(--dim); max-width: 62ch; }
 .gauges { columns: 2; column-gap: 56px; }
 .gg { break-inside: avoid; margin-bottom: 28px; }
 .gg-h { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; gap: 4px 12px; padding-bottom: 8px; border-bottom: 1px solid var(--rule2); }
-.gg-h span { font-family: var(--serif); font-style: italic; font-size: 26px; line-height: 1.1; }
-.gg-h small { font-size: 12px; color: var(--dim); }
+.gg-h span { font-family: var(--display); font-weight: 600; letter-spacing: -0.02em; font-size: 26px; line-height: 1.1; }
+.gg-h small { font-size: 13px; color: var(--dim); }
 .gr { padding: 12px 0 14px; border-bottom: 1px solid var(--rule); }
-.gr-t { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; gap: 2px 14px; font-size: 13.5px; color: var(--soft); }
-.gr-t b { font-size: 15px; color: var(--ink); font-variant-numeric: tabular-nums; }
-.gr.off .gr-t b { color: var(--dim); font-weight: 500; font-size: 12.5px; }
+.gr-t { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; gap: 2px 14px; font-size: 14.5px; color: var(--soft); }
+.gr-t b { font-size: 16px; color: var(--ink); font-variant-numeric: tabular-nums; }
+.gr.off .gr-t b { color: var(--dim); font-weight: 500; font-size: 13.5px; }
 .meter { position: relative; height: 6px; margin: 11px 7px 7px; border-radius: 3px; background: linear-gradient(90deg, #2b3c86 0%, #4fd1ff 30%, #14F195 50%, #ffb020 76%, #ff3b5c 100%); }
 .meter i { position: absolute; top: 50%; left: 0; width: 14px; height: 14px; margin: -7px 0 0 -7px; border-radius: 50%; background: #fff; box-shadow: 0 0 0 3px #05060d, 0 0 14px rgba(255,255,255,0.55); }
 .gr.off .meter { opacity: .22; }
-.gr-a { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 2px 12px; font-size: 11.5px; color: var(--dim); font-variant-numeric: tabular-nums; }
+.gr-a { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 2px 12px; font-size: 12.5px; color: var(--dim); font-variant-numeric: tabular-nums; }
 .gr-a .sc { color: var(--ink); font-weight: 700; }
-.gr .nt { display: block; margin-top: 6px; font-size: 11.5px; color: var(--dim); }
+.gr .nt { display: block; margin-top: 6px; font-size: 12.5px; color: var(--dim); }
 .chip { font-size: 10.5px; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; padding: 2px 7px; border-radius: 4px; white-space: nowrap; border: 1px solid; }
 .chip.yes, .chip.up { color: var(--green); border-color: var(--green); }
 .chip.down { color: #ff8da0; border-color: rgba(255,59,92,0.7); }
@@ -326,38 +328,38 @@ figcaption { margin-top: 10px; font-size: 12px; color: var(--dim); }
 .chip.armed { color: var(--amber); border-color: var(--amber); }
 .chip.off { color: var(--dim); border-color: rgba(163,171,192,0.4); border-style: dashed; }
 .kills { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px 28px; }
-.kill { display: flex; flex-direction: column; gap: 8px; padding-top: 12px; border-top: 1px solid var(--rule2); font-size: 13.5px; line-height: 1.5; color: var(--soft); min-width: 0; }
+.kill { display: flex; flex-direction: column; gap: 8px; padding-top: 12px; border-top: 1px solid var(--rule2); font-size: 14.5px; line-height: 1.5; color: var(--soft); min-width: 0; }
 .kill-h { display: flex; justify-content: space-between; align-items: center; gap: 10px; }
 .kill-h b { color: var(--ink); }
-.kill small { color: var(--dim); font-size: 12px; }
+.kill small { color: var(--dim); font-size: 13px; }
 .tbox { overflow-x: auto; margin-top: 8px; }
 @media (max-width: 899px) { .gauges { columns: 1; } }
 
 /* ---------- Runners list ---------- */
 .list { margin-top: 32px; border: 1px solid var(--rule2); border-radius: 16px; padding: 20px; min-width: 0; }
 .list-head { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; gap: 6px 24px; }
-.list-head h3 { margin: 0; font-family: var(--serif); font-style: italic; font-weight: 400; font-size: 30px; line-height: 1.05; }
-.list-head p { margin: 0; font-size: 12.5px; color: var(--dim); max-width: 64ch; }
+.list-head h3 { margin: 0; font-family: var(--display); font-weight: 600; letter-spacing: -0.02em; font-size: 30px; line-height: 1.05; }
+.list-head p { margin: 0; font-size: 13.5px; color: var(--dim); max-width: 64ch; }
 .list-tools { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 14px; margin: 16px 0 4px; }
-.list-tools input { min-height: 44px; width: min(320px, 100%); padding: 0 14px; border-radius: 12px; border: 1px solid var(--rule2); background: rgba(255,255,255,0.03); color: var(--ink); font-family: var(--mono); font-size: 14px; }
+.list-tools input { min-height: 44px; width: min(320px, 100%); padding: 0 14px; border-radius: 12px; border: 1px solid var(--rule2); background: rgba(255,255,255,0.03); color: var(--ink); font-family: var(--text); font-size: 15px; }
 .list-tools input::placeholder { color: #8a92a8; }
 .list-tools input:focus-visible { outline: 2px solid var(--green); outline-offset: 2px; }
 .chips { display: flex; gap: 6px; min-width: 0; }
-.chips button { min-height: 40px; padding: 0 12px; border-radius: 999px; border: 1px solid var(--rule2); background: transparent; color: var(--soft); font-family: var(--mono); font-size: 12px; font-weight: 700; letter-spacing: 0.04em; cursor: pointer; white-space: nowrap; }
+.chips button { min-height: 40px; padding: 0 12px; border-radius: 999px; border: 1px solid var(--rule2); background: transparent; color: var(--soft); font-family: var(--text); font-size: 12px; font-weight: 700; letter-spacing: 0.04em; cursor: pointer; white-space: nowrap; }
 .chips button:hover { border-color: var(--ink); color: var(--ink); }
 .chips button[aria-pressed="true"] { background: var(--ink); border-color: var(--ink); color: #05060d; }
-.runs { width: 100%; border-collapse: collapse; font-size: 13.5px; font-variant-numeric: tabular-nums; }
-.runs th { text-align: left; font-weight: 500; font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--dim); padding: 10px 10px 8px 0; white-space: nowrap; }
+.runs { width: 100%; border-collapse: collapse; font-size: 14.5px; font-variant-numeric: tabular-nums; }
+.runs th { text-align: left; font-weight: 500; font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--dim); padding: 10px 10px 8px 0; white-space: nowrap; }
 .runs td { padding: 10px 10px 10px 0; border-top: 1px solid var(--rule); vertical-align: middle; }
 .runs th:last-child, .runs td:last-child { padding-right: 0; }
 .runs .rk { width: 2.8em; color: var(--dim); }
 .runs .coin a, .runs .coin b { color: var(--ink); font-weight: 800; text-decoration: none; overflow-wrap: anywhere; }
 .runs .coin a:hover { color: var(--green); }
-.runs .coin small, .runs .w small { display: block; color: var(--dim); font-size: 12px; font-weight: 400; overflow-wrap: anywhere; }
-.runs .w { color: var(--soft); font-size: 12.5px; }
+.runs .coin small, .runs .w small { display: block; color: var(--dim); font-size: 13px; font-weight: 400; overflow-wrap: anywhere; }
+.runs .w { color: var(--soft); font-size: 13.5px; }
 .runs .num, .runs .chg, .runs .fl { text-align: right; white-space: nowrap; }
 .runs .chg.up { color: var(--green); } .runs .chg.down { color: #ff8da0; } .runs .chg { color: var(--dim); }
-.list-foot { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 16px; margin-top: 14px; font-size: 12.5px; color: var(--dim); }
+.list-foot { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 16px; margin-top: 14px; font-size: 13.5px; color: var(--dim); }
 @media (max-width: 699px) { .runs .w { display: none; } }
 @media (max-width: 479px) {
   .list { padding: 16px 14px; }
@@ -367,8 +369,8 @@ figcaption { margin-top: 10px; font-size: 12px; color: var(--dim); }
 }
 
 /* ---------- Log ---------- */
-.log { width: 100%; border-collapse: collapse; font-size: 13px; font-variant-numeric: tabular-nums; min-width: 620px; }
-.log th { text-align: left; font-weight: 500; font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--dim); padding: 0 14px 8px 0; }
+.log { width: 100%; border-collapse: collapse; font-size: 14px; font-variant-numeric: tabular-nums; min-width: 620px; }
+.log th { text-align: left; font-weight: 500; font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--dim); padding: 0 14px 8px 0; }
 .log td { padding: 9px 14px 9px 0; border-top: 1px solid var(--rule); white-space: nowrap; }
 .links { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 20px; }
 
@@ -384,34 +386,34 @@ figcaption { margin-top: 10px; font-size: 12px; color: var(--dim); }
 .wake-in h2 { margin: 0; font-size: clamp(44px, 6vw, 80px); line-height: 1; }
 .wake-line { position: absolute; z-index: 1; left: 0; right: 0; bottom: 80px; height: 2px; background: linear-gradient(90deg, rgba(20,241,149,0) 0%, var(--green) 20%, var(--green) 80%, rgba(20,241,149,0) 100%); box-shadow: 0 0 24px 2px rgba(20,241,149,0.5); }
 footer { position: relative; }
-footer .wrap { padding-block: 36px 40px; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(360px, 100%), 1fr)); gap: 24px 48px; font-size: 13px; color: var(--dim); }
+footer .wrap { padding-block: 36px 40px; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(360px, 100%), 1fr)); gap: 24px 48px; font-size: 14px; color: var(--dim); }
 footer ul { margin: 8px 0 0; padding: 0; list-style: none; display: grid; gap: 6px; }
-footer .sign { font-family: var(--serif); font-style: italic; font-size: 24px; color: var(--ink); margin-top: 10px; }
-.label { font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--dim); }
+footer .sign { font-family: var(--display); font-weight: 600; letter-spacing: -0.02em; font-size: 24px; color: var(--ink); margin-top: 10px; }
+.label { font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--dim); }
 
 /* ---------- Donate: four wallets on shared rows ---------- */
 .donate { width: min(1080px, calc(100vw - 32px)); max-width: none; max-height: calc(100dvh - 32px); margin: auto; padding: 0; border: 1px solid var(--rule2); border-radius: 18px; background: #0b0d16; color: var(--ink); overflow: auto; overscroll-behavior: contain; }
 .donate::backdrop { background: rgba(2,3,8,0.76); }
 .d-in { padding: 24px; }
 .d-head { display: flex; justify-content: space-between; align-items: flex-start; gap: 16px; }
-.d-head h2 { margin: 4px 0 0; font-family: var(--serif); font-style: italic; font-weight: 400; font-size: 44px; line-height: 1; }
-.d-close { flex: none; min-height: 44px; font-family: var(--mono); font-size: 12px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink); background: transparent; border: 1px solid var(--rule2); border-radius: 999px; padding: 0 18px; cursor: pointer; }
+.d-head h2 { margin: 4px 0 0; font-family: var(--display); font-weight: 600; letter-spacing: -0.02em; font-size: 44px; line-height: 1; }
+.d-close { flex: none; min-height: 44px; font-family: var(--text); font-size: 13px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink); background: transparent; border: 1px solid var(--rule2); border-radius: 999px; padding: 0 18px; cursor: pointer; }
 .d-close:hover { border-color: var(--ink); }
-.d-lead { margin: 12px 0 20px; color: var(--soft); font-size: 14.5px; max-width: 64ch; }
+.d-lead { margin: 12px 0 20px; color: var(--soft); font-size: 15.5px; max-width: 64ch; }
 .wallets { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); column-gap: 14px; row-gap: 14px; }
 .wallet { display: grid; grid-row: span 5; grid-template-rows: subgrid; row-gap: 12px; padding: 18px 16px; border: 1px solid var(--rule2); border-radius: 14px; background: rgba(255,255,255,0.02); min-width: 0; }
 @supports not (grid-template-rows: subgrid) { .wallet { grid-template-rows: auto auto 1fr auto auto; } .panel, .hour, .board { display: block; } }
 .qr { justify-self: center; width: 100%; max-width: 156px; background: #fff; border-radius: 10px; padding: 6px; line-height: 0; }
 .qr-svg { width: 100%; height: auto; display: block; }
-.w-name { margin: 0; align-self: end; font-family: var(--serif); font-style: italic; font-weight: 400; font-size: 25px; line-height: 1.05; }
-.w-net { margin: 0; align-self: start; font-size: 12px; line-height: 1.5; color: var(--dim); text-wrap: pretty; }
-.w-addr { display: flex; align-items: center; min-width: 0; font-family: var(--mono); font-size: 12px; line-height: 1.5; color: var(--soft); background: rgba(255,255,255,0.04); border: 1px solid var(--rule2); border-radius: 8px; padding: 8px 10px; }
+.w-name { margin: 0; align-self: end; font-family: var(--display); font-weight: 600; letter-spacing: -0.02em; font-size: 25px; line-height: 1.05; }
+.w-net { margin: 0; align-self: start; font-size: 13px; line-height: 1.5; color: var(--dim); text-wrap: pretty; }
+.w-addr { display: flex; align-items: center; min-width: 0; font-family: var(--mono); font-size: 13px; line-height: 1.5; color: var(--soft); background: rgba(255,255,255,0.04); border: 1px solid var(--rule2); border-radius: 8px; padding: 8px 10px; }
 .w-addr span { display: block; min-width: 0; word-break: break-all; overflow-wrap: anywhere; user-select: all; -webkit-user-select: all; }
 .w-addr b { color: var(--ink); font-weight: 800; }
-.copy { align-self: end; width: 100%; min-height: 44px; font-family: var(--mono); font-size: 11.5px; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink); background: transparent; border: 1px solid rgba(237,237,237,0.4); border-radius: 10px; padding: 0 12px; cursor: pointer; }
+.copy { align-self: end; width: 100%; min-height: 44px; font-family: var(--text); font-size: 12.5px; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink); background: transparent; border: 1px solid rgba(237,237,237,0.4); border-radius: 10px; padding: 0 12px; cursor: pointer; }
 .copy:hover { border-color: var(--ink); }
 .copy.ok { color: var(--green); border-color: var(--green); }
-.d-warn { margin: 18px 0 0; font-size: 12.5px; color: var(--soft); border-top: 1px solid var(--rule); padding-top: 12px; }
+.d-warn { margin: 18px 0 0; font-size: 13.5px; color: var(--soft); border-top: 1px solid var(--rule); padding-top: 12px; }
 @media (max-width: 959px) {
   .wallets { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
@@ -431,20 +433,20 @@ footer .sign { font-family: var(--serif); font-style: italic; font-size: 24px; c
 .numbers { background: radial-gradient(70% 90% at 12% 0%, rgba(20,241,149,0.07), rgba(20,241,149,0) 60%), radial-gradient(60% 80% at 90% 100%, rgba(153,69,255,0.08), rgba(153,69,255,0) 60%), var(--bg); }
 section.band.numbers > .wrap { padding-block: 64px 84px; }
 .tick { display: flex; align-items: stretch; border-bottom: 1px solid var(--rule); background: #04050b; min-width: 0; }
-.tick-label { flex: none; display: flex; align-items: center; gap: 8px; padding-block: 12px; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: 16px; font-size: 11px; font-weight: 800; letter-spacing: 0.14em; text-transform: uppercase; color: var(--green); border-right: 1px solid var(--rule); white-space: nowrap; }
+.tick-label { flex: none; display: flex; align-items: center; gap: 8px; padding-block: 12px; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: 16px; font-size: 12px; font-weight: 800; letter-spacing: 0.14em; text-transform: uppercase; color: var(--green); border-right: 1px solid var(--rule); white-space: nowrap; }
 .tick-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--green); box-shadow: 0 0 8px var(--green); }
 .tick-track { position: relative; flex: 1 1 auto; min-width: 0; overflow: hidden; -webkit-mask-image: linear-gradient(90deg, rgba(0,0,0,0), #000 3%, #000 94%, rgba(0,0,0,0)); mask-image: linear-gradient(90deg, rgba(0,0,0,0), #000 3%, #000 94%, rgba(0,0,0,0)); }
-.tick-row { display: flex; width: max-content; padding: 12px 0 12px 22px; font-size: 13px; white-space: nowrap; }
+.tick-row { display: flex; width: max-content; padding: 12px 0 12px 22px; font-size: 14px; white-space: nowrap; }
 .tick-set { display: flex; gap: 34px; padding-right: 34px; }
 .tick-row a, .tick-row .ti { color: var(--ink); text-decoration: none; display: inline-flex; gap: 8px; align-items: baseline; }
 .tick-row a:hover b { color: var(--green); }
 .tick-row b { font-weight: 800; }
 .tick-row .up { color: var(--green); } .tick-row .down { color: #ff8da0; }
-.tick-row small { color: var(--dim); font-size: 11.5px; }
+.tick-row small { color: var(--dim); font-size: 12.5px; }
 @media (prefers-reduced-motion: reduce) { .tick-track { overflow-x: auto; -webkit-mask-image: none; mask-image: none; } .tick-set.dup { display: none; } }
 .ldot { display: inline-block; width: 8px; height: 8px; margin-right: 9px; border-radius: 50%; background: var(--green); box-shadow: 0 0 10px var(--green); vertical-align: 1px; }
 .stat.off .v { color: var(--dim); }
-.sponsor { margin: 18px 0 0; display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 12px; font-size: 13px; color: var(--soft); }
+.sponsor { margin: 18px 0 0; display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 12px; font-size: 14px; color: var(--soft); }
 .sponsor span { font-size: 10.5px; font-weight: 800; letter-spacing: 0.12em; text-transform: uppercase; color: var(--dim); border: 1px solid var(--rule2); border-radius: 4px; padding: 1px 6px; }
 .sponsor a { color: var(--ink); font-weight: 800; text-decoration: none; }
 .sponsor a:hover { color: var(--green); }
@@ -461,9 +463,9 @@ section.band.numbers > .wrap { padding-block: 64px 84px; }
 .stats { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; }
 .stat { border: 1px solid var(--rule2); border-radius: 16px; padding: 18px 18px 16px; display: flex; flex-direction: column; gap: 8px; min-width: 0; background: rgba(255,255,255,0.015); transition: border-color .6s ease; }
 .stat.flash { border-color: rgba(20,241,149,0.6); }
-.stat .k { font-size: 11.5px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--dim); }
-.stat .v { font-family: var(--serif); font-size: clamp(34px, 3.6vw, 48px); line-height: 1; font-variant-numeric: tabular-nums; color: var(--ink); overflow-wrap: anywhere; }
-.stat .s { font-size: 12.5px; line-height: 1.45; color: var(--soft); }
+.stat .k { font-size: 12.5px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--dim); }
+.stat .v { font-family: var(--display); font-weight: 600; letter-spacing: -0.02em; font-size: clamp(34px, 3.6vw, 48px); line-height: 1; font-variant-numeric: tabular-nums; color: var(--ink); overflow-wrap: anywhere; }
+.stat .s { font-size: 13.5px; line-height: 1.45; color: var(--soft); }
 .up { color: var(--green); } .down { color: #ff8da0; }
 @media (max-width: 899px) { .stats { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 @media (max-width: 359px) { .stats { grid-template-columns: minmax(0, 1fr); } }
@@ -471,30 +473,30 @@ section.band.numbers > .wrap { padding-block: 64px 84px; }
 /* ---------- Launchpads table ---------- */
 .lpads { margin-top: 28px; border: 1px solid var(--rule2); border-radius: 16px; padding: 20px; min-width: 0; }
 .runs.lp td.lpn b { font-weight: 800; color: var(--ink); }
-.runs.lp td.lpn small { display: block; color: var(--dim); font-size: 12px; }
+.runs.lp td.lpn small { display: block; color: var(--dim); font-size: 13px; }
 .runs.lp tr.pin td.lpn b::after { content: "watch"; margin-left: 8px; font-size: 10px; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; color: var(--amber); border: 1px solid rgba(255,176,32,0.6); border-radius: 4px; padding: 1px 5px; vertical-align: 1px; }
 .runs.lp td.hotc a, .runs.lp td.hotc b { color: var(--ink); font-weight: 800; text-decoration: none; }
-.runs.lp td.hotc small { display: block; font-size: 12px; }
-.lp-foot { margin: 12px 0 0; font-size: 12.5px; color: var(--dim); }
+.runs.lp td.hotc small { display: block; font-size: 13px; }
+.lp-foot { margin: 12px 0 0; font-size: 13.5px; color: var(--dim); }
 @media (max-width: 699px) { .runs.lp .vol { display: none; } }
 @media (max-width: 479px) { .lpads { padding: 16px 14px; } .runs.lp .rn { display: none; } }
 
 /* ---------- Weekly candles ---------- */
 .chart-tabs { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin-bottom: 12px; }
-.chart-tabs button { min-height: 38px; padding: 0 14px; border-radius: 999px; border: 1px solid var(--rule2); background: transparent; color: var(--soft); font-family: var(--mono); font-size: 12px; font-weight: 700; letter-spacing: 0.06em; cursor: pointer; }
+.chart-tabs button { min-height: 38px; padding: 0 14px; border-radius: 999px; border: 1px solid var(--rule2); background: transparent; color: var(--soft); font-family: var(--text); font-size: 13px; font-weight: 700; letter-spacing: 0.06em; cursor: pointer; }
 .chart-tabs button:hover { border-color: var(--ink); color: var(--ink); }
 .chart-tabs button[aria-pressed="true"] { background: var(--ink); border-color: var(--ink); color: #05060d; }
 .chart-tabs button:disabled { opacity: .4; cursor: default; }
-.chart-live { margin-left: auto; display: inline-flex; align-items: center; gap: 8px; font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--green); }
+.chart-live { margin-left: auto; display: inline-flex; align-items: center; gap: 8px; font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--green); }
 .chart-live i { width: 7px; height: 7px; border-radius: 50%; background: var(--green); box-shadow: 0 0 10px var(--green); }
 .candles { position: relative; }
 .candles svg { display: block; width: 100%; height: auto; overflow: visible; touch-action: pan-y; }
 .candles .cd { transform-box: fill-box; transform-origin: 50% 100%; }
 .candles .cd.est { opacity: .72; }
-.candles .ctip { position: absolute; top: 6px; pointer-events: none; padding: 8px 10px; border-radius: 10px; background: rgba(4,5,11,0.94); border: 1px solid var(--rule2); font-size: 12px; line-height: 1.5; color: var(--soft); white-space: nowrap; font-variant-numeric: tabular-nums; }
+.candles .ctip { position: absolute; top: 6px; pointer-events: none; padding: 8px 10px; border-radius: 10px; background: rgba(4,5,11,0.94); border: 1px solid var(--rule2); font-size: 13px; line-height: 1.5; color: var(--soft); white-space: nowrap; font-variant-numeric: tabular-nums; }
 .candles .ctip b { color: var(--ink); }
 .trio.wk { margin-top: 4px; }
-.trio.wk b { font-size: 40px; color: var(--ink); }
+.trio.wk b { font-size: clamp(26px, 7.5vw, 40px); color: var(--ink); }
 .trio.wk b.up { color: var(--green); } .trio.wk b.down { color: #ff8da0; }
 
 /* ---------- Narrow screens ---------- */
@@ -537,7 +539,7 @@ section.band.numbers > .wrap { padding-block: 64px 84px; }
   .tiers { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px; }
   .tier { padding: 10px 8px 9px; border-radius: 12px; }
   .tier .n { font-size: 36px; }
-  .tier .l { font-size: 11px; letter-spacing: 0.04em; }
+  .tier .l { font-size: 12px; letter-spacing: 0.04em; }
   .tier .h { display: none; }
   section.band > .wrap { padding-block: 72px; }
 }
@@ -733,9 +735,9 @@ section.band.numbers > .wrap { padding-block: 64px 84px; }
           <circle class="xpt" id="xpt" cx="60" cy="300" r="4.5"></circle>
         </svg>
         <div class="dread" id="dread"><div class="num" id="num">0</div><div class="of"><span>/100</span><span class="zone" id="zone">Deep Winter</span></div></div>
-        <div class="dlab line" id="labLine" data-x="300" data-dy="24" data-p="0">The Line · 45</div>
-        <div class="dlab tag" id="labNoon" data-x="300" data-y="26" data-p="1">Noon · 100</div>
-        <div class="dlab tag under" id="labMid" data-x="300" data-y="576" data-p="2">Midnight · 0</div>
+        <div class="dlab line" id="labLine" data-x="300" data-dy="24" data-p="0">The Line<i class="sep"></i>45</div>
+        <div class="dlab tag" id="labNoon" data-x="300" data-y="26" data-p="1">Noon<i class="sep"></i>100</div>
+        <div class="dlab tag under" id="labMid" data-x="300" data-y="576" data-p="2">Midnight<i class="sep"></i>0</div>
         <button type="button" class="sunhandle invite" id="sunHandle" role="slider" aria-label="The sun. Drag it, or use the arrow keys, to see what the rules say at any reading." aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"></button>
       </div>
     </div>
@@ -834,12 +836,12 @@ section.band.numbers > .wrap { padding-block: 64px 84px; }
         <div class="trio">
           <div><b data-cv="7.53" data-cf="x1">7.5x</b><span>bottom to top</span></div>
           <div><b data-cv="11" data-cf="int">11</b><span>months, midnight to noon</span></div>
-          <div><b id="trioNow" style="color: var(--green)">·</b><span>today's Line</span></div>
+          <div><b id="trioNow" style="color: var(--green)">n/a</b><span>today's Line</span></div>
         </div>
         <div class="trio wk" id="trioWeek" hidden>
-          <div><b id="wkChg">·</b><span>this week so far</span></div>
-          <div><b id="wkFromTop">·</b><span>below the Dec 2024 top</span></div>
-          <div><b id="wkStreak">·</b><span id="wkStreakL">weeks in a row</span></div>
+          <div><b id="wkChg">n/a</b><span>this week so far</span></div>
+          <div><b id="wkFromTop">n/a</b><span>below the Dec 2024 top</span></div>
+          <div><b id="wkStreak">n/a</b><span id="wkStreakL">weeks in a row</span></div>
         </div>
         <p class="risk">One cycle is not a promise. That is why the rules buy slowly and sell in steps, whatever the next day brings.</p>
       </div>
@@ -971,6 +973,8 @@ section.band.numbers > .wrap { padding-block: 64px 84px; }
   "use strict";
   const $ = (id) => document.getElementById(id);
   const esc = (s) => String(s == null ? "" : s).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", "\"": "&quot;" }[c]));
+  /* two facts side by side are set apart by space, not by a dot */
+  const SEP = '<i class="sep" aria-hidden="true"></i>';
   const setting = (name, d) => { const m = document.querySelector(`meta[name="${name}"]`); return (m && m.content.trim()) || d; };
   const DATA = setting("ohl-data", "data/latest.json");
   const HIST = setting("ohl-history", "data/history.json");
@@ -2543,7 +2547,7 @@ section.band.numbers > .wrap { padding-block: 64px 84px; }
   /* ---------- hero text ---------- */
   function setChip(text, cls) {
     $("liveDot").className = `dot ${cls || ""}`.trim();
-    $("liveText").textContent = text;
+    $("liveText").innerHTML = (Array.isArray(text) ? text : [text]).map(esc).join(SEP);
   }
   function setH1(text, animate) {
     if (h1El.dataset.t === text) return;
@@ -2561,19 +2565,19 @@ section.band.numbers > .wrap { padding-block: 64px 84px; }
       h1 = "Midnight, January 2024.";
       explain = "The bottom of the last cycle, 0 by design. Memes were worth $20.0B and almost nobody was watching.";
       sea = ["Memes <b>$20.0B</b>", "The last cycle starts here", "Eleven months to the top"];
-      chip = ["January 22, 2024 · the last bottom", "late"];
+      chip = [["January 22, 2024", "the last bottom"], "late"];
     } else if (view === "dec") {
       h1 = "High noon, December 2024.";
       explain = "The top of the last cycle, 100 by design. Memes hit $150.6B, 7.5x the bottom. The rules sold.";
       sea = ["Memes <b>$150.6B</b>", "7.5x in eleven months", "Then down 80%"];
-      chip = ["December 9, 2024 · the last top", "late"];
+      chip = [["December 9, 2024", "the last top"], "late"];
     } else if (view === "what") {
       const z = zoneOf(whatL);
       h1 = H1[toneOf(whatL)];
       explain = `What if the Line read ${whatL}? That is ${z.hour.toLowerCase()}, ${z.name}. The live reading stays where it is.`;
       rules = `<b>The rules say:</b> ${esc(z.spot)}.`;
       sea = c ? liveSea(c) : methodSea();
-      chip = ["What if · not a reading", "what"];
+      chip = [["What if", "not a reading"], "what"];
       numCls = "what";
     } else if (c) {
       const L = c.line, tone = toneOf(L);
@@ -2589,7 +2593,7 @@ section.band.numbers > .wrap { padding-block: 64px 84px; }
       explain = "0 is the January 2024 bottom, 100 the December 2024 top. Season starts above the Line at 45.";
       rules = PREVIEW ? "<b>No live data in this preview.</b> Drag the sun to see what the rules say at any hour." : "<b>Waiting for the first reading.</b> Drag the sun to see what the rules say at any hour.";
       sea = methodSea();
-      chip = PREVIEW ? ["Preview · no live data", "late"] : R && R.blank ? ["Waiting for the first reading", "late"] : ["No reading yet", "stale"];
+      chip = PREVIEW ? [["Preview", "no live data"], "late"] : R && R.blank ? ["Waiting for the first reading", "late"] : ["No reading yet", "stale"];
       numCls = "what";
     }
     setH1(h1, firstText);
@@ -2615,7 +2619,7 @@ section.band.numbers > .wrap { padding-block: 64px 84px; }
     ].filter(Boolean);
   }
   function methodSea() {
-    return ["0 = Jan 22, 2024 · memes <b>$20.0B</b>", "100 = Dec 9, 2024 · memes <b>$150.6B</b>", "<b>11</b> live inputs, every 30 minutes"];
+    return [`0 = Jan 22, 2024${SEP}memes <b>$20.0B</b>`, `100 = Dec 9, 2024${SEP}memes <b>$150.6B</b>`, "<b>11</b> live inputs, every 30 minutes"];
   }
   function shareUrl() {
     const c = current();
@@ -2632,10 +2636,10 @@ section.band.numbers > .wrap { padding-block: 64px 84px; }
     if (view !== "now") return;
     const c = current();
     if (!c) return;
-    if (c.ghost) { setChip(`Last good reading · ${when(R.lastGood.at)}`, "stale"); return; }
+    if (c.ghost) { setChip(["Last good reading", when(R.lastGood.at)], "stale"); return; }
     const mins = (Date.now() - Date.parse(R.at)) / 60000;
     const cls = mins <= 90 ? "" : mins <= 1440 ? "late" : "stale";
-    setChip(`${cls === "" ? "Live" : cls === "late" ? "Late" : "Stale"} · updated ${ago(R.at)}`, cls);
+    setChip([cls === "" ? "Live" : cls === "late" ? "Late" : "Stale", `updated ${ago(R.at)}`], cls);
     $("liveText").title = when(R.at);
   }
 
@@ -2662,7 +2666,7 @@ section.band.numbers > .wrap { padding-block: 64px 84px; }
         "<b>No live data in this preview.</b> Drag the sun to see what the rules say at any hour.",
         "<b>Waiting for the first reading.</b> Drag the sun to see what the rules say at any hour."
       ]],
-      [$("live"), ["<span>Last good reading · 23 Oct, 18:07</span>", "<span>Waiting for the first reading</span>", "<span>Preview · no live data</span>", "<span>What if · not a reading</span><button class=\"back\">Today</button>", "<span>December 9, 2024 · the last top</span>"]]
+      [$("live"), [`<span>Last good reading${SEP}23 Oct, 18:07</span>`, "<span>Waiting for the first reading</span>", `<span>Preview${SEP}no live data</span>`, `<span>What if${SEP}not a reading</span><button class="back">Today</button>`, `<span>December 9, 2024${SEP}the last top</span>`]]
     ];
     const grid = h1El.parentElement.closest(".hero-grid");
     for (const [el, texts] of sets) {
@@ -2857,10 +2861,10 @@ section.band.numbers > .wrap { padding-block: 64px 84px; }
   /* point at a star, the moon, the lighthouse or a boat to read it */
   const tip = $("skytip");
   function skyTipText(h) {
-    if (h.kind === "star") { const x = h.d; return `<b>${esc(x.s)}</b>${x.n ? ` · ${esc(x.n)}` : ""}<small>${usd(x.m)}${x.d != null ? ` · ${pct(x.d)} in 24h` : ""} · one star per memecoin from $10M</small>`; }
+    if (h.kind === "star") { const x = h.d; return `<b>${esc(x.s)}</b>${x.n ? `${SEP}${esc(x.n)}` : ""}<small>${usd(x.m)}${x.d != null ? `${SEP}${pct(x.d)} in 24h` : ""}${SEP}one star per memecoin from $10M</small>`; }
     if (h.kind === "moon") { const n = Math.round(h.f * 8); return `<b>The moon: ${n} of 8 bottom signs</b><small>Full at 8. From 5 the buy zone is open.</small>`; }
     if (h.kind === "lighthouse") return h.light ? `<b>The lighthouse: ${h.light === "sell" ? "red, sell now" : h.light === "nobuys" ? "amber, no new buys" : "green, quiet"}</b><small>It shows the sell signals: amber at 1, red at 3.</small>` : "<b>The lighthouse</b><small>Shows the sell signals once there is a reading.</small>";
-    if (h.kind === "boat") { const x = h.d; return `<b>${esc(x.s)}</b>${x.n ? ` · ${esc(x.n)}` : ""}<small>${usd(x.m)}${x.lp ? ` · ${esc(x.lp)}` : ""}${x.a != null ? ` · ${x.a < 1 ? "launched today" : `${Math.round(x.a)} days old`}` : ""}</small>`; }
+    if (h.kind === "boat") { const x = h.d; return `<b>${esc(x.s)}</b>${x.n ? `${SEP}${esc(x.n)}` : ""}<small>${usd(x.m)}${x.lp ? `${SEP}${esc(x.lp)}` : ""}${x.a != null ? `${SEP}${x.a < 1 ? "launched today" : `${Math.round(x.a)} days old`}` : ""}</small>`; }
     return "";
   }
   function showSkyTip(e) {
@@ -2969,7 +2973,7 @@ section.band.numbers > .wrap { padding-block: 64px 84px; }
       { key: "mc", k: "Meme market cap", v: m.memeMC || null, f: "usd", s: ch != null ? `<span class="${ch > 0 ? "up" : ch < 0 ? "down" : ""}">${pct(ch)}</span> in the last 24 hours.` : "CoinGecko Meme category." },
       { key: "dd", k: dd != null && dd < 0 ? "Above the last top" : "Below the last top", v: dd != null ? Math.abs(dd) * 100 : null, f: "p0", s: "The top was $150.6B, on December 9, 2024." },
       { key: "n10", k: "Runners from $10M", v: L ? L.counts[0] : null, f: "int", s: L ? `${L.counts[2]} above $100M, ${L.counts[4]} above $1B.` : na },
-      { key: "best", k: "Top gainer, 24h", v: best && best.d > 0 ? best.d : null, f: "sp1", cls: "up", s: best && best.d > 0 ? `${esc(best.s)}${best.n ? ` · ${esc(best.n)}` : ""} · ${usd(best.m)}` : withD.length ? "No runner is up over 24 hours." : na },
+      { key: "best", k: "Top gainer, 24h", v: best && best.d > 0 ? best.d : null, f: "sp1", cls: "up", s: best && best.d > 0 ? `${esc(best.s)}${best.n ? `${SEP}${esc(best.n)}` : ""}${SEP}${usd(best.m)}` : withD.length ? "No runner is up over 24 hours." : na },
       { key: "breadth", k: "Runners up, 24h", v: withD.length ? nUp / withD.length * 100 : null, f: "p0", s: withD.length ? `${nUp} up and ${nDown} down in the last 24 hours.` : na },
       { key: "nw", k: "New this week", v: L ? L.newWeekCount : null, f: "int", s: L ? `Above $10M and under 7 days old.${radar ? ` ${radar.length >= 40 ? "40 or more" : radar.length} launch${radar.length === 1 ? "" : "es"} of the week already above $1M.` : ""}` : na },
       { key: "pump", k: "pump.fun revenue", v: pumpIn && pumpIn.status === "live" ? pumpIn.x : null, f: "m2", s: pumpIn && pumpIn.status === "live" ? "A day, 7-day average, from DefiLlama." : na },
@@ -2982,7 +2986,7 @@ section.band.numbers > .wrap { padding-block: 64px 84px; }
     const before = waiting("stats");
     box.innerHTML = statTiles().map((t) => {
       const has = t.v != null && isFinite(t.v);
-      return `<div class="stat${has ? "" : " off"}"><span class="k">${esc(t.k)}</span><span class="v${t.cls && has ? ` ${t.cls}` : ""}"${has ? ` data-key="${t.key}" data-cv="${t.v}" data-cf="${t.f}"` : ""}>${has ? FMT[t.f](t.v) : "·"}</span><span class="s">${t.s}</span></div>`;
+      return `<div class="stat${has ? "" : " off"}"><span class="k">${esc(t.k)}</span><span class="v${t.cls && has ? ` ${t.cls}` : ""}"${has ? ` data-key="${t.key}" data-cv="${t.v}" data-cf="${t.f}"` : ""}>${has ? FMT[t.f](t.v) : "n/a"}</span><span class="s">${t.s}</span></div>`;
     }).join("");
     $("numbersLead").innerHTML = isBlank()
       ? (PREVIEW ? "No live data in this preview, so these are the method's own numbers. On the live site every tile is today's figure, refreshed every 30 minutes." : "Today's figures arrive with the first reading. Until then, these are the method's own numbers.")
@@ -3011,7 +3015,7 @@ section.band.numbers > .wrap { padding-block: 64px 84px; }
       const href = coinHref(x), ci = chainInfo(x.c);
       const where = x.c === "listed" ? "" : (x.lp || ci.name);
       const age = x.fresh && x.a != null ? (x.a < 1 ? "new today" : `${Math.round(x.a)}d old`) : "";
-      const body = `<b>${esc(x.s)}</b>${x.d != null ? `<span class="${x.d > 0 ? "up" : x.d < 0 ? "down" : ""}">${pct(x.d)}</span>` : ""}<small>${[usd(x.m), where, age].filter(Boolean).map(esc).join(" · ")}</small>`;
+      const body = `<b>${esc(x.s)}</b>${x.d != null ? `<span class="${x.d > 0 ? "up" : x.d < 0 ? "down" : ""}">${pct(x.d)}</span>` : ""}<small>${[usd(x.m), where, age].filter(Boolean).map(esc).join(SEP)}</small>`;
       return href ? `<a href="${esc(href)}" target="_blank" rel="noopener"${dup ? ' tabindex="-1"' : ""}>${body}</a>` : `<span class="ti">${body}</span>`;
     };
     row.innerHTML = `<div class="tick-set">${items.map((x) => one(x, false)).join("")}</div><div class="tick-set dup" aria-hidden="true">${items.map((x) => one(x, true)).join("")}</div>`;
@@ -3045,12 +3049,12 @@ section.band.numbers > .wrap { padding-block: 64px 84px; }
       return;
     }
     const radarLive = Boolean(L.radar && L.radar.status === "live");
-    const chg = (d) => (d != null ? ` · <span class="${d > 0 ? "up" : d < 0 ? "down" : ""}">${pct(d)}</span>` : "");
+    const chg = (d) => (d != null ? `${SEP}<span class="${d > 0 ? "up" : d < 0 ? "down" : ""}">${pct(d)}</span>` : "");
     $("lpTable").innerHTML = `<thead><tr><th>Launchpad</th><th class="num rn">Runners $10M+</th><th class="num">New this week</th><th class="num vol">Their volume, 24h</th><th class="hotc">Hottest now</th></tr></thead><tbody>${L.launch.map((x) => {
       const chains = (x.chains || []).map((c) => chainInfo(c).name).join(", ");
       const h = x.hot || x.top;
       const hot = h ? `<b>${esc(h.s)}</b><small>${usd(h.m)}${chg(h.d)}</small>` : `<small>Nothing above $1M this week</small>`;
-      return `<tr class="${x.pinned ? "pin" : ""}"><td class="lpn"><b>${esc(x.id)}</b><small>${chains ? esc(chains) : "No coin above $1M yet"}</small></td><td class="num rn">${x.runners}</td><td class="num">${radarLive ? x.fresh : "·"}</td><td class="num vol">${radarLive && x.vol ? usd(x.vol) : "·"}</td><td class="hotc">${hot}</td></tr>`;
+      return `<tr class="${x.pinned ? "pin" : ""}"><td class="lpn"><b>${esc(x.id)}</b><small>${chains ? esc(chains) : "No coin above $1M yet"}</small></td><td class="num rn">${x.runners}</td><td class="num">${radarLive ? x.fresh : "n/a"}</td><td class="num vol">${radarLive && x.vol ? usd(x.vol) : "n/a"}</td><td class="hotc">${hot}</td></tr>`;
     }).join("")}</tbody>`;
   }
 
@@ -3078,10 +3082,10 @@ section.band.numbers > .wrap { padding-block: 64px 84px; }
     tiers.forEach((t) => {
       const x = X(t.min);
       s += `<line x1="${x.toFixed(1)}" x2="${x.toFixed(1)}" y1="30" y2="300" stroke="${t.scored ? "rgba(20,241,149,0.35)" : "rgba(237,237,237,0.18)"}" stroke-dasharray="3 5"></line>`;
-      s += `<text x="${x.toFixed(1)}" y="324" text-anchor="middle" fill="#a3abc0" font-size="12" font-family="JetBrains Mono, monospace">${esc(t.label)}</text>`;
+      s += `<text x="${x.toFixed(1)}" y="324" text-anchor="middle" fill="#a3abc0" font-size="12" font-family="IBM Plex Mono, monospace">${esc(t.label)}</text>`;
       obstacles.push({ l: x - textW(t.label, 12) / 2 - 2, r: x + textW(t.label, 12) / 2 + 2, t: 312, b: 328 });
       if (t.count != null) {
-        s += `<text x="${(x + 6).toFixed(1)}" y="21" fill="${t.scored ? "#14F195" : "#a3abc0"}" font-size="12" font-family="JetBrains Mono, monospace">${t.count}</text>`;
+        s += `<text x="${(x + 6).toFixed(1)}" y="21" fill="${t.scored ? "#14F195" : "#a3abc0"}" font-size="12" font-family="IBM Plex Mono, monospace">${t.count}</text>`;
         obstacles.push({ l: x + 4, r: x + 8 + textW(String(t.count), 12), t: 9, b: 25 });
       }
     });
@@ -3113,7 +3117,7 @@ section.band.numbers > .wrap { padding-block: 64px 84px; }
     const dots = [], rings = [];
     placed.forEach((p) => {
       const r = p.d, ci = chainInfo(r.c);
-      const tip = `${r.s}${r.n ? ` (${r.n})` : ""} · ${usd(r.m)} · ${ci.name}${r.lp ? ` · ${r.lp}` : ""}${r.a != null ? ` · ${r.a} days old` : ""}`;
+      const tip = `${r.s}${r.n ? ` (${r.n})` : ""}: ${usd(r.m)}, ${ci.name}${r.lp ? `, ${r.lp}` : ""}${r.a != null ? `, ${r.a} days old` : ""}`;
       dots.push(`<circle cx="${p.x.toFixed(1)}" cy="${p.y.toFixed(1)}" r="${p.r}" fill="${ci.color}" fill-opacity="${r.t >= 2 ? 0.95 : 0.75}"><title>${esc(tip)}</title></circle>`);
       if (r.f && r.f.includes("N")) rings.push(`<circle class="pulse" cx="${p.x.toFixed(1)}" cy="${p.y.toFixed(1)}" r="${p.r + 1}" fill="none" stroke="#14F195" stroke-width="1.5"></circle>`);
     });
@@ -3134,7 +3138,7 @@ section.band.numbers > .wrap { padding-block: 64px 84px; }
       }
     });
     s += `<g filter="url(#dg)">${dots.join("")}</g>${rings.join("")}`;
-    labels.forEach((l) => { s += `<text x="${l.x.toFixed(1)}" y="${l.y.toFixed(1)}" text-anchor="${l.anc}" fill="#ededed" font-size="11.5" font-family="JetBrains Mono, monospace">${esc(l.s)}</text>`; });
+    labels.forEach((l) => { s += `<text x="${l.x.toFixed(1)}" y="${l.y.toFixed(1)}" text-anchor="${l.anc}" fill="#ededed" font-size="11.5" font-family="IBM Plex Mono, monospace">${esc(l.s)}</text>`; });
     svg.innerHTML = s;
   }
 
@@ -3146,7 +3150,7 @@ section.band.numbers > .wrap { padding-block: 64px 84px; }
         ? (PREVIEW ? "On the live site each dot is one coin, placed at its market cap: exchanges and on-chain, refreshed every 30 minutes." : "The first count appears with the first reading, then every 30 minutes.")
         : "CoinGecko did not answer on the last update, so the runners are not counted this time.";
       const labels = ["$10M", "$50M", "$100M", "$500M", "$1B", "$5B", "$10B"], hot = [null, null, "~120", "~35", "~18", "~3", "3"];
-      $("tiers").innerHTML = labels.map((l, i) => `<div class="tier reveal ${i >= 2 ? "scored" : ""}"><span class="n">·</span><span class="l">${l}+</span><span class="h">${i >= 2 ? `last top ${hot[i]}` : "counted, not scored yet"}</span></div>`).join("");
+      $("tiers").innerHTML = labels.map((l, i) => `<div class="tier reveal ${i >= 2 ? "scored" : ""}"><span class="n">n/a</span><span class="l">${l}+</span><span class="h">${i >= 2 ? `last top ${hot[i]}` : "counted, not scored yet"}</span></div>`).join("");
       /* no coins to place: no empty chart, only the note */
       $("stripBox").hidden = true;
       $("stripNote").hidden = false;
@@ -3165,13 +3169,13 @@ section.band.numbers > .wrap { padding-block: 64px 84px; }
     if (waiting("tiers")) onView($("tiers"), "tiers", () => countIn($("tiers")));
     drawStrip();
     $("legend").innerHTML = L.byChain.map((c) => { const ci = chainInfo(c.id); return `<span><i style="background:${ci.color}"></i>${esc(ci.name)} ${c.count}</span>`; }).join("") + (L.newWeekCount ? `<span><i style="background:transparent;border:1.5px solid #14F195"></i>New this week ${L.newWeekCount}</span>` : "");
-    const where = (x) => [chainInfo(x.c).name, x.lp].filter(Boolean).join(" · ");
+    const where = (x) => [chainInfo(x.c).name, x.lp].filter(Boolean).map(esc).join(SEP);
     $("newWeek").innerHTML = L.newWeek.length
-      ? L.newWeek.slice(0, 8).map((x) => `<div class="rowi"><span><b><i class="cdot" style="background:${chainInfo(x.c).color}"></i>${esc(x.s)}</b><small>${esc(where(x))}</small></span><span class="r">${usd(x.m)}<small>${x.a < 1 ? "launched today" : `${Math.round(x.a)} day${Math.round(x.a) === 1 ? "" : "s"} old`}</small></span></div>`).join("")
+      ? L.newWeek.slice(0, 8).map((x) => `<div class="rowi"><span><b><i class="cdot" style="background:${chainInfo(x.c).color}"></i>${esc(x.s)}</b><small>${where(x)}</small></span><span class="r">${usd(x.m)}<small>${x.a < 1 ? "launched today" : `${Math.round(x.a)} day${Math.round(x.a) === 1 ? "" : "s"} old`}</small></span></div>`).join("")
       : `<div class="empty">${L.onchain.status === "live" ? "No coin younger than 7 days is above $10M. In a season this list fills up first." : "Needs on-chain data: shows up once the Codex key is set."}</div>`;
     const edgeRows = [
-      ...L.near.slice(0, 4).map((x) => `<div class="rowi"><span><b>${esc(x.s)}</b><small>${x.n ? `${esc(x.n)} · ` : ""}${x.m != null ? `${usd(x.m)} now, ` : ""}needs +${(x.toNext * 100).toFixed(1)}% to reach ${esc(x.next)}</small></span><span class="r"><span class="chip up">↑ ${esc(x.next)}</span></span></div>`),
-      ...L.edge.slice(0, 4).map((x) => `<div class="rowi"><span><b>${esc(x.s)}</b><small>${x.n ? `${esc(x.n)} · ` : ""}${x.m != null ? `${usd(x.m)} now, ` : ""}${(x.cushion * 100).toFixed(1)}% above ${esc(x.floor)}</small></span><span class="r"><span class="chip down">↓ ${esc(x.floor)}</span></span></div>`)
+      ...L.near.slice(0, 4).map((x) => `<div class="rowi"><span><b>${esc(x.s)}</b><small>${x.n ? `${esc(x.n)}${SEP}` : ""}${x.m != null ? `${usd(x.m)} now, ` : ""}needs +${(x.toNext * 100).toFixed(1)}% to reach ${esc(x.next)}</small></span><span class="r"><span class="chip up">↑ ${esc(x.next)}</span></span></div>`),
+      ...L.edge.slice(0, 4).map((x) => `<div class="rowi"><span><b>${esc(x.s)}</b><small>${x.n ? `${esc(x.n)}${SEP}` : ""}${x.m != null ? `${usd(x.m)} now, ` : ""}${(x.cushion * 100).toFixed(1)}% above ${esc(x.floor)}</small></span><span class="r"><span class="chip down">↓ ${esc(x.floor)}</span></span></div>`)
     ];
     $("edge").innerHTML = edgeRows.length ? edgeRows.join("") : `<div class="empty">No coin is within 10% of the next floor or 5% above its own.</div>`;
     /* born in the last 7 days, already above $1M, hottest first: names from the launch radar */
@@ -3181,7 +3185,7 @@ section.band.numbers > .wrap { padding-block: 64px 84px; }
         const href = coinHref(x), ci = chainInfo(x.c);
         const tk = href ? `<a href="${esc(href)}" target="_blank" rel="noopener">${esc(x.s)}</a>` : esc(x.s);
         const age = x.a < 1 ? "launched today" : `${Math.round(x.a)} day${Math.round(x.a) === 1 ? "" : "s"} old`;
-        return `<div class="rowi"><span><b><i class="cdot" style="background:${ci.color}"></i>${tk}</b><small>${esc([x.n, x.lp || ci.name].filter(Boolean).join(" · "))}</small></span><span class="r">${usd(x.m)}<small>${x.d != null ? `<span class="${x.d > 0 ? "up" : x.d < 0 ? "down" : ""}">${pct(x.d)}</span> · ` : ""}${age}</small></span></div>`;
+        return `<div class="rowi"><span><b><i class="cdot" style="background:${ci.color}"></i>${tk}</b><small>${[x.n, x.lp || ci.name].filter(Boolean).map(esc).join(SEP)}</small></span><span class="r">${usd(x.m)}<small>${x.d != null ? `<span class="${x.d > 0 ? "up" : x.d < 0 ? "down" : ""}">${pct(x.d)}</span>${age ? SEP : ""}` : ""}${age}</small></span></div>`;
       }).join("")
       : `<div class="empty">${rd.status === "live" ? "No launch of the last 7 days has reached $1M with real trading yet." : rd.status === "offline" ? "The launch radar did not answer on the last update." : "Needs on-chain data: shows up once the Codex key is set."}</div>`;
     /* rigged launches never make the list; say how many, so the empty spots are not a mystery */
@@ -3205,7 +3209,7 @@ section.band.numbers > .wrap { padding-block: 64px 84px; }
       return `<div class="hour reveal ${now ? "now" : ""}">
         <div class="mini" aria-hidden="true" style="background:linear-gradient(180deg, ${a}, ${b})"><div class="s" style="top:${sunTop}%"></div><div class="w"></div><div class="l"></div></div>
         <div class="nm"><span>${esc(z.hour)}</span>${now ? '<span class="tag">Now</span>' : ""}</div>
-        <div class="z">${z.from} to ${z.to} · ${esc(z.name)}</div>
+        <div class="z">${z.from} to ${z.to}${SEP}${esc(z.name)}</div>
         <div class="a">${esc(z.spot)}.</div>
       </div>`;
     }).join("");
@@ -3226,7 +3230,7 @@ section.band.numbers > .wrap { padding-block: 64px 84px; }
   function renderProof() {
     const cur = current();
     const tn = $("trioNow");
-    if (cur) { tn.dataset.cv = cur.line; tn.dataset.cf = "int"; tn.textContent = cur.line; } else { delete tn.dataset.cv; tn.textContent = "·"; }
+    if (cur) { tn.dataset.cv = cur.line; tn.dataset.cf = "int"; tn.textContent = cur.line; } else { delete tn.dataset.cv; tn.textContent = "n/a"; }
     const yearFrac = (iso) => { const d = new Date(iso); const y = d.getUTCFullYear(); return y + (d - Date.UTC(y, 0, 1)) / (Date.UTC(y + 1, 0, 1) - Date.UTC(y, 0, 1)); };
     const pts = R.cycle || [];
     if (pts.length < 4) { $("cycleChart").innerHTML = ""; return; }
@@ -3242,10 +3246,10 @@ section.band.numbers > .wrap { padding-block: 64px 84px; }
     const F = 12;
     let s = `<svg viewBox="0 0 ${W} ${Hh}" width="${W}" height="${Hh}" role="img" aria-label="Meme market cap from 2021 to today"><defs><linearGradient id="pfFill" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffb020" stop-opacity="0.35"></stop><stop offset="1" stop-color="#ffb020" stop-opacity="0"></stop></linearGradient><filter id="pfGlow" x="-10%" y="-10%" width="120%" height="120%"><feGaussianBlur stdDeviation="4" result="b"></feGaussianBlur><feMerge><feMergeNode in="b"></feMergeNode><feMergeNode in="SourceGraphic"></feMergeNode></feMerge></filter></defs>`;
     const taken = [];
-    [0, 50, 100, 150].forEach((g) => { s += `<line x1="${x0}" x2="${x1}" y1="${Y(g)}" y2="${Y(g)}" stroke="rgba(237,237,237,0.08)"></line><text x="${x0 - 10}" y="${Y(g) + 4}" text-anchor="end" fill="#a3abc0" font-size="${F}" font-family="JetBrains Mono, monospace">$${g === 0 ? 0 : g + "B"}</text>`; });
+    [0, 50, 100, 150].forEach((g) => { s += `<line x1="${x0}" x2="${x1}" y1="${Y(g)}" y2="${Y(g)}" stroke="rgba(237,237,237,0.08)"></line><text x="${x0 - 10}" y="${Y(g) + 4}" text-anchor="end" fill="#a3abc0" font-size="${F}" font-family="IBM Plex Mono, monospace">$${g === 0 ? 0 : g + "B"}</text>`; });
     for (let yr = 2022; yr <= Math.floor(tmax); yr++) {
       if (W < 520 && yr % 2) continue;
-      s += `<text x="${X(yr)}" y="${Hh - 16}" text-anchor="middle" fill="#a3abc0" font-size="${F}" font-family="JetBrains Mono, monospace">${yr}</text>`;
+      s += `<text x="${X(yr)}" y="${Hh - 16}" text-anchor="middle" fill="#a3abc0" font-size="${F}" font-family="IBM Plex Mono, monospace">${yr}</text>`;
     }
     const p = pts.map((q) => ({ x: X(q.t), y: Y(q.mc), q }));
     const tail = [...logPts, ...(nowPt ? [nowPt] : [])].sort((a, b) => a.t - b.t).map((q) => ({ x: X(q.t), y: Y(q.mc) }));
@@ -3276,18 +3280,18 @@ section.band.numbers > .wrap { padding-block: 64px 84px; }
           if (marks.some((m) => m.x + m.r > rect.l && m.x - m.r < rect.r && m.y + m.r > rect.t && m.y - m.r < rect.b)) continue;
           if (segs.some(([a, b]) => segHitsRect(a, b, rect))) continue;
           taken.push(rect);
-          return `<text x="${l.toFixed(1)}" y="${by.toFixed(1)}" fill="${fill}" font-size="${F}"${weight ? ` font-weight="${weight}"` : ""} font-family="JetBrains Mono, monospace">${esc(text)}</text>`;
+          return `<text x="${l.toFixed(1)}" y="${by.toFixed(1)}" fill="${fill}" font-size="${F}"${weight ? ` font-weight="${weight}"` : ""} font-family="IBM Plex Mono, monospace" style="white-space:pre">${esc(text)}</text>`;
         }
       }
       return "";
     };
-    if (q) s += place([`Now${cur ? ` · Line ${cur.line}` : ""} · $${nowPt.mc.toFixed(1)}B`, `Now · $${nowPt.mc.toFixed(1)}B`, "Now"], q.x, q.y, 7, "#14F195", 700);
-    s += place(["Noon · Line 100 · $150.6B", "Line 100 · $150.6B", "Line 100"], p[3].x, p[3].y, 10, "#ffd27a");
-    s += place(["Midnight · Line 0 · $20.0B", "Line 0 · $20.0B", "Line 0"], p[1].x, p[1].y, 7, "#ededed");
+    if (q) s += place([`Now${cur ? `   Line ${cur.line}` : ""}   $${nowPt.mc.toFixed(1)}B`, `Now   $${nowPt.mc.toFixed(1)}B`, "Now"], q.x, q.y, 7, "#14F195", 700);
+    s += place(["Noon   Line 100   $150.6B", "Line 100   $150.6B", "Line 100"], p[3].x, p[3].y, 10, "#ffd27a");
+    s += place(["Midnight   Line 0   $20.0B", "Line 0   $20.0B", "Line 0"], p[1].x, p[1].y, 7, "#ededed");
     s += place(["2021 top $88B", "2021 top"], p[0].x, p[0].y, 4, "#a3abc0");
     const gx = X(2022.9), gy = Y(118), gt = W < 520 ? "no data 2022, 2023" : "no points 2022 and 2023", gw = textW(gt, 11);
     const grect = { l: gx - gw / 2 - 2, r: gx + gw / 2 + 2, t: gy - 12, b: gy + 4 };
-    if (!taken.some((o) => hit(o, grect)) && !segs.some(([a, b]) => segHitsRect(a, b, grect))) s += `<text x="${gx}" y="${gy}" text-anchor="middle" fill="#a3abc0" font-size="11" font-family="JetBrains Mono, monospace">${gt}</text>`;
+    if (!taken.some((o) => hit(o, grect)) && !segs.some(([a, b]) => segHitsRect(a, b, grect))) s += `<text x="${gx}" y="${gy}" text-anchor="middle" fill="#a3abc0" font-size="11" font-family="IBM Plex Mono, monospace">${gt}</text>`;
     const cyc = $("cycleChart");
     const cycWait = waiting("cycle");
     cyc.classList.toggle("pre", cycWait);
@@ -3333,7 +3337,7 @@ section.band.numbers > .wrap { padding-block: 64px 84px; }
     for (let v = lo; v <= hi + step / 1000; v += step) {
       const y = Y(v);
       s += `<line x1="${x0}" x2="${x1}" y1="${y.toFixed(1)}" y2="${y.toFixed(1)}" stroke="rgba(237,237,237,0.07)"></line>`;
-      if (Math.abs(y - yNow) > 15) s += `<text x="${x1 + 9}" y="${(y + 4).toFixed(1)}" fill="#a3abc0" font-size="11.5" font-family="JetBrains Mono, monospace">${fmtB(v)}</text>`;
+      if (Math.abs(y - yNow) > 15) s += `<text x="${x1 + 9}" y="${(y + 4).toFixed(1)}" fill="#a3abc0" font-size="11.5" font-family="IBM Plex Mono, monospace">${fmtB(v)}</text>`;
     }
     let lastLab = -99;
     wk.forEach((c, i) => {
@@ -3343,7 +3347,7 @@ section.band.numbers > .wrap { padding-block: 64px 84px; }
       const x = X(i), lab = d.getUTCMonth() === 0 ? String(d.getUTCFullYear()) : MON[d.getUTCMonth()];
       if (x - lastLab < (W0 < 520 ? 40 : 44) || x + 18 > x1) return;
       lastLab = x;
-      s += `<text x="${x.toFixed(1)}" y="${Hh - 9}" text-anchor="middle" fill="${d.getUTCMonth() === 0 ? "#ededed" : "#a3abc0"}" font-size="11.5" font-family="JetBrains Mono, monospace">${lab}</text>`;
+      s += `<text x="${x.toFixed(1)}" y="${Hh - 9}" text-anchor="middle" fill="${d.getUTCMonth() === 0 ? "#ededed" : "#a3abc0"}" font-size="11.5" font-family="IBM Plex Mono, monospace">${lab}</text>`;
     });
     s += `<line class="pline" x1="${x0}" x2="${x1}" y1="${yNow.toFixed(1)}" y2="${yNow.toFixed(1)}" stroke="${nowCol}" stroke-opacity="0.65" stroke-dasharray="3 5"></line>`;
     wk.forEach((c, i) => {
@@ -3355,7 +3359,7 @@ section.band.numbers > .wrap { padding-block: 64px 84px; }
       if (isLive) s += `<rect class="halo" x="${(x - bw / 2 - 5).toFixed(1)}" y="${(yh - 5).toFixed(1)}" width="${(bw + 10).toFixed(1)}" height="${(yl - yh + 10).toFixed(1)}" rx="5" fill="${col}"></rect>`;
       s += `<line x1="${x.toFixed(1)}" x2="${x.toFixed(1)}" y1="${yh.toFixed(1)}" y2="${yl.toFixed(1)}" stroke="${col}" stroke-width="1.3"></line><rect x="${(x - bw / 2).toFixed(1)}" y="${top.toFixed(1)}" width="${bw.toFixed(1)}" height="${h.toFixed(1)}" rx="1.2" fill="${col}"></rect></g>`;
     });
-    s += `<rect x="${x1 + 3}" y="${(yNow - 10).toFixed(1)}" width="${W0 - x1 - 4}" height="20" rx="5" fill="${nowCol}"></rect><text x="${((x1 + 3 + W0 - 1) / 2).toFixed(1)}" y="${(yNow + 4).toFixed(1)}" text-anchor="middle" fill="#05060d" font-size="11.5" font-weight="800" font-family="JetBrains Mono, monospace">${fmtB(last.c)}</text>`;
+    s += `<rect x="${x1 + 3}" y="${(yNow - 10).toFixed(1)}" width="${W0 - x1 - 4}" height="20" rx="5" fill="${nowCol}"></rect><text x="${((x1 + 3 + W0 - 1) / 2).toFixed(1)}" y="${(yNow + 4).toFixed(1)}" text-anchor="middle" fill="#05060d" font-size="11.5" font-weight="800" font-family="IBM Plex Mono, monospace">${fmtB(last.c)}</text>`;
     s += `<line class="cx" x1="0" x2="0" y1="${yT}" y2="${yB}" stroke="rgba(237,237,237,0.35)" stroke-dasharray="2 4" visibility="hidden"></line></svg><div class="ctip" hidden></div>`;
     const cdWait = waiting("candles");
     box.classList.toggle("pre", cdWait);
@@ -3371,7 +3375,7 @@ section.band.numbers > .wrap { padding-block: 64px 84px; }
     if (i < 0 || i >= cdGeo.wk.length) { hideTip(); return; }
     const c = cdGeo.wk[i], isLive = cdGeo.live && i === cdGeo.wk.length - 1, est = !isLive && c.t <= cdGeo.until;
     const ch = (c.c / c.o - 1) * 100;
-    tip.innerHTML = `<b>${isLive ? "This week, live" : `Week of ${esc(dayOf(c.t))}`}</b><br>Open ${fmtB(c.o)} · Close ${fmtB(c.c)}<br>High ${fmtB(c.h)} · Low ${fmtB(c.l)}<br><span class="${ch > 0 ? "up" : ch < 0 ? "down" : ""}">${pct(ch)}</span> on the week${est ? "<br><small>Estimated from the 15 biggest memes</small>" : ""}`;
+    tip.innerHTML = `<b>${isLive ? "This week, live" : `Week of ${esc(dayOf(c.t))}`}</b><br>Open ${fmtB(c.o)}${SEP}Close ${fmtB(c.c)}<br>High ${fmtB(c.h)}${SEP}Low ${fmtB(c.l)}<br><span class="${ch > 0 ? "up" : ch < 0 ? "down" : ""}">${pct(ch)}</span> on the week${est ? "<br><small>Estimated from the 15 biggest memes</small>" : ""}`;
     tip.hidden = false;
     const px = cdGeo.X(i) / k, bw = box.clientWidth, tw = tip.offsetWidth;
     tip.style.left = `${Math.round(px + 14 + tw > bw ? Math.max(0, px - 14 - tw) : px + 14)}px`;
@@ -3478,9 +3482,8 @@ section.band.numbers > .wrap { padding-block: 64px 84px; }
     const dots = (n, of) => `<span class="dots" aria-hidden="true">${Array.from({ length: of }, (_, i) => `<i class="${!blank && i < n ? "on" : ""}" style="--k:${i}"></i>`).join("")}</span>`;
     const ruleList = (kind, items) => `<ul class="rules">${items.map((it) => {
       const val = blank ? "" : it.hit == null ? "No data on this update" : it.value;
-      const last = kind === "top" && it.last ? `${val ? " · " : ""}last time: ${it.last}` : "";
-      const sub = `${val}${last}`;
-      return `<li>${markFor(kind, it.hit)}<span>${esc(it.text)}${sub ? `<small>${esc(sub)}</small>` : ""}</span></li>`;
+      const sub = [val, kind === "top" && it.last ? `last time: ${it.last}` : ""].filter(Boolean).map(esc).join(SEP);
+      return `<li>${markFor(kind, it.hit)}<span>${esc(it.text)}${sub ? `<small>${sub}</small>` : ""}</span></li>`;
     }).join("")}</ul>`;
     const lit = b.top.lit, hits = b.bottom.hits, conf = b.season.hits;
     const waitNote = PREVIEW ? " Today's values fill in on the live site." : " Values arrive with the first reading.";
@@ -3488,21 +3491,21 @@ section.band.numbers > .wrap { padding-block: 64px 84px; }
       {
         k: "Buy zone", cls: blank ? "" : b.bottom.open ? "good" : "",
         s: blank ? "Waiting" : b.bottom.open ? "Open" : "Closed",
-        c: `${dots(hits, 8)}<span>${blank ? "·" : hits} of 8 bottom signs</span>`,
+        c: `${dots(hits, 8)}<span>${blank ? "8 bottom signs" : `${hits} of 8 bottom signs`}</span>`,
         r: `5 or more open slow weekly buying, blue-chip memes first.${blank ? waitNote : ""}`,
         list: ruleList("bottom", b.bottom.items)
       },
       {
         k: "Meme season", cls: blank ? "" : R.season.on ? "good" : "warn",
         s: blank ? "Waiting" : R.season.on ? "On" : "Off",
-        c: `${dots(conf, 6)}<span>${blank ? "·" : conf} of 6 confirmations</span>`,
+        c: `${dots(conf, 6)}<span>${blank ? "6 confirmations" : `${conf} of 6 confirmations`}</span>`,
         r: `Needs 4 of 6 with S6 among them, and the Line at 45 or higher.${blank ? waitNote : ""}`,
         list: ruleList("season", b.season.items)
       },
       {
         k: "Sell signals", cls: blank ? "" : lit >= 1 ? "bad" : "",
         s: blank ? "Waiting" : lit >= 3 ? "Sell now" : lit >= 1 ? "No new buys" : "Quiet",
-        c: `${dots(lit, 8)}<span>${blank ? "·" : lit} of 8 live</span>`,
+        c: `${dots(lit, 8)}<span>${blank ? "8 sell signals" : `${lit} of 8 live`}</span>`,
         r: `1 live stops new buys. 3 live means selling down to the moonbag.${blank ? waitNote : ""}`,
         list: ruleList("top", b.top.items)
       }
@@ -3516,7 +3519,7 @@ section.band.numbers > .wrap { padding-block: 64px 84px; }
     const ggWait = waiting("gauges");
     const gauge = (m) => {
       const live = m.status === "live";
-      const val = live ? (m.label || fmtIn(m, m.x)) : blank ? "·" : "no data this update";
+      const val = live ? (m.label || fmtIn(m, m.x)) : blank ? "n/a" : "no data this update";
       const lo = m.scale ? "outside the top 100" : fmtIn(m, m.cold);
       const hi = m.scale ? "top 10" : `${m.est ? "~" : ""}${fmtIn(m, m.hot)}`;
       const sc = live && m.s != null ? Math.max(0, Math.min(100, m.s)) : null;
@@ -3529,7 +3532,7 @@ section.band.numbers > .wrap { padding-block: 64px 84px; }
     };
     $("gauges").innerHTML = R.pillars.map((p) => {
       const ms = R.inputs.filter((m) => m.pillar === p.id);
-      return `<div class="gg reveal"><div class="gg-h"><span>${esc(PILLAR_PLAIN[p.id] || p.name)}</span><small>${p.w}% of the Line${p.score != null ? ` · ${Math.round(p.score)}/100 now` : ""}</small></div>${ms.map(gauge).join("")}</div>`;
+      return `<div class="gg reveal"><div class="gg-h"><span>${esc(PILLAR_PLAIN[p.id] || p.name)}</span><small>${p.w}% of the Line${p.score != null ? `${SEP}${Math.round(p.score)}/100 now` : ""}</small></div>${ms.map(gauge).join("")}</div>`;
     }).join("");
     if (ggWait && !blank) onView($("gauges"), "gauges", () => requestAnimationFrame(() => $("gauges").querySelectorAll(".meter i[data-x]").forEach((i) => { i.style.left = `${i.dataset.x}%`; })));
 
@@ -3543,7 +3546,7 @@ section.band.numbers > .wrap { padding-block: 64px 84px; }
   const coinHref = (x) => x.g ? `https://www.coingecko.com/en/coins/${encodeURIComponent(x.g)}`
     : x.ad && TRADE && DEX[x.c] && TRADE_CHAINS.includes(x.c) ? TRADE.replace(/\{chain\}/g, x.c).replace(/\{address\}/g, encodeURIComponent(x.ad))
     : x.ad && DEX[x.c] ? `https://dexscreener.com/${DEX[x.c]}/${encodeURIComponent(x.ad)}` : "";
-  const pct = (d) => (d == null ? "·" : `${d > 0 ? "+" : d < 0 ? "−" : ""}${Math.abs(d).toFixed(1)}%`);
+  const pct = (d) => (d == null ? "n/a" : `${d > 0 ? "+" : d < 0 ? "−" : ""}${Math.abs(d).toFixed(1)}%`);
   function renderList() {
     const L = R && R.ladder;
     const has = Boolean(L && L.runners && L.runners.length);
@@ -3565,9 +3568,9 @@ section.band.numbers > .wrap { padding-block: 64px 84px; }
       cut.length ? cut.map((x) => {
         const ci = chainInfo(x.c), href = coinHref(x);
         const tick = href ? `<a href="${esc(href)}" target="_blank" rel="noopener">${esc(x.s)}</a>` : `<b>${esc(x.s)}</b>`;
-        const where = [x.c === "listed" ? "Exchanges" : ci.name, x.lp].filter(Boolean).join(" · ");
+        const where = [x.c === "listed" ? "Exchanges" : ci.name, x.lp].filter(Boolean).map(esc).join(SEP);
         const age = x.a != null ? `<small>${x.a < 1 ? "launched today" : `${x.a} day${x.a === 1 ? "" : "s"} old`}</small>` : "";
-        return `<tr><td class="rk">${x.rk}</td><td class="coin"><i class="cdot" style="background:${ci.color}"></i>${tick}${x.n ? `<small>${esc(x.n)}</small>` : ""}</td><td class="w">${esc(where)}${age}</td><td class="num">${usd(x.m)}</td><td class="chg ${x.d > 0 ? "up" : x.d < 0 ? "down" : ""}">${pct(x.d)}</td><td class="fl"><span class="chip ${x.t >= 2 ? "yes" : "no"}">${esc(L.tiers[x.t].label)}+</span></td></tr>`;
+        return `<tr><td class="rk">${x.rk}</td><td class="coin"><i class="cdot" style="background:${ci.color}"></i>${tick}${x.n ? `<small>${esc(x.n)}</small>` : ""}</td><td class="w">${where}${age}</td><td class="num">${usd(x.m)}</td><td class="chg ${x.d > 0 ? "up" : x.d < 0 ? "down" : ""}">${pct(x.d)}</td><td class="fl"><span class="chip ${x.t >= 2 ? "yes" : "no"}">${esc(L.tiers[x.t].label)}+</span></td></tr>`;
       }).join("") : `<tr><td colspan="6" class="empty">${listF === "new" ? "No coin younger than 7 days is above $10M right now." : listF === "gain" ? "No coin is up over the last 24 hours." : "No coin matches."}</td></tr>`
     }</tbody>`;
     $("listMore").hidden = Boolean(listAll || q || total <= 25);
@@ -3604,7 +3607,7 @@ section.band.numbers > .wrap { padding-block: 64px 84px; }
 
   function renderFooter() {
     const blank = isBlank();
-    $("sources").innerHTML = R.sources.map((s) => `<li><a href="${esc(s.url)}" target="_blank" rel="noopener">${esc(s.name)}</a> · ${blank ? (PREVIEW ? "pulled on the live site" : "waiting for the first run") : s.off ? "not switched on" : s.ok ? "answered" : `failed (${esc(s.failed.map((f) => f.error).join(", "))})`}</li>`).join("");
+    $("sources").innerHTML = R.sources.map((s) => `<li><a href="${esc(s.url)}" target="_blank" rel="noopener">${esc(s.name)}</a>${SEP}${blank ? (PREVIEW ? "pulled on the live site" : "waiting for the first run") : s.off ? "not switched on" : s.ok ? "answered" : `failed (${esc(s.failed.map((f) => f.error).join(", "))})`}</li>`).join("");
   }
 
   /* ---------- load and render ---------- */
