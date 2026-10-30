@@ -130,7 +130,7 @@ export function apps(variant = "today") {
 function cx(symbol, name, networkId, mc, o = {}) {
   return {
     circulatingMarketCap: String(mc), marketCap: String(mc * 1.02), liquidity: String(o.liq ?? mc * 0.05), volume24: String(o.vol ?? mc * 0.08),
-    holders: o.holders ?? Math.max(12000, Math.round(mc / 2500)), isScam: Boolean(o.scam), change24: String(o.ch ?? (d24of(symbol + networkId) / 100)),
+    holders: o.holders ?? Math.max(12000, Math.round(mc / 2500)), isScam: Boolean(o.scam), ...(o.q || {}), change24: String(o.ch ?? (d24of(symbol + networkId) / 100)),
     token: { address: o.addr ?? `${symbol}Addr${networkId}`, networkId, name, symbol, createdAt: Math.floor((NOW - (o.age ?? 400) * DAY) / 1000), launchpad: { launchpadName: o.lp ?? "Pump.fun", migrated: true, completed: true } }
   };
 }
@@ -162,7 +162,11 @@ export function codexResults(variant = "today") {
     cx("OILX", "Oil Dividend", 1399811149, 140e6, { age: 0.5, holders: 3100, addr: "OILX2" }),
     cx("OILX", "", 1399811149, 40e6, { age: 2, holders: 2600, addr: "OILX3" }),
     cx("DEEPX", "Deep Fund", 1399811149, 190e6, { age: 2, holders: 2500 }),
-    cx("PNUT", "Not Peanut", 8453, 12e6, { age: 3, holders: 900 })
+    cx("PNUT", "Not Peanut", 8453, 12e6, { age: 3, holders: 900 }),
+    /* rigged markets: insiders hold the supply, buyers who cannot sell, a few wallets trading with themselves */
+    cx("RIGHELD", "Rig Held", 1399811149, 40e6, { age: 2, holders: 20000, q: { suspiciousHeldPercentage: 97.9, uniqueBuys24: 1700, uniqueSells24: 900, txnCount24: 6000 } }),
+    cx("RIGONE", "Rig One Way", 1399811149, 19e6, { age: 2, holders: 3000, q: { suspiciousHeldPercentage: 1, uniqueBuys24: 2910, uniqueSells24: 7, txnCount24: 33000 } }),
+    cx("RIGBOT", "Rig Bots", 1399811149, 13e6, { age: 1, holders: 2323, q: { suspiciousHeldPercentage: 5, uniqueBuys24: 344, uniqueSells24: 331, txnCount24: 75441 } })
   ];
 }
 
@@ -186,6 +190,7 @@ export function radarResults(variant = "today") {
     cx("DEMOC", "Demo C", 56, 18e6, { lp: "Four.meme", age: 3, ch: -0.08 }),
     cx("DEMOSTK2", "Demo Stonk Two", 1399811149, 1.6e6 * k, { lp: "StonkFun", age: 4, vol: 400e3 * k, ch: 0.21 }),
     cx("DEMOOLD", "Demo Old", 1399811149, 5e6, { lp: "Pump.fun", age: 30 }),
+    cx("DEMORIG", "Demo Rigged", 1399811149, 9e6 * k, { lp: "Pump.fun", age: 0.4, vol: 900e3 * k, ch: 337, q: { suspiciousHeldPercentage: 96, uniqueBuys24: 1300, uniqueSells24: 38, txnCount24: 6500 } }),
     /* past the top 100 of the main scan: only the pinned call finds it */
     Object.assign(cx("DEMOPON2", "Demo Pons Two", 4663, 1.4e6 * k, { lp: "pons", age: 3, vol: 300e3 * k, ch: 0.35 }), { _deep: true }),
     cx("DEMOTINY", "Demo Tiny", 1399811149, 400e3, { lp: "Pump.fun", age: 1 })

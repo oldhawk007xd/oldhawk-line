@@ -1,5 +1,5 @@
 import assert from "node:assert/strict";
-import { collect, compute, toDaily, alertsFor, blank, INPUTS, deepEnough, cloneGroups, cloneLeads, watchIds } from "../lib/engine.mjs";
+import { collect, compute, toDaily, alertsFor, blank, INPUTS, deepEnough, cloneGroups, cloneLeads, watchIds, rigged } from "../lib/engine.mjs";
 import { fakeFetch, NOW } from "./fixtures.mjs";
 
 const results = [];
@@ -17,7 +17,7 @@ check("12 calls routed (9 sources + 1 Codex page + 2 launch radar calls)", () =>
 check("radar: one scan of every launchpad, then one call for StonkFun and pons only", () => {
   const rc = calls.filter((c) => c.route === "codex" && /query Radar/.test(JSON.parse(c.body).query)).map((c) => JSON.parse(c.body).variables);
   assert.equal(rc.length, 2);
-  assert.ok(rc[0].filters.launchpadName.length > 20 && rc[0].limit === 100);
+  assert.ok(rc[0].filters.launchpadName.length > 20 && rc[0].limit === 200, "200 candidates, since rigged launches no longer take the seats");
   assert.deepEqual(rc[1].filters.launchpadName, ["StonkFun", "pons"]); assert.equal(rc[1].limit, 25);
   assert.ok(rc.every((v) => v.filters.circulatingMarketCap.gte === 1000000 && v.filters.tokenCreatedAt.gte > 0));
 });
@@ -53,9 +53,27 @@ check("币安人生 linked to BNB, Four.meme", () => { const f = L.runners.filte
 check("scam, unknown chain and quiet tokens kept out", () => ["DEMOX", "DEMOR", "DEMOQ"].forEach((s) => assert.ok(!L.runners.some((x) => x.s === s), s)));
 check("on-chain status live, 8 added, 3 linked", () => { assert.equal(L.onchain.status, "live"); assert.equal(L.onchain.added, 8); assert.equal(L.onchain.matched, 3); });
 check("look-alikes left out: shallow coins, a ticker launched three times, a copy of a listed ticker", () => {
-  assert.equal(L.onchain.left, 4, "the two OILX launches with one name count once");
+  assert.equal(L.onchain.left, 7, "the two OILX launches with one name count once, plus three rigged markets");
+  assert.deepEqual(L.onchain.why, { shallow: 4, held: 1, oneway: 1, bots: 1 }, "the depth check comes first");
+  for (const t of ["RIGHELD", "RIGONE", "RIGBOT"]) assert.ok(!L.runners.some((x) => x.s === t), `${t} should not be a runner`);
   for (const t of ["OILX", "DEEPX"]) assert.ok(!L.runners.some((x) => x.s === t), `${t} should not be a runner`);
   assert.ok(!L.runners.some((x) => x.s === "PNUT" && x.ad), "an on-chain PNUT copy should not be a runner");
+});
+check("rigged markets, measured on the coins in the screenshots", () => {
+  assert.equal(rigged({ a: 0.2, q: { ub: 1748, us: 15, tx: 2896, sus: 98.869 } }), "held", "DOTF: insiders hold 99%");
+  assert.equal(rigged({ a: 2, q: { ub: 2910, us: 7, tx: 33304, sus: 1 } }), "oneway", "2,910 buyers, 7 sellers");
+  assert.equal(rigged({ a: 1, q: { ub: 344, us: 331, tx: 75441, sus: 19 } }), "bots", "75,441 trades by 675 wallets");
+  assert.equal(rigged({ a: 3, q: { ub: 13, us: 15, tx: 6233 } }), "bots", "17 traders, 6,233 trades");
+  assert.equal(rigged({ a: 109, q: { ub: 678, us: 687, tx: 5241, sus: 0 } }), null, "PONS");
+  assert.equal(rigged({ a: 99, q: { ub: 3368, us: 3214, tx: 18432, sus: 0 } }), null, "STONK");
+  assert.equal(rigged({ a: 689, q: { ub: 143, us: 144, tx: 6252, sus: 0 } }), null, "ARC: an old coin with market makers");
+  assert.equal(rigged({ a: 0.2, q: { ub: 10017, us: 8322, tx: 90388, sus: 0 } }), null, "a busy new launch with real buyers and sellers");
+  assert.equal(rigged({ a: 2 }), null, "no numbers, no verdict");
+});
+check("radar: the rigged launch is left out, and nothing younger than a day shows a 24h move", () => {
+  assert.ok(!r.ladder.radar.tokens.some((x) => x.s === "DEMORIG"));
+  assert.equal(r.ladder.radar.why.held, 1);
+  assert.ok(r.ladder.radar.tokens.filter((x) => x.a < 1).every((x) => x.d == null));
 });
 check("depth: one holder per $8,000 of market cap", () => {
   assert.equal(deepEnough({ m: 80e6, h: 10000 }), true);

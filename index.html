@@ -230,6 +230,7 @@ section.band > .wrap { padding-block: 96px; }
 .panel { display: grid; grid-row: span 3; grid-template-rows: subgrid; row-gap: 0; align-content: start; border: 1px solid var(--rule2); border-radius: 16px; padding: 20px; min-width: 0; }
 .panel h3 { margin: 0; font-family: var(--serif); font-style: italic; font-weight: 400; font-size: 28px; line-height: 1; }
 .panel .sub { margin: 6px 0 12px; font-size: 12px; color: var(--dim); }
+.panel .sub.left-out { margin: 12px 0 0; }
 .panel > h3 { align-self: end; }
 .rowi { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 4px 12px; padding: 10px 0; border-top: 1px solid var(--rule); font-size: 13.5px; align-items: center; }
 .rowi > span { min-width: 0; }
@@ -3183,10 +3184,12 @@ section.band.numbers > .wrap { padding-block: 64px 84px; }
         return `<div class="rowi"><span><b><i class="cdot" style="background:${ci.color}"></i>${tk}</b><small>${esc([x.n, x.lp || ci.name].filter(Boolean).join(" · "))}</small></span><span class="r">${usd(x.m)}<small>${x.d != null ? `<span class="${x.d > 0 ? "up" : x.d < 0 ? "down" : ""}">${pct(x.d)}</span> · ` : ""}${age}</small></span></div>`;
       }).join("")
       : `<div class="empty">${rd.status === "live" ? "No launch of the last 7 days has reached $1M with real trading yet." : rd.status === "offline" ? "The launch radar did not answer on the last update." : "Needs on-chain data: shows up once the Codex key is set."}</div>`;
+    /* rigged launches never make the list; say how many, so the empty spots are not a mystery */
+    if (rd.status === "live" && rd.left) $("launchpads").insertAdjacentHTML("beforeend", `<p class="sub left-out">${rd.left} more left out as rigged or look-alike: insiders holding the supply, buyers who do not sell, or a few wallets trading with themselves.</p>`);
     const oc = L.onchain;
     const base = "Listed memes: CoinGecko Meme category without launchpad tokens, meme-branded L1s and bridged copies. Circulating market cap, never FDV. A runner needs 24h volume of at least $25K and 0.1% of its market cap.";
     const ocText = oc.status === "live"
-      ? `On-chain memes: Codex, launchpad tokens on Solana, BNB Chain, Base, Ethereum, Monad and Robinhood Chain with at least $50K of liquidity${oc.at ? `, snapshot from ${ago(oc.at)}` : ""}. ${oc.added} came only from on-chain data, ${oc.matched} were matched to listed coins.${oc.watched ? ` ${oc.watched} more come from the watchlist kept by hand, with live numbers from Codex.` : ""}${oc.left ? ` ${oc.left} look-alike token${oc.left === 1 ? " was" : "s were"} left out: less than one holder per $8,000 of market cap, or one ticker launched over and over.` : ""}${oc.truncated ? " The list is capped at the biggest coins." : ""}`
+      ? `On-chain memes: Codex, launchpad tokens on Solana, BNB Chain, Base, Ethereum, Monad and Robinhood Chain with at least $50K of liquidity${oc.at ? `, snapshot from ${ago(oc.at)}` : ""}. ${oc.added} came only from on-chain data, ${oc.matched} were matched to listed coins.${oc.watched ? ` ${oc.watched} more come from the watchlist kept by hand, with live numbers from Codex.` : ""}${oc.left ? ` ${oc.left} look-alike or rigged token${oc.left === 1 ? " was" : "s were"} left out: less than one holder per $8,000 of market cap, one ticker launched over and over, 20% or more of the supply with insiders, snipers, bundlers or the dev, buyers who do not sell, or a few wallets trading with themselves. A coin younger than a day shows no 24h move.` : ""}${oc.truncated ? " The list is capped at the biggest coins." : ""}`
       : oc.status === "offline" ? "On-chain data did not answer on the last update, so launchpad coins that are not listed are left out this time."
       : "On-chain runners from Codex are not switched on yet, so this counts listed memes only.";
     $("srcNote").textContent = `${ocText} ${base}`;
