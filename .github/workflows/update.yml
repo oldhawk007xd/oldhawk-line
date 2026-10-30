@@ -20,7 +20,10 @@ jobs:
     permissions:
       contents: write
     steps:
+      # the newest main, not the commit that triggered the run: a run queued behind another one starts from its data
       - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.ref_name }}
 
       - uses: actions/setup-node@v4
         with:
