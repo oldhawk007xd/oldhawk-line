@@ -642,6 +642,94 @@ section.band.numbers > .wrap { padding-block: 64px 84px; }
   section.band > .wrap { padding-block: 72px; }
 }
 
+/* ---------- the KOL scores link, top right ---------- */
+.nav a.navkol { display: inline-flex; align-items: center; gap: 10px; min-height: 44px; margin-left: 8px; padding: 0 17px; border-radius: 999px; border: 1px solid var(--heroInk); background: var(--btnBack, rgba(3,6,18,0.3)); font-weight: 700; letter-spacing: 0.12em; transition: color 1.2s ease, border-color 1.2s ease, box-shadow .3s ease; }
+.nav a.navkol i { flex: none; width: 22px; height: 6px; border-radius: 3px; background: linear-gradient(90deg, #14F195, #ffb020 52%, #ff5c7a); box-shadow: 0 0 10px rgba(255,176,32,0.4); }
+.nav a.navkol:hover { box-shadow: 0 0 22px rgba(255,176,32,0.22); }
+.nav a.navkol[aria-current] { border-color: var(--amber); }
+.nav a.navkol .nk-s { display: none; }
+a.kcall { text-decoration: none; }
+a.kcall:hover { text-decoration: underline; text-underline-offset: 3px; }
+
+/* ---------- the rail: where you are on the page, and a way to every part of it ----------
+   A slim capsule on the left edge. Each part of the page is a dot on a spine; a small sun travels the spine
+   with the scroll, and the dots it has passed take the colour of the Line. Hover, focus or a tap opens it. */
+.rail { --dot: 10px; --row: 26px; position: fixed; z-index: 40; left: 3px; top: 50%; opacity: 0; visibility: hidden; transform: translate(-12px, -50%); transition: opacity .4s ease, transform .55s cubic-bezier(.2,.8,.2,1), visibility 0s linear .55s; }
+.rail.on { opacity: 1; visibility: visible; transform: translate(0, -50%); transition: opacity .4s ease, transform .55s cubic-bezier(.2,.8,.2,1), visibility 0s; }
+.rail-in { position: relative; padding: 9px 3px; border-radius: 999px; background: rgba(5,6,13,0.5); border: 1px solid rgba(237,237,237,0.09); -webkit-backdrop-filter: blur(10px) saturate(1.2); backdrop-filter: blur(10px) saturate(1.2); transition: padding .32s cubic-bezier(.2,.8,.2,1), border-radius .32s ease, background .3s ease, border-color .3s ease, box-shadow .3s ease; }
+.rail-track { position: relative; }
+.rail-list { list-style: none; margin: 0; padding: 0; }
+.rail .ri, .rail .rx { position: relative; display: flex; align-items: center; height: var(--row); margin: 0; padding: 0; border: 0; background: none; color: var(--dim); font: 500 12px/1 var(--text); letter-spacing: 0.14em; text-transform: uppercase; white-space: nowrap; text-decoration: none; cursor: pointer; transition: color .2s ease, height .32s cubic-bezier(.2,.8,.2,1); }
+.rail .ri:focus-visible, .rail .rx:focus-visible { outline-offset: 2px; }
+.rd, .rxi { position: relative; z-index: 2; flex: none; width: var(--dot); height: var(--dot); display: grid; place-items: center; }
+.rd::before { content: ""; width: 6px; height: 6px; box-sizing: border-box; border-radius: 50%; border: 1.5px solid rgba(237,237,237,0.42); background: #05060d; transition: background .35s ease, border-color .35s ease, transform .35s cubic-bezier(.2,.8,.2,1), box-shadow .35s ease; }
+.ri.past .rd::before { background: var(--c, #14F195); border-color: var(--c, #14F195); }
+.ri.cur .rd::before { transform: scale(1.5); border-color: #fff1cf; background: #05060d; box-shadow: 0 0 0 3px rgba(255,214,140,0.12); }
+.ri:hover .rd::before { border-color: var(--ink); transform: scale(1.4); }
+.rl { display: inline-block; max-width: 0; margin-left: 0; opacity: 0; overflow: hidden; vertical-align: middle; transition: max-width .38s cubic-bezier(.2,.8,.2,1), margin .38s cubic-bezier(.2,.8,.2,1), opacity .22s ease; }
+.rl em { font: 500 10.5px/1 var(--mono); letter-spacing: 0.02em; font-style: normal; color: rgba(163,171,192,0.55); margin-right: 11px; }
+.rail .ri:hover, .rail .rx:hover, .rail .ri.cur { color: var(--ink); }
+.rail .ri.cur em { color: var(--amber); }
+.rail-spine { position: absolute; left: calc(var(--dot) / 2 - 0.5px); top: var(--s0, 13px); height: var(--sh, 0px); width: 1px; background: rgba(237,237,237,0.16); pointer-events: none; }
+.rail-spine i { position: absolute; inset: 0; background: linear-gradient(180deg, #9945FF 0%, #14F195 55%, #ffb020 100%); clip-path: inset(0 0 calc(100% - var(--p, 0px)) 0); }
+.rail-sun { position: absolute; z-index: 3; left: calc(var(--dot) / 2 - 5px); top: calc(var(--s0, 13px) - 5px); width: 10px; height: 10px; border-radius: 50%; pointer-events: none; transform: translateY(var(--p, 0px)); background: radial-gradient(circle, #fffdf5 0 26%, #ffe6a8 50%, #ffb020 80%, rgba(255,176,32,0) 100%); box-shadow: 0 0 8px 2px rgba(255,196,100,0.55), 0 0 20px 6px rgba(255,150,60,0.2); }
+.rail-x { margin-top: 7px; padding-top: 7px; border-top: 1px solid rgba(237,237,237,0.1); }
+.rx-kol .rxi::before { content: ""; width: 4px; height: 11px; border-radius: 2px; background: linear-gradient(180deg, #ff5c7a, #ffb020 50%, #14F195); }
+.rx-buy .rxi::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: var(--green); box-shadow: 0 0 9px rgba(20,241,149,0.75); }
+.rx-don .rxi::before { content: ""; width: 6px; height: 6px; box-sizing: border-box; border: 1.5px solid var(--soft); border-radius: 1px; transform: rotate(45deg); }
+.rx-line .rxi::before { content: ""; width: 9px; height: 5px; border-radius: 9px 9px 0 0; background: #ffb020; box-shadow: 0 1.5px 0 #14F195, 0 0 8px rgba(255,176,32,0.6); }
+.rail .rx-buy { color: var(--green); }
+.rail .rx-buy .rl { font-weight: 700; }
+.rail-tog { display: none; }
+/* open: a glass panel with every name */
+.rail.open .rail-in, .rail:focus-within .rail-in { padding: 14px 20px 14px 13px; border-radius: 18px; background: rgba(8,10,22,0.88); border-color: var(--rule2); box-shadow: 0 26px 80px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255,255,255,0.05); }
+.rail.open .rl, .rail:focus-within .rl { max-width: 220px; margin-left: 15px; opacity: 1; }
+@media (hover: hover) and (pointer: fine) {
+  .rail:hover .rail-in { padding: 14px 20px 14px 13px; border-radius: 18px; background: rgba(8,10,22,0.88); border-color: var(--rule2); box-shadow: 0 26px 80px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255,255,255,0.05); }
+  .rail:hover .rl { max-width: 220px; margin-left: 15px; opacity: 1; }
+}
+/* entering a new part: its name shows for a moment beside the capsule, where there is room */
+@media (hover: hover) and (pointer: fine) and (min-width: 900px) {
+  .rail:not(:hover):not(:focus-within):not(.open) .ri.peek .rl { position: absolute; left: calc(var(--dot) + 16px); top: 50%; max-width: 220px; margin: 0; padding: 7px 11px 6px; opacity: 1; transform: translateY(-50%); border-radius: 9px; background: rgba(8,10,22,0.9); border: 1px solid var(--rule2); box-shadow: 0 10px 30px rgba(0,0,0,0.45); color: var(--ink); }
+}
+/* touch: the capsule opens on a tap, and the rows grow to finger size */
+@media (hover: none), (pointer: coarse) {
+  .rail-tog { display: block; position: absolute; z-index: 5; left: -4px; top: -10px; bottom: -10px; width: 30px; margin: 0; padding: 0; border: 0; background: transparent; cursor: pointer; -webkit-tap-highlight-color: transparent; }
+  .rail.open .rail-tog { display: none; }
+  .rail.open { --row: 42px; }
+  .rail.open .rl { font-size: 13px; }
+}
+/* wide screens: the capsule sits in the margin beside the content */
+@media (min-width: 1340px) {
+  .rail { --dot: 12px; --row: 28px; left: max(12px, calc((100vw - 1240px) / 2 - 48px)); }
+  .rail-in { padding: 11px 5px; }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .rail-sun { animation: railsun 3.2s ease-in-out infinite; }
+  @keyframes railsun { 0%, 100% { box-shadow: 0 0 8px 2px rgba(255,196,100,0.55), 0 0 20px 6px rgba(255,150,60,0.2); } 50% { box-shadow: 0 0 10px 3px rgba(255,206,120,0.75), 0 0 28px 9px rgba(255,150,60,0.3); } }
+}
+@media (prefers-reduced-motion: reduce) { .rail, .rail.on, .rail-in, .rl, .rail .ri, .rd::before { transition: none; } }
+@media print { .rail { display: none; } }
+@media (max-width: 1279px) {
+  .nav a.navkol { padding: 0 14px; gap: 9px; }
+  .nav a.navkol .nk-l { display: none; }
+  .nav a.navkol .nk-s { display: inline; }
+}
+@media (max-width: 640px) { .nav a.navkol { margin-left: 0; } }
+/* a phone keeps the header on one line: the name, KOLs and Buy */
+@media (max-width: 480px) {
+  .top .brand { font-size: 22px; }
+  .nav { gap: 6px; }
+  .nav a.navkol { padding: 0 11px; gap: 7px; font-size: 12px; letter-spacing: 0.08em; }
+  .nav a.navkol i { width: 16px; height: 5px; }
+  .nav a.navbuy { padding: 0 13px; font-size: 12px; letter-spacing: 0.06em; }
+}
+@media (max-width: 413px) {
+  .nav a.navkol { width: 40px; padding: 0; justify-content: center; }
+  .nav a.navkol .nk-s { display: none; }
+}
+@media (max-width: 339px) { .nav a.navkol { display: none; } }
+
 /* ---------- Motion ---------- */
 @media (prefers-reduced-motion: no-preference) {
   .horizon { animation: breathe 4.5s ease-in-out infinite; }
@@ -777,11 +865,11 @@ section.band.numbers > .wrap { padding-block: 64px 84px; }
       <nav class="nav" aria-label="Sections">
         <a href="#numbers">Numbers</a>
         <a href="#runners">Runners</a>
-        <a href="#kols">KOLs</a>
         <a href="#hours">Playbook</a>
         <a href="#proof">Proof</a>
         <a href="#signals">Signals</a>
         <a href="#log">Log</a>
+        <a class="navkol" href="kols.html" aria-label="KOL scores"><i aria-hidden="true"></i><span class="nk-l">KOL scores</span><span class="nk-s">KOLs</span></a>
         <a class="navbuy" data-buy href="#" target="_blank" rel="noopener sponsored" hidden>Buy on Fomo</a>
         <button type="button" data-donate aria-haspopup="dialog" aria-controls="donate">Donate</button>
       </nav>
@@ -918,44 +1006,6 @@ section.band.numbers > .wrap { padding-block: 64px 84px; }
   </div>
 </section>
 
-<section class="band glow" id="kols" aria-labelledby="kols-h">
-  <div class="wrap">
-    <div class="head-row">
-      <h2 class="serif" id="kols-h">Who is calling, and their record.</h2>
-      <p class="lead" id="kolsLead">Before you buy what an account is shilling, look at what happened the last times. Every score comes from documented on-chain investigations, court filings and the account's own posts, all linked.</p>
-    </div>
-    <div class="stats kstats" id="kolStats"></div>
-    <figure class="kfig kspec">
-      <div class="kfig-h"><h3>The risk scale</h3><p>From 1, a record of holding what they call, to 10, a record of selling into the people who bought. Accounts without a record stay at 5 until their calls are measured.</p></div>
-      <div id="kolSpectrum"></div>
-    </figure>
-    <div class="ktools">
-      <h3>The accounts</h3>
-      <div class="chips" id="kolChips" role="group" aria-label="Which accounts">
-        <button type="button" data-k="all" aria-pressed="true">All</button>
-        <button type="button" data-k="risk" aria-pressed="false">High risk</button>
-        <button type="button" data-k="caution" aria-pressed="false">Caution</button>
-        <button type="button" data-k="trusted" aria-pressed="false">Trusted</button>
-      </div>
-    </div>
-    <div class="kgrid" id="kolGrid"></div>
-    <div class="list-foot"><button type="button" class="btn" id="kolMore" hidden>Show all</button></div>
-    <figure class="kfig ktime" style="margin-top:18px">
-      <div class="kfig-h"><h3>Every documented incident</h3><p>One dot per incident, sized by the amount its source gives. Red: sold into their own promotion. Amber: insiders held or sold the supply. Violet: paid without saying so. Grey: collapsed after the promotion. Green rings: held what they called.</p></div>
-      <div class="tbox" id="kolTimeline"></div>
-    </figure>
-    <div class="list" id="kolCallsBox">
-      <div class="list-head">
-        <h3>Latest calls, measured</h3>
-        <p>Every coin a tracked account names on X, by contract address or by the ticker of a runner, from the market cap when we first saw the post, followed for 31 days.</p>
-      </div>
-      <div class="tbox" id="kolCallsWrap"><table class="runs kc" id="kolCalls"></table></div>
-      <p class="empty" id="kolCallsEmpty" hidden></p>
-    </div>
-    <details class="kmethod" id="kolMethod"><summary>How the score works</summary><div id="kolMethodBody"></div></details>
-    <p class="srcnote" id="kolNote">A score describes the risk to buyers when an account promotes a coin, from what is documented. It is not a legal finding: allegations are marked as allegations and answers are quoted. Corrections with a source are welcome on X.</p>
-  </div>
-</section>
 
 <section class="band" id="hours" aria-labelledby="hours-h">
   <div class="wrap">
@@ -1066,6 +1116,32 @@ section.band.numbers > .wrap { padding-block: 64px 84px; }
 </section>
 </main>
 
+<!--@rail-->
+<nav class="rail" id="rail" aria-label="On this page">
+  <div class="rail-in">
+    <button type="button" class="rail-tog" aria-expanded="false" aria-controls="railList" aria-label="Show every part of the page"></button>
+    <div class="rail-track">
+      <span class="rail-spine" aria-hidden="true"><i></i></span>
+      <span class="rail-sun" aria-hidden="true"></span>
+      <ol class="rail-list" id="railList">
+        <li><a class="ri" href="#top"><i class="rd" aria-hidden="true"></i><span class="rl"><em>00</em>Today</span></a></li>
+        <li><a class="ri" href="#numbers"><i class="rd" aria-hidden="true"></i><span class="rl"><em>01</em>Numbers</span></a></li>
+        <li><a class="ri" href="#runners"><i class="rd" aria-hidden="true"></i><span class="rl"><em>02</em>Runners</span></a></li>
+        <li><a class="ri" href="#hours"><i class="rd" aria-hidden="true"></i><span class="rl"><em>03</em>Playbook</span></a></li>
+        <li><a class="ri" href="#proof"><i class="rd" aria-hidden="true"></i><span class="rl"><em>04</em>Proof</span></a></li>
+        <li><a class="ri" href="#signals"><i class="rd" aria-hidden="true"></i><span class="rl"><em>05</em>Signals</span></a></li>
+        <li><a class="ri" href="#log"><i class="rd" aria-hidden="true"></i><span class="rl"><em>06</em>Log</span></a></li>
+      </ol>
+    </div>
+    <div class="rail-x">
+      <a class="rx rx-kol" href="kols.html"><i class="rxi" aria-hidden="true"></i><span class="rl">KOL scores</span></a>
+      <a class="rx rx-buy" href="#" target="_blank" rel="noopener sponsored" hidden><i class="rxi" aria-hidden="true"></i><span class="rl">Buy on Fomo</span></a>
+      <button type="button" class="rx rx-don" data-donate aria-haspopup="dialog" aria-controls="donate"><i class="rxi" aria-hidden="true"></i><span class="rl">Donate</span></button>
+    </div>
+  </div>
+</nav>
+<!--@/rail-->
+
 <dialog class="donate" id="donate" aria-labelledby="donateTitle" tabindex="-1">
   <div class="d-in">
     <div class="d-head">
@@ -1112,6 +1188,7 @@ section.band.numbers > .wrap { padding-block: 64px 84px; }
 <script>
 (function () {
   "use strict";
+/*@share*/
   const $ = (id) => document.getElementById(id);
   const esc = (s) => String(s == null ? "" : s).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", "\"": "&quot;" }[c]));
   /* two facts side by side are set apart by space, not by a dot */
@@ -1142,6 +1219,7 @@ section.band.numbers > .wrap { padding-block: 64px 84px; }
     sc.setAttribute("data-cf-beacon", JSON.stringify({ token: BEACON }));
     document.head.appendChild(sc);
   }
+/*@end*/
   const mq = window.matchMedia ? window.matchMedia("(prefers-reduced-motion: reduce)") : null;
   let reduced = Boolean(mq && mq.matches);
 
@@ -1176,7 +1254,9 @@ section.band.numbers > .wrap { padding-block: 64px 84px; }
 
   /* ---------- geometry of the dial: 600 x 600, center 300,300, radius 240 ---------- */
   const PATH_LEN = Math.PI * 240;
+/*@share*/
   const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
+/*@end*/
   const phiOf = (L) => (L <= 45 ? L / 45 * 90 : 90 + (L - 45) / 55 * 90);
   const LofPhi = (p) => (p <= 90 ? p / 90 * 45 : 45 + (p - 90) / 90 * 55);
   const pt = (phi, r) => { const a = phi * Math.PI / 180; return [300 - (r || 240) * Math.sin(a), 300 + (r || 240) * Math.cos(a)]; };
@@ -2397,6 +2477,7 @@ section.band.numbers > .wrap { padding-block: 64px 84px; }
   sky.onRedraw = () => { if (!ambOn) skyStillSoon(); };
 
   /* ---------- formatting ---------- */
+/*@share*/
   const usd = (n) => {
     if (n == null) return "";
     const a = Math.abs(n);
@@ -2414,6 +2495,7 @@ section.band.numbers > .wrap { padding-block: 64px 84px; }
     return h < 48 ? `${h} h ago` : `${Math.round(h / 24)} days ago`;
   };
   const when = (iso) => new Date(iso).toLocaleString("en-GB", { day: "numeric", month: "short", hour: "2-digit", minute: "2-digit" });
+/*@end*/
 
   /* ---------- state ---------- */
   let R = null, H = [], W = null;
@@ -2431,6 +2513,7 @@ section.band.numbers > .wrap { padding-block: 64px 84px; }
     if (R.lastGood) return { line: R.lastGood.line, zone: R.lastGood.zone, action: R.lastGood.action, ghost: true };
     return null;
   }
+/*@share*/
   const chainInfo = (id) => (R && R.chains ? R.chains.find((c) => c.id === id) : null) || { id, name: id, color: "#ededed" };
   /* a coin's logo: the image the project gave CoinGecko or its launchpad, or its first letter in its chain's colour */
   const initial = (x) => esc(([...String((x && x.s) || "?")][0] || "?").toUpperCase());
@@ -2448,6 +2531,7 @@ section.band.numbers > .wrap { padding-block: 64px 84px; }
     i.dataset.m = t.dataset.m || "?";
     t.replaceWith(i);
   }, true);
+/*@end*/
   /* chains in the order people know them, not in the order of their network ids */
   const CHAIN_ORDER = ["sol", "bsc", "base", "eth", "monad", "hood", "listed"];
   const byChainOrder = (a, b) => CHAIN_ORDER.indexOf(a.id) - CHAIN_ORDER.indexOf(b.id);
@@ -3219,8 +3303,10 @@ section.band.numbers > .wrap { padding-block: 64px 84px; }
     for (let i = 0; i < s.length; i++) { h ^= s.charCodeAt(i); h = Math.imul(h, 16777619); }
     return ((h >>> 0) % 10000) / 10000;
   }
+/*@share*/
   const textW = (s, size) => [...String(s)].reduce((w, ch) => w + (ch.codePointAt(0) > 0x2e80 ? 1.0 : 0.6) * size, 0);
   const hit = (a, b) => a.l < b.r && a.r > b.l && a.t < b.b && a.b > b.t;
+/*@end*/
 
   function drawStrip() {
     const L = R && R.ladder;
@@ -3705,7 +3791,9 @@ section.band.numbers > .wrap { padding-block: 64px 84px; }
   const coinHref = (x) => x.g ? `https://www.coingecko.com/en/coins/${encodeURIComponent(x.g)}`
     : x.ad && TRADE && DEX[x.c] && TRADE_CHAINS.includes(x.c) ? TRADE.replace(/\{chain\}/g, x.c).replace(/\{address\}/g, encodeURIComponent(x.ad))
     : x.ad && DEX[x.c] ? `https://dexscreener.com/${DEX[x.c]}/${encodeURIComponent(x.ad)}` : "";
+/*@share*/
   const pct = (d) => (d == null ? "n/a" : `${d > 0 ? "+" : d < 0 ? "−" : ""}${Math.abs(d).toFixed(1)}%`);
+/*@end*/
   function renderList() {
     const L = R && R.ladder;
     const has = Boolean(L && L.runners && L.runners.length);
@@ -3751,6 +3839,7 @@ section.band.numbers > .wrap { padding-block: 64px 84px; }
   });
   $("listMore").addEventListener("click", () => { listAll = true; renderList(); });
 
+/*@share*/
   /* ---------- KOL Watch: who is calling, and their record ---------- */
   const KBAND = { risk: "High risk", caution: "Caution", trusted: "Trusted", none: "Not scored yet" };
   const KCOL = { risk: "#ff5c7a", caution: "#ffb020", trusted: "#14F195", none: "#a3abc0" };
@@ -3765,198 +3854,10 @@ section.band.numbers > .wrap { padding-block: 64px 84px; }
   const kolFlag = (x) => {
     const K = R && R.kols, e = K && K.byToken && x && x.ad ? K.byToken[x.ad] : null;
     if (!e || !e.h || !e.h.length) return "";
-    return `<small class="kcall ${kband(e.max)}">Called by @${esc(e.h[0])}${e.h.length > 1 ? ` and ${e.h.length - 1} more` : ""}${e.max != null ? `, risk ${e.max.toFixed(1)}` : ""}</small>`;
+    const h0 = String(e.h[0]).toLowerCase(), p = (K.people || []).find((q) => q.x && q.x.toLowerCase() === h0);
+    return `<a class="kcall ${kband(e.max)}" href="kols.html${p ? `#kol-${esc(p.id)}` : ""}">Called by @${esc(e.h[0])}${e.h.length > 1 ? ` and ${e.h.length - 1} more` : ""}${e.max != null ? `, risk ${e.max.toFixed(1)}` : ""}</a>`;
   };
-  let kolF = "all", kolAll = false;
-  const kolOpen = new Set();
-
-  function renderKols() {
-    const K = R && R.kols;
-    if (!K || !Array.isArray(K.people) || !K.people.length) {
-      ["kolStats", "kolSpectrum", "kolTimeline", "kolCalls", "kolMethodBody"].forEach((id) => { $(id).innerHTML = ""; });
-      $("kolGrid").innerHTML = `<div class="empty">${isBlank() ? (PREVIEW ? "The records live on the live site." : "Appears with the first reading.") : "Appears with the next update."}</div>`;
-      $("kolCallsWrap").hidden = true; $("kolCallsEmpty").hidden = true;
-      return;
-    }
-    const st = K.stats || {};
-    const tiles = [
-      { k: "Accounts on record", v: String(st.people), s: `${st.risk} high risk, ${st.caution} caution, ${st.trusted} trusted.` },
-      { k: "Documented incidents", v: String(st.incidents), s: "From ZachXBT, Bubblemaps, Coffeezilla, the SEC, court filings and the press, each one linked." },
-      { k: "Put on those incidents", v: st.usd ? usd(st.usd) : "n/a", s: "Taken from buyers or held by insiders, as each source puts it." },
-      { k: "Calls measured", v: String(st.measured || 0), s: st.measured ? `${Math.round((st.rugShare || 0) * 100)}% of them lost 80% or more within 7 days.` : `${st.calls30 || 0} call${st.calls30 === 1 ? "" : "s"} in the last 30 days. The first 7-day results come a week after the first call.` }
-    ];
-    $("kolStats").innerHTML = tiles.map((t) => `<div class="stat"><span class="k">${esc(t.k)}</span><span class="v">${esc(t.v)}</span><span class="s">${esc(t.s)}</span></div>`).join("");
-    drawKolCharts();
-    renderKolGrid();
-    renderKolCalls();
-    const r = K.rule || {};
-    $("kolMethodBody").innerHTML = `<p>Each documented incident counts evidence times harm.</p><ul>
-      <li>Evidence: admitted or found in court 3, settled with a regulator without admitting or a named on-chain investigation 2, a pending lawsuit 1.5, claims dismissed in court or reported in the press 1.</li>
-      <li>Harm: sold into their own promotion, or launched a coin and sold it, 3. Insiders held or sold a large part of the supply 1.5. Paid to promote without saying so 1.2. The coin collapsed after the promotion 1.</li>
-      <li>A bigger documented amount weighs more, on a log scale, up to 1.75 times from $100K up.</li>
-      <li>Documented alignment pulls the other way: holding what they call through a drawdown 3, public wallets 2, labelled paid posts 1.</li></ul>
-      <p>Score = ${r.neutral || 5} + ${r.up || 4.5} x (1 − e^(−harm / ${r.upScale || 8})) − ${r.down || 4} x (1 − e^(−alignment / ${r.downScale || 5})), from 1 to 10. From ${r.minCalls || 10} measured calls on, the calls move it too: up to +${r.liveMax || 2} when the coins lost 80% or more within 7 days, down to ${r.liveMin || -1.5} when they doubled. Under ${r.trusted || 3.5} is trusted, from ${r.risk || 7} up is high risk.</p>
-      <p>Calls: each tracked account is read every ${r.readEveryHours || 2} hours through FxTwitter. A coin named by contract address, or by the ticker of an on-chain runner, is a call from the market cap DexScreener gives when we first see the post, at most a day after it. The same coin named again within 7 days is the same call. Its change after 1 and 7 days is kept for good.</p>`;
-  }
-  function kolCard(p) {
-    const b = p.band || kband(p.score);
-    const handle = p.x ? `<a href="https://x.com/${encodeURIComponent(p.x)}" target="_blank" rel="noopener">@${esc(p.x)}</a>` : p.also && p.also.length ? `@${esc(p.also[0])}, banned from X` : "No X account on record";
-    const n = p.incidents.length, a = p.align.length, rec = p.rec || { n: 0, measured: 0 };
-    const facts = [
-      n ? `<span><b>${n}</b> incident${n === 1 ? "" : "s"}</span>` : "",
-      p.usd ? `<span><b>${usd(p.usd)}</b> documented</span>` : "",
-      a ? `<span><b>${a}</b> sign${a === 1 ? "" : "s"} of alignment</span>` : "",
-      p.track ? `<span><b>${rec.n}</b> call${rec.n === 1 ? "" : "s"} tracked</span>` : ""
-    ].filter(Boolean).join("");
-    const srcs = (list) => `<span class="src">${(list || []).map((x) => `<a href="${esc(x.u)}" target="_blank" rel="noopener">${esc(x.t)}</a>`).join("<br>")}</span>`;
-    const items = [...p.align.map((x) => ({ good: true, x })), ...p.incidents.map((x) => ({ good: false, x }))].sort((u, v) => String(v.x.date || "").localeCompare(String(u.x.date || "")));
-    const open = kolOpen.has(p.id), shown = open ? items : items.slice(0, 2);
-    const one = (it) => it.good
-      ? `<div><span class="kh"><span class="ev good">${esc(ALIGNN[it.x.kind] || it.x.kind)}</span><small>${esc(ym(it.x.date))}</small></span>${esc(it.x.what)}${srcs(it.x.sources)}</div>`
-      : `<div><span class="kh">${esc(it.x.token)}<span class="ev ${esc(it.x.evidence)}">${esc(EVN[it.x.evidence] || it.x.evidence)}</span><small>${esc(ym(it.x.date))}${SEP}${esc(HARMN[it.x.harm] || "")}</small></span>${esc(it.x.what)}${srcs(it.x.sources)}</div>`;
-    const due = rec.n && !rec.measured ? ", the first 7-day result is due within the week" : "";
-    const recLine = !p.track ? "" : rec.measured
-      ? `<div class="krec"><b>${rec.measured}</b> call${rec.measured === 1 ? "" : "s"} measured: median <b>${pct(rec.med7 * 100)}</b> after 7 days, <b>${rec.rug}</b> lost 80% or more, <b>${rec.win}</b> doubled.</div>`
-      : `<div class="krec">${rec.n ? `<b>${rec.n}</b> call${rec.n === 1 ? "" : "s"} so far${due}.` : p.seen && p.seen.miss >= 2 ? `X has not shown us @${esc(p.x)}'s posts in the last ${p.seen.miss} tries. The account may be private, renamed or gone.` : "Read on X every 2 hours. No call yet."}</div>`;
-    return `<article class="kcard ${b}" id="kol-${esc(p.id)}">
-      <div class="kc-top"><div><b>${esc(p.name)}</b><small>${handle}</small><small>${esc(p.role || "")}</small></div><div class="kc-score"><div class="n">${p.score != null ? p.score.toFixed(1) : "n/a"}<small>/10</small></div><span class="chip ${b === "risk" ? "down" : b === "trusted" ? "up" : b === "caution" ? "armed" : "off"}">${esc(KBAND[b])}</span></div></div>
-      ${p.score != null ? `<div class="kbar" role="img" aria-label="Risk ${p.score.toFixed(1)} of 10"><i style="left:${((p.score - 1) / 9 * 100).toFixed(1)}%"></i></div>` : ""}
-      ${facts ? `<div class="kfacts">${facts}</div>` : ""}
-      <div class="kinc">${shown.map(one).join("")}</div>
-      ${items.length > 2 ? `<button type="button" class="kmore" data-kopen="${esc(p.id)}" aria-expanded="${open}">${open ? "Show less" : `Show all ${items.length}`}</button>` : ""}
-      ${recLine}
-    </article>`;
-  }
-  function renderKolGrid() {
-    const K = R && R.kols;
-    if (!K) return;
-    const list = K.people.filter((p) => kolF === "all" || p.band === kolF);
-    const cut = kolAll ? list : list.slice(0, 6);
-    $("kolGrid").innerHTML = list.length ? cut.map(kolCard).join("") : `<div class="empty">No account in this group yet.</div>`;
-    $("kolMore").hidden = kolAll || list.length <= 6;
-    $("kolMore").textContent = `Show all ${list.length} accounts`;
-  }
-  $("kolMore").addEventListener("click", () => { kolAll = true; renderKolGrid(); });
-  $("kolChips").addEventListener("click", (e) => {
-    const btn = e.target.closest("button[data-k]");
-    if (!btn) return;
-    kolF = btn.dataset.k; kolAll = false;
-    $("kolChips").querySelectorAll("button").forEach((x) => x.setAttribute("aria-pressed", String(x === btn)));
-    renderKolGrid();
-  });
-  $("kolGrid").addEventListener("click", (e) => {
-    const btn = e.target.closest("button[data-kopen]");
-    if (!btn) return;
-    const id = btn.dataset.kopen;
-    if (kolOpen.has(id)) kolOpen.delete(id); else kolOpen.add(id);
-    renderKolGrid();
-    const card = $(`kol-${id}`);
-    if (card) { const b2 = card.querySelector("button[data-kopen]"); if (b2) b2.focus(); }
-  });
-  function renderKolCalls() {
-    const K = R && R.kols, list = K && Array.isArray(K.calls) ? K.calls.slice(0, 20) : [];
-    $("kolCallsWrap").hidden = !list.length; $("kolCallsEmpty").hidden = Boolean(list.length);
-    if (!list.length) {
-      $("kolCalls").innerHTML = "";
-      $("kolCallsEmpty").textContent = K && K.at ? "No call yet. The tracked accounts are read every 2 hours, and a call shows up here the first time one of them names a coin." : "The tracked accounts are read from the next update on.";
-      return;
-    }
-    const nowS = Date.now() / 1000;
-    const when = (t) => { const h = (nowS - t) / 3600; return h < 1 ? "just now" : h < 24 ? `${Math.round(h)}h ago` : `${Math.round(h / 24)}d ago`; };
-    const CH = { solana: "sol", ethereum: "eth", bsc: "bsc", base: "base", monad: "monad" };
-    $("kolCalls").innerHTML = `<thead><tr><th>Called</th><th>Account</th><th>Coin</th><th class="num hide-s">At the call</th><th class="num">Now</th><th class="chg">Since</th><th class="chg hide-s">7 days</th></tr></thead><tbody>${list.map((x) => {
-      const b = kband(x.score), ch = x.m0 && x.m ? (x.m / x.m0 - 1) * 100 : null;
-      const coin = { s: x.s, c: CH[x.ch] || x.ch, i: x.i };
-      const href = x.ad && x.ch ? `https://dexscreener.com/${encodeURIComponent(x.ch)}/${encodeURIComponent(x.ad)}` : "";
-      const left = Math.max(1, Math.ceil(7 - (nowS - x.t) / 86400));
-      return `<tr><td>${x.u ? `<a href="${esc(x.u)}" target="_blank" rel="noopener">${esc(when(x.t))}</a>` : esc(when(x.t))}</td>`
-        + `<td class="who"><b>${esc(x.name)}</b><small>@${esc(x.h)}${x.score != null ? `${SEP}<span class="sc ${b}">${x.score.toFixed(1)}</span>` : ""}</small></td>`
-        + `<td class="coin"><span class="cw">${logo(coin, "s")}<span>${href ? `<a href="${esc(href)}" target="_blank" rel="noopener">${esc(x.s)}</a>` : `<b>${esc(x.s)}</b>`}${x.n ? `<small>${esc(x.n)}</small>` : ""}${x.x > 1 ? `<small>named ${x.x} times</small>` : ""}</span></span></td>`
-        + `<td class="num hide-s">${x.m0 ? usd(x.m0) : "n/a"}</td><td class="num">${x.m ? usd(x.m) : "n/a"}</td>`
-        + `<td class="chg ${ch > 0 ? "up" : ch < 0 ? "down" : ""}">${ch != null ? pct(ch) : "n/a"}</td>`
-        + `<td class="chg hide-s ${x.d7 > 0 ? "up" : x.d7 < 0 ? "down" : ""}">${x.d7 != null ? pct(x.d7 * 100) : `in ${left}d`}</td></tr>`;
-    }).join("")}</tbody>`;
-  }
-  /* the two charts: the risk scale with every account on it, and the incidents over time */
-  function drawKolCharts() {
-    const K = R && R.kols;
-    if (!K || !K.people || !K.people.length) return;
-    const box = $("kolSpectrum");
-    const W = clamp(Math.round(box.clientWidth || 900), 280, 1200), narrow = W < 640;
-    const x0 = 14, x1 = W - 14, X = (v) => x0 + (v - 1) / 9 * (x1 - x0);
-    const axisY = narrow ? 44 : 104, H = narrow ? 88 : 214;
-    let s = `<svg viewBox="0 0 ${W} ${H}" width="${W}" height="${H}" role="img" aria-label="Every account on the risk scale from 1 to 10">`;
-    s += `<defs><linearGradient id="kg" x1="0" x2="1"><stop offset="0" stop-color="#14F195"/><stop offset="0.22" stop-color="#14F195"/><stop offset="0.5" stop-color="#ffb020"/><stop offset="0.78" stop-color="#ff3b5c"/><stop offset="1" stop-color="#ff3b5c"/></linearGradient></defs>`;
-    [["Trusted", 1, 3.5], ["Caution", 3.5, 7], ["High risk", 7, 10]].forEach(([t, a, b], i) => {
-      s += `<text x="${((X(a) + X(b)) / 2).toFixed(1)}" y="${narrow ? 12 : 12}" text-anchor="middle" fill="${["#14F195", "#ffb020", "#ff8da0"][i]}" font-size="11" font-weight="800" letter-spacing="1.2" font-family="IBM Plex Sans, sans-serif">${t.toUpperCase()}</text>`;
-    });
-    s += `<rect x="${x0}" y="${axisY - 3}" width="${x1 - x0}" height="6" rx="3" fill="url(#kg)" opacity="0.85"></rect>`;
-    for (let v = 1; v <= 10; v++) s += `<text x="${X(v).toFixed(1)}" y="${axisY + 24}" text-anchor="middle" fill="#a3abc0" font-size="11.5" font-family="IBM Plex Mono, monospace">${v}</text>`;
-    const people = K.people.filter((p) => p.score != null).slice().sort((a, b) => a.score - b.score || a.name.localeCompare(b.name));
-    const rows = narrow ? [] : [-1, 1, -2, 2, -3, 3, -4, 4];
-    const rowY = (k) => (k < 0 ? axisY - 18 - (-k - 1) * 17 : axisY + 46 + (k - 1) * 17);
-    const used = new Map();
-    const dots = [], labels = [], seen = [];
-    people.forEach((p) => {
-      const x = X(p.score), b = p.band || kband(p.score);
-      const near = seen.filter((q) => Math.abs(q - x) < 9).length;
-      const y = axisY + (near ? (near % 2 ? -1 : 1) * Math.ceil(near / 2) * 7 : 0);
-      seen.push(x);
-      dots.push(`<g><title>${esc(p.name)}: ${p.score.toFixed(1)}, ${KBAND[b]}</title><circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="${narrow ? 5 : 6}" fill="${KCOL[b]}" stroke="#05060d" stroke-width="2"></circle></g>`);
-      const w = textW(p.name, 12) + 8;
-      for (const k of rows) {
-        const l = clamp(x - w / 2, x0 - 6, x1 + 6 - w), r = l + w;
-        const taken = used.get(k) || [];
-        if (taken.some(([a, c]) => l < c + 6 && r > a - 6)) continue;
-        taken.push([l, r]); used.set(k, taken);
-        const ly = rowY(k);
-        labels.push(`<line x1="${x.toFixed(1)}" y1="${(k < 0 ? y - 7 : y + 7).toFixed(1)}" x2="${x.toFixed(1)}" y2="${(k < 0 ? ly + 4 : ly - 11).toFixed(1)}" stroke="rgba(237,237,237,0.22)"></line><text x="${(l + w / 2).toFixed(1)}" y="${ly}" text-anchor="middle" fill="#ededed" font-size="12" font-family="IBM Plex Sans, sans-serif">${esc(p.name)}</text>`);
-        break;
-      }
-    });
-    s += labels.join("") + dots.join("") + "</svg>";
-    box.innerHTML = s;
-
-    /* incidents over time, one row per account */
-    const tb = $("kolTimeline");
-    const rowsP = K.people.filter((p) => p.incidents.length || p.align.length);
-    const TW = clamp(Math.round(tb.clientWidth || 900), 280, 1200), slim = TW < 640;
-    const left = slim ? 98 : 132, right = TW - (slim ? 8 : 18), top = 26, rowH = slim ? 24 : 26, TH = top + rowsP.length * rowH + 30;
-    /* the axis starts with the year of the oldest record */
-    const yrs = rowsP.flatMap((p) => p.incidents.concat(p.align).map((it) => Number(String(it.date || "").slice(0, 4)))).filter((y) => y > 2000);
-    const y0 = yrs.length ? Math.min(...yrs) : 2024;
-    const t0 = Date.UTC(y0, 0, 1), t1 = Date.parse((R && R.at) || "") || Date.now();
-    const XT = (t) => left + (t - t0) / (t1 - t0) * (right - left);
-    const TT = (d) => { const [y, m] = String(d || "").split("-").map(Number); return Date.UTC(y || y0, (m || 1) - 1, 15); };
-    let u = `<svg viewBox="0 0 ${TW} ${TH}" width="${TW}" height="${TH}" role="img" aria-label="Documented incidents over time, one row per account">`;
-    for (let y = y0; Date.UTC(y, 0, 1) <= t1; y++) {
-      for (let q = 0; q < 4; q++) {
-        const t = Date.UTC(y, q * 3, 1);
-        if (t > t1) break;
-        const x = XT(t);
-        u += `<line x1="${x.toFixed(1)}" x2="${x.toFixed(1)}" y1="${top - 8}" y2="${TH - 24}" stroke="${q ? "rgba(237,237,237,0.06)" : "rgba(237,237,237,0.16)"}"></line>`;
-        if (!q) u += `<text x="${(x + 4).toFixed(1)}" y="${TH - 8}" fill="#a3abc0" font-size="${slim ? 11 : 11.5}" font-family="IBM Plex Mono, monospace">${y}</text>`;
-      }
-    }
-    rowsP.forEach((p, i) => {
-      const y = top + i * rowH + rowH / 2, b = p.band || kband(p.score);
-      u += `<line x1="${left}" x2="${right}" y1="${y}" y2="${y}" stroke="rgba(237,237,237,0.07)"></line>`;
-      const nm = slim && p.name.length > 14 ? `${p.name.slice(0, 13)}.` : p.name.length > 18 ? `${p.name.slice(0, 17)}.` : p.name;
-      u += `<text x="${left - 8}" y="${y + 4}" text-anchor="end" fill="${KCOL[b]}" font-size="${slim ? 11 : 12}" font-family="IBM Plex Sans, sans-serif">${esc(nm)}</text>`;
-      const placed = [];
-      const at = (d, rad) => { let x = XT(TT(d)); while (placed.some((q) => Math.abs(q - x) < rad + 3)) x += rad + 3; placed.push(x); return x; };
-      p.incidents.slice().sort((a2, b2) => String(a2.date).localeCompare(String(b2.date))).forEach((it) => {
-        const rad = (it.usd > 1e5 ? Math.min(12, 4 + 2.6 * Math.log10(it.usd / 1e5)) : 4) * (slim ? 0.75 : 1);
-        const x = at(it.date, rad);
-        u += `<g><title>${esc(ym(it.date))}, ${esc(it.token)}: ${esc(it.what)} (${esc(EVN[it.evidence] || it.evidence)})</title><circle cx="${x.toFixed(1)}" cy="${y}" r="${rad.toFixed(1)}" fill="${HARMC[it.harm] || "#a3abc0"}" fill-opacity="0.88" stroke="#05060d" stroke-width="1.5"></circle></g>`;
-      });
-      p.align.forEach((it) => {
-        const x = at(it.date, 6);
-        u += `<g><title>${esc(ym(it.date))}: ${esc(it.what)}</title><circle cx="${x.toFixed(1)}" cy="${y}" r="6" fill="none" stroke="#14F195" stroke-width="2"></circle></g>`;
-      });
-    });
-    tb.innerHTML = u + "</svg>";
-  }
+/*@end*/
 
   /* ---------- log ---------- */
   function renderLog() {
@@ -4063,7 +3964,7 @@ section.band.numbers > .wrap { padding-block: 64px 84px; }
   function renderAll() {
     $("notice").hidden = !(PREVIEW && isBlank());
     reserveHeights();
-    [renderNumbers, renderTicker, renderRunners, renderList, renderLaunch, renderKols, renderHours, renderProof, renderWeekly, renderSignals, renderLog, renderFooter].forEach((fn) => { try { fn(); } catch (e) { console.warn(fn.name, e); } });
+    [renderNumbers, renderTicker, renderRunners, renderList, renderLaunch, renderHours, renderProof, renderWeekly, renderSignals, renderLog, renderFooter].forEach((fn) => { try { fn(); } catch (e) { console.warn(fn.name, e); } });
     try { sky.setData(skyData()); if (!ambOn) skyStill(); } catch (e) { console.warn("sky", e); }
     try { renderSkyKey(); } catch (e) { console.warn("renderSkyKey", e); }
   }
@@ -4112,6 +4013,7 @@ section.band.numbers > .wrap { padding-block: 64px 84px; }
   ["alertBtn", "alertBtn2"].forEach((id) => { $(id).href = alertHref; $(id).textContent = TG ? "Get the sunrise alert" : "Follow for the sunrise alert"; });
   if (XHANDLE) { $("byLink").href = `https://x.com/${XHANDLE}`; $("byLink").textContent = `@${XHANDLE}`; }
 
+/*@share*/
   /* ---------- donate ---------- */
   const dlg = $("donate");
   /* Every wallet card gets the same height for each part, so names, networks, addresses and buttons
@@ -4149,6 +4051,82 @@ section.band.numbers > .wrap { padding-block: 64px 84px; }
     });
   });
   if (location.hash === "#donate") openDonate();
+/*@end*/
+/*@share*/
+  /* ---------- the rail: where you are on the page, and a way to every part of it ---------- */
+  (function rail() {
+    const nav = $("rail");
+    if (!nav) return;
+    const links = [...nav.querySelectorAll("a.ri")];
+    const secs = links.map((a) => document.getElementById(decodeURIComponent(a.hash.slice(1))));
+    const track = nav.querySelector(".rail-track"), tog = nav.querySelector(".rail-tog"), buy = nav.querySelector(".rx-buy");
+    if (buy) {
+      buy.hidden = !BUY;
+      if (BUY) { buy.href = BUY.url; buy.querySelector(".rl").textContent = `Buy on ${BUY.name}`; }
+    }
+    /* the Line's colours, purple at the top of the page to amber at the end */
+    const G = [[153, 69, 255], [20, 241, 149], [255, 176, 32]];
+    const colorAt = (f) => {
+      const [a, b, u] = f <= 0.55 ? [G[0], G[1], f / 0.55] : [G[1], G[2], (f - 0.55) / 0.45];
+      return `rgb(${a.map((v, k) => Math.round(v + (b[k] - v) * clamp(u, 0, 1))).join(",")})`;
+    };
+    let tops = [], cur = -1, raf = 0, peekT = 0, open = false;
+    const measure = () => { tops = secs.map((el) => (el ? el.getBoundingClientRect().top + window.scrollY : Infinity)); };
+    const peek = (a) => {
+      links.forEach((x) => x.classList.remove("peek"));
+      a.classList.add("peek");
+      clearTimeout(peekT);
+      peekT = setTimeout(() => a.classList.remove("peek"), 1700);
+    };
+    function update() {
+      raf = 0;
+      const vh = window.innerHeight, y = window.scrollY + vh * 0.35;
+      let i = 0;
+      tops.forEach((t, k) => { if (t <= y) i = k; });
+      const end = Math.max(tops[i] + 1, document.documentElement.scrollHeight - vh * 0.65);
+      const next = i + 1 < tops.length ? tops[i + 1] : end;
+      const u = clamp((y - tops[i]) / Math.max(1, next - tops[i]), 0, 1);
+      /* the dots' centres on the spine, and the sun between the part it is in and the next */
+      const ys = links.map((a) => a.offsetTop + a.offsetHeight / 2);
+      const s0 = ys[0], sh = Math.max(0, ys[ys.length - 1] - s0);
+      const pos = i + 1 < ys.length ? ys[i] + (ys[i + 1] - ys[i]) * u : ys[i];
+      track.style.setProperty("--s0", `${s0}px`);
+      track.style.setProperty("--sh", `${sh}px`);
+      track.style.setProperty("--p", `${(pos - s0).toFixed(1)}px`);
+      links.forEach((a, k) => {
+        a.style.setProperty("--c", colorAt(sh ? (ys[k] - s0) / sh : 0));
+        a.classList.toggle("past", k < i);
+        a.classList.toggle("cur", k === i);
+        if (k === i) a.setAttribute("aria-current", "location"); else a.removeAttribute("aria-current");
+      });
+      const on = tops.length > 1 && isFinite(tops[1]) ? window.scrollY + vh * 0.55 > tops[1] : window.scrollY > vh * 0.5;
+      const was = nav.classList.contains("on");
+      nav.classList.toggle("on", on);
+      if (!on && open) setOpen(false);
+      if (i !== cur) { if (was && on && cur !== -1) peek(links[i]); cur = i; }
+    }
+    const ask = () => { if (!raf) raf = requestAnimationFrame(update); };
+    /* while the panel opens or closes the rows change height, so the spine follows for a moment */
+    const follow = () => { const t0 = performance.now(); const step = () => { update(); if (performance.now() - t0 < 420) requestAnimationFrame(step); }; requestAnimationFrame(step); };
+    function setOpen(v) {
+      if (open === v) return;
+      open = v;
+      nav.classList.toggle("open", v);
+      if (tog) tog.setAttribute("aria-expanded", String(v));
+      follow();
+    }
+    if (tog) tog.addEventListener("click", (e) => { e.stopPropagation(); setOpen(true); });
+    nav.addEventListener("click", (e) => { if (open && e.target.closest("a, button[data-donate]")) setTimeout(() => setOpen(false), 80); });
+    document.addEventListener("click", (e) => { if (open && !nav.contains(e.target)) setOpen(false); });
+    document.addEventListener("keydown", (e) => { if (e.key === "Escape" && open) setOpen(false); });
+    nav.addEventListener("transitionend", (e) => { if (e.propertyName === "height") ask(); });
+    window.addEventListener("scroll", ask, { passive: true });
+    window.addEventListener("resize", () => { measure(); ask(); });
+    if ("ResizeObserver" in window) new ResizeObserver(() => { measure(); ask(); }).observe(document.body);
+    measure();
+    update();
+  })();
+/*@end*/
 
   /* ---------- resize, fonts, refresh ---------- */
   let rsT = 0, lastW = 0;
@@ -4158,7 +4136,7 @@ section.band.numbers > .wrap { padding-block: 64px 84px; }
       measure();
       if (dlg.open) evenWallets();
       const w = window.innerWidth;
-      if (R && w !== lastW) { lastW = w; reserveHeights(); try { drawStrip(); drawKolCharts(); if (chartTab === "wk" && hasWeeks()) renderCandles(); else renderProof(); sizeTicker(); } catch (e) { console.warn(e); } measure(); }
+      if (R && w !== lastW) { lastW = w; reserveHeights(); try { drawStrip(); if (chartTab === "wk" && hasWeeks()) renderCandles(); else renderProof(); sizeTicker(); } catch (e) { console.warn(e); } measure(); }
     }, 120);
   };
   window.addEventListener("resize", onResize);
