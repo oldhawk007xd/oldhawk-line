@@ -199,7 +199,7 @@
           "harm": "dump",
           "evidence": "onchain",
           "usd": 130000,
-          "what": "Bubblemaps found 5 wallets linked to him that bought about 20 seconds before 61% of his 534 calls in two weeks and sold minutes later, for about $130K with his callout rewards.",
+          "what": "Bubblemaps found 5 wallets linked to him that bought about 20 seconds before 61% of his 534 calls in two weeks and began selling about 4 minutes later, for about $130K with his callout rewards. His public wallet bought after them and sold last.",
           "sources": [
             {
               "t": "Bubblemaps: Key Opinion Leaders are leading by example, just not for you",
@@ -600,6 +600,74 @@
         }
       ],
       "align": []
+    },
+    {
+      "id": "the-solstice",
+      "name": "TheSolstice",
+      "x": "The__Solstice",
+      "role": "Fomo top trader",
+      "track": true,
+      "incidents": [
+        {
+          "date": "2026-10",
+          "token": "STONKINU, BOP, QUEEF, HEV, LLAMA",
+          "harm": "insiders",
+          "evidence": "onchain",
+          "usd": 270000,
+          "what": "Bubblemaps found dozens of fresh wallets buying these Pump.fun microcaps at the same moments, each holding 0.5% to 1%, while he posted about them dozens of times. His public wallet sits two hops from a wallet that funded the deployers of all of them. The bundle wallets gained about $270K while his public wallet lost about $70K. He said he knew some of the teams from a while ago; another source told Bubblemaps he bundled the tokens with their help.",
+          "sources": [
+            {
+              "t": "Bubblemaps on X: an investigation into @The__Solstice",
+              "u": "https://x.com/bubblemaps/status/2114773390414487697"
+            },
+            {
+              "t": "TokenPost: Bubblemaps says wallets tied to TheSolstice promotions gained $270,000",
+              "u": "https://www.tokenpost.com/news/people/41537"
+            }
+          ]
+        }
+      ],
+      "align": []
+    },
+    {
+      "id": "unipcs",
+      "name": "Unipcs",
+      "x": "theunipcs",
+      "role": "Memecoin trader, Bonk Guy",
+      "track": true,
+      "incidents": [],
+      "align": [
+        {
+          "date": "2026-10",
+          "kind": "holds",
+          "what": "Kept his main positions, PONS, USELESS and MARSCOIN, all coins he calls in public, while his public Fomo portfolio fell 69% from $28.5M to about $8.9M, and reported no sales.",
+          "sources": [
+            {
+              "t": "KuCoin News: Bonk Guy's Fomo portfolio drops 69% to $8.9M from a $28.5M peak",
+              "u": "https://www.kucoin.com/news/flash/bonk-guy-s-fomo-portfolio-drops-69-to-8-9m-from-28-5m-peak"
+            },
+            {
+              "t": "Unipcs on X: USELESS coin and chill until year end",
+              "u": "https://x.com/theunipcs/status/2084346561576738849"
+            }
+          ]
+        },
+        {
+          "date": "2024-06",
+          "kind": "holds",
+          "what": "Held the BONK position he opened with about $16K through every correction of the 2023 to 2024 run, with unrealized profit peaking near $20M.",
+          "sources": [
+            {
+              "t": "Airdrop Alert: who is Bonk Guy",
+              "u": "https://airdropalert.com/blogs/who-is-bonkguy-guide/"
+            },
+            {
+              "t": "The Defiant: crypto community torn over Bonk Guy, who wants to ride his tokens to $1 billion",
+              "u": "https://thedefiant.io/crypto-community-torn-over-bonk-guy-who-wants-to-emulate-roaring-kitty"
+            }
+          ]
+        }
+      ]
     }
   ]
 }
