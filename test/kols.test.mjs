@@ -109,6 +109,7 @@ check("score: neutral 5, documented harm pushes it up, documented alignment pull
   assert.equal(scoreOf(people[1], null).score, 2.5);
   assert.equal(scoreOf({ incidents: [{ harm: "dump", evidence: "admitted", usd: 1e8 }, { harm: "dump", evidence: "onchain", usd: 12e6 }], align: [] }, null).score, 9.3);
   assert.equal(incidentPoints({ harm: "insiders", evidence: "reported" }), 1.5);
+  assert.equal(incidentPoints({ harm: "undisclosed", evidence: "settled" }), 2.4);
   assert.equal(band(2.5), "trusted"); assert.equal(band(5), "caution"); assert.equal(band(7), "risk");
 });
 check("score: from 10 measured calls, what the coins did moves it", () => {
@@ -135,10 +136,16 @@ check("board: totals", () => { assert.equal(board.stats.people, 3); assert.equal
 
 /* the real file: every record has sources, and only the words the method knows */
 const file = JSON.parse(await readFile(new URL("../kols.json", import.meta.url), "utf8"));
+check("board: an account X has not let us read lately says so", () => {
+  const one = (read) => kolBoard({ people: [{ id: "a", name: "A", x: "Abc_1", track: true, incidents: [], align: [] }] }, { calls: [], read }, Date.now()).people[0].seen;
+  assert.deepEqual(one({ abc_1: { at: "2026-10-31T12:00:00Z", miss: 3 } }), { ok: null, miss: 3 });
+  assert.deepEqual(one({ abc_1: { at: "2026-10-31T12:00:00Z", ok: "2026-10-31T12:00:00Z", since: 1 } }), { ok: "2026-10-31T12:00:00Z", miss: 0 });
+  assert.equal(one({}), null);
+});
 check("kols.json: every incident and alignment has a date, a known kind and at least one https source", () => {
   for (const p of file.people) {
     assert.ok(p.id && p.name, JSON.stringify(p).slice(0, 60));
-    for (const i of p.incidents) { assert.ok(/^\d{4}-\d{2}$/.test(i.date) && i.what && ["dump", "insiders", "undisclosed", "collapse"].includes(i.harm) && ["admitted", "court", "onchain", "lawsuit", "dismissed", "reported"].includes(i.evidence), `${p.id} ${i.token}`); assert.ok(i.sources.length && i.sources.every((s) => /^https:\/\//.test(s.u) && s.t), `${p.id} ${i.token} sources`); }
+    for (const i of p.incidents) { assert.ok(/^\d{4}-\d{2}$/.test(i.date) && i.what && ["dump", "insiders", "undisclosed", "collapse"].includes(i.harm) && ["admitted", "court", "settled", "onchain", "lawsuit", "dismissed", "reported"].includes(i.evidence), `${p.id} ${i.token}`); assert.ok(i.sources.length && i.sources.every((s) => /^https:\/\//.test(s.u) && s.t), `${p.id} ${i.token} sources`); }
     for (const a of p.align) { assert.ok(["wallets", "holds", "discloses"].includes(a.kind) && a.what && a.sources.length && a.sources.every((s) => /^https:\/\//.test(s.u)), `${p.id} align`); }
     if (p.track) assert.ok(/^[A-Za-z0-9_]{1,15}$/.test(p.x), `${p.id} handle`);
   }

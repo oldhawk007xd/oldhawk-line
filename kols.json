@@ -1,5 +1,5 @@
 {
-  "about": "KOL Watch: what is documented about accounts that promote coins, with a source for every line. Only add a record that a named investigator, a court filing or the person's own words back up, and link it. harm: dump (they or wallets tied to them sold into their own promotion, or launched a coin and sold it), insiders (a large part of the supply of a coin they launched or promoted sat with insiders, who held or sold it), undisclosed (paid to promote without saying so), collapse (the coin collapsed after their promotion, with no link to their own selling). evidence: admitted, court, onchain (a named on-chain investigation), lawsuit (pending), dismissed, reported (press reports or public accusations). align: wallets (public wallets attributed by a named analyst), holds (documented holding of what they promote through a drawdown), discloses (labels paid posts). usd: the documented amount taken from buyers or held by insiders, when a source gives one. track: read their X posts and measure every coin they name.",
+  "about": "KOL Watch: what is documented about accounts that promote coins, with a source for every line. Only add a record that a named investigator, a court filing or the person's own words back up, and link it. harm: dump (they or wallets tied to them sold into their own promotion, or launched a coin and sold it), insiders (a large part of the supply of a coin they launched or promoted sat with insiders, who held or sold it), undisclosed (paid to promote without saying so), collapse (the coin collapsed after their promotion, with no link to their own selling). evidence: admitted, court, settled (a settlement with a regulator or in court, without admitting or denying), onchain (a named on-chain investigation), lawsuit (pending), dismissed, reported (press reports or public accusations). align: wallets (public wallets attributed by a named analyst), holds (documented holding of what they promote through a drawdown), discloses (labels paid posts). usd: the documented amount taken from buyers or held by insiders, when a source gives one. track: read their X posts and measure every coin they name.",
   "people": [
     {
       "id": "hayden-davis",
@@ -9,27 +9,62 @@
       "track": false,
       "incidents": [
         {
-          "date": "2025-02", "token": "LIBRA", "harm": "dump", "evidence": "admitted", "usd": 100000000,
+          "date": "2025-02",
+          "token": "LIBRA",
+          "harm": "dump",
+          "evidence": "admitted",
+          "usd": 100000000,
           "what": "Said in an interview with Coffeezilla that his team sniped LIBRA at launch and that wallets he controlled held over $100M from it. LIBRA fell 97% within hours.",
           "sources": [
-            { "t": "The Block: Hayden Davis admits team sniped token at launch", "u": "https://www.theblock.co/post/341251/libra-memecoin-facilitator-hayden-davis-admits-team-sniped-token-at-launch" },
-            { "t": "DL News: how scandals and lawsuits shaped memecoins in 2025", "u": "https://www.dlnews.com/articles/defi/how-scandals-and-lawsuits-shaped-memecoins-in-2025/" }
+            {
+              "t": "The Block: Hayden Davis admits team sniped token at launch",
+              "u": "https://www.theblock.co/post/341251/libra-memecoin-facilitator-hayden-davis-admits-team-sniped-token-at-launch"
+            },
+            {
+              "t": "DL News: how scandals and lawsuits shaped memecoins in 2025",
+              "u": "https://www.dlnews.com/articles/defi/how-scandals-and-lawsuits-shaped-memecoins-in-2025/"
+            }
           ]
         },
         {
-          "date": "2025-03", "token": "WOLF", "harm": "collapse", "evidence": "onchain",
+          "date": "2025-03",
+          "token": "WOLF",
+          "harm": "collapse",
+          "evidence": "onchain",
           "what": "Bubblemaps linked the creator address of WOLF to him. The coin reached a $40M market cap, then collapsed.",
-          "sources": [ { "t": "ForkLog: LIBRA and MELANIA creator continues token launches", "u": "https://forklog.com/en/libra-and-melania-creator-continues-token-launches-despite-interpol-notice/" } ]
+          "sources": [
+            {
+              "t": "ForkLog: LIBRA and MELANIA creator continues token launches",
+              "u": "https://forklog.com/en/libra-and-melania-creator-continues-token-launches-despite-interpol-notice/"
+            }
+          ]
         },
         {
-          "date": "2025-08", "token": "YZY", "harm": "dump", "evidence": "onchain", "usd": 12000000,
+          "date": "2025-08",
+          "token": "YZY",
+          "harm": "dump",
+          "evidence": "onchain",
+          "usd": 12000000,
           "what": "Bubblemaps tied 14 wallets to him that bought Kanye West's YZY about a minute after launch and took about $12M in profit. Bubblemaps said it could not confirm insider information.",
-          "sources": [ { "t": "The Block: LIBRA facilitator earns $12M sniping Kanye West memecoin", "u": "https://www.theblock.co/news/ecosystems/2025-08-25-libra-token-facilitator-earns-12-million-sniping-kanye-west-memecoin-bubblemaps-368164" } ]
+          "sources": [
+            {
+              "t": "The Block: LIBRA facilitator earns $12M sniping Kanye West memecoin",
+              "u": "https://www.theblock.co/news/ecosystems/2025-08-25-libra-token-facilitator-earns-12-million-sniping-kanye-west-memecoin-bubblemaps-368164"
+            }
+          ]
         },
         {
-          "date": "2025-10", "token": "LIBRA, MELANIA, ENRON, TRUST, M3M3", "harm": "dump", "evidence": "lawsuit",
+          "date": "2025-10",
+          "token": "LIBRA, MELANIA, ENRON, TRUST, M3M3",
+          "harm": "dump",
+          "evidence": "lawsuit",
           "what": "Named with Kelsier Ventures and Meteora's Ben Chow in a class action (Hurlock v. Kelsier Ventures) that alleges at least 15 coins were launched as a coordinated liquidity trap. Pending.",
-          "sources": [ { "t": "The Block: class action claims Ben Chow orchestrated Melania, LIBRA memecoin fraud", "u": "https://www.theblock.co/news/regulation/2025-10-23-ben-chow-melania-libra-memecoin-375832" } ]
+          "sources": [
+            {
+              "t": "The Block: class action claims Ben Chow orchestrated Melania, LIBRA memecoin fraud",
+              "u": "https://www.theblock.co/news/regulation/2025-10-23-ben-chow-melania-libra-memecoin-375832"
+            }
+          ]
         }
       ],
       "align": []
@@ -38,19 +73,39 @@
       "id": "sahil-arora",
       "name": "Sahil Arora",
       "x": null,
-      "also": ["Habibi_Comm", "sahilsaysol", "sahilbuilds"],
+      "also": [
+        "Habibi_Comm",
+        "sahilsaysol",
+        "sahilbuilds"
+      ],
       "role": "Celebrity coin launcher",
       "track": false,
       "incidents": [
         {
-          "date": "2024-05", "token": "Celebrity coins", "harm": "dump", "evidence": "onchain",
+          "date": "2024-05",
+          "token": "Celebrity coins",
+          "harm": "dump",
+          "evidence": "onchain",
           "what": "The investigator Roxo traced coins launched for Soulja Boy, Rich The Kid, Kazumi and Ivana Knoll to one wallet attributed to him. Rich The Kid said Arora dumped all the money.",
-          "sources": [ { "t": "Cointelegraph: Roxo identifies Sahil Arora behind celebrity memecoins", "u": "https://cointelegraph.com/news/celebrity-x-accounts-hacked-roxo-identifies-sahil-arora" } ]
+          "sources": [
+            {
+              "t": "Cointelegraph: Roxo identifies Sahil Arora behind celebrity memecoins",
+              "u": "https://cointelegraph.com/news/celebrity-x-accounts-hacked-roxo-identifies-sahil-arora"
+            }
+          ]
         },
         {
-          "date": "2024-06", "token": "JENNER", "harm": "dump", "evidence": "reported",
+          "date": "2024-06",
+          "token": "JENNER",
+          "harm": "dump",
+          "evidence": "reported",
           "what": "Caitlyn Jenner said he launched JENNER, had her promote it, then sold his holdings. It fell from $43M to about $5M, and X banned his account. He denied the claims.",
-          "sources": [ { "t": "The Block: X bans alleged celebrity memecoin scammer Sahil Arora", "u": "https://www.theblock.co/post/298428/x-bans-alleged-celebrity-memecoin-scammer-sahil-arora" } ]
+          "sources": [
+            {
+              "t": "The Block: X bans alleged celebrity memecoin scammer Sahil Arora",
+              "u": "https://www.theblock.co/post/298428/x-bans-alleged-celebrity-memecoin-scammer-sahil-arora"
+            }
+          ]
         }
       ],
       "align": []
@@ -63,11 +118,21 @@
       "track": true,
       "incidents": [
         {
-          "date": "2025-07", "token": "ALT", "harm": "dump", "evidence": "onchain", "usd": 11000000,
+          "date": "2025-07",
+          "token": "ALT",
+          "harm": "dump",
+          "evidence": "onchain",
+          "usd": 11000000,
           "what": "ZachXBT linked 45 wallets, funded through an address tied to his public wallet, that sold over $11M of ALT in the July 14 crash after he promoted it. Market cap went from $190M to $3M and his posts were deleted. He denied it and blamed snipers.",
           "sources": [
-            { "t": "BeInCrypto: Crypto Beast exposed for ALT pump and dump", "u": "https://beincrypto.com/crypto-beast-exposed-alt-token-pump-dump-scam/" },
-            { "t": "Mitrade: ZachXBT traces $11M ALT scam to Crypto Beast", "u": "https://www.mitrade.com/insights/news/live-news/article-3-977974-20250722" }
+            {
+              "t": "BeInCrypto: Crypto Beast exposed for ALT pump and dump",
+              "u": "https://beincrypto.com/crypto-beast-exposed-alt-token-pump-dump-scam/"
+            },
+            {
+              "t": "Mitrade: ZachXBT traces $11M ALT scam to Crypto Beast",
+              "u": "https://www.mitrade.com/insights/news/live-news/article-3-977974-20250722"
+            }
           ]
         }
       ],
@@ -81,9 +146,18 @@
       "track": true,
       "incidents": [
         {
-          "date": "2025-02", "token": "GREED", "harm": "dump", "evidence": "onchain", "usd": 258000,
+          "date": "2025-02",
+          "token": "GREED",
+          "harm": "dump",
+          "evidence": "onchain",
+          "usd": 258000,
           "what": "A wallet tied to him deployed GREED with 35% of the supply and sold it for about $258K as the price fell over 90% (Lookonchain). GREED2, launched the same day, went from $28M to under $750K. He had warned buyers it would be volatile.",
-          "sources": [ { "t": "The Block: Dave Portnoy nets over $250,000 by creating and selling GREED", "u": "https://www.theblock.co/post/341696/dave-portnoy-nets-over-250000-by-creating-and-selling-greed-memecoin" } ]
+          "sources": [
+            {
+              "t": "The Block: Dave Portnoy nets over $250,000 by creating and selling GREED",
+              "u": "https://www.theblock.co/post/341696/dave-portnoy-nets-over-250000-by-creating-and-selling-greed-memecoin"
+            }
+          ]
         }
       ],
       "align": []
@@ -96,9 +170,18 @@
       "track": true,
       "incidents": [
         {
-          "date": "2026-02", "token": "SIAS and others", "harm": "dump", "evidence": "onchain", "usd": 600000,
+          "date": "2026-02",
+          "token": "SIAS and others",
+          "harm": "dump",
+          "evidence": "onchain",
+          "usd": 600000,
           "what": "Bubblemaps traced a wallet linked to the account to the launch of SIAS, which reached about $6M and went to zero, and to dozens of other coins that went to zero, for about $600K in profit. He answered: cry me a river.",
-          "sources": [ { "t": "The Block: X $1M article winner accused of profiting $600K from memecoin rug pulls", "u": "https://www.theblock.co/post/389385/cry-me-a-river-x-1m-article-winner-accused-of-profiting-600k-from-solana-memecoin-rug-pulls" } ]
+          "sources": [
+            {
+              "t": "The Block: X $1M article winner accused of profiting $600K from memecoin rug pulls",
+              "u": "https://www.theblock.co/post/389385/cry-me-a-river-x-1m-article-winner-accused-of-profiting-600k-from-solana-memecoin-rug-pulls"
+            }
+          ]
         }
       ],
       "align": []
@@ -111,11 +194,21 @@
       "track": true,
       "incidents": [
         {
-          "date": "2026-10", "token": "534 calls", "harm": "dump", "evidence": "onchain", "usd": 130000,
+          "date": "2026-10",
+          "token": "534 calls",
+          "harm": "dump",
+          "evidence": "onchain",
+          "usd": 130000,
           "what": "Bubblemaps found 5 wallets linked to him that bought about 20 seconds before 61% of his 534 calls in two weeks and sold minutes later, for about $130K with his callout rewards.",
           "sources": [
-            { "t": "Bubblemaps: Key Opinion Leaders are leading by example, just not for you", "u": "https://blog.bubblemaps.io/key-opinion-leaders-are-leading-by-example-just-not-for-you/" },
-            { "t": "KuCoin News: KOL Anglio accused of front-running token promotions", "u": "https://www.kucoin.com/news/flash/kol-anglio-accused-of-using-linked-wallets-to-front-run-token-promotions-gaining-130k" }
+            {
+              "t": "Bubblemaps: Key Opinion Leaders are leading by example, just not for you",
+              "u": "https://blog.bubblemaps.io/key-opinion-leaders-are-leading-by-example-just-not-for-you/"
+            },
+            {
+              "t": "KuCoin News: KOL Anglio accused of front-running token promotions",
+              "u": "https://www.kucoin.com/news/flash/kol-anglio-accused-of-using-linked-wallets-to-front-run-token-promotions-gaining-130k"
+            }
           ]
         }
       ],
@@ -129,11 +222,21 @@
       "track": true,
       "incidents": [
         {
-          "date": "2026-10", "token": "49 calls", "harm": "dump", "evidence": "onchain", "usd": 125000,
+          "date": "2026-10",
+          "token": "49 calls",
+          "harm": "dump",
+          "evidence": "onchain",
+          "usd": 125000,
           "what": "Bubblemaps found side wallets that bought before 49 of his calls and began selling about 3 minutes after each one, for about $125K with callout rewards. No public answer found.",
           "sources": [
-            { "t": "crypto.news: Bubblemaps accuses Pump.fun influencer Ethan of $125K scam", "u": "https://crypto.news/bubblemaps-accuses-pump-fun-influencer-ethan-of-125k-scam/" },
-            { "t": "Bubblemaps on X", "u": "https://x.com/bubblemaps/status/2108590916982513819" }
+            {
+              "t": "crypto.news: Bubblemaps accuses Pump.fun influencer Ethan of $125K scam",
+              "u": "https://crypto.news/bubblemaps-accuses-pump-fun-influencer-ethan-of-125k-scam/"
+            },
+            {
+              "t": "Bubblemaps on X",
+              "u": "https://x.com/bubblemaps/status/2108590916982513819"
+            }
           ]
         }
       ],
@@ -147,11 +250,21 @@
       "track": true,
       "incidents": [
         {
-          "date": "2025-09", "token": "Paid campaign", "harm": "undisclosed", "evidence": "admitted", "usd": 60000,
+          "date": "2025-09",
+          "token": "Paid campaign",
+          "harm": "undisclosed",
+          "evidence": "admitted",
+          "usd": 60000,
           "what": "Named in ZachXBT's leak of a paid campaign where fewer than 5 of 160+ accounts disclosed their ads. He confirmed he was paid $60K to push a platform and its presale and said he was told not to disclose it.",
           "sources": [
-            { "t": "Cybernews: 200+ crypto influencers caught hiding paid promotions", "u": "https://cybernews.com/crypto/hundreds-crypto-influencers-caught-deceiving-followers/" },
-            { "t": "blocmates: 200+ influencers named in paid crypto promotion leak", "u": "https://www.blocmates.com/news-posts/200-influencers-named-in-paid-crypto-promotion-leak-few-disclosed-ads" }
+            {
+              "t": "Cybernews: 200+ crypto influencers caught hiding paid promotions",
+              "u": "https://cybernews.com/crypto/hundreds-crypto-influencers-caught-deceiving-followers/"
+            },
+            {
+              "t": "blocmates: 200+ influencers named in paid crypto promotion leak",
+              "u": "https://www.blocmates.com/news-posts/200-influencers-named-in-paid-crypto-promotion-leak-few-disclosed-ads"
+            }
           ]
         }
       ],
@@ -165,9 +278,18 @@
       "track": true,
       "incidents": [
         {
-          "date": "2024-06", "token": "DADDY", "harm": "insiders", "evidence": "onchain", "usd": 45000000,
+          "date": "2024-06",
+          "token": "DADDY",
+          "harm": "insiders",
+          "evidence": "onchain",
+          "usd": 45000000,
           "what": "Bubblemaps found insiders bought 30% of DADDY at launch across 21 wallets and that 40% of the supply went to his wallet before he promoted it. He said he would never sell what was sent to him.",
-          "sources": [ { "t": "CryptoSlate: Bubblemaps alleges insider trading in memecoins promoted by Andrew Tate, Iggy Azalea", "u": "https://cryptoslate.com/bubblemaps-alleges-insider-trading-in-memecoins-promoted-by-andrew-tate-iggy-azalea/" } ]
+          "sources": [
+            {
+              "t": "CryptoSlate: Bubblemaps alleges insider trading in memecoins promoted by Andrew Tate, Iggy Azalea",
+              "u": "https://cryptoslate.com/bubblemaps-alleges-insider-trading-in-memecoins-promoted-by-andrew-tate-iggy-azalea/"
+            }
+          ]
         }
       ],
       "align": []
@@ -180,9 +302,18 @@
       "track": true,
       "incidents": [
         {
-          "date": "2024-05", "token": "MOTHER", "harm": "insiders", "evidence": "onchain", "usd": 2000000,
+          "date": "2024-05",
+          "token": "MOTHER",
+          "harm": "insiders",
+          "evidence": "onchain",
+          "usd": 2000000,
           "what": "Bubblemaps found insiders bought 20% of MOTHER at launch and had sold about $2M of it.",
-          "sources": [ { "t": "CryptoSlate: Bubblemaps alleges insider trading in memecoins promoted by Andrew Tate, Iggy Azalea", "u": "https://cryptoslate.com/bubblemaps-alleges-insider-trading-in-memecoins-promoted-by-andrew-tate-iggy-azalea/" } ]
+          "sources": [
+            {
+              "t": "CryptoSlate: Bubblemaps alleges insider trading in memecoins promoted by Andrew Tate, Iggy Azalea",
+              "u": "https://cryptoslate.com/bubblemaps-alleges-insider-trading-in-memecoins-promoted-by-andrew-tate-iggy-azalea/"
+            }
+          ]
         }
       ],
       "align": []
@@ -195,12 +326,24 @@
       "track": true,
       "incidents": [
         {
-          "date": "2024-05", "token": "JENNER", "harm": "insiders", "evidence": "lawsuit",
+          "date": "2024-05",
+          "token": "JENNER",
+          "harm": "insiders",
+          "evidence": "lawsuit",
           "what": "JENNER fell from $43M to about $5M after its launch. Buyers sued her, alleging a pump and dump; a federal judge dismissed the federal claims in April 2026, finding the coin was not a security, and a new complaint followed. She blames the promoter Sahil Arora.",
           "sources": [
-            { "t": "The Block: X bans alleged celebrity memecoin scammer Sahil Arora", "u": "https://www.theblock.co/post/298428/x-bans-alleged-celebrity-memecoin-scammer-sahil-arora" },
-            { "t": "The Block: judge says JENNER memecoin is not a security", "u": "https://theblock.co/news/regulation/2026-04-17-judge-says-caitlyn-jenners-jenner-memecoin-not-a-security-class-action-lawsuit-397976" },
-            { "t": "TMZ: Caitlyn Jenner sued over alleged crypto pump and dump", "u": "https://www.tmz.com/2026/05/12/caitlyn-jenner-sued-for-crypto-scheme/" }
+            {
+              "t": "The Block: X bans alleged celebrity memecoin scammer Sahil Arora",
+              "u": "https://www.theblock.co/post/298428/x-bans-alleged-celebrity-memecoin-scammer-sahil-arora"
+            },
+            {
+              "t": "The Block: judge says JENNER memecoin is not a security",
+              "u": "https://theblock.co/news/regulation/2026-04-17-judge-says-caitlyn-jenners-jenner-memecoin-not-a-security-class-action-lawsuit-397976"
+            },
+            {
+              "t": "TMZ: Caitlyn Jenner sued over alleged crypto pump and dump",
+              "u": "https://www.tmz.com/2026/05/12/caitlyn-jenner-sued-for-crypto-scheme/"
+            }
           ]
         }
       ],
@@ -214,11 +357,20 @@
       "track": false,
       "incidents": [
         {
-          "date": "2024-12", "token": "HAWK", "harm": "insiders", "evidence": "reported",
+          "date": "2024-12",
+          "token": "HAWK",
+          "harm": "insiders",
+          "evidence": "reported",
           "what": "HAWK reached about $490M and lost 93% minutes after launch, with ten wallets holding 97% of the supply. Buyers sued her business partners, not her, and the SEC closed its probe of her without findings.",
           "sources": [
-            { "t": "Tubefilter: Haliey Welch is free to go over HAWK, SEC says", "u": "https://www.tubefilter.com/2025/03/28/haliey-welch-sec-ruling-hawk-coin/" },
-            { "t": "Blockworks: HAWK memecoin draws lawsuit, but Hawk Tuah girl not sued", "u": "https://blockworks.co/news/hawk-memecoin-draws-lawsuit" }
+            {
+              "t": "Tubefilter: Haliey Welch is free to go over HAWK, SEC says",
+              "u": "https://www.tubefilter.com/2025/03/28/haliey-welch-sec-ruling-hawk-coin/"
+            },
+            {
+              "t": "Blockworks: HAWK memecoin draws lawsuit, but Hawk Tuah girl not sued",
+              "u": "https://blockworks.co/news/hawk-memecoin-draws-lawsuit"
+            }
           ]
         }
       ],
@@ -232,24 +384,47 @@
       "track": true,
       "incidents": [
         {
-          "date": "2024-10", "token": "BODEN, HOBBES, ZEUS, WYNN", "harm": "collapse", "evidence": "reported",
+          "date": "2024-10",
+          "token": "BODEN, HOBBES, ZEUS, WYNN",
+          "harm": "collapse",
+          "evidence": "reported",
           "what": "ZachXBT criticised him for pushing hundreds of low caps to his followers; BODEN, HOBBES, ZEUS and WYNN were down about 98% from their highs. He answered with his early WIF call.",
-          "sources": [ { "t": "Cointelegraph: ZachXBT accuses Ansem of promoting memecoin pump and dumps", "u": "https://cointelegraph.com/news/zachxbt-slams-crypto-influencer-over-memecoin-promotions" } ]
+          "sources": [
+            {
+              "t": "Cointelegraph: ZachXBT accuses Ansem of promoting memecoin pump and dumps",
+              "u": "https://cointelegraph.com/news/zachxbt-slams-crypto-influencer-over-memecoin-promotions"
+            }
+          ]
         },
         {
-          "date": "2026-06", "token": "ANSEM", "harm": "insiders", "evidence": "onchain",
+          "date": "2026-06",
+          "token": "ANSEM",
+          "harm": "insiders",
+          "evidence": "onchain",
           "what": "65% of the ANSEM supply went to a wallet Arkham labels as his six days before trading opened. That main wallet did not sell; other wallets that received tokens sold about $500K, and he airdropped $6.7M to holders.",
           "sources": [
-            { "t": "Bitquery: The Black Bull (ANSEM) investigation", "u": "https://bitquery.io/investigations/ansem-black-bull-370x-investigation" },
-            { "t": "Bubblemaps: ANSEM lab unlocks", "u": "https://blog.bubblemaps.io/onchain-insights-ansem-lab-unlocks-paper-hand-ptsd/" }
+            {
+              "t": "Bitquery: The Black Bull (ANSEM) investigation",
+              "u": "https://bitquery.io/investigations/ansem-black-bull-370x-investigation"
+            },
+            {
+              "t": "Bubblemaps: ANSEM lab unlocks",
+              "u": "https://blog.bubblemaps.io/onchain-insights-ansem-lab-unlocks-paper-hand-ptsd/"
+            }
           ]
         }
       ],
       "align": [
         {
-          "date": "2026-06", "kind": "holds",
+          "date": "2026-06",
+          "kind": "holds",
           "what": "The main ANSEM wallet kept its tokens through the launch and the run.",
-          "sources": [ { "t": "Bitquery: The Black Bull (ANSEM) investigation", "u": "https://bitquery.io/investigations/ansem-black-bull-370x-investigation" } ]
+          "sources": [
+            {
+              "t": "Bitquery: The Black Bull (ANSEM) investigation",
+              "u": "https://bitquery.io/investigations/ansem-black-bull-370x-investigation"
+            }
+          ]
         }
       ]
     },
@@ -262,19 +437,169 @@
       "incidents": [],
       "align": [
         {
-          "date": "2024-10", "kind": "wallets",
+          "date": "2024-10",
+          "kind": "wallets",
           "what": "His wallets are public since ZachXBT published them in October 2024; Arkham tracks them as the entity Muststopmurad.",
           "sources": [
-            { "t": "The Block: ZachXBT's doxxing of Murad Mahmudov's addresses sparks debate", "u": "https://www.theblock.co/post/320472/zachxbt-murad-mahmudov-memecoins" },
-            { "t": "Cointelegraph: memecoin messiah lost $60M trading SPX6900 and GIGA, still not selling", "u": "https://cointelegraph.com/markets/memecoin-messiah-lost-60m-trading-spx6900-giga-hes-still-not-selling" }
+            {
+              "t": "The Block: ZachXBT's doxxing of Murad Mahmudov's addresses sparks debate",
+              "u": "https://www.theblock.co/post/320472/zachxbt-murad-mahmudov-memecoins"
+            },
+            {
+              "t": "Cointelegraph: memecoin messiah lost $60M trading SPX6900 and GIGA, still not selling",
+              "u": "https://cointelegraph.com/markets/memecoin-messiah-lost-60m-trading-spx6900-giga-hes-still-not-selling"
+            }
           ]
         },
         {
-          "date": "2026-04", "kind": "holds",
+          "date": "2026-04",
+          "kind": "holds",
           "what": "Held his SPX6900 through a drop of about $60M from the July 2025 peak with no meaningful sales (DropsTab).",
-          "sources": [ { "t": "Cointelegraph: memecoin messiah lost $60M trading SPX6900 and GIGA, still not selling", "u": "https://cointelegraph.com/markets/memecoin-messiah-lost-60m-trading-spx6900-giga-hes-still-not-selling" } ]
+          "sources": [
+            {
+              "t": "Cointelegraph: memecoin messiah lost $60M trading SPX6900 and GIGA, still not selling",
+              "u": "https://cointelegraph.com/markets/memecoin-messiah-lost-60m-trading-spx6900-giga-hes-still-not-selling"
+            }
+          ]
         }
       ]
+    },
+    {
+      "id": "jake-paul",
+      "name": "Jake Paul",
+      "x": "jakepaul",
+      "role": "YouTuber and boxer",
+      "track": true,
+      "incidents": [
+        {
+          "date": "2022-03",
+          "token": "SafeMoon, Yummy, Milf and others",
+          "harm": "dump",
+          "evidence": "onchain",
+          "usd": 2000000,
+          "what": "Coffeezilla traced a new wallet for each token he promoted, funded with that token, most likely by its developer; the coins then went to a wallet named PRBLM CHILD, whose first transaction came from his official wallet. He made over $2M, did not label the posts as paid ads, and the projects lost over 90% or were abandoned.",
+          "sources": [
+            {
+              "t": "CryptoSlate: Jake Paul earned over $2 million by promoting pump and dump crypto schemes",
+              "u": "https://cryptoslate.com/jake-paul-earned-over-2-million-by-promoting-pump-and-dump-crypto-schemes/"
+            }
+          ]
+        },
+        {
+          "date": "2023-03",
+          "token": "TRX, BTT",
+          "harm": "undisclosed",
+          "evidence": "settled",
+          "what": "The SEC charged him with promoting Justin Sun's TRX and BTT without disclosing he was paid. He settled without admitting or denying the findings; the celebrities who settled paid about $400K in total.",
+          "sources": [
+            {
+              "t": "The Block: SEC charges Tron's Justin Sun and celebrities including Lindsay Lohan, Jake Paul",
+              "u": "https://www.theblock.co/post/222077/sec-charges-trons-justin-sun-and-celebrities-including-lindsay-lohan-jake-paul"
+            }
+          ]
+        }
+      ],
+      "align": []
+    },
+    {
+      "id": "ice-poseidon",
+      "name": "Ice Poseidon",
+      "x": "REALIcePoseidon",
+      "role": "Streamer",
+      "track": true,
+      "incidents": [
+        {
+          "date": "2022-01",
+          "token": "CxCoin",
+          "harm": "dump",
+          "evidence": "admitted",
+          "usd": 500000,
+          "what": "Per Coffeezilla, on 22 January 2022 he drained the liquidity of CxCoin, the coin he launched, killing it and taking about $500K. In an interview Coffeezilla published he appeared to confirm he kept 55%, and said he could give the money back but would look out for himself instead. He later said he planned to return some of it.",
+          "sources": [
+            {
+              "t": "Tubefilter: Ice Poseidon appears to admit to $500,000 pump and dump",
+              "u": "https://tubefilter.com/2022/02/01/youtuber-ice-poseidon-pump-and-dump-crypto-scheme/"
+            }
+          ]
+        }
+      ],
+      "align": []
+    },
+    {
+      "id": "serpent",
+      "name": "Serpent",
+      "x": null,
+      "role": "Former pro Fortnite player",
+      "track": false,
+      "incidents": [
+        {
+          "date": "2024-11",
+          "token": "GRIMACE, SCHRADER and others",
+          "harm": "dump",
+          "evidence": "onchain",
+          "usd": 3500000,
+          "what": "ZachXBT tied his wallets to nine or more hacks of celebrity and brand accounts on X and Instagram, McDonald's and Dean Norris among them, used to push coins such as GRIMACE and SCHRADER that were then dumped, for about $3.5M, which he gambled away at online casinos. He deleted many of his posts after the report.",
+          "sources": [
+            {
+              "t": "CoinGape: pro gamer linked to $3.5M meme coin scam, ZachXBT",
+              "u": "https://coingape.com/trending/pro-gamer-linked-to-3-5m-meme-coin-scam-zachxbt/"
+            },
+            {
+              "t": "The Defiant: Fortnite player gambles away $3.5M from memecoin rug pulls",
+              "u": "https://thedefiant.io/news/hacks/fortnite-player-gambles-away-usd3-5m-from-memecoin-rug-pulls"
+            }
+          ]
+        }
+      ],
+      "align": []
+    },
+    {
+      "id": "kimchi",
+      "name": "Kimchi",
+      "x": null,
+      "role": "Memecoin trader",
+      "track": false,
+      "incidents": [
+        {
+          "date": "2026-10",
+          "token": "KIMCHI",
+          "harm": "insiders",
+          "evidence": "reported",
+          "what": "An anonymous deployer bought about 79% of KIMCHI for roughly $9,300 and routed all creator fees to a wallet labelled Kimchi; analysts noted about 75% of the supply sat with that address. The coin reached about $40M in its first hour.",
+          "sources": [
+            {
+              "t": "cryptonews.net: Trader Kimchi goes from Pump.fun star to rug pull suspect in 48 hours",
+              "u": "https://cryptonews.net/news/altcoins/33638501/"
+            },
+            {
+              "t": "Bitcoin.com News: Kimchi's X account and the Project Kimchi crash",
+              "u": "https://news.bitcoin.com/market-updates/kimchi-x-account-hacked-project-kimchi-token-crash/"
+            }
+          ]
+        },
+        {
+          "date": "2026-10",
+          "token": "Project Kimchi",
+          "harm": "collapse",
+          "evidence": "reported",
+          "what": "His account posted a QR code poster that opened a new coin, Project Kimchi, and a Pump.fun co-founder reposted it. It peaked near $15M; about half an hour later the post was gone and the coin was down over 98%. Early reports said the account was hacked; on-chain investigators questioned that.",
+          "sources": [
+            {
+              "t": "cryptonews.net: Trader Kimchi goes from Pump.fun star to rug pull suspect in 48 hours",
+              "u": "https://cryptonews.net/news/altcoins/33638501/"
+            },
+            {
+              "t": "Bitcoin.com News: Kimchi's X account and the Project Kimchi crash",
+              "u": "https://news.bitcoin.com/market-updates/kimchi-x-account-hacked-project-kimchi-token-crash/"
+            },
+            {
+              "t": "Protos: Pump.fun's Kimchi partnership has turned into chaos",
+              "u": "https://protos.com/pump-funs-kimchi-partnership-has-turned-into-chaos/"
+            }
+          ]
+        }
+      ],
+      "align": []
     }
   ]
 }

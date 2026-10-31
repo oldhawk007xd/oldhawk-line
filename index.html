@@ -560,7 +560,7 @@ section.band.numbers > .wrap { padding-block: 64px 84px; }
 .kinc .src a:hover { color: var(--green); }
 .ev { font-size: 10px; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; padding: 2px 6px; border-radius: 4px; border: 1px solid rgba(163,171,192,0.5); color: var(--dim); white-space: nowrap; }
 .ev.admitted, .ev.court { color: #ff8da0; border-color: rgba(255,59,92,0.7); }
-.ev.onchain { color: var(--amber); border-color: rgba(255,176,32,0.7); }
+.ev.onchain, .ev.settled { color: var(--amber); border-color: rgba(255,176,32,0.7); }
 .ev.good { color: var(--green); border-color: rgba(20,241,149,0.7); }
 .kmore { align-self: flex-start; background: none; border: 0; padding: 0; color: var(--soft); font: 600 13px var(--text); text-decoration: underline; cursor: pointer; }
 .kmore:hover { color: var(--green); }
@@ -3754,7 +3754,7 @@ section.band.numbers > .wrap { padding-block: 64px 84px; }
   /* ---------- KOL Watch: who is calling, and their record ---------- */
   const KBAND = { risk: "High risk", caution: "Caution", trusted: "Trusted", none: "Not scored yet" };
   const KCOL = { risk: "#ff5c7a", caution: "#ffb020", trusted: "#14F195", none: "#a3abc0" };
-  const EVN = { admitted: "Admitted", court: "Court", onchain: "On-chain", lawsuit: "Lawsuit", dismissed: "Dismissed", reported: "Reported" };
+  const EVN = { admitted: "Admitted", court: "Court", settled: "Settled", onchain: "On-chain", lawsuit: "Lawsuit", dismissed: "Dismissed", reported: "Reported" };
   const HARMN = { dump: "Sold into their promotion", insiders: "Insiders held the supply", undisclosed: "Paid, not disclosed", collapse: "Collapsed after the promotion" };
   const HARMC = { dump: "#ff5c7a", insiders: "#ffb020", undisclosed: "#c4a8ff", collapse: "#a3abc0" };
   const ALIGNN = { holds: "Holds what they call", wallets: "Public wallets", discloses: "Discloses paid posts" };
@@ -3781,7 +3781,7 @@ section.band.numbers > .wrap { padding-block: 64px 84px; }
     const st = K.stats || {};
     const tiles = [
       { k: "Accounts on record", v: String(st.people), s: `${st.risk} high risk, ${st.caution} caution, ${st.trusted} trusted.` },
-      { k: "Documented incidents", v: String(st.incidents), s: "From ZachXBT, Bubblemaps, court filings and the press, each one linked." },
+      { k: "Documented incidents", v: String(st.incidents), s: "From ZachXBT, Bubblemaps, Coffeezilla, the SEC, court filings and the press, each one linked." },
       { k: "Put on those incidents", v: st.usd ? usd(st.usd) : "n/a", s: "Taken from buyers or held by insiders, as each source puts it." },
       { k: "Calls measured", v: String(st.measured || 0), s: st.measured ? `${Math.round((st.rugShare || 0) * 100)}% of them lost 80% or more within 7 days.` : `${st.calls30 || 0} call${st.calls30 === 1 ? "" : "s"} in the last 30 days. The first 7-day results come a week after the first call.` }
     ];
@@ -3791,7 +3791,7 @@ section.band.numbers > .wrap { padding-block: 64px 84px; }
     renderKolCalls();
     const r = K.rule || {};
     $("kolMethodBody").innerHTML = `<p>Each documented incident counts evidence times harm.</p><ul>
-      <li>Evidence: admitted or found in court 3, a named on-chain investigation 2, a pending lawsuit 1.5, claims dismissed in court or reported in the press 1.</li>
+      <li>Evidence: admitted or found in court 3, settled with a regulator without admitting or a named on-chain investigation 2, a pending lawsuit 1.5, claims dismissed in court or reported in the press 1.</li>
       <li>Harm: sold into their own promotion, or launched a coin and sold it, 3. Insiders held or sold a large part of the supply 1.5. Paid to promote without saying so 1.2. The coin collapsed after the promotion 1.</li>
       <li>A bigger documented amount weighs more, on a log scale, up to 1.75 times from $100K up.</li>
       <li>Documented alignment pulls the other way: holding what they call through a drawdown 3, public wallets 2, labelled paid posts 1.</li></ul>
@@ -3817,7 +3817,7 @@ section.band.numbers > .wrap { padding-block: 64px 84px; }
     const due = rec.n && !rec.measured ? ", the first 7-day result is due within the week" : "";
     const recLine = !p.track ? "" : rec.measured
       ? `<div class="krec"><b>${rec.measured}</b> call${rec.measured === 1 ? "" : "s"} measured: median <b>${pct(rec.med7 * 100)}</b> after 7 days, <b>${rec.rug}</b> lost 80% or more, <b>${rec.win}</b> doubled.</div>`
-      : `<div class="krec">${rec.n ? `<b>${rec.n}</b> call${rec.n === 1 ? "" : "s"} so far${due}.` : "Read on X every 2 hours. No call yet."}</div>`;
+      : `<div class="krec">${rec.n ? `<b>${rec.n}</b> call${rec.n === 1 ? "" : "s"} so far${due}.` : p.seen && p.seen.miss >= 2 ? `X has not shown us @${esc(p.x)}'s posts in the last ${p.seen.miss} tries. The account may be private, renamed or gone.` : "Read on X every 2 hours. No call yet."}</div>`;
     return `<article class="kcard ${b}" id="kol-${esc(p.id)}">
       <div class="kc-top"><div><b>${esc(p.name)}</b><small>${handle}</small><small>${esc(p.role || "")}</small></div><div class="kc-score"><div class="n">${p.score != null ? p.score.toFixed(1) : "n/a"}<small>/10</small></div><span class="chip ${b === "risk" ? "down" : b === "trusted" ? "up" : b === "caution" ? "armed" : "off"}">${esc(KBAND[b])}</span></div></div>
       ${p.score != null ? `<div class="kbar" role="img" aria-label="Risk ${p.score.toFixed(1)} of 10"><i style="left:${((p.score - 1) / 9 * 100).toFixed(1)}%"></i></div>` : ""}
@@ -3922,11 +3922,14 @@ section.band.numbers > .wrap { padding-block: 64px 84px; }
     const rowsP = K.people.filter((p) => p.incidents.length || p.align.length);
     const TW = clamp(Math.round(tb.clientWidth || 900), 280, 1200), slim = TW < 640;
     const left = slim ? 98 : 132, right = TW - (slim ? 8 : 18), top = 26, rowH = slim ? 24 : 26, TH = top + rowsP.length * rowH + 30;
-    const t0 = Date.UTC(2024, 0, 1), t1 = Date.parse((R && R.at) || "") || Date.now();
+    /* the axis starts with the year of the oldest record */
+    const yrs = rowsP.flatMap((p) => p.incidents.concat(p.align).map((it) => Number(String(it.date || "").slice(0, 4)))).filter((y) => y > 2000);
+    const y0 = yrs.length ? Math.min(...yrs) : 2024;
+    const t0 = Date.UTC(y0, 0, 1), t1 = Date.parse((R && R.at) || "") || Date.now();
     const XT = (t) => left + (t - t0) / (t1 - t0) * (right - left);
-    const TT = (d) => { const [y, m] = String(d || "").split("-").map(Number); return Date.UTC(y || 2024, (m || 1) - 1, 15); };
+    const TT = (d) => { const [y, m] = String(d || "").split("-").map(Number); return Date.UTC(y || y0, (m || 1) - 1, 15); };
     let u = `<svg viewBox="0 0 ${TW} ${TH}" width="${TW}" height="${TH}" role="img" aria-label="Documented incidents over time, one row per account">`;
-    for (let y = 2024; Date.UTC(y, 0, 1) <= t1; y++) {
+    for (let y = y0; Date.UTC(y, 0, 1) <= t1; y++) {
       for (let q = 0; q < 4; q++) {
         const t = Date.UTC(y, q * 3, 1);
         if (t > t1) break;
