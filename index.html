@@ -524,6 +524,62 @@ section.band.numbers > .wrap { padding-block: 64px 84px; }
 .trio.wk b { font-size: clamp(26px, 7.5vw, 40px); color: var(--ink); }
 .trio.wk b.up { color: var(--green); } .trio.wk b.down { color: #ff8da0; }
 
+/* ---------- KOL Watch ---------- */
+.kstats { margin-bottom: 18px; }
+.kfig { margin: 0 0 18px; border: 1px solid var(--rule2); border-radius: 16px; padding: 20px; background: rgba(255,255,255,0.015); min-width: 0; }
+.kfig-h { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; gap: 6px 24px; margin-bottom: 10px; }
+.kfig-h h3 { margin: 0; font-family: var(--display); font-weight: 600; letter-spacing: -0.02em; font-size: 22px; }
+.kfig-h p { margin: 0; font-size: 13px; color: var(--dim); max-width: 62ch; }
+.kspec svg, .ktime svg { display: block; width: 100%; height: auto; overflow: visible; }
+.ktime .tbox { overflow: visible; }
+.ktools { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px 16px; margin: 26px 0 14px; }
+.ktools h3 { margin: 0; font-family: var(--display); font-weight: 600; letter-spacing: -0.02em; font-size: 28px; }
+.kgrid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; align-items: start; }
+.kcard { border: 1px solid var(--rule2); border-radius: 16px; padding: 18px; min-width: 0; background: rgba(255,255,255,0.015); display: flex; flex-direction: column; gap: 12px; }
+.kcard.risk { border-color: rgba(255,59,92,0.38); }
+.kcard.trusted { border-color: rgba(20,241,149,0.38); }
+.kc-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; }
+.kc-top b { display: block; font-size: 17px; font-weight: 700; color: var(--ink); }
+.kc-top small { display: block; color: var(--dim); font-size: 13px; }
+.kc-top a { color: var(--soft); text-decoration: none; }
+.kc-top a:hover { color: var(--green); }
+.kc-score { text-align: right; flex: none; }
+.kc-score .n { font-family: var(--mono); font-weight: 500; font-size: 34px; line-height: 1; letter-spacing: -0.04em; }
+.kc-score .n small { display: inline; font-size: 14px; color: var(--dim); letter-spacing: 0; }
+.kcard.risk .kc-score .n { color: #ff8da0; } .kcard.caution .kc-score .n { color: var(--amber); } .kcard.trusted .kc-score .n { color: var(--green); }
+.kbar { position: relative; height: 6px; border-radius: 3px; background: linear-gradient(90deg, rgba(20,241,149,0.85) 0%, rgba(20,241,149,0.85) 22%, rgba(255,176,32,0.85) 50%, rgba(255,59,92,0.9) 78%, rgba(255,59,92,0.9) 100%); opacity: 0.9; }
+.kbar i { position: absolute; top: -4px; width: 4px; height: 14px; margin-left: -2px; border-radius: 2px; background: #fff; box-shadow: 0 0 0 2px #05060d; }
+.kfacts { display: flex; flex-wrap: wrap; gap: 4px 16px; font-size: 13px; color: var(--soft); }
+.kfacts b { color: var(--ink); font-weight: 700; }
+.kinc { display: grid; gap: 10px; }
+.kinc > div { border-top: 1px solid var(--rule); padding-top: 10px; font-size: 13.5px; line-height: 1.5; color: var(--soft); }
+.kinc .kh { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 8px; margin-bottom: 4px; color: var(--ink); font-weight: 700; font-size: 13px; }
+.kinc .kh small { color: var(--dim); font-weight: 500; }
+.kinc .src { display: block; margin-top: 4px; font-size: 12.5px; }
+.kinc .src a { color: var(--dim); }
+.kinc .src a:hover { color: var(--green); }
+.ev { font-size: 10px; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; padding: 2px 6px; border-radius: 4px; border: 1px solid rgba(163,171,192,0.5); color: var(--dim); white-space: nowrap; }
+.ev.admitted, .ev.court { color: #ff8da0; border-color: rgba(255,59,92,0.7); }
+.ev.onchain { color: var(--amber); border-color: rgba(255,176,32,0.7); }
+.ev.good { color: var(--green); border-color: rgba(20,241,149,0.7); }
+.kmore { align-self: flex-start; background: none; border: 0; padding: 0; color: var(--soft); font: 600 13px var(--text); text-decoration: underline; cursor: pointer; }
+.kmore:hover { color: var(--green); }
+.krec { font-size: 13px; color: var(--dim); border-top: 1px solid var(--rule); padding-top: 10px; }
+.krec b { color: var(--ink); }
+.kcall { display: inline-block; margin-top: 3px; font-size: 12px; font-weight: 700; white-space: nowrap; }
+.kcall.risk { color: #ff8da0; } .kcall.caution { color: var(--amber); } .kcall.trusted { color: var(--green); } .kcall.none { color: var(--dim); }
+.runs.kc td.who b { color: var(--ink); font-weight: 700; }
+.runs.kc td.who small, .runs.kc td.coin small { display: block; color: var(--dim); font-size: 13px; }
+.runs.kc .sc { font-family: var(--mono); font-weight: 500; }
+.runs.kc .sc.risk { color: #ff8da0; } .runs.kc .sc.caution { color: var(--amber); } .runs.kc .sc.trusted { color: var(--green); }
+.runs.kc td a { color: var(--soft); }
+.kmethod { margin-top: 18px; border: 1px solid var(--rule2); border-radius: 16px; padding: 4px 20px; }
+.kmethod summary { cursor: pointer; padding: 14px 0; font-weight: 700; color: var(--ink); }
+.kmethod p, .kmethod li { font-size: 14px; color: var(--soft); line-height: 1.6; }
+.kmethod ul { padding-left: 18px; margin: 0 0 14px; }
+@media (max-width: 1031px) { .kgrid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 699px) { .kgrid { grid-template-columns: minmax(0, 1fr); } .runs.kc .hide-s { display: none; } }
+
 /* ---------- Narrow screens ---------- */
 /* sets of three: 3 columns, or 2 with the third spanning both, or 1; never one card alone beside a gap */
 @media (max-width: 1031px) {
@@ -721,6 +777,7 @@ section.band.numbers > .wrap { padding-block: 64px 84px; }
       <nav class="nav" aria-label="Sections">
         <a href="#numbers">Numbers</a>
         <a href="#runners">Runners</a>
+        <a href="#kols">KOLs</a>
         <a href="#hours">Playbook</a>
         <a href="#proof">Proof</a>
         <a href="#signals">Signals</a>
@@ -858,6 +915,45 @@ section.band.numbers > .wrap { padding-block: 64px 84px; }
       <p class="lp-foot" id="lpFoot" hidden></p>
     </div>
     <p class="srcnote" id="srcNote"></p>
+  </div>
+</section>
+
+<section class="band glow" id="kols" aria-labelledby="kols-h">
+  <div class="wrap">
+    <div class="head-row">
+      <h2 class="serif" id="kols-h">Who is calling, and their record.</h2>
+      <p class="lead" id="kolsLead">Before you buy what an account is shilling, look at what happened the last times. Every score comes from documented on-chain investigations, court filings and the account's own posts, all linked.</p>
+    </div>
+    <div class="stats kstats" id="kolStats"></div>
+    <figure class="kfig kspec">
+      <div class="kfig-h"><h3>The risk scale</h3><p>From 1, a record of holding what they call, to 10, a record of selling into the people who bought. Accounts without a record stay at 5 until their calls are measured.</p></div>
+      <div id="kolSpectrum"></div>
+    </figure>
+    <div class="ktools">
+      <h3>The accounts</h3>
+      <div class="chips" id="kolChips" role="group" aria-label="Which accounts">
+        <button type="button" data-k="all" aria-pressed="true">All</button>
+        <button type="button" data-k="risk" aria-pressed="false">High risk</button>
+        <button type="button" data-k="caution" aria-pressed="false">Caution</button>
+        <button type="button" data-k="trusted" aria-pressed="false">Trusted</button>
+      </div>
+    </div>
+    <div class="kgrid" id="kolGrid"></div>
+    <div class="list-foot"><button type="button" class="btn" id="kolMore" hidden>Show all</button></div>
+    <figure class="kfig ktime" style="margin-top:18px">
+      <div class="kfig-h"><h3>Every documented incident</h3><p>One dot per incident, sized by the amount its source gives. Red: sold into their own promotion. Amber: insiders held or sold the supply. Violet: paid without saying so. Grey: collapsed after the promotion. Green rings: held what they called.</p></div>
+      <div class="tbox" id="kolTimeline"></div>
+    </figure>
+    <div class="list" id="kolCallsBox">
+      <div class="list-head">
+        <h3>Latest calls, measured</h3>
+        <p>Every coin a tracked account names on X, by contract address or by the ticker of a runner, from the market cap when we first saw the post, followed for 31 days.</p>
+      </div>
+      <div class="tbox" id="kolCallsWrap"><table class="runs kc" id="kolCalls"></table></div>
+      <p class="empty" id="kolCallsEmpty" hidden></p>
+    </div>
+    <details class="kmethod" id="kolMethod"><summary>How the score works</summary><div id="kolMethodBody"></div></details>
+    <p class="srcnote" id="kolNote">A score describes the risk to buyers when an account promotes a coin, from what is documented. It is not a legal finding: allegations are marked as allegations and answers are quoted. Corrections with a source are welcome on X.</p>
   </div>
 </section>
 
@@ -3240,7 +3336,7 @@ section.band.numbers > .wrap { padding-block: 64px 84px; }
     const trRow = (x) => {
       const where = [x.c === "listed" ? "Exchanges" : chainInfo(x.c).name, x.lp].filter(Boolean).map(esc).join(SEP);
       const xl = x.x ? `<a class="xl" href="https://x.com/${encodeURIComponent(x.x)}" target="_blank" rel="noopener">@${esc(x.x)}</a>${x.xd != null ? `${SEP}${postAgo(x.xd)}` : ""}` : "";
-      return `<div class="rowi"><span class="cw">${logo(x)}<span><b>${tk(x)}</b><small>${x.n ? `${esc(x.n)}${SEP}` : ""}${where}</small><small>${xl}</small></span></span><span class="r">${usd(x.m)}<small>${x.d != null ? `<span class="${x.d > 0 ? "up" : x.d < 0 ? "down" : ""}">${pct(x.d)}</span>` : "n/a"}</small></span></div>`;
+      return `<div class="rowi"><span class="cw">${logo(x)}<span><b>${tk(x)}</b><small>${x.n ? `${esc(x.n)}${SEP}` : ""}${where}</small><small>${xl}</small>${kolFlag(x)}</span></span><span class="r">${usd(x.m)}<small>${x.d != null ? `<span class="${x.d > 0 ? "up" : x.d < 0 ? "down" : ""}">${pct(x.d)}</span>` : "n/a"}</small></span></div>`;
     };
     $("trendList").innerHTML = tr && tr.coins.length
       ? `<div class="tgrid">${tr.coins.slice(0, 8).map(trRow).join("")}</div>`
@@ -3638,7 +3734,7 @@ section.band.numbers > .wrap { padding-block: 64px 84px; }
         const tick = href ? `<a href="${esc(href)}" target="_blank" rel="noopener">${esc(x.s)}</a>` : `<b>${esc(x.s)}</b>`;
         const where = [x.c === "listed" ? "Exchanges" : ci.name, x.lp].filter(Boolean).map(esc).join(SEP);
         const age = x.a != null ? `<small>${x.a < 1 ? "launched today" : `${x.a} day${x.a === 1 ? "" : "s"} old`}</small>` : "";
-        return `<tr><td class="rk">${x.rk}</td><td class="coin"><span class="cw">${logo(x)}<span>${tick}${x.n ? `<small>${esc(x.n)}</small>` : ""}</span></span></td><td class="w">${where}${age}</td><td class="num">${usd(x.m)}</td><td class="chg ${x.d > 0 ? "up" : x.d < 0 ? "down" : ""}">${pct(x.d)}</td><td class="fl"><span class="chip ${x.t >= 2 ? "yes" : "no"}">${esc(L.tiers[x.t].label)}+</span></td></tr>`;
+        return `<tr><td class="rk">${x.rk}</td><td class="coin"><span class="cw">${logo(x)}<span>${tick}${x.n ? `<small>${esc(x.n)}</small>` : ""}${kolFlag(x)}</span></span></td><td class="w">${where}${age}</td><td class="num">${usd(x.m)}</td><td class="chg ${x.d > 0 ? "up" : x.d < 0 ? "down" : ""}">${pct(x.d)}</td><td class="fl"><span class="chip ${x.t >= 2 ? "yes" : "no"}">${esc(L.tiers[x.t].label)}+</span></td></tr>`;
       }).join("") : `<tr><td colspan="6" class="empty">${listF === "trend" ? "No coin passes the trending checks right now." : listF === "gain" ? "No coin is up over the last 24 hours." : "No coin matches."}</td></tr>`
     }</tbody>`;
     $("listMore").hidden = Boolean(listAll || q || total <= 25);
@@ -3654,6 +3750,210 @@ section.band.numbers > .wrap { padding-block: 64px 84px; }
     renderList();
   });
   $("listMore").addEventListener("click", () => { listAll = true; renderList(); });
+
+  /* ---------- KOL Watch: who is calling, and their record ---------- */
+  const KBAND = { risk: "High risk", caution: "Caution", trusted: "Trusted", none: "Not scored yet" };
+  const KCOL = { risk: "#ff5c7a", caution: "#ffb020", trusted: "#14F195", none: "#a3abc0" };
+  const EVN = { admitted: "Admitted", court: "Court", onchain: "On-chain", lawsuit: "Lawsuit", dismissed: "Dismissed", reported: "Reported" };
+  const HARMN = { dump: "Sold into their promotion", insiders: "Insiders held the supply", undisclosed: "Paid, not disclosed", collapse: "Collapsed after the promotion" };
+  const HARMC = { dump: "#ff5c7a", insiders: "#ffb020", undisclosed: "#c4a8ff", collapse: "#a3abc0" };
+  const ALIGNN = { holds: "Holds what they call", wallets: "Public wallets", discloses: "Discloses paid posts" };
+  const KMON = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+  const ym = (d) => { const [y, m] = String(d || "").split("-").map(Number); return y && m ? `${KMON[m - 1]} ${y}` : ""; };
+  const kband = (v) => (v == null ? "none" : v < 3.5 ? "trusted" : v < 7 ? "caution" : "risk");
+  /* a coin named this week by a tracked account: who, and the riskiest score among them */
+  const kolFlag = (x) => {
+    const K = R && R.kols, e = K && K.byToken && x && x.ad ? K.byToken[x.ad] : null;
+    if (!e || !e.h || !e.h.length) return "";
+    return `<small class="kcall ${kband(e.max)}">Called by @${esc(e.h[0])}${e.h.length > 1 ? ` and ${e.h.length - 1} more` : ""}${e.max != null ? `, risk ${e.max.toFixed(1)}` : ""}</small>`;
+  };
+  let kolF = "all", kolAll = false;
+  const kolOpen = new Set();
+
+  function renderKols() {
+    const K = R && R.kols;
+    if (!K || !Array.isArray(K.people) || !K.people.length) {
+      ["kolStats", "kolSpectrum", "kolTimeline", "kolCalls", "kolMethodBody"].forEach((id) => { $(id).innerHTML = ""; });
+      $("kolGrid").innerHTML = `<div class="empty">${isBlank() ? (PREVIEW ? "The records live on the live site." : "Appears with the first reading.") : "Appears with the next update."}</div>`;
+      $("kolCallsWrap").hidden = true; $("kolCallsEmpty").hidden = true;
+      return;
+    }
+    const st = K.stats || {};
+    const tiles = [
+      { k: "Accounts on record", v: String(st.people), s: `${st.risk} high risk, ${st.caution} caution, ${st.trusted} trusted.` },
+      { k: "Documented incidents", v: String(st.incidents), s: "From ZachXBT, Bubblemaps, court filings and the press, each one linked." },
+      { k: "Put on those incidents", v: st.usd ? usd(st.usd) : "n/a", s: "Taken from buyers or held by insiders, as each source puts it." },
+      { k: "Calls measured", v: String(st.measured || 0), s: st.measured ? `${Math.round((st.rugShare || 0) * 100)}% of them lost 80% or more within 7 days.` : `${st.calls30 || 0} call${st.calls30 === 1 ? "" : "s"} in the last 30 days. The first 7-day results come a week after the first call.` }
+    ];
+    $("kolStats").innerHTML = tiles.map((t) => `<div class="stat"><span class="k">${esc(t.k)}</span><span class="v">${esc(t.v)}</span><span class="s">${esc(t.s)}</span></div>`).join("");
+    drawKolCharts();
+    renderKolGrid();
+    renderKolCalls();
+    const r = K.rule || {};
+    $("kolMethodBody").innerHTML = `<p>Each documented incident counts evidence times harm.</p><ul>
+      <li>Evidence: admitted or found in court 3, a named on-chain investigation 2, a pending lawsuit 1.5, claims dismissed in court or reported in the press 1.</li>
+      <li>Harm: sold into their own promotion, or launched a coin and sold it, 3. Insiders held or sold a large part of the supply 1.5. Paid to promote without saying so 1.2. The coin collapsed after the promotion 1.</li>
+      <li>A bigger documented amount weighs more, on a log scale, up to 1.75 times from $100K up.</li>
+      <li>Documented alignment pulls the other way: holding what they call through a drawdown 3, public wallets 2, labelled paid posts 1.</li></ul>
+      <p>Score = ${r.neutral || 5} + ${r.up || 4.5} x (1 − e^(−harm / ${r.upScale || 8})) − ${r.down || 4} x (1 − e^(−alignment / ${r.downScale || 5})), from 1 to 10. From ${r.minCalls || 10} measured calls on, the calls move it too: up to +${r.liveMax || 2} when the coins lost 80% or more within 7 days, down to ${r.liveMin || -1.5} when they doubled. Under ${r.trusted || 3.5} is trusted, from ${r.risk || 7} up is high risk.</p>
+      <p>Calls: each tracked account is read every ${r.readEveryHours || 2} hours through FxTwitter. A coin named by contract address, or by the ticker of an on-chain runner, is a call from the market cap DexScreener gives when we first see the post, at most a day after it. The same coin named again within 7 days is the same call. Its change after 1 and 7 days is kept for good.</p>`;
+  }
+  function kolCard(p) {
+    const b = p.band || kband(p.score);
+    const handle = p.x ? `<a href="https://x.com/${encodeURIComponent(p.x)}" target="_blank" rel="noopener">@${esc(p.x)}</a>` : p.also && p.also.length ? `@${esc(p.also[0])}, banned from X` : "No X account on record";
+    const n = p.incidents.length, a = p.align.length, rec = p.rec || { n: 0, measured: 0 };
+    const facts = [
+      n ? `<span><b>${n}</b> incident${n === 1 ? "" : "s"}</span>` : "",
+      p.usd ? `<span><b>${usd(p.usd)}</b> documented</span>` : "",
+      a ? `<span><b>${a}</b> sign${a === 1 ? "" : "s"} of alignment</span>` : "",
+      p.track ? `<span><b>${rec.n}</b> call${rec.n === 1 ? "" : "s"} tracked</span>` : ""
+    ].filter(Boolean).join("");
+    const srcs = (list) => `<span class="src">${(list || []).map((x) => `<a href="${esc(x.u)}" target="_blank" rel="noopener">${esc(x.t)}</a>`).join("<br>")}</span>`;
+    const items = [...p.align.map((x) => ({ good: true, x })), ...p.incidents.map((x) => ({ good: false, x }))].sort((u, v) => String(v.x.date || "").localeCompare(String(u.x.date || "")));
+    const open = kolOpen.has(p.id), shown = open ? items : items.slice(0, 2);
+    const one = (it) => it.good
+      ? `<div><span class="kh"><span class="ev good">${esc(ALIGNN[it.x.kind] || it.x.kind)}</span><small>${esc(ym(it.x.date))}</small></span>${esc(it.x.what)}${srcs(it.x.sources)}</div>`
+      : `<div><span class="kh">${esc(it.x.token)}<span class="ev ${esc(it.x.evidence)}">${esc(EVN[it.x.evidence] || it.x.evidence)}</span><small>${esc(ym(it.x.date))}${SEP}${esc(HARMN[it.x.harm] || "")}</small></span>${esc(it.x.what)}${srcs(it.x.sources)}</div>`;
+    const due = rec.n && !rec.measured ? ", the first 7-day result is due within the week" : "";
+    const recLine = !p.track ? "" : rec.measured
+      ? `<div class="krec"><b>${rec.measured}</b> call${rec.measured === 1 ? "" : "s"} measured: median <b>${pct(rec.med7 * 100)}</b> after 7 days, <b>${rec.rug}</b> lost 80% or more, <b>${rec.win}</b> doubled.</div>`
+      : `<div class="krec">${rec.n ? `<b>${rec.n}</b> call${rec.n === 1 ? "" : "s"} so far${due}.` : "Read on X every 2 hours. No call yet."}</div>`;
+    return `<article class="kcard ${b}" id="kol-${esc(p.id)}">
+      <div class="kc-top"><div><b>${esc(p.name)}</b><small>${handle}</small><small>${esc(p.role || "")}</small></div><div class="kc-score"><div class="n">${p.score != null ? p.score.toFixed(1) : "n/a"}<small>/10</small></div><span class="chip ${b === "risk" ? "down" : b === "trusted" ? "up" : b === "caution" ? "armed" : "off"}">${esc(KBAND[b])}</span></div></div>
+      ${p.score != null ? `<div class="kbar" role="img" aria-label="Risk ${p.score.toFixed(1)} of 10"><i style="left:${((p.score - 1) / 9 * 100).toFixed(1)}%"></i></div>` : ""}
+      ${facts ? `<div class="kfacts">${facts}</div>` : ""}
+      <div class="kinc">${shown.map(one).join("")}</div>
+      ${items.length > 2 ? `<button type="button" class="kmore" data-kopen="${esc(p.id)}" aria-expanded="${open}">${open ? "Show less" : `Show all ${items.length}`}</button>` : ""}
+      ${recLine}
+    </article>`;
+  }
+  function renderKolGrid() {
+    const K = R && R.kols;
+    if (!K) return;
+    const list = K.people.filter((p) => kolF === "all" || p.band === kolF);
+    const cut = kolAll ? list : list.slice(0, 6);
+    $("kolGrid").innerHTML = list.length ? cut.map(kolCard).join("") : `<div class="empty">No account in this group yet.</div>`;
+    $("kolMore").hidden = kolAll || list.length <= 6;
+    $("kolMore").textContent = `Show all ${list.length} accounts`;
+  }
+  $("kolMore").addEventListener("click", () => { kolAll = true; renderKolGrid(); });
+  $("kolChips").addEventListener("click", (e) => {
+    const btn = e.target.closest("button[data-k]");
+    if (!btn) return;
+    kolF = btn.dataset.k; kolAll = false;
+    $("kolChips").querySelectorAll("button").forEach((x) => x.setAttribute("aria-pressed", String(x === btn)));
+    renderKolGrid();
+  });
+  $("kolGrid").addEventListener("click", (e) => {
+    const btn = e.target.closest("button[data-kopen]");
+    if (!btn) return;
+    const id = btn.dataset.kopen;
+    if (kolOpen.has(id)) kolOpen.delete(id); else kolOpen.add(id);
+    renderKolGrid();
+    const card = $(`kol-${id}`);
+    if (card) { const b2 = card.querySelector("button[data-kopen]"); if (b2) b2.focus(); }
+  });
+  function renderKolCalls() {
+    const K = R && R.kols, list = K && Array.isArray(K.calls) ? K.calls.slice(0, 20) : [];
+    $("kolCallsWrap").hidden = !list.length; $("kolCallsEmpty").hidden = Boolean(list.length);
+    if (!list.length) {
+      $("kolCalls").innerHTML = "";
+      $("kolCallsEmpty").textContent = K && K.at ? "No call yet. The tracked accounts are read every 2 hours, and a call shows up here the first time one of them names a coin." : "The tracked accounts are read from the next update on.";
+      return;
+    }
+    const nowS = Date.now() / 1000;
+    const when = (t) => { const h = (nowS - t) / 3600; return h < 1 ? "just now" : h < 24 ? `${Math.round(h)}h ago` : `${Math.round(h / 24)}d ago`; };
+    const CH = { solana: "sol", ethereum: "eth", bsc: "bsc", base: "base", monad: "monad" };
+    $("kolCalls").innerHTML = `<thead><tr><th>Called</th><th>Account</th><th>Coin</th><th class="num hide-s">At the call</th><th class="num">Now</th><th class="chg">Since</th><th class="chg hide-s">7 days</th></tr></thead><tbody>${list.map((x) => {
+      const b = kband(x.score), ch = x.m0 && x.m ? (x.m / x.m0 - 1) * 100 : null;
+      const coin = { s: x.s, c: CH[x.ch] || x.ch, i: x.i };
+      const href = x.ad && x.ch ? `https://dexscreener.com/${encodeURIComponent(x.ch)}/${encodeURIComponent(x.ad)}` : "";
+      const left = Math.max(1, Math.ceil(7 - (nowS - x.t) / 86400));
+      return `<tr><td>${x.u ? `<a href="${esc(x.u)}" target="_blank" rel="noopener">${esc(when(x.t))}</a>` : esc(when(x.t))}</td>`
+        + `<td class="who"><b>${esc(x.name)}</b><small>@${esc(x.h)}${x.score != null ? `${SEP}<span class="sc ${b}">${x.score.toFixed(1)}</span>` : ""}</small></td>`
+        + `<td class="coin"><span class="cw">${logo(coin, "s")}<span>${href ? `<a href="${esc(href)}" target="_blank" rel="noopener">${esc(x.s)}</a>` : `<b>${esc(x.s)}</b>`}${x.n ? `<small>${esc(x.n)}</small>` : ""}${x.x > 1 ? `<small>named ${x.x} times</small>` : ""}</span></span></td>`
+        + `<td class="num hide-s">${x.m0 ? usd(x.m0) : "n/a"}</td><td class="num">${x.m ? usd(x.m) : "n/a"}</td>`
+        + `<td class="chg ${ch > 0 ? "up" : ch < 0 ? "down" : ""}">${ch != null ? pct(ch) : "n/a"}</td>`
+        + `<td class="chg hide-s ${x.d7 > 0 ? "up" : x.d7 < 0 ? "down" : ""}">${x.d7 != null ? pct(x.d7 * 100) : `in ${left}d`}</td></tr>`;
+    }).join("")}</tbody>`;
+  }
+  /* the two charts: the risk scale with every account on it, and the incidents over time */
+  function drawKolCharts() {
+    const K = R && R.kols;
+    if (!K || !K.people || !K.people.length) return;
+    const box = $("kolSpectrum");
+    const W = clamp(Math.round(box.clientWidth || 900), 280, 1200), narrow = W < 640;
+    const x0 = 14, x1 = W - 14, X = (v) => x0 + (v - 1) / 9 * (x1 - x0);
+    const axisY = narrow ? 44 : 104, H = narrow ? 88 : 214;
+    let s = `<svg viewBox="0 0 ${W} ${H}" width="${W}" height="${H}" role="img" aria-label="Every account on the risk scale from 1 to 10">`;
+    s += `<defs><linearGradient id="kg" x1="0" x2="1"><stop offset="0" stop-color="#14F195"/><stop offset="0.22" stop-color="#14F195"/><stop offset="0.5" stop-color="#ffb020"/><stop offset="0.78" stop-color="#ff3b5c"/><stop offset="1" stop-color="#ff3b5c"/></linearGradient></defs>`;
+    [["Trusted", 1, 3.5], ["Caution", 3.5, 7], ["High risk", 7, 10]].forEach(([t, a, b], i) => {
+      s += `<text x="${((X(a) + X(b)) / 2).toFixed(1)}" y="${narrow ? 12 : 12}" text-anchor="middle" fill="${["#14F195", "#ffb020", "#ff8da0"][i]}" font-size="11" font-weight="800" letter-spacing="1.2" font-family="IBM Plex Sans, sans-serif">${t.toUpperCase()}</text>`;
+    });
+    s += `<rect x="${x0}" y="${axisY - 3}" width="${x1 - x0}" height="6" rx="3" fill="url(#kg)" opacity="0.85"></rect>`;
+    for (let v = 1; v <= 10; v++) s += `<text x="${X(v).toFixed(1)}" y="${axisY + 24}" text-anchor="middle" fill="#a3abc0" font-size="11.5" font-family="IBM Plex Mono, monospace">${v}</text>`;
+    const people = K.people.filter((p) => p.score != null).slice().sort((a, b) => a.score - b.score || a.name.localeCompare(b.name));
+    const rows = narrow ? [] : [-1, 1, -2, 2, -3, 3, -4, 4];
+    const rowY = (k) => (k < 0 ? axisY - 18 - (-k - 1) * 17 : axisY + 46 + (k - 1) * 17);
+    const used = new Map();
+    const dots = [], labels = [], seen = [];
+    people.forEach((p) => {
+      const x = X(p.score), b = p.band || kband(p.score);
+      const near = seen.filter((q) => Math.abs(q - x) < 9).length;
+      const y = axisY + (near ? (near % 2 ? -1 : 1) * Math.ceil(near / 2) * 7 : 0);
+      seen.push(x);
+      dots.push(`<g><title>${esc(p.name)}: ${p.score.toFixed(1)}, ${KBAND[b]}</title><circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="${narrow ? 5 : 6}" fill="${KCOL[b]}" stroke="#05060d" stroke-width="2"></circle></g>`);
+      const w = textW(p.name, 12) + 8;
+      for (const k of rows) {
+        const l = clamp(x - w / 2, x0 - 6, x1 + 6 - w), r = l + w;
+        const taken = used.get(k) || [];
+        if (taken.some(([a, c]) => l < c + 6 && r > a - 6)) continue;
+        taken.push([l, r]); used.set(k, taken);
+        const ly = rowY(k);
+        labels.push(`<line x1="${x.toFixed(1)}" y1="${(k < 0 ? y - 7 : y + 7).toFixed(1)}" x2="${x.toFixed(1)}" y2="${(k < 0 ? ly + 4 : ly - 11).toFixed(1)}" stroke="rgba(237,237,237,0.22)"></line><text x="${(l + w / 2).toFixed(1)}" y="${ly}" text-anchor="middle" fill="#ededed" font-size="12" font-family="IBM Plex Sans, sans-serif">${esc(p.name)}</text>`);
+        break;
+      }
+    });
+    s += labels.join("") + dots.join("") + "</svg>";
+    box.innerHTML = s;
+
+    /* incidents over time, one row per account */
+    const tb = $("kolTimeline");
+    const rowsP = K.people.filter((p) => p.incidents.length || p.align.length);
+    const TW = clamp(Math.round(tb.clientWidth || 900), 280, 1200), slim = TW < 640;
+    const left = slim ? 98 : 132, right = TW - (slim ? 8 : 18), top = 26, rowH = slim ? 24 : 26, TH = top + rowsP.length * rowH + 30;
+    const t0 = Date.UTC(2024, 0, 1), t1 = Date.parse((R && R.at) || "") || Date.now();
+    const XT = (t) => left + (t - t0) / (t1 - t0) * (right - left);
+    const TT = (d) => { const [y, m] = String(d || "").split("-").map(Number); return Date.UTC(y || 2024, (m || 1) - 1, 15); };
+    let u = `<svg viewBox="0 0 ${TW} ${TH}" width="${TW}" height="${TH}" role="img" aria-label="Documented incidents over time, one row per account">`;
+    for (let y = 2024; Date.UTC(y, 0, 1) <= t1; y++) {
+      for (let q = 0; q < 4; q++) {
+        const t = Date.UTC(y, q * 3, 1);
+        if (t > t1) break;
+        const x = XT(t);
+        u += `<line x1="${x.toFixed(1)}" x2="${x.toFixed(1)}" y1="${top - 8}" y2="${TH - 24}" stroke="${q ? "rgba(237,237,237,0.06)" : "rgba(237,237,237,0.16)"}"></line>`;
+        if (!q) u += `<text x="${(x + 4).toFixed(1)}" y="${TH - 8}" fill="#a3abc0" font-size="${slim ? 11 : 11.5}" font-family="IBM Plex Mono, monospace">${y}</text>`;
+      }
+    }
+    rowsP.forEach((p, i) => {
+      const y = top + i * rowH + rowH / 2, b = p.band || kband(p.score);
+      u += `<line x1="${left}" x2="${right}" y1="${y}" y2="${y}" stroke="rgba(237,237,237,0.07)"></line>`;
+      const nm = slim && p.name.length > 14 ? `${p.name.slice(0, 13)}.` : p.name.length > 18 ? `${p.name.slice(0, 17)}.` : p.name;
+      u += `<text x="${left - 8}" y="${y + 4}" text-anchor="end" fill="${KCOL[b]}" font-size="${slim ? 11 : 12}" font-family="IBM Plex Sans, sans-serif">${esc(nm)}</text>`;
+      const placed = [];
+      const at = (d, rad) => { let x = XT(TT(d)); while (placed.some((q) => Math.abs(q - x) < rad + 3)) x += rad + 3; placed.push(x); return x; };
+      p.incidents.slice().sort((a2, b2) => String(a2.date).localeCompare(String(b2.date))).forEach((it) => {
+        const rad = (it.usd > 1e5 ? Math.min(12, 4 + 2.6 * Math.log10(it.usd / 1e5)) : 4) * (slim ? 0.75 : 1);
+        const x = at(it.date, rad);
+        u += `<g><title>${esc(ym(it.date))}, ${esc(it.token)}: ${esc(it.what)} (${esc(EVN[it.evidence] || it.evidence)})</title><circle cx="${x.toFixed(1)}" cy="${y}" r="${rad.toFixed(1)}" fill="${HARMC[it.harm] || "#a3abc0"}" fill-opacity="0.88" stroke="#05060d" stroke-width="1.5"></circle></g>`;
+      });
+      p.align.forEach((it) => {
+        const x = at(it.date, 6);
+        u += `<g><title>${esc(ym(it.date))}: ${esc(it.what)}</title><circle cx="${x.toFixed(1)}" cy="${y}" r="6" fill="none" stroke="#14F195" stroke-width="2"></circle></g>`;
+      });
+    });
+    tb.innerHTML = u + "</svg>";
+  }
 
   /* ---------- log ---------- */
   function renderLog() {
@@ -3760,7 +4060,7 @@ section.band.numbers > .wrap { padding-block: 64px 84px; }
   function renderAll() {
     $("notice").hidden = !(PREVIEW && isBlank());
     reserveHeights();
-    [renderNumbers, renderTicker, renderRunners, renderList, renderLaunch, renderHours, renderProof, renderWeekly, renderSignals, renderLog, renderFooter].forEach((fn) => { try { fn(); } catch (e) { console.warn(fn.name, e); } });
+    [renderNumbers, renderTicker, renderRunners, renderList, renderLaunch, renderKols, renderHours, renderProof, renderWeekly, renderSignals, renderLog, renderFooter].forEach((fn) => { try { fn(); } catch (e) { console.warn(fn.name, e); } });
     try { sky.setData(skyData()); if (!ambOn) skyStill(); } catch (e) { console.warn("sky", e); }
     try { renderSkyKey(); } catch (e) { console.warn("renderSkyKey", e); }
   }
@@ -3855,7 +4155,7 @@ section.band.numbers > .wrap { padding-block: 64px 84px; }
       measure();
       if (dlg.open) evenWallets();
       const w = window.innerWidth;
-      if (R && w !== lastW) { lastW = w; reserveHeights(); try { drawStrip(); if (chartTab === "wk" && hasWeeks()) renderCandles(); else renderProof(); sizeTicker(); } catch (e) { console.warn(e); } measure(); }
+      if (R && w !== lastW) { lastW = w; reserveHeights(); try { drawStrip(); drawKolCharts(); if (chartTab === "wk" && hasWeeks()) renderCandles(); else renderProof(); sizeTicker(); } catch (e) { console.warn(e); } measure(); }
     }, 120);
   };
   window.addEventListener("resize", onResize);

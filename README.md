@@ -20,6 +20,8 @@
 | `data/weekly.json` | Εβδομαδιαία κεριά του meme market cap. Το τελευταίο κερί κουνιέται σε κάθε update. |
 | `data/alerts.json` | Δημόσιο log με κάθε alert. |
 | `data/socials.json` | Το X account κάθε coin και πότε έκανε το τελευταίο του post. Γράφεται από το Action. |
+| `kols.json` | KOL Watch: το τεκμηριωμένο ιστορικό κάθε account, με πηγές. Γράφεται με το χέρι. |
+| `data/calls.json` | Κάθε coin που ανέφεραν τα accounts του KOL Watch, με το market cap τότε και μετά. Γράφεται από το Action. |
 | `data/method.json` | Η μέθοδος χωρίς τιμές. Γράφεται μόνο του, μην το αλλάζεις με το χέρι. |
 | `test/` | Έλεγχοι της μηχανής και backtest των αγκυρών. |
 
@@ -102,6 +104,14 @@
 Πρώτα τα coins με τη μεγαλύτερη άνοδο 24ώρου. Ένα coin κάτω των 10 ημερών μετράει στους αριθμούς αλλά δεν γράφεται πουθενά με το όνομά του. Πόσα μένουν έξω και γιατί γράφεται κάτω από το κουτί.
 
 Τα X accounts ελέγχονται μέσω του FxTwitter (χωρίς key): κάθε account ξανά κάθε 20 ώρες, έως 60 ανά run. Τα X handles των listed coins έρχονται από τη σελίδα τους στο CoinGecko, έως 20 σελίδες ανά run, μία φορά τον μήνα για κάθε coin. Ένα account γράφεται suspended μόνο όταν το λένε δύο έλεγχοι στη σειρά, και αν σε ένα run τα περισσότερα βγουν «gone», αυτό είναι βλάβη του FxTwitter και δεν σημειώνεται τίποτα.
+
+### KOL Watch: ποιος κάνει calls και τι ιστορικό έχει
+
+Το `kols.json` κρατάει ό,τι είναι τεκμηριωμένο για κάθε account που προωθεί coins, με πηγή σε κάθε γραμμή. Μπαίνει μόνο ό,τι στηρίζει έρευνα με όνομα (ZachXBT, Bubblemaps, Lookonchain), δικαστικό έγγραφο ή τα λόγια του ίδιου, πάντα με link, και οι απαντήσεις τους γράφονται κι αυτές. Κάθε incident έχει `harm` (dump, insiders, undisclosed, collapse), `evidence` (admitted, court, onchain, lawsuit, dismissed, reported), ημερομηνία `YYYY-MM`, μία πρόταση `what`, προαιρετικά `usd` και `sources`. Τα καλά σημάδια μπαίνουν στο `align` (holds, wallets, discloses). Με `track: true` και `x` διαβάζονται τα posts του στο X.
+
+Το σκορ (1 έως 10) είναι κίνδυνος για όποιον αγοράσει όταν το account προωθεί ένα coin, όχι δικαστική κρίση. Κάθε incident μετράει evidence x harm, περισσότερο όσο μεγαλύτερο είναι το ποσό που δίνει η πηγή. Σκορ = 5 + 4.5 x (1 − e^(−harm/8)) − 4 x (1 − e^(−alignment/5)). Από 10 μετρημένα calls και πάνω το κουνάνε και τα calls του: όσα έχασαν 80% μέσα σε 7 μέρες το ανεβάζουν, όσα διπλασιάστηκαν το κατεβάζουν. Κάτω από 3.5 είναι Trusted, από 7 και πάνω High risk.
+
+Τα calls (`data/calls.json`): κάθε account με `track` διαβάζεται κάθε 2 ώρες μέσω FxTwitter. Κάθε coin που αναφέρει με contract address, ή με το ticker ενός on-chain runner, γίνεται call από το market cap που δίνει το DexScreener την πρώτη φορά που βλέπουμε το post, το πολύ μία μέρα μετά. Το ίδιο coin ξανά μέσα σε 7 μέρες είναι το ίδιο call. Η αλλαγή στη 1 και στις 7 μέρες κρατιέται για πάντα. Ένα coin που ανέφερε account της λίστας την τελευταία εβδομάδα γράφει «Called by @...» δίπλα του, στο Trending now και στη λίστα των runners.
 
 ### Logos
 

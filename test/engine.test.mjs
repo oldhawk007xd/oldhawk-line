@@ -51,9 +51,10 @@ check("every runner has a ticker; names, 24h moves and link keys come through", 
   assert.ok(L.runners.every((x) => x.s && x.s.length));
   const doge = L.runners.find((x) => x.s === "DOGE");
   assert.equal(doge.n, "Dogecoin"); assert.equal(doge.g, "dogecoin"); assert.equal(typeof doge.d, "number");
-  const onchainOnly = L.runners.filter((x) => x.ad);
+  const onchainOnly = L.runners.filter((x) => x.ad && !x.g);
   assert.equal(onchainOnly.length, 8);
-  assert.ok(onchainOnly.every((x) => !x.g && x.c !== "listed"));
+  assert.ok(onchainOnly.every((x) => x.c !== "listed"));
+  assert.deepEqual(L.runners.filter((x) => x.ad && x.g).map((x) => x.s).sort(), ["FARTCOIN", "USELESS", "币安人生"], "a listed coin found on-chain keeps its CoinGecko link and carries its address");
   assert.ok(L.runners.filter((x) => x.c === "listed").every((x) => x.g && !x.ad));
 });
 check("$10M+ = 56 listed + 3 linked + 8 on-chain only = 67", () => assert.equal(L.counts[0], 67, JSON.stringify(L.counts)));

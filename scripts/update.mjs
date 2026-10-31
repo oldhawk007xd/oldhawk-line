@@ -3,6 +3,7 @@
    logs alerts in data/alerts.json and, if a Telegram bot is set up, posts them to the channel. */
 import { readFile, writeFile, mkdir, appendFile } from "node:fs/promises";
 import { collect, compute, toDaily, alertsFor, blank, basketIds, basketCharts, basketSeries, weeklyFrom, liveCandle, slimCodex, watchIds, NEEDS, refreshSocials } from "../lib/engine.mjs";
+import { refreshCalls, kolBoard } from "../lib/kols.mjs";
 
 const DATA = new URL("../data/", import.meta.url);
 const read = async (name, fallback) => {
@@ -72,6 +73,21 @@ if (socials) await write("socials.json", socials);
 if (reading.line == null) {
   const last = prev && prev.line != null ? prev : (prev && prev.lastGood) || null;
   reading.lastGood = last ? { at: last.at, line: last.line, zone: last.zone, action: last.action } : null;
+}
+/* KOL Watch: the documented record in kols.json, plus every coin the tracked accounts name, measured over time
+   (data/calls.json). Each account is read every 2 hours, a few per run. */
+let kolFile = null;
+try { kolFile = JSON.parse(await readFile(new URL("../kols.json", import.meta.url), "utf8")); } catch (e) { console.log("kols.json:", e.message); }
+if (kolFile) {
+  let calls = await read("calls.json", null);
+  try {
+    const out = await refreshCalls(calls, kolFile.people, { runners: reading.ladder ? reading.ladder.runners : [], log: (m) => console.log("kol calls:", m) });
+    calls = out.calls;
+    const st = out.stats;
+    console.log(`kol calls: ${st.read} accounts read${st.readFails ? `, ${st.readFails} failed` : ""}, ${st.posts} new posts, ${st.newCalls} new calls, ${st.repeats} repeats, ${st.priced} open calls priced`);
+  } catch (e) { console.log("kol calls failed:", e.message); }
+  reading.kols = kolBoard(kolFile, calls, Date.now());
+  if (calls) await write("calls.json", calls);
 }
 await write("latest.json", reading);
 

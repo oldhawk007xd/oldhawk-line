@@ -6,7 +6,7 @@
   "description": "Oldhawk Line: a live memecoin cycle index. Static site on GitHub Pages plus a 30-minute GitHub Action that writes data/ and publishes the site.",
   "scripts": {
     "update": "node scripts/update.mjs",
-    "test": "node test/engine.test.mjs && node test/backtest.test.mjs",
+    "test": "node test/engine.test.mjs && node test/backtest.test.mjs && node test/kols.test.mjs",
     "site": "node scripts/site.mjs _site"
   },
   "engines": {
