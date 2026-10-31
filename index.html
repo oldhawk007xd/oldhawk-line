@@ -30,6 +30,7 @@
 <meta name="ohl-trade" content="">
 <meta name="ohl-trade-chains" content="sol,bsc,base,eth">
 <meta name="ohl-sponsor" content="">
+<meta name="ohl-buy" content="Fomo|https://fomo.family/r/oldhawksol">
 <meta name="ohl-cf-beacon" content="">
 <meta name="ohl-preview" content="">
 
@@ -125,6 +126,8 @@ section.band > .wrap { padding-block: 96px; }
 .brand { font-family: var(--display); font-weight: 600; letter-spacing: -0.02em; font-size: 30px; line-height: 1; color: var(--heroInk); text-decoration: none; text-shadow: 0 0 12px var(--halo); transition: color 1.2s ease; }
 .nav { display: flex; flex-wrap: wrap; align-items: center; gap: 2px; }
 .nav a { color: var(--heroInk); text-decoration: none; font-size: 13px; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; padding: 14px 10px; text-shadow: 0 0 4px var(--halo), 0 0 12px var(--halo); transition: color 1.2s ease; }
+.nav a.navbuy { display: inline-flex; align-items: center; min-height: 44px; margin-left: 6px; padding: 0 18px; border-radius: 999px; background: var(--green); color: #03140b; font-weight: 800; letter-spacing: 0.1em; text-shadow: none; box-shadow: 0 0 24px rgba(20,241,149,0.35); }
+.nav a.navbuy:hover { color: #03140b; box-shadow: 0 0 34px rgba(20,241,149,0.55); }
 .nav button { min-height: 44px; margin-left: 6px; padding: 0 18px; border-radius: 999px; border: 1px solid var(--heroInk); background: var(--btnBack, rgba(3,6,18,0.3)); text-shadow: 0 0 4px var(--halo), 0 0 12px var(--halo); color: var(--heroInk); font-family: var(--text); font-size: 13px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; cursor: pointer; transition: color 1.2s ease, border-color 1.2s ease; }
 
 /* Text column and dial column */
@@ -200,6 +203,13 @@ section.band > .wrap { padding-block: 96px; }
 .rules-say b { color: var(--heroInk); transition: color 1.2s ease; }
 .cta-row { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 26px; }
 .hero .btn.ghostbtn { border-color: var(--heroInk); color: var(--heroInk); transition: color 1.2s ease, border-color 1.2s ease; }
+.btn.buy { border-color: var(--green); color: var(--green); background: rgba(3,14,8,0.86); }
+.btn.buy:hover { color: #03140b; background: var(--green); }
+.tick-buy { flex: none; display: flex; align-items: center; gap: 8px; padding: 0 max(16px, env(safe-area-inset-right, 0px)) 0 16px; border-left: 1px solid var(--rule); color: var(--green); font-size: 12px; font-weight: 800; letter-spacing: 0.14em; text-transform: uppercase; text-decoration: none; white-space: nowrap; }
+.tick-buy:hover { background: rgba(20,241,149,0.08); }
+@media (max-width: 479px) { .tick-buy { display: none; } }
+.buyrow { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 16px; margin-top: 16px; padding-top: 16px; border-top: 1px solid var(--rule); }
+.buyrow small { flex: 1 1 220px; color: var(--dim); font-size: 13px; }
 .toggle { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
 .toggle span { font-size: 13px; letter-spacing: 0.12em; text-transform: uppercase; color: #a3abc0; margin-right: 6px; }
 .toggle button { min-height: 44px; padding: 0 16px; border-radius: 999px; border: 1px solid rgba(237,237,237,0.7); background: transparent; color: #ededed; font-family: var(--text); font-size: 12px; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; cursor: pointer; transition: background .3s ease, color .3s ease; }
@@ -550,6 +560,21 @@ section.band.numbers > .wrap { padding-block: 64px 84px; }
 }
 @media (max-width: 640px) {
   .nav a { display: none; }
+  .nav a.navbuy { display: inline-flex; padding: 0 16px; }
+}
+/* on a phone the header keeps one line: the buy link stays, Donate waits further down the page */
+@media (max-width: 480px) {
+  .nav:has(a.navbuy:not([hidden])) button[data-donate] { display: none; }
+  .nav a.navbuy { margin-left: 0; }
+}
+@media (max-width: 400px) {
+  .top .brand { font-size: 26px; }
+}
+@media (max-width: 359px) {
+  .top .brand { font-size: 22px; }
+  .nav a.navbuy { padding: 0 12px; font-size: 12px; letter-spacing: 0.06em; }
+}
+@media (max-width: 640px) {
   /* the label takes its own line, the three dates share the next one */
   .toggle span { flex-basis: 100%; margin-right: 0; }
   .toggle button { padding: 0 12px; }
@@ -700,6 +725,7 @@ section.band.numbers > .wrap { padding-block: 64px 84px; }
         <a href="#proof">Proof</a>
         <a href="#signals">Signals</a>
         <a href="#log">Log</a>
+        <a class="navbuy" data-buy href="#" target="_blank" rel="noopener sponsored" hidden>Buy on Fomo</a>
         <button type="button" data-donate aria-haspopup="dialog" aria-controls="donate">Donate</button>
       </nav>
     </div>
@@ -713,6 +739,7 @@ section.band.numbers > .wrap { padding-block: 64px 84px; }
       <p class="rules-say" id="rulesSay"></p>
       <div class="cta-row">
         <a class="btn go" id="alertBtn" href="https://x.com/oldhawksol" target="_blank" rel="noopener">Follow for the sunrise alert</a>
+        <a class="btn buy" data-buy href="#" target="_blank" rel="noopener sponsored" hidden>Buy on Fomo</a>
         <a class="btn ghostbtn" id="shareBtn" href="https://x.com/intent/post" target="_blank" rel="noopener">Share the sky</a>
       </div>
     </div>
@@ -777,6 +804,7 @@ section.band.numbers > .wrap { padding-block: 64px 84px; }
   <div class="tick" id="tick" hidden>
     <span class="tick-label"><i class="tick-dot"></i>Trending now</span>
     <div class="tick-track" data-marquee><div class="tick-row" id="tickRow"></div></div>
+    <a class="tick-buy" data-buy href="#" target="_blank" rel="noopener sponsored" hidden>Buy on Fomo <span aria-hidden="true">→</span></a>
   </div>
   <div class="wrap">
     <div class="head-row">
@@ -814,7 +842,7 @@ section.band.numbers > .wrap { padding-block: 64px 84px; }
       </div>
       <div class="tbox" id="listBox"><table class="runs" id="listTable"></table></div>
       <p class="empty" id="listEmpty" hidden></p>
-      <div class="list-foot" id="listFoot"><button type="button" class="btn" id="listMore" hidden>Show all</button><span id="listCount"></span></div>
+      <div class="list-foot" id="listFoot"><button type="button" class="btn" id="listMore" hidden>Show all</button><a class="btn buy" data-buy href="#" target="_blank" rel="noopener sponsored" hidden>Buy on Fomo</a><span id="listCount"></span></div>
     </div>
     <div class="panels">
       <div class="panel wide reveal" id="trendPanel"><h3>Trending now</h3><p class="sub">Over 10 days old and above $10M, with an X account of their own that posted in the last 14 days and has 1,000 followers or more. Biggest 24h gainers first, then the most traded.</p><div id="trendList"></div></div>
@@ -934,6 +962,7 @@ section.band.numbers > .wrap { padding-block: 64px 84px; }
         <p>The Oldhawk Line is a rules-based research framework, published for education. It is not financial advice and not a recommendation to buy or sell any token. Memecoins can go to zero. The anchors come from one past cycle and the next one can behave differently.</p>
         <p>Built and maintained by <a id="byLink" href="https://x.com/oldhawksol" target="_blank" rel="noopener">@oldhawksol</a>.</p>
         <p id="tradeNote" hidden>On-chain coin links open a trading terminal through a referral link that supports the site.</p>
+        <p id="buyNote" hidden></p>
         <div class="sign">Receipts, not vibes.</div>
       </div>
     </div>
@@ -1006,6 +1035,9 @@ section.band.numbers > .wrap { padding-block: 64px 84px; }
   const TRADE_CHAINS = setting("ohl-trade-chains", "sol,bsc,base,eth").split(",").map((x) => x.trim());
   /* optional: one sponsor line, "Name | https://link | short line" */
   const SPONSOR = setting("ohl-sponsor", "");
+  /* where to buy: one app for the chains on this page, through a referral link that supports the site (name|url) */
+  const BUY = (() => { const [name, url] = setting("ohl-buy", "").split("|").map((x) => x.trim()); return name && /^https:\/\/[^\s"<>]+$/.test(url || "") ? { name, url } : null; })();
+  const BUY_CHAINS = "Solana, Base, BNB Chain, Ethereum, Monad and Robinhood Chain";
   /* optional: Cloudflare Web Analytics, free and cookie-free, so the traffic can be shown to sponsors */
   const BEACON = setting("ohl-cf-beacon", "");
   if (BEACON && /^[A-Za-z0-9]{16,64}$/.test(BEACON) && !PREVIEW) {
@@ -3219,6 +3251,8 @@ section.band.numbers > .wrap { padding-block: 64px 84px; }
       const parts = WHY.filter(([k]) => tr.why && tr.why[k]).map(([k, t]) => `${tr.why[k]} ${t}`);
       $("trendList").insertAdjacentHTML("beforeend", `<p class="sub left-out">${tr.pool} coin${tr.pool === 1 ? "" : "s"} from $10M pass${tr.pool === 1 ? "es" : ""} the checks${tr.coins.length < tr.pool ? `, the top ${Math.min(8, tr.coins.length)} are shown` : ""}. ${tr.left} left out: ${parts.join(", ")}.</p>`);
     }
+    /* where to buy them, right under the list */
+    if (BUY && tr && tr.coins.length) $("trendList").insertAdjacentHTML("beforeend", `<div class="buyrow"><a class="btn go" href="${esc(BUY.url)}" target="_blank" rel="noopener sponsored">Buy these on ${esc(BUY.name)}</a><small>${esc(BUY.name)} trades ${BUY_CHAINS} from one balance. Referral link: it supports the site.</small></div>`);
     const oc = L.onchain;
     const base = "Listed memes: CoinGecko Meme category without launchpad tokens, meme-branded L1s and bridged copies. Circulating market cap, never FDV. A runner needs 24h volume of at least $25K and 0.1% of its market cap. Logos: CoinGecko for listed coins, the launchpad's own image through Codex for on-chain coins. Trending: over 10 days old and above $10M, with an X account of its own (from its CoinGecko page or its launchpad) that posted in the last 14 days and has 1,000 followers or more, read through FxTwitter. A coin younger than 10 days is counted but never named.";
     const ocText = oc.status === "live"
@@ -3761,6 +3795,13 @@ section.band.numbers > .wrap { padding-block: 64px 84px; }
       $("sponsor").hidden = false;
     }
     $("tradeNote").hidden = !TRADE;
+    /* the buy links: the header, the hero, the ticker, the runner list and the trending panel */
+    document.querySelectorAll("[data-buy]").forEach((a) => {
+      if (!BUY) { a.hidden = true; return; }
+      a.href = BUY.url; a.hidden = false;
+      a.firstChild.nodeValue = `Buy on ${BUY.name}${a.classList.contains("tick-buy") ? " " : ""}`;
+    });
+    if (BUY) { $("buyNote").textContent = `Buy on ${BUY.name} links are referral links: a share of the trading fees supports the site.`; $("buyNote").hidden = false; }
   })();
 
   /* Alerts link: Telegram channel when set, else X */

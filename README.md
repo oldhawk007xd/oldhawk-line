@@ -127,6 +127,7 @@ Chains: `sol`, `bsc`, `base`, `eth`, `monad`, `hood`. Τα νούμερα (marke
 - `ohl-telegram`: το link του Telegram καναλιού. Αν το βάλεις, τα κουμπιά «Get the sunrise alert» οδηγούν εκεί. Αλλιώς οδηγούν στο X.
 - `ohl-x`: το προφίλ στο X. Είναι ήδη `https://x.com/oldhawksol`.
 - `ohl-trade`: link με referral για τα on-chain coins. Γράψε το link της σελίδας ενός token από το terminal σου, με `{chain}` στη θέση του chain (sol, bsc, base, eth) και `{address}` στη θέση της διεύθυνσης. Για παράδειγμα GMGN: `https://gmgn.ai/{chain}/token/{address}?ref=ΚΩΔΙΚΟΣ` (έλεγξε στο referral panel του terminal ότι το link κρατάει τον κωδικό σου). Αν το terminal δουλεύει μόνο σε Solana, βάλε `ohl-trade-chains` = `sol`. Όταν είναι ενεργό, το footer λέει καθαρά ότι τα links είναι referral.
+- `ohl-buy`: πού αγοράζει κανείς, `Όνομα|https://link`. Είναι ήδη `Fomo|https://fomo.family/r/oldhawksol`. Βγάζει κουμπί «Buy on Fomo» στο header (και στο κινητό, στη θέση του Donate), στο hero, στη λωρίδα Trending now, κάτω από το κουτί Trending now και στη λίστα των runners. Το footer λέει καθαρά ότι είναι referral link. Άδειο, και τα κουμπιά κρύβονται.
 - `ohl-sponsor`: μία γραμμή χορηγού, `Όνομα | https://link | σύντομη φράση`. Φαίνεται κάτω από το «Today in numbers» με την ένδειξη Sponsor, ποτέ μέσα στα δεδομένα ή στα σήματα.
 - `ohl-cf-beacon`: το token του Cloudflare Web Analytics (δωρεάν, χωρίς cookies). *dash.cloudflare.com › Analytics & Logs › Web Analytics › Add a site*, και αντέγραψε το token από το snippet. Έτσι έχεις επισκέπτες και χώρες, που τα θέλει κάθε χορηγός.
 
