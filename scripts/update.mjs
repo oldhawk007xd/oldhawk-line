@@ -2,7 +2,8 @@
    Pulls the live sources, writes data/latest.json, keeps one close per UTC day in data/history.json,
    logs alerts in data/alerts.json and, if a Telegram bot is set up, posts them to the channel. */
 import { readFile, writeFile, mkdir, appendFile } from "node:fs/promises";
-import { collect, compute, toDaily, alertsFor, blank, basketIds, basketCharts, basketSeries, weeklyFrom, liveCandle, slimCodex, watchIds, NEEDS, refreshSocials } from "../lib/engine.mjs";
+import { collect, compute, toDaily, alertsFor, blank, slimCodex, watchIds, NEEDS, refreshSocials } from "../lib/engine.mjs";
+import { addReading } from "../lib/memecap.mjs";
 import { refreshCalls, kolBoard } from "../lib/kols.mjs";
 
 const DATA = new URL("../data/", import.meta.url);
@@ -99,36 +100,12 @@ if (reading.line != null) {
   await write("history.json", { v: 2, days });
 }
 
-/* Weekly candles of the meme market (data/weekly.json), values in $B.
-   The year before launch is estimated once from the 15 biggest memes, scaled to the CoinGecko Meme
-   category total on launch day. From then on every update moves the live candle with the real total. */
-let weekly = await read("weekly.json", null);
+/* The meme market cap by day (data/memecap.json), values in $B: every update moves today's row with the
+   CoinGecko Meme category total. The days before the site went live come from scripts/memecap-backfill.mjs. */
 const memeMC = reading.market && reading.market.memeMC;
-const hasWeeks = (w) => Boolean(w && Array.isArray(w.weeks) && w.weeks.length);
-if (memeMC && !hasWeeks(weekly)) {
-  try {
-    const ids = basketIds(raw, 15);
-    const charts = await basketCharts({ cgKey: process.env.COINGECKO_DEMO_KEY || "", ids, gapMs: process.env.CG_GAP_MS ? Number(process.env.CG_GAP_MS) : undefined });
-    if (charts.failed.length) console.log("weekly backfill: skipped", charts.failed.map((f) => `${f.id} (${f.error})`).join(", "));
-    const series = basketSeries(charts);
-    const last = series.length ? series[series.length - 1][1] : 0;
-    /* at least two thirds of the basket, or it waits for a run where CoinGecko answers */
-    if (charts.length >= Math.ceil(ids.length * 2 / 3) && series.length >= 30 && last > 0) {
-      const from = charts.map((c) => c.id);
-      const k = memeMC / last;
-      weekly = {
-        v: 1, unit: "$B", basis: "CoinGecko Meme category market cap",
-        estimated: { from, scale: Number(k.toFixed(4)), until: reading.at, note: `Weeks before launch: the ${from.length} biggest memes, scaled to the category total` },
-        weeks: weeklyFrom(series.map(([t, x]) => [t, Number((x * k / 1e9).toFixed(3))]))
-      };
-      console.log(`weekly backfill: ${weekly.weeks.length} weeks from ${from.length} coins`);
-    } else console.log(`weekly backfill: ${charts.length} of ${ids.length} coins answered, tried again on the next run`);
-  } catch (e) { console.log("weekly backfill failed:", e.message); }
-}
-if (hasWeeks(weekly) && memeMC) {
-  weekly.weeks = liveCandle(weekly.weeks, Date.parse(reading.at), Number((memeMC / 1e9).toFixed(3)));
-  weekly.at = reading.at;
-  await write("weekly.json", weekly);
+if (memeMC) {
+  const memecap = addReading(await read("memecap.json", null), reading.at, memeMC);
+  await write("memecap.json", memecap);
 }
 
 const { messages, state } = alertsFor(alerts.state, reading);
