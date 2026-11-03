@@ -145,14 +145,23 @@ check("board: an account X has not let us read lately says so", () => {
 check("kols.json: every incident and alignment has a date, a known kind and at least one https source", () => {
   for (const p of file.people) {
     assert.ok(p.id && p.name, JSON.stringify(p).slice(0, 60));
-    for (const i of p.incidents) { assert.ok(/^\d{4}-\d{2}$/.test(i.date) && i.what && ["dump", "insiders", "undisclosed", "collapse"].includes(i.harm) && ["admitted", "court", "settled", "onchain", "lawsuit", "dismissed", "reported"].includes(i.evidence), `${p.id} ${i.token}`); assert.ok(i.sources.length && i.sources.every((s) => /^https:\/\//.test(s.u) && s.t), `${p.id} ${i.token} sources`); }
+    for (const i of p.incidents) { assert.ok(/^\d{4}-\d{2}$/.test(i.date) && i.what && ["dump", "insiders", "undisclosed", "collapse", "paidloss"].includes(i.harm) && ["admitted", "court", "settled", "onchain", "lawsuit", "dismissed", "reported"].includes(i.evidence), `${p.id} ${i.token}`); assert.ok(i.sources.length && i.sources.every((s) => /^https:\/\//.test(s.u) && s.t), `${p.id} ${i.token} sources`); }
     for (const a of p.align) { assert.ok(["wallets", "holds", "discloses"].includes(a.kind) && a.what && a.sources.length && a.sources.every((s) => /^https:\/\//.test(s.u)), `${p.id} align`); }
     if (p.track) assert.ok(/^[A-Za-z0-9_]{1,15}$/.test(p.x), `${p.id} handle`);
   }
 });
+check("kols.json: a paid-while-copiers-lost incident carries both amounts and none taken from buyers", () => {
+  const list = file.people.flatMap((p) => p.incidents.filter((i) => i.harm === "paidloss"));
+  assert.ok(list.length >= 20);
+  for (const i of list) assert.ok(i.paid > 0 && i.lost >= 0 && i.usd == null, i.what.slice(0, 60));
+  const b = kolBoard(file, { calls: [] }, NOW);
+  assert.equal(b.stats.paid, Math.round(list.reduce((s, i) => s + i.paid, 0)));
+  assert.equal(b.stats.lost, list.reduce((s, i) => s + i.lost, 0));
+  assert.ok(!b.people.some((p) => p.usd && p.incidents.every((i) => i.harm === "paidloss")), "copiers' losses are not counted as taken from buyers");
+});
 check("kols.json: no dashes", () => assert.ok(!/[–—]/.test(JSON.stringify(file))));
 const real = kolBoard(file, { calls: [] }, NOW);
-check("kols.json: the board stays small", () => assert.ok(JSON.stringify(real).length < 30000, String(JSON.stringify(real).length)));
+check("kols.json: the board stays small", () => assert.ok(JSON.stringify(real).length < 48000, String(JSON.stringify(real).length)));
 
 for (const [s, n, m] of results) console.log(`${s.padEnd(4)} ${n}${m ? "  >> " + m : ""}`);
 console.log(`\nKOL board: ${real.people.map((p) => `${p.name} ${p.score}`).join(", ")}`);

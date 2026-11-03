@@ -1485,13 +1485,33 @@ a.fomo:hover .fm { opacity: 0.18; transform: translateY(-50%) rotate(-6deg) scal
     /* the hawk by hour: its underside lit by the moon at night, by the low sun at dawn, in sky shade by day,
        with sunlight through the flight feathers when the sun is behind them */
     const HAWK_LOOK = [
-      { base: [14, 16, 30, 0.95], pattern: 0.5, tint: [0.4, 0.46, 0.68], glow: 0 }, { base: [16, 18, 36, 0.95], pattern: 0.5, tint: [0.44, 0.5, 0.72], glow: 0 },
+      { base: [14, 16, 30, 0.95], pattern: 0.4, tint: [0.4, 0.46, 0.68], glow: 0 }, { base: [16, 18, 36, 0.95], pattern: 0.4, tint: [0.44, 0.5, 0.72], glow: 0 },
       { base: [20, 16, 34, 0.95], pattern: 0.5, tint: [0.78, 0.52, 0.46], glow: 0.2 }, { base: [34, 26, 40, 0.96], pattern: 0.62, tint: [0.8, 0.6, 0.52], glow: 0.4 },
-      { base: [40, 44, 60, 0.97], pattern: 0.85, tint: [0.62, 0.65, 0.74], glow: 0.3 }, { base: [60, 40, 34, 0.97], pattern: 0.82, tint: [0.78, 0.64, 0.55], glow: 0.4 },
-      { base: [62, 34, 28, 0.97], pattern: 0.8, tint: [0.8, 0.6, 0.5], glow: 0.45 }
+      { base: [40, 44, 60, 0.97], pattern: 0.89, tint: [0.89, 0.84, 0.8], glow: 0.3 }, { base: [60, 40, 34, 0.97], pattern: 0.88, tint: [0.93, 0.835, 0.75], glow: 0.4 },
+      { base: [62, 34, 28, 0.97], pattern: 0.87, tint: [0.935, 0.825, 0.74], glow: 0.45 }
     ];
     const LIGHT = { quiet: [70, 255, 168], nobuys: [255, 182, 52], sell: [255, 64, 92], none: [255, 238, 196] };
     const BEAM_PERIOD = { quiet: 9, nobuys: 6, sell: 3.2, none: 9 };
+    /* the beam's phase, so the still painting (t = 12.5) shows it sweeping across the sea */
+    const BEAM_PHASE = Object.fromEntries(Object.entries(BEAM_PERIOD).map(([k, p]) => [k, 4.4 - (12.5 / p) * Math.PI * 2]));
+    /* the painted shore, hour by hour: the air, the mountains in shade and in light, snow, hills, firs, rock,
+       and the lighthouse's walls and bands */
+    const HAZE = [[34, 42, 84], [42, 52, 104], [150, 104, 140], [236, 176, 150], [178, 204, 236], [244, 190, 150], [240, 160, 120]];
+    const MT_SHADE = [[17, 22, 46], [21, 28, 58], [62, 46, 90], [100, 78, 116], [90, 110, 150], [148, 94, 88], [138, 72, 62]];
+    const MT_LIT = [[52, 64, 104], [62, 76, 122], [182, 122, 150], [242, 168, 134], [184, 202, 230], [238, 172, 130], [232, 142, 106]];
+    const SNOW = [[150, 166, 214], [166, 182, 228], [255, 212, 218], [255, 230, 202], [252, 253, 255], [255, 238, 216], [255, 222, 194]];
+    const HILL = [[11, 15, 32], [14, 19, 40], [44, 33, 64], [60, 46, 76], [48, 74, 90], [96, 60, 52], [100, 50, 40]];
+    const FIR = [[5, 8, 18], [7, 10, 22], [20, 15, 32], [26, 21, 36], [16, 40, 32], [42, 27, 23], [46, 23, 19]];
+    const FIR_HI = [[40, 56, 96], [46, 62, 106], [118, 72, 98], [160, 104, 88], [70, 120, 74], [156, 104, 66], [160, 86, 58]];
+    const ROCK = [[11, 13, 25], [14, 17, 31], [38, 29, 46], [58, 45, 56], [66, 68, 76], [86, 60, 52], [92, 54, 44]];
+    const ROCK_HI = [[66, 78, 114], [76, 90, 130], [176, 126, 146], [236, 176, 146], [196, 196, 202], [232, 176, 136], [232, 156, 120]];
+    const WALL_LIT = [[84, 92, 124], [96, 104, 138], [206, 176, 194], [252, 228, 210], [247, 245, 239], [255, 238, 218], [255, 228, 206]];
+    const WALL_SH = [[20, 24, 42], [24, 28, 50], [78, 64, 94], [138, 114, 130], [166, 172, 190], [194, 148, 134], [186, 128, 110]];
+    const BAND_LIT = [[92, 56, 74], [104, 62, 82], [200, 96, 104], [224, 96, 82], [206, 58, 50], [216, 74, 58], [208, 60, 48]];
+    const BAND_SH = [[28, 17, 28], [34, 21, 34], [92, 42, 58], [126, 50, 52], [118, 30, 28], [126, 38, 32], [116, 32, 26]];
+    const NIGHTK = [1, 1, 0.7, 0.2, 0, 0, 0];
+    function noise1(seed) { const r = rng(seed), v = Array.from({ length: 1024 }, () => r()); return (x) => { const i = Math.floor(x), f = x - i, a = v[((i % 1024) + 1024) % 1024], b = v[(((i + 1) % 1024) + 1024) % 1024], t = f * f * (3 - 2 * f); return a + (b - a) * t; }; }
+    const fbm1 = (n, x, oct) => { let a = 0.5, s = 0, f = 1, t = 0; for (let i = 0; i < oct; i++) { s += a * n(x * f); t += a; a *= 0.5; f *= 2.07; } return s / t; };
 
     /* ===================== the hawk: a buteo built feather by feather ===================== */
     /* Model space: x forward (head), y along the right wing, z up. Half span about 1.1.
@@ -1968,68 +1988,184 @@ a.fomo:hover .fm { opacity: 0.18; transform: translateY(-50%) rotate(-6deg) scal
         x.drawImage(out, cx - r, cy - r, r * 2, r * 2);
       }
 
-      /* ---------- the far shore and the lighthouse ---------- */
+      /* ---------- the far shore and the lighthouse, painted ---------- */
+      /* Far mountains laid in with a knife: a soft wash and broad scrapes down the fall line on the faces that look toward
+         the light (the sun once it is up, the moon before), snow at the summits, mist at their feet. Then the foothills
+         with a fringe of far firs, a wooded headland, rocks and surf, and the lighthouse with the keeper's house. */
+      function paintShore(x, W, H) {
+        const u = S.u, narrow = S.narrow, sc = narrow ? 0.6 : 1, night = at(NIGHTK, u);
+        const lightX = u >= 2.2 ? (S.sun ? S.sun.x : W * 0.5) : (S.moon && S.moon.x ? S.moon.x : W * 0.55);
+        const x0 = narrow ? W * 0.5 : Math.max(W * 0.56, S.dial.cx + S.dial.R * 0.3), RW = W - x0;
+        const lhX = W - (narrow ? 66 : 128);
+        const haze = at(HAZE, u), r = rng(7), nA = noise1(11), nB = noise1(23), nC = noise1(41);
+        const peaks = narrow
+          ? [{ x: x0 + RW * 0.34, h: 50 }, { x: x0 + RW * 0.66, h: 76 }, { x: x0 + RW * 0.95, h: 62 }]
+          : [{ x: x0 + RW * 0.26, h: 66 }, { x: x0 + RW * 0.55, h: 116 }, { x: x0 + RW * 0.8, h: 94 }, { x: x0 + RW * 1.04, h: 104 }];
+        const ridgeAt = (X) => {
+          let h = 0;
+          for (const p of peaks) { const d = Math.abs(X - p.x) / (p.h * 1.85); if (d < 1) h = Math.max(h, p.h * Math.pow(1 - d, 1.12)); }
+          return h * (0.9 + 0.2 * fbm1(nA, X / (16 * sc), 4)) * sstep(x0 - 20, x0 + 70 * sc, X);
+        };
+        const xs = []; for (let X = x0 - 24; X <= W + 4; X += 1) xs.push([X, H - ridgeAt(X)]);
+        const maxH = Math.max(1, ...xs.map((p) => H - p[1]));
+        const silhouette = (pts) => { x.beginPath(); x.moveTo(pts[0][0], H + 1); pts.forEach((p) => x.lineTo(p[0], p[1])); x.lineTo(W + 4, H + 1); x.closePath(); };
+        const shade = at(MT_SHADE, u), lit = at(MT_LIT, u), snow = at(SNOW, u);
+        silhouette(xs);
+        let g = x.createLinearGradient(0, H - maxH, 0, H);
+        g.addColorStop(0, rgba(mixc(shade, haze, 0.12))); g.addColorStop(0.7, rgba(mixc(shade, haze, 0.38))); g.addColorStop(1, rgba(mixc(shade, haze, 0.6)));
+        x.fillStyle = g; x.fill();
+        x.save(); silhouette(xs); x.clip();
+        const dim = 1 - 0.45 * night;
+        const kRaw = xs.map((p, i) => { if (i < 2 || i > xs.length - 3) return 0; const slope = (xs[i - 2][1] - xs[i + 2][1]) / 4, toward = lightX < p[0] ? slope : -slope; return clamp(toward * 1.4, 0, 1); });
+        const kS = kRaw.map((_, i) => { let s0 = 0, n = 0; for (let j = Math.max(0, i - 4); j <= Math.min(kRaw.length - 1, i + 4); j++) { s0 += kRaw[j]; n++; } return s0 / n; });
+        for (let i = 0; i < xs.length; i++) {
+          const [X, Y] = xs[i], h = H - Y, k = kS[i];
+          if (h < 6 || k < 0.04) continue;
+          const c0 = mixc(snow, lit, sstep(0.3, 0.9, clamp((Y - (H - maxH)) / (maxH * 0.45), 0, 1)));
+          const wg = x.createLinearGradient(0, Y, 0, Y + h * 0.7);
+          wg.addColorStop(0, rgba(c0, 0.5 * k * dim)); wg.addColorStop(1, rgba(c0, 0));
+          x.fillStyle = wg; x.fillRect(X, Y, 1.02, h * 0.7);
+        }
+        for (let i = 2; i < xs.length - 2; i += narrow ? 2 : 3) {
+          const [X, Y] = xs[i], h = H - Y;
+          if (h < 8) continue;
+          const slope = (xs[i - 2][1] - xs[i + 2][1]) / 4, toward = lightX < X ? slope : -slope;
+          if (toward <= 0.12 || fbm1(nB, X / (7 * sc), 2) < 0.42) continue;
+          const k = clamp(toward * 1.4, 0, 1), dir = lightX < X ? -1 : 1;
+          const len = (0.16 + 0.38 * r()) * h * (0.6 + 0.4 * k), ang = Math.atan(Math.abs(slope)) * 0.9 + 0.25;
+          const ex = X + dir * Math.cos(ang) * len * 0.75, ey = Y + Math.sin(ang) * len + len * 0.35;
+          const colr = mixc(snow, lit, sstep(0.3, 0.95, clamp((Y - (H - maxH)) / (maxH * 0.45), 0, 1) + 0.12 * r()));
+          const w = (2.2 + 3.2 * r()) * (narrow ? 0.7 : 1);
+          x.fillStyle = rgba(colr, (0.55 + 0.4 * r()) * (0.65 + 0.35 * k) * dim);
+          x.beginPath(); x.moveTo(X - w * 0.5, Y + 0.6); x.lineTo(X + w * 0.5, Y + 0.6); x.lineTo(ex + w * 0.15, ey); x.lineTo(ex - w * 0.15, ey); x.closePath(); x.fill();
+          if (r() < 0.12) { x.strokeStyle = rgba(shade, 0.55); x.lineWidth = 0.8; x.beginPath(); x.moveTo(X + dir * 1.5, Y + len * 0.2); x.lineTo(ex + dir * 2, ey - len * 0.1); x.stroke(); }
+        }
+        for (let i = 2; i < xs.length - 2; i += 3) {
+          const [X, Y] = xs[i], h = H - Y;
+          if (h < maxH * 0.5) continue;
+          const slope = (xs[i - 2][1] - xs[i + 2][1]) / 4, toward = lightX < X ? slope : -slope;
+          if (toward > 0) continue;
+          const dir = lightX < X ? 1 : -1, len = (h - maxH * 0.45) * (0.4 + 0.6 * r());
+          x.fillStyle = rgba(mixc(snow, shade, 0.5), (0.3 + 0.25 * r()) * dim);
+          x.beginPath(); x.moveTo(X - 0.8, Y + 0.6); x.lineTo(X + 0.8, Y + 0.6); x.lineTo(X + dir * len * 0.6, Y + len); x.closePath(); x.fill();
+        }
+        x.restore();
+        /* mist at the foot of the mountains, two soft layers */
+        const mistTop = H - maxH * 0.5;
+        for (const [seed, a, lift] of [[0, 0.5, 0.28], [37, 0.42, 0.12]]) {
+          x.beginPath(); x.moveTo(x0 - 30, H + 1);
+          for (let X = x0 - 30; X <= W + 30; X += 4) { const m = fbm1(nC, X / (46 * sc) + seed, 3); x.lineTo(X, mistTop + (1 - m) * maxH * lift + maxH * (0.28 - lift)); }
+          x.lineTo(W + 30, H + 1); x.closePath();
+          const mg = x.createLinearGradient(0, mistTop, 0, H);
+          mg.addColorStop(0, rgba(haze, 0)); mg.addColorStop(0.55, rgba(haze, a * 0.6)); mg.addColorStop(1, rgba(haze, a));
+          x.fillStyle = mg; x.fill();
+        }
+        /* the foothills, with a fringe of far firs */
+        const hill = mixc(at(HILL, u), haze, 0.28), hs = [];
+        for (let X = x0 + RW * 0.08; X <= W + 4; X += 1) hs.push([X, H - (narrow ? 20 : 34) * (0.45 + 0.55 * fbm1(nB, X / (55 * sc) + 3, 3)) * sstep(x0 + RW * 0.08, x0 + RW * 0.3, X)]);
+        silhouette(hs); x.fillStyle = rgba(hill); x.fill();
+        for (let i = 0; i < hs.length; i += narrow ? 3 : 2) {
+          const [X, Y] = hs[i];
+          if (H - Y < 6) continue;
+          const th = (2.5 + 4 * r()) * sc;
+          x.strokeStyle = rgba(hill, 0.9); x.lineWidth = 1.1; x.beginPath(); x.moveTo(X, Y + 1); x.lineTo(X, Y - th); x.stroke();
+          x.beginPath(); x.moveTo(X - th * 0.3, Y); x.lineTo(X, Y - th * 0.9); x.lineTo(X + th * 0.3, Y); x.fillStyle = rgba(hill); x.fill();
+        }
+        g = x.createLinearGradient(0, H - 14 * sc, 0, H); g.addColorStop(0, rgba(haze, 0)); g.addColorStop(1, rgba(haze, 0.35));
+        x.fillStyle = g; x.fillRect(x0 - 10, H - 14 * sc, W - x0 + 20, 14 * sc);
+        /* the headland: rocks at the point, a knoll for the lighthouse, wooded ground rising behind */
+        const knoll = 15 * sc, xTip = lhX - 34 * sc;
+        const groundAt = (X) => {
+          if (X < xTip) return 0;
+          if (X < lhX - 10 * sc) return knoll * sstep(xTip, lhX - 10 * sc, X) * (0.85 + 0.3 * fbm1(nA, X / 5, 2));
+          if (X < lhX + 14 * sc) return knoll;
+          return knoll + sstep(lhX + 14 * sc, lhX + 70 * sc, X) * (16 * sc + 12 * sc * fbm1(nC, X / (30 * sc), 3));
+        };
+        const gs = []; for (let X = xTip - 2; X <= W + 4; X += 1) gs.push([X, H - groundAt(X)]);
+        silhouette(gs); x.fillStyle = rgba(mixc(at(FIR, u), at(ROCK, u), 0.4)); x.fill();
+        const fir = at(FIR, u), firHi = at(FIR_HI, u);
+        const tree = (tx, base, h, col, hiA) => {
+          const rows = Math.max(5, Math.round(h / 1.7));
+          x.strokeStyle = rgba(col); x.lineWidth = 1; x.beginPath(); x.moveTo(tx, base); x.lineTo(tx, base - h); x.stroke();
+          for (let k = 0; k <= rows; k++) {
+            const t = k / rows, y = base - h + t * h * 0.94, w = (0.6 + t * h * 0.3) * (0.85 + 0.3 * r());
+            x.lineWidth = 1 + t * 0.9; x.beginPath(); x.moveTo(tx, y - 0.5); x.lineTo(tx - w, y + w * 0.42); x.moveTo(tx, y - 0.5); x.lineTo(tx + w, y + w * 0.42); x.stroke();
+          }
+          if (hiA > 0.01) {
+            const side = lightX < tx ? -1 : 1;
+            x.strokeStyle = rgba(firHi, hiA); x.lineWidth = 0.9;
+            for (let k = 1; k < rows; k += 2) {
+              if (r() < 0.35) continue;
+              const t = k / rows, y = base - h + t * h * 0.94, w = (0.6 + t * h * 0.3) * (0.4 + 0.5 * r());
+              x.beginPath(); x.moveTo(tx + side * w * 0.2, y); x.lineTo(tx + side * w, y + w * 0.38); x.stroke();
+            }
+          }
+        };
+        const back = mixc(fir, haze, 0.3);
+        for (let X = lhX + 18 * sc; X < W + 8; X += (4 + 4 * r()) * sc) tree(X, H - groundAt(X) + 2, (14 + 14 * r()) * sc * (0.6 + 0.4 * sstep(lhX, lhX + 90 * sc, X)), back, 0.25 * (1 - night * 0.4));
+        for (let X = lhX + 30 * sc; X < W + 8; X += (6 + 7 * r()) * sc) tree(X, H - groundAt(X) + 4, (20 + 22 * r()) * sc * (0.55 + 0.45 * sstep(lhX, lhX + 110 * sc, X)), fir, 0.45 * (1 - night * 0.3));
+        const rock = at(ROCK, u), rockHi = at(ROCK_HI, u);
+        const boulder = (bx, by, bw, bh) => {
+          const pts = [], n = 7;
+          for (let k = 0; k <= n; k++) { const a = Math.PI + (k / n) * Math.PI; pts.push([bx + Math.cos(a) * bw * (0.85 + 0.25 * r()), by + Math.sin(a) * bh * (0.75 + 0.35 * r())]); }
+          x.beginPath(); x.moveTo(bx - bw, by + 1); pts.forEach((p) => x.lineTo(p[0], p[1])); x.lineTo(bx + bw, by + 1); x.closePath(); x.fillStyle = rgba(rock); x.fill();
+          x.strokeStyle = rgba(rockHi, 0.5 + 0.3 * (1 - night)); x.lineWidth = 1;
+          x.beginPath(); const sd = lightX < bx ? 0 : 3; for (let k = sd; k <= sd + 3; k++) { const p = pts[k]; k === sd ? x.moveTo(p[0], p[1] + 0.6) : x.lineTo(p[0], p[1] + 0.6); } x.stroke();
+        };
+        const nb = narrow ? 5 : 8;
+        for (let k = 0; k < nb; k++) boulder(lerp(xTip - 6 * sc, lhX + 40 * sc, k / (nb - 1)) + (r() - 0.5) * 6 * sc, H, (4 + 5 * r()) * sc, (3 + 5 * r()) * sc);
+        x.strokeStyle = rgba(mixc([255, 255, 255], haze, 0.4), 0.35 + 0.35 * (1 - night)); x.lineWidth = 1;
+        for (let k = 0; k < (narrow ? 10 : 18); k++) { const sx = lerp(xTip - 10 * sc, lhX + 50 * sc, r()), sw = (2 + 6 * r()) * sc; x.beginPath(); x.moveTo(sx, H - 0.6); x.lineTo(sx + sw, H - 0.6); x.stroke(); }
+        /* the lighthouse and the keeper's house */
+        const baseY = H - knoll, tH = 66 * sc, bw = 8.4 * sc, tw = 5.6 * sc, side = lightX < lhX ? -1 : 1;
+        const wl = at(WALL_LIT, u), ws = at(WALL_SH, u), bl = at(BAND_LIT, u), bs = at(BAND_SH, u);
+        const hx = lhX + 9 * sc, hw = 22 * sc, hh = 9 * sc, rh = 7 * sc;
+        x.fillStyle = rgba(mixc(ws, wl, side > 0 ? 0.65 : 0.35)); x.fillRect(hx, baseY - hh, hw, hh + 1);
+        x.fillStyle = rgba(mixc(rock, [120, 46, 40], 0.35 * (1 - night)));
+        x.beginPath(); x.moveTo(hx - 2 * sc, baseY - hh); x.lineTo(hx + hw * 0.5, baseY - hh - rh); x.lineTo(hx + hw + 2 * sc, baseY - hh); x.closePath(); x.fill();
+        x.fillRect(hx + hw * 0.72, baseY - hh - rh * 0.9, 2.6 * sc, rh * 0.6);
+        for (const wx of [hx + hw * 0.22, hx + hw * 0.62]) {
+          x.fillStyle = night > 0.05 ? rgba([255, 206, 140], 0.9 * night + 0.1) : rgba(mixc(ws, [30, 34, 44], 0.5));
+          x.fillRect(wx, baseY - hh * 0.68, 3.2 * sc, 3.6 * sc);
+          if (night > 0.05) { const wg = x.createRadialGradient(wx + 1.6 * sc, baseY - hh * 0.5, 0, wx + 1.6 * sc, baseY - hh * 0.5, 9 * sc); wg.addColorStop(0, rgba([255, 200, 130], 0.35 * night)); wg.addColorStop(1, rgba([255, 200, 130], 0)); x.fillStyle = wg; x.fillRect(wx - 9 * sc, baseY - hh - 8 * sc, 22 * sc, 20 * sc); }
+        }
+        x.fillStyle = rgba(mixc(ws, wl, 0.3)); x.fillRect(lhX - bw - 2 * sc, baseY - 3 * sc, (bw + 2 * sc) * 2, 3 * sc + 1);
+        const tower = () => { x.beginPath(); x.moveTo(lhX - bw, baseY - 3 * sc); x.lineTo(lhX - tw, baseY - tH); x.lineTo(lhX + tw, baseY - tH); x.lineTo(lhX + bw, baseY - 3 * sc); x.closePath(); };
+        const across = (c1, c2) => { const gg = x.createLinearGradient(lhX - bw, 0, lhX + bw, 0), L = side < 0 ? c1 : c2, Rr = side < 0 ? c2 : c1; gg.addColorStop(0, rgba(mixc(L, Rr, 0.15))); gg.addColorStop(0.35, rgba(L)); gg.addColorStop(1, rgba(Rr)); return gg; };
+        tower(); x.fillStyle = across(wl, ws); x.fill();
+        x.save(); tower(); x.clip();
+        x.fillStyle = across(bl, bs);
+        x.fillRect(lhX - bw - 1, baseY - tH * 0.42, bw * 2 + 2, tH * 0.13);
+        x.fillRect(lhX - bw - 1, baseY - tH * 0.74, bw * 2 + 2, tH * 0.13);
+        x.fillStyle = rgba(mixc(ws, [10, 10, 16], 0.6)); x.fillRect(lhX - 1.6 * sc, baseY - 9 * sc, 3.2 * sc, 6 * sc);
+        for (const fy of [0.3, 0.58]) { x.fillStyle = night > 0.4 && fy === 0.58 ? rgba([255, 210, 150], 0.85) : rgba(mixc(ws, [10, 10, 16], 0.55)); x.fillRect(lhX - 0.9 * sc, baseY - tH * fy - 2.2 * sc, 1.8 * sc, 3.6 * sc); }
+        x.restore();
+        const gy = baseY - tH;
+        x.fillStyle = rgba(mixc(ws, [12, 12, 18], 0.55)); x.fillRect(lhX - tw - 2.6 * sc, gy - 1.6 * sc, (tw + 2.6 * sc) * 2, 2 * sc);
+        x.strokeStyle = rgba(mixc(ws, [12, 12, 18], 0.4), 0.9); x.lineWidth = 0.7;
+        x.beginPath(); x.moveTo(lhX - tw - 2.4 * sc, gy - 5.4 * sc); x.lineTo(lhX + tw + 2.4 * sc, gy - 5.4 * sc);
+        for (let px = lhX - tw - 2.2 * sc; px <= lhX + tw + 2.3 * sc; px += 1.8 * sc) { x.moveTo(px, gy - 1.6 * sc); x.lineTo(px, gy - 5.4 * sc); }
+        x.stroke();
+        const lw = tw * 0.82, lh = 8 * sc, ly = gy - 1.6 * sc - lh;
+        const glass = night > 0.05 ? mixc([255, 250, 230], LIGHT[S.data.light || "none"], 0.35) : mixc([200, 214, 226], wl, 0.3);
+        x.fillStyle = rgba(glass, night > 0.05 ? 0.95 : 0.9); x.fillRect(lhX - lw, ly, lw * 2, lh);
+        x.strokeStyle = "rgba(18,18,24,0.85)"; x.lineWidth = 0.8;
+        x.beginPath(); for (let k = 0; k <= 3; k++) { const mx = lhX - lw + (k / 3) * lw * 2; x.moveTo(mx, ly); x.lineTo(mx, ly + lh); } x.stroke();
+        x.fillStyle = rgba(mixc(ws, [14, 14, 20], 0.65));
+        x.beginPath(); x.moveTo(lhX - lw - 1.4 * sc, ly); x.quadraticCurveTo(lhX, ly - 9 * sc, lhX + lw + 1.4 * sc, ly); x.closePath(); x.fill();
+        x.beginPath(); x.arc(lhX, ly - 5.8 * sc, 1.5 * sc, 0, TAU); x.fill();
+        x.strokeStyle = rgba(mixc(ws, [14, 14, 20], 0.65)); x.lineWidth = 0.7; x.beginPath(); x.moveTo(lhX, ly - 7 * sc); x.lineTo(lhX, ly - 11 * sc); x.stroke();
+        return { lamp: { x: lhX, y: ly + lh / 2 }, x0, maxH: Math.max(maxH, tH + knoll + 14 * sc) };
+      }
       function buildLand() {
-        const W = S.W, H = S.hy, k = `${W}:${H}:${S.narrow}:${Math.round(S.u * 8)}:${S.dpr}`;
+        const W = S.W, H = S.hy, k = `${W}:${H}:${S.narrow}:${Math.round(S.u * 8)}:${S.dpr}:${S.data.light || ""}`;
         if (k === S.landKey && S.land) return;
         S.landKey = k;
-        const far = at(LAND_FAR, S.u), near = at(LAND_NEAR, S.u);
-        const x0 = S.narrow ? W * 0.5 : Math.max(W * 0.56, S.dial.cx + S.dial.R * 0.3);
-        const hFar = S.narrow ? 20 : 34, hNear = S.narrow ? 13 : 21;
-        const lhX = W - (S.narrow ? 34 : Math.min(84, W * 0.06));
         const c = makeCanvas(W * S.dpr, H * S.dpr), x = c.getContext("2d");
         x.scale(S.dpr, S.dpr);
-        const n = noise2(3);
-        const ridge = (base, amp, sc, seed, from) => {
-          const pts = [];
-          for (let X = from - 4; X <= W + 4; X += 3) {
-            const rise = sstep(from, from + (W - from) * 0.25, X);
-            const h = base * rise * (0.55 + 0.45 * fbm(n, X / sc + seed, seed, 4)) + amp * rise * Math.pow(fbm(n, X / (sc * 0.4) + seed * 2, 1.7, 3), 2);
-            pts.push([X, H - h]);
-          }
-          return pts;
-        };
-        const fill = (pts, col, alpha) => { x.beginPath(); x.moveTo(pts[0][0], H + 1); pts.forEach((p) => x.lineTo(p[0], p[1])); x.lineTo(W + 4, H + 1); x.closePath(); x.fillStyle = rgba(col, alpha); x.fill(); };
-        /* far hills, hazy; then the near cape where the lighthouse stands */
-        fill(ridge(hFar, hFar * 0.5, 160, 1.3, x0), far, 0.92);
-        const capeFrom = S.narrow ? W * 0.68 : Math.max(x0 + 80, W * 0.72);
-        const cape = ridge(hNear, hNear * 0.3, 90, 4.1, capeFrom).map(([X, Y]) => {
-          /* a flat top under the lighthouse */
-          const d = Math.abs(X - lhX), top = H - hNear * 1.05;
-          return d < 16 ? [X, Math.min(Y, top)] : [X, Y];
-        });
-        fill(cape, near, 1);
-        /* the lighthouse: white with two red bands by day, a dark shape at night */
-        const day = sstep(3, 4.2, S.u), towerH = S.narrow ? 22 : 36, tw = S.narrow ? 3.8 : 5.8;
-        const baseY = H - hNear * 1.05;
-        const wall = mixc(near, [236, 232, 222], 0.15 + 0.75 * day), band = mixc(near, [196, 64, 58], 0.1 + 0.7 * day);
-        x.beginPath(); x.moveTo(lhX - tw, baseY); x.lineTo(lhX - tw * 0.68, baseY - towerH); x.lineTo(lhX + tw * 0.68, baseY - towerH); x.lineTo(lhX + tw, baseY); x.closePath();
-        x.fillStyle = rgba(wall); x.fill();
-        x.save(); x.clip();
-        x.fillStyle = rgba(band);
-        x.fillRect(lhX - tw - 1, baseY - towerH * 0.36, tw * 2 + 2, towerH * 0.14);
-        x.fillRect(lhX - tw - 1, baseY - towerH * 0.72, tw * 2 + 2, towerH * 0.14);
-        x.restore();
-        /* gallery and lantern room */
-        x.fillStyle = rgba(mixc(near, [60, 60, 64], 0.5));
-        x.fillRect(lhX - tw * 0.95, baseY - towerH - 1.2, tw * 1.9, 1.4);
-        x.fillStyle = rgba(mixc(near, [40, 40, 44], 0.4));
-        x.fillRect(lhX - tw * 0.5, baseY - towerH - (S.narrow ? 5 : 7), tw, S.narrow ? 4 : 6);
-        x.beginPath(); x.moveTo(lhX - tw * 0.62, baseY - towerH - (S.narrow ? 5 : 7)); x.lineTo(lhX, baseY - towerH - (S.narrow ? 8.5 : 11)); x.lineTo(lhX + tw * 0.62, baseY - towerH - (S.narrow ? 5 : 7)); x.closePath(); x.fill();
-        /* a few windows at the foot of the cape, lit after dark */
-        const night = 1 - sstep(2.4, 3.6, S.u);
-        if (night > 0.02) {
-          const rr = rng(909);
-          for (let k = 0; k < (S.narrow ? 5 : 9); k++) {
-            const vx = lerp(capeFrom + 20, lhX - 26, rr()), vy = H - 2 - rr() * hNear * 0.55;
-            const vg = x.createRadialGradient(vx, vy, 0, vx, vy, 3.2);
-            vg.addColorStop(0, `rgba(255,214,150,${(0.95 * night).toFixed(3)})`); vg.addColorStop(1, "rgba(255,190,120,0)");
-            x.fillStyle = vg; x.fillRect(vx - 4, vy - 4, 8, 8);
-          }
-        }
-        const lampY = baseY - towerH - (S.narrow ? 3 : 4);
-        /* everything the land layer ever shows sits in a band above the horizon: hills, cape, lamp glow and beam */
-        S.land = { c, lamp: { x: lhX, y: lampY }, x0, top: Math.max(0, Math.floor(Math.min(lampY - 74, H - hFar * 1.6))) };
+        const p = paintShore(x, W, H);
+        /* everything the land layer ever shows sits in a band above the horizon: mountains, lighthouse, lamp glow and beam */
+        S.land = { c, lamp: p.lamp, x0: p.x0, maxH: p.maxH, top: Math.max(0, Math.floor(Math.min(p.lamp.y - 74, H - p.maxH - 8))) };
         buildReflection();
       }
 
@@ -2044,7 +2180,7 @@ a.fomo:hover .fm { opacity: 0.18; transform: translateY(-50%) rotate(-6deg) scal
         c.save(); c.setTransform(1, 0, 0, 1, 0, 0); c.drawImage(S.land.c, 0, sy, S.land.c.width, sh, 0, sy, S.land.c.width, sh); c.restore();
         const kind = S.data.light || "none", col = LIGHT[kind], lamp = S.land.lamp;
         const vis = at(BEAM_VIS, S.u);
-        const per = BEAM_PERIOD[kind], th = (t / per) * TAU;
+        const per = BEAM_PERIOD[kind], th = (t / per) * TAU + BEAM_PHASE[kind];
         const toward = Math.cos(th);
         /* the lamp itself, flashing when the beam faces us */
         const flash = Math.pow(Math.max(0, toward), 12);
@@ -2316,6 +2452,18 @@ a.fomo:hover .fm { opacity: 0.18; transform: translateY(-50%) rotate(-6deg) scal
           lx.fillStyle = m; lx.fillRect(0, 0, W, deep);
         }
         x.drawImage(layer, 0, 0);
+        /* the painted shore mirrored in the water, broken by ripples, gone toward us */
+        if (S.land && S.land.c) {
+          const src = S.land.c, sd = S.dpr, depth = Math.min(H, (S.land.maxH || 60) * 1.05), nn = noise1(77), rr = rng(19), A = lerp(0.42, 0.3, sstep(2, 4, S.u));
+          for (let y = 0; y < depth; y += 1.5) {
+            const k = y / depth, sy = S.hy - 1 - y * 0.95;
+            if (sy < 0) break;
+            if (fbm1(nn, y * 0.9, 2) > 0.74) continue;
+            x.globalAlpha = A * Math.pow(1 - k, 1.5) * (0.75 + 0.25 * rr());
+            x.drawImage(src, 0, Math.floor(sy * sd), src.width, Math.max(1, Math.ceil(1.5 * sd)), Math.sin(y * 0.55 + nn(y) * 6) * (0.6 + 2.2 * k), y, W, 1.5);
+          }
+          x.globalAlpha = 1;
+        }
         S.refl = c;
       }
       function drawSea(t) {
@@ -2438,7 +2586,7 @@ a.fomo:hover .fm { opacity: 0.18; transform: translateY(-50%) rotate(-6deg) scal
       /* the bird's size and a thermal that keeps all of it inside its lane, whatever its pose */
       function hawkSpan(L) {
         const w = L.r - L.l, h = L.b - L.t;
-        return clamp(Math.min(w * (S.narrow ? 0.62 : 0.24), h * 0.62, S.narrow ? 112 : 172), 46, 172);
+        return clamp(Math.min(w * (S.narrow ? 0.7 : 0.28), h * 0.62, S.narrow ? 128 : 198), 46, 198);
       }
       function planFlight(t0) {
         const L = laneFor(), r = rng((Math.random() * 1e9) | 0);
@@ -2507,6 +2655,20 @@ a.fomo:hover .fm { opacity: 0.18; transform: translateY(-50%) rotate(-6deg) scal
         look.base[3] *= op;
         return look;
       }
+      /* the hawk is drawn at three device pixels per point on its own canvas and brought down: smooth edges, no stair steps */
+      const hawkOff = { c: null, x: null };
+      function hawkPaint(c, x, y, s, orient, pose, look) {
+        const SS = Math.max(1, 3 / (S.dpr || 1)), k = SS * (S.dpr || 1), half = s * 1.3, px = Math.ceil(half * 2 * k);
+        if (!hawkOff.c || hawkOff.c.width < px) { hawkOff.c = makeCanvas(px, px); hawkOff.x = hawkOff.c.getContext("2d"); }
+        const o = hawkOff.x;
+        o.setTransform(1, 0, 0, 1, 0, 0); o.clearRect(0, 0, hawkOff.c.width, hawkOff.c.height);
+        o.setTransform(k, 0, 0, k, 0, 0);
+        const b = Hawk.draw(o, half, half, s, orient, pose, look);
+        c.save(); c.imageSmoothingEnabled = true; c.imageSmoothingQuality = "high";
+        c.drawImage(hawkOff.c, 0, 0, px, px, x - half, y - half, px / k, px / k);
+        c.restore();
+        return { l: b.l - half + x, t: b.t - half + y, r: b.r - half + x, b: b.b - half + y };
+      }
       /* a still painting: the hawk holds one soaring pose in its lane */
       function drawHawkStill() {
         const c = ctx.hawk;
@@ -2515,7 +2677,7 @@ a.fomo:hover .fm { opacity: 0.18; transform: translateY(-50%) rotate(-6deg) scal
         const L = laneFor(), w = L.r - L.l, h = L.b - L.t;
         const span = hawkSpan(L) * 0.85;
         const x = L.l + w * 0.6, y = L.t + h * 0.5;
-        S.hawkBox = Hawk.draw(c, x, y, span / 2.2, { psi: 200, phi: -16, theta: 0, alpha: 48 }, Hawk.soar(0.4), hawkLook(1));
+        S.hawkBox = hawkPaint(c, x, y, span / 2.2, { psi: 200, phi: -16, theta: 0, alpha: 48 }, Hawk.soar(0.4), hawkLook(1));
         return S.hawkBox;
       }
       function drawHawk(t, allowNew) {
@@ -2528,7 +2690,7 @@ a.fomo:hover .fm { opacity: 0.18; transform: translateY(-50%) rotate(-6deg) scal
         const look = hawkLook(st.op);
         if (look.base[3] < 0.01) return null;
         const s = S.hawk.span / 2.2 * st.scale;
-        const box = Hawk.draw(c, st.x, st.y, s, { psi: st.psi, phi: st.phi, theta: st.theta, alpha: st.alpha }, st.pose, look);
+        const box = hawkPaint(c, st.x, st.y, s, { psi: st.psi, phi: st.phi, theta: st.theta, alpha: st.alpha }, st.pose, look);
         S.hawkBox = box;
         return box;
       }
@@ -4141,8 +4303,8 @@ a.fomo:hover .fm { opacity: 0.18; transform: translateY(-50%) rotate(-6deg) scal
   const KBAND = { risk: "High risk", caution: "Caution", trusted: "Trusted", none: "Not scored yet" };
   const KCOL = { risk: "#ff5c7a", caution: "#ffb020", trusted: "#14F195", none: "#a3abc0" };
   const EVN = { admitted: "Admitted", court: "Court", settled: "Settled", onchain: "On-chain", lawsuit: "Lawsuit", dismissed: "Dismissed", reported: "Reported" };
-  const HARMN = { dump: "Sold into their promotion", insiders: "Insiders held the supply", undisclosed: "Paid, not disclosed", collapse: "Collapsed after the promotion" };
-  const HARMC = { dump: "#ff5c7a", insiders: "#ffb020", undisclosed: "#c4a8ff", collapse: "#a3abc0" };
+  const HARMN = { dump: "Sold into their promotion", insiders: "Insiders held the supply", undisclosed: "Paid, not disclosed", collapse: "Collapsed after the promotion", paidloss: "Paid per callout, copiers lost" };
+  const HARMC = { dump: "#ff5c7a", insiders: "#ffb020", undisclosed: "#c4a8ff", collapse: "#a3abc0", paidloss: "#5cc8ff" };
   const ALIGNN = { holds: "Holds what they call", wallets: "Public wallets", discloses: "Discloses paid posts" };
   const KMON = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
   const ym = (d) => { const [y, m] = String(d || "").split("-").map(Number); return y && m ? `${KMON[m - 1]} ${y}` : ""; };

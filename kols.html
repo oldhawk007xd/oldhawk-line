@@ -1062,7 +1062,7 @@ a.fomo:hover .fm { opacity: 0.18; transform: translateY(-50%) rotate(-6deg) scal
   <div class="wrap">
     <div class="head-row">
       <h2 class="serif" id="timeline-h">Every documented incident.</h2>
-      <p class="lead">One dot per incident, sized by the amount its source gives. Red: sold into their own promotion. Amber: insiders held or sold the supply. Violet: paid without saying so. Grey: collapsed after the promotion. Green rings: held what they called.</p>
+      <p class="lead">One dot per incident, sized by the amount its source gives. Red: sold into their own promotion. Amber: insiders held or sold the supply. Violet: paid without saying so. Grey: collapsed after the promotion. Blue: Pump.fun paid for the callouts while copy-traders lost. Green rings: held what they called.</p>
     </div>
     <figure class="kfig ktime"><div class="tbox" id="kolTimeline"></div></figure>
   </div>
@@ -1259,8 +1259,8 @@ a.fomo:hover .fm { opacity: 0.18; transform: translateY(-50%) rotate(-6deg) scal
   const KBAND = { risk: "High risk", caution: "Caution", trusted: "Trusted", none: "Not scored yet" };
   const KCOL = { risk: "#ff5c7a", caution: "#ffb020", trusted: "#14F195", none: "#a3abc0" };
   const EVN = { admitted: "Admitted", court: "Court", settled: "Settled", onchain: "On-chain", lawsuit: "Lawsuit", dismissed: "Dismissed", reported: "Reported" };
-  const HARMN = { dump: "Sold into their promotion", insiders: "Insiders held the supply", undisclosed: "Paid, not disclosed", collapse: "Collapsed after the promotion" };
-  const HARMC = { dump: "#ff5c7a", insiders: "#ffb020", undisclosed: "#c4a8ff", collapse: "#a3abc0" };
+  const HARMN = { dump: "Sold into their promotion", insiders: "Insiders held the supply", undisclosed: "Paid, not disclosed", collapse: "Collapsed after the promotion", paidloss: "Paid per callout, copiers lost" };
+  const HARMC = { dump: "#ff5c7a", insiders: "#ffb020", undisclosed: "#c4a8ff", collapse: "#a3abc0", paidloss: "#5cc8ff" };
   const ALIGNN = { holds: "Holds what they call", wallets: "Public wallets", discloses: "Discloses paid posts" };
   const KMON = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
   const ym = (d) => { const [y, m] = String(d || "").split("-").map(Number); return y && m ? `${KMON[m - 1]} ${y}` : ""; };
@@ -1408,8 +1408,8 @@ a.fomo:hover .fm { opacity: 0.18; transform: translateY(-50%) rotate(-6deg) scal
     const st = K.stats || {};
     const tiles = [
       { k: "Accounts on record", v: String(st.people), s: `${st.risk} high risk, ${st.caution} caution, ${st.trusted} trusted.` },
-      { k: "Documented incidents", v: String(st.incidents), s: "From ZachXBT, Bubblemaps, Coffeezilla, the SEC, court filings and the press, each one linked." },
-      { k: "Put on those incidents", v: st.usd ? usd(st.usd) : "n/a", s: "Taken from buyers or held by insiders, as each source puts it." },
+      { k: "Documented incidents", v: String(st.incidents), s: "From ZachXBT, Bubblemaps, Coffeezilla, the SEC, court filings, the press and named analysts on X, each one linked." },
+      { k: "Put on those incidents", v: st.usd ? usd(st.usd) : "n/a", s: "Taken from buyers or held by insiders, as each source puts it." + (st.lost ? ` Not counted in it: Pump.fun paid ${st.paidN} callers ${usd(st.paid)} while their copy-traders lost ${usd(st.lost)}.` : "") },
       { k: "Calls measured", v: String(st.measured || 0), s: st.measured ? `${Math.round((st.rugShare || 0) * 100)}% of them lost 80% or more within 7 days.` : `${st.calls30 || 0} call${st.calls30 === 1 ? "" : "s"} in the last 30 days. The first 7-day results come a week after the first call.` }
     ];
     $("kolStats").innerHTML = tiles.map((t) => `<div class="stat"><span class="k">${esc(t.k)}</span><span class="v">${esc(t.v)}</span><span class="s">${esc(t.s)}</span></div>`).join("");
@@ -1419,7 +1419,7 @@ a.fomo:hover .fm { opacity: 0.18; transform: translateY(-50%) rotate(-6deg) scal
     const r = K.rule || {};
     $("kolMethodBody").innerHTML = `<p>Each documented incident counts evidence times harm.</p><ul>
       <li>Evidence: admitted or found in court 3, settled with a regulator without admitting or a named on-chain investigation 2, a pending lawsuit 1.5, claims dismissed in court or reported in the press 1.</li>
-      <li>Harm: sold into their own promotion, or launched a coin and sold it, 3. Insiders held or sold a large part of the supply 1.5. Paid to promote without saying so 1.2. The coin collapsed after the promotion 1.</li>
+      <li>Harm: sold into their own promotion, or launched a coin and sold it, 3. Insiders held or sold a large part of the supply 1.5. Paid to promote without saying so 1.2. The coin collapsed after the promotion 1. Pump.fun paid callout rewards while the traders who copied the calls lost 0.8, sized by what they lost, which is not counted as taken from buyers.</li>
       <li>A bigger documented amount weighs more, on a log scale, up to 1.75 times from $100K up.</li>
       <li>Documented alignment pulls the other way: holding what they call through a drawdown 3, public wallets 2, labelled paid posts 1.</li></ul>
       <p>Score = ${r.neutral || 5} + ${r.up || 4.5} x (1 − e^(−harm / ${r.upScale || 8})) − ${r.down || 4} x (1 − e^(−alignment / ${r.downScale || 5})), from 1 to 10. From ${r.minCalls || 10} measured calls on, the calls move it too: up to +${r.liveMax || 2} when the coins lost 80% or more within 7 days, down to ${r.liveMin || -1.5} when they doubled. Under ${r.trusted || 3.5} is trusted, from ${r.risk || 7} up is high risk.</p>
@@ -1432,6 +1432,7 @@ a.fomo:hover .fm { opacity: 0.18; transform: translateY(-50%) rotate(-6deg) scal
     const facts = [
       n ? `<span><b>${n}</b> incident${n === 1 ? "" : "s"}</span>` : "",
       p.usd ? `<span><b>${usd(p.usd)}</b> documented</span>` : "",
+      p.lost ? `<span><b>${usd(p.lost)}</b> lost by copiers</span>` : "",
       a ? `<span><b>${a}</b> sign${a === 1 ? "" : "s"} of alignment</span>` : "",
       p.track ? `<span><b>${rec.n}</b> call${rec.n === 1 ? "" : "s"} tracked</span>` : ""
     ].filter(Boolean).join("");
@@ -1554,7 +1555,8 @@ a.fomo:hover .fm { opacity: 0.18; transform: translateY(-50%) rotate(-6deg) scal
     const y0 = yrs.length ? Math.min(...yrs) : 2024;
     const t0 = Date.UTC(y0, 0, 1), t1 = Date.parse((R && R.at) || "") || Date.now();
     const XT = (t) => left + (t - t0) / (t1 - t0) * (right - left);
-    const TT = (d) => { const [y, m] = String(d || "").split("-").map(Number); return Date.UTC(y || y0, (m || 1) - 1, 15); };
+    /* mid-month, but never past the reading: this month's records sit at today */
+    const TT = (d) => { const [y, m] = String(d || "").split("-").map(Number); return Math.min(Date.UTC(y || y0, (m || 1) - 1, 15), t1); };
     let u = `<svg viewBox="0 0 ${TW} ${TH}" width="${TW}" height="${TH}" role="img" aria-label="Documented incidents over time, one row per account">`;
     for (let y = y0; Date.UTC(y, 0, 1) <= t1; y++) {
       for (let q = 0; q < 4; q++) {
@@ -1571,9 +1573,9 @@ a.fomo:hover .fm { opacity: 0.18; transform: translateY(-50%) rotate(-6deg) scal
       const nm = slim && p.name.length > 14 ? `${p.name.slice(0, 13)}.` : p.name.length > 18 ? `${p.name.slice(0, 17)}.` : p.name;
       u += `<text x="${left - 8}" y="${y + 4}" text-anchor="end" fill="${KCOL[b]}" font-size="${slim ? 11 : 12}" font-family="IBM Plex Sans, sans-serif">${esc(nm)}</text>`;
       const placed = [];
-      const at = (d, rad) => { let x = XT(TT(d)); while (placed.some((q) => Math.abs(q - x) < rad + 3)) x += rad + 3; placed.push(x); return x; };
+      const at = (d, rad) => { const x0 = Math.min(XT(TT(d)), right - rad); let x = x0; while (placed.some((q) => Math.abs(q - x) < rad + 3)) x += rad + 3; if (x > right - rad) { x = x0; while (placed.some((q) => Math.abs(q - x) < rad + 3)) x -= rad + 3; } placed.push(x); return x; };
       p.incidents.slice().sort((a2, b2) => String(a2.date).localeCompare(String(b2.date))).forEach((it) => {
-        const rad = (it.usd > 1e5 ? Math.min(12, 4 + 2.6 * Math.log10(it.usd / 1e5)) : 4) * (slim ? 0.75 : 1);
+        const amt = it.usd || it.lost || 0, rad = (amt > 1e5 ? Math.min(12, 4 + 2.6 * Math.log10(amt / 1e5)) : 4) * (slim ? 0.75 : 1);
         const x = at(it.date, rad);
         u += `<g><title>${esc(ym(it.date))}, ${esc(it.token)}: ${esc(it.what)} (${esc(EVN[it.evidence] || it.evidence)})</title><circle cx="${x.toFixed(1)}" cy="${y}" r="${rad.toFixed(1)}" fill="${HARMC[it.harm] || "#a3abc0"}" fill-opacity="0.88" stroke="#05060d" stroke-width="1.5"></circle></g>`;
       });

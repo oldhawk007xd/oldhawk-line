@@ -1,5 +1,5 @@
 {
-  "about": "KOL Watch: what is documented about accounts that promote coins, with a source for every line. Only add a record that a named investigator, a court filing or the person's own words back up, and link it. harm: dump (they or wallets tied to them sold into their own promotion, or launched a coin and sold it), insiders (a large part of the supply of a coin they launched or promoted sat with insiders, who held or sold it), undisclosed (paid to promote without saying so), collapse (the coin collapsed after their promotion, with no link to their own selling). evidence: admitted, court, settled (a settlement with a regulator or in court, without admitting or denying), onchain (a named on-chain investigation), lawsuit (pending), dismissed, reported (press reports or public accusations). align: wallets (public wallets attributed by a named analyst), holds (documented holding of what they promote through a drawdown), discloses (labels paid posts). usd: the documented amount taken from buyers or held by insiders, when a source gives one. track: read their X posts and measure every coin they name.",
+  "about": "KOL Watch: what is documented about accounts that promote coins, with a source for every line. Only add a record that a named investigator, a court filing or the person's own words back up, and link it. harm: dump (they or wallets tied to them sold into their own promotion, or launched a coin and sold it), insiders (a large part of the supply of a coin they launched or promoted sat with insiders, who held or sold it), undisclosed (paid to promote without saying so), collapse (the coin collapsed after their promotion, with no link to their own selling), paidloss (Pump.fun paid them callout rewards while the traders who copied their callouts lost money, by a named analyst's count; paid and lost hold the two amounts, and lost is not counted as taken from buyers). evidence: admitted, court, settled (a settlement with a regulator or in court, without admitting or denying), onchain (a named on-chain investigation), lawsuit (pending), dismissed, reported (press reports or public accusations). align: wallets (public wallets attributed by a named analyst), holds (documented holding of what they promote through a drawdown), discloses (labels paid posts). usd: the documented amount taken from buyers or held by insiders, when a source gives one. track: read their X posts and measure every coin they name.",
   "people": [
     {
       "id": "hayden-davis",
@@ -236,6 +236,21 @@
             {
               "t": "Bubblemaps on X",
               "u": "https://x.com/bubblemaps/status/2108590916982513819"
+            }
+          ]
+        },
+        {
+          "date": "2026-11",
+          "token": "Pump.fun callouts",
+          "harm": "paidloss",
+          "evidence": "reported",
+          "paid": 142474,
+          "lost": 59982,
+          "what": "Paid $142,474 in Pump.fun callout rewards while the traders who copied its callouts lost $59,982 since Oct 12, by Bando's count. The post does not say it sold into its calls.",
+          "sources": [
+            {
+              "t": "Bando on X: callers paid $4.5M by Pump.fun while their copy-traders lost $1.5M",
+              "u": "https://x.com/bandosei/status/2117597322817483012"
             }
           ]
         }
@@ -625,6 +640,21 @@
               "u": "https://www.tokenpost.com/news/people/41537"
             }
           ]
+        },
+        {
+          "date": "2026-11",
+          "token": "Pump.fun callouts",
+          "harm": "paidloss",
+          "evidence": "reported",
+          "paid": 82548,
+          "lost": 8533,
+          "what": "Paid $82,548 in Pump.fun callout rewards while the traders who copied its callouts lost $8,533 since Oct 12, by Bando's count. Pump.fun name: The_Solstice. The post does not say it sold into its calls.",
+          "sources": [
+            {
+              "t": "Bando on X: callers paid $4.5M by Pump.fun while their copy-traders lost $1.5M",
+              "u": "https://x.com/bandosei/status/2117597322817483012"
+            }
+          ]
         }
       ],
       "align": []
@@ -667,6 +697,559 @@
             }
           ]
         }
+      ]
+    },
+    {
+      "id": "mickeymantled",
+      "name": "mickeymantled",
+      "x": "mickeymantled",
+      "role": "Pump.fun caller",
+      "track": true,
+      "incidents": [
+        {
+          "date": "2026-11",
+          "token": "Pump.fun callouts",
+          "harm": "paidloss",
+          "evidence": "reported",
+          "paid": 179577,
+          "lost": 218260,
+          "what": "Paid $179,577 in Pump.fun callout rewards while the traders who copied its callouts lost $218,260 since Oct 12, by Bando's count. The post does not say it sold into its calls.",
+          "sources": [
+            {
+              "t": "Bando on X: callers paid $4.5M by Pump.fun while their copy-traders lost $1.5M",
+              "u": "https://x.com/bandosei/status/2117597322817483012"
+            }
+          ]
+        }
+      ],
+      "align": []
+    },
+    {
+      "id": "thedetective",
+      "name": "thedetective",
+      "x": null,
+      "role": "Pump.fun caller",
+      "track": false,
+      "incidents": [
+        {
+          "date": "2026-11",
+          "token": "Pump.fun callouts",
+          "harm": "paidloss",
+          "evidence": "reported",
+          "paid": 256532,
+          "lost": 130347,
+          "what": "Paid $256,532 in Pump.fun callout rewards while the traders who copied its callouts lost $130,347 since Oct 12, by Bando's count. The post does not say it sold into its calls.",
+          "sources": [
+            {
+              "t": "Bando on X: callers paid $4.5M by Pump.fun while their copy-traders lost $1.5M",
+              "u": "https://x.com/bandosei/status/2117597322817483012"
+            }
+          ]
+        }
+      ],
+      "align": []
+    },
+    {
+      "id": "gar0u",
+      "name": "gar0u",
+      "x": null,
+      "role": "Pump.fun caller",
+      "track": false,
+      "incidents": [
+        {
+          "date": "2026-11",
+          "token": "Pump.fun callouts",
+          "harm": "paidloss",
+          "evidence": "reported",
+          "paid": 88987,
+          "lost": 117533,
+          "what": "Paid $88,987 in Pump.fun callout rewards while the traders who copied its callouts lost $117,533 since Oct 12, by Bando's count. The post does not say it sold into its calls.",
+          "sources": [
+            {
+              "t": "Bando on X: callers paid $4.5M by Pump.fun while their copy-traders lost $1.5M",
+              "u": "https://x.com/bandosei/status/2117597322817483012"
+            }
+          ]
+        }
+      ],
+      "align": []
+    },
+    {
+      "id": "ely",
+      "name": "ely",
+      "x": null,
+      "role": "Pump.fun caller",
+      "track": false,
+      "incidents": [
+        {
+          "date": "2026-11",
+          "token": "Pump.fun callouts",
+          "harm": "paidloss",
+          "evidence": "reported",
+          "paid": 310147,
+          "lost": 116811,
+          "what": "Paid $310,147 in Pump.fun callout rewards while the traders who copied its callouts lost $116,811 since Oct 12, by Bando's count. The post does not say it sold into its calls.",
+          "sources": [
+            {
+              "t": "Bando on X: callers paid $4.5M by Pump.fun while their copy-traders lost $1.5M",
+              "u": "https://x.com/bandosei/status/2117597322817483012"
+            }
+          ]
+        }
+      ],
+      "align": []
+    },
+    {
+      "id": "sh4vwty",
+      "name": "shawty",
+      "x": "sh4vwty",
+      "role": "Pump.fun caller",
+      "track": true,
+      "incidents": [
+        {
+          "date": "2026-11",
+          "token": "Pump.fun callouts",
+          "harm": "paidloss",
+          "evidence": "reported",
+          "paid": 53805,
+          "lost": 82005,
+          "what": "Paid $53,805 in Pump.fun callout rewards while the traders who copied its callouts lost $82,005 since Oct 12, by Bando's count. The post does not say it sold into its calls.",
+          "sources": [
+            {
+              "t": "Bando on X: callers paid $4.5M by Pump.fun while their copy-traders lost $1.5M",
+              "u": "https://x.com/bandosei/status/2117597322817483012"
+            }
+          ]
+        }
+      ],
+      "align": []
+    },
+    {
+      "id": "yenni",
+      "name": "Yenni",
+      "x": "Yennii56",
+      "role": "Pump.fun caller",
+      "track": true,
+      "incidents": [
+        {
+          "date": "2026-11",
+          "token": "Pump.fun callouts",
+          "harm": "paidloss",
+          "evidence": "reported",
+          "paid": 174979,
+          "lost": 80125,
+          "what": "Paid $174,979 in Pump.fun callout rewards while the traders who copied its callouts lost $80,125 since Oct 12, by Bando's count. The post does not say it sold into its calls.",
+          "sources": [
+            {
+              "t": "Bando on X: callers paid $4.5M by Pump.fun while their copy-traders lost $1.5M",
+              "u": "https://x.com/bandosei/status/2117597322817483012"
+            }
+          ]
+        }
+      ],
+      "align": []
+    },
+    {
+      "id": "schoen",
+      "name": "schoen",
+      "x": null,
+      "role": "Pump.fun caller",
+      "track": false,
+      "incidents": [
+        {
+          "date": "2026-11",
+          "token": "Pump.fun callouts",
+          "harm": "paidloss",
+          "evidence": "reported",
+          "paid": 152815,
+          "lost": 77241,
+          "what": "Paid $152,815 in Pump.fun callout rewards while the traders who copied its callouts lost $77,241 since Oct 12, by Bando's count. The post does not say it sold into its calls.",
+          "sources": [
+            {
+              "t": "Bando on X: callers paid $4.5M by Pump.fun while their copy-traders lost $1.5M",
+              "u": "https://x.com/bandosei/status/2117597322817483012"
+            }
+          ]
+        }
+      ],
+      "align": []
+    },
+    {
+      "id": "iced",
+      "name": "Iced",
+      "x": "IcedKnife",
+      "role": "Pump.fun caller",
+      "track": true,
+      "incidents": [
+        {
+          "date": "2026-11",
+          "token": "Pump.fun callouts",
+          "harm": "paidloss",
+          "evidence": "reported",
+          "paid": 154305,
+          "lost": 76734,
+          "what": "Paid $154,305 in Pump.fun callout rewards while the traders who copied its callouts lost $76,734 since Oct 12, by Bando's count. The post does not say it sold into its calls.",
+          "sources": [
+            {
+              "t": "Bando on X: callers paid $4.5M by Pump.fun while their copy-traders lost $1.5M",
+              "u": "https://x.com/bandosei/status/2117597322817483012"
+            }
+          ]
+        }
+      ],
+      "align": []
+    },
+    {
+      "id": "chairman",
+      "name": "Chairman",
+      "x": "Chairman_DN",
+      "role": "Pump.fun caller",
+      "track": true,
+      "incidents": [
+        {
+          "date": "2026-11",
+          "token": "Pump.fun callouts",
+          "harm": "paidloss",
+          "evidence": "reported",
+          "paid": 573719,
+          "lost": 70819,
+          "what": "Paid $573,719 in Pump.fun callout rewards while the traders who copied its callouts lost $70,819 since Oct 12, by Bando's count. The post does not say it sold into its calls.",
+          "sources": [
+            {
+              "t": "Bando on X: callers paid $4.5M by Pump.fun while their copy-traders lost $1.5M",
+              "u": "https://x.com/bandosei/status/2117597322817483012"
+            }
+          ]
+        }
+      ],
+      "align": []
+    },
+    {
+      "id": "cooker",
+      "name": "Cooker",
+      "x": "CookerFlips",
+      "role": "Pump.fun caller",
+      "track": true,
+      "incidents": [
+        {
+          "date": "2026-11",
+          "token": "Pump.fun callouts",
+          "harm": "paidloss",
+          "evidence": "reported",
+          "paid": 152929,
+          "lost": 69906,
+          "what": "Paid $152,929 in Pump.fun callout rewards while the traders who copied its callouts lost $69,906 since Oct 12, by Bando's count. The post does not say it sold into its calls.",
+          "sources": [
+            {
+              "t": "Bando on X: callers paid $4.5M by Pump.fun while their copy-traders lost $1.5M",
+              "u": "https://x.com/bandosei/status/2117597322817483012"
+            }
+          ]
+        }
+      ],
+      "align": []
+    },
+    {
+      "id": "jackduvalcalls",
+      "name": "jackduvalcalls",
+      "x": null,
+      "role": "Pump.fun caller",
+      "track": false,
+      "incidents": [
+        {
+          "date": "2026-11",
+          "token": "Pump.fun callouts",
+          "harm": "paidloss",
+          "evidence": "reported",
+          "paid": 230848,
+          "lost": 65855,
+          "what": "Paid $230,848 in Pump.fun callout rewards while the traders who copied its callouts lost $65,855 since Oct 12, by Bando's count. The post does not say it sold into its calls.",
+          "sources": [
+            {
+              "t": "Bando on X: callers paid $4.5M by Pump.fun while their copy-traders lost $1.5M",
+              "u": "https://x.com/bandosei/status/2117597322817483012"
+            }
+          ]
+        }
+      ],
+      "align": []
+    },
+    {
+      "id": "limfork",
+      "name": "Limfork",
+      "x": "limfork",
+      "role": "Pump.fun caller",
+      "track": true,
+      "incidents": [
+        {
+          "date": "2026-11",
+          "token": "Pump.fun callouts",
+          "harm": "paidloss",
+          "evidence": "reported",
+          "paid": 104977,
+          "lost": 56643,
+          "what": "Paid $104,977 in Pump.fun callout rewards while the traders who copied its callouts lost $56,643 since Oct 12, by Bando's count. The post does not say it sold into its calls.",
+          "sources": [
+            {
+              "t": "Bando on X: callers paid $4.5M by Pump.fun while their copy-traders lost $1.5M",
+              "u": "https://x.com/bandosei/status/2117597322817483012"
+            }
+          ]
+        }
+      ],
+      "align": []
+    },
+    {
+      "id": "ferre",
+      "name": "ferre",
+      "x": null,
+      "role": "Pump.fun caller",
+      "track": false,
+      "incidents": [
+        {
+          "date": "2026-11",
+          "token": "Pump.fun callouts",
+          "harm": "paidloss",
+          "evidence": "reported",
+          "paid": 154374,
+          "lost": 53334,
+          "what": "Paid $154,374 in Pump.fun callout rewards while the traders who copied its callouts lost $53,334 since Oct 12, by Bando's count. The post does not say it sold into its calls.",
+          "sources": [
+            {
+              "t": "Bando on X: callers paid $4.5M by Pump.fun while their copy-traders lost $1.5M",
+              "u": "https://x.com/bandosei/status/2117597322817483012"
+            }
+          ]
+        }
+      ],
+      "align": []
+    },
+    {
+      "id": "daumen",
+      "name": "Daumen",
+      "x": "daumeneth",
+      "role": "Pump.fun caller",
+      "track": true,
+      "incidents": [
+        {
+          "date": "2026-11",
+          "token": "Pump.fun callouts",
+          "harm": "paidloss",
+          "evidence": "reported",
+          "paid": 139378,
+          "lost": 42342,
+          "what": "Paid $139,378 in Pump.fun callout rewards while the traders who copied its callouts lost $42,342 since Oct 12, by Bando's count. The post does not say it sold into its calls.",
+          "sources": [
+            {
+              "t": "Bando on X: callers paid $4.5M by Pump.fun while their copy-traders lost $1.5M",
+              "u": "https://x.com/bandosei/status/2117597322817483012"
+            }
+          ]
+        }
+      ],
+      "align": []
+    },
+    {
+      "id": "poorgoat",
+      "name": "POORGOAT___",
+      "x": null,
+      "role": "Pump.fun caller",
+      "track": false,
+      "incidents": [
+        {
+          "date": "2026-11",
+          "token": "Pump.fun callouts",
+          "harm": "paidloss",
+          "evidence": "reported",
+          "paid": 593223,
+          "lost": 34546,
+          "what": "Paid $593,223 in Pump.fun callout rewards while the traders who copied its callouts lost $34,546 since Oct 12, by Bando's count. The post does not say it sold into its calls.",
+          "sources": [
+            {
+              "t": "Bando on X: callers paid $4.5M by Pump.fun while their copy-traders lost $1.5M",
+              "u": "https://x.com/bandosei/status/2117597322817483012"
+            }
+          ]
+        }
+      ],
+      "align": []
+    },
+    {
+      "id": "flippingprofits",
+      "name": "FlippingProfits",
+      "x": "FlippingProfits",
+      "role": "Pump.fun caller",
+      "track": true,
+      "incidents": [
+        {
+          "date": "2026-11",
+          "token": "Pump.fun callouts",
+          "harm": "paidloss",
+          "evidence": "reported",
+          "paid": 130032,
+          "lost": 29013,
+          "what": "Paid $130,032 in Pump.fun callout rewards while the traders who copied its callouts lost $29,013 since Oct 12, by Bando's count. The post does not say it sold into its calls.",
+          "sources": [
+            {
+              "t": "Bando on X: callers paid $4.5M by Pump.fun while their copy-traders lost $1.5M",
+              "u": "https://x.com/bandosei/status/2117597322817483012"
+            }
+          ]
+        }
+      ],
+      "align": []
+    },
+    {
+      "id": "tylerd",
+      "name": "TylerD",
+      "x": null,
+      "role": "Pump.fun caller",
+      "track": false,
+      "incidents": [
+        {
+          "date": "2026-11",
+          "token": "Pump.fun callouts",
+          "harm": "paidloss",
+          "evidence": "reported",
+          "paid": 79256,
+          "lost": 26295,
+          "what": "Paid $79,256 in Pump.fun callout rewards while the traders who copied its callouts lost $26,295 since Oct 12, by Bando's count. The post does not say it sold into its calls.",
+          "sources": [
+            {
+              "t": "Bando on X: callers paid $4.5M by Pump.fun while their copy-traders lost $1.5M",
+              "u": "https://x.com/bandosei/status/2117597322817483012"
+            }
+          ]
+        }
+      ],
+      "align": []
+    },
+    {
+      "id": "officialpatty",
+      "name": "officialpatty",
+      "x": null,
+      "role": "Pump.fun caller",
+      "track": false,
+      "incidents": [
+        {
+          "date": "2026-11",
+          "token": "Pump.fun callouts",
+          "harm": "paidloss",
+          "evidence": "reported",
+          "paid": 57005,
+          "lost": 23395,
+          "what": "Paid $57,005 in Pump.fun callout rewards while the traders who copied its callouts lost $23,395 since Oct 12, by Bando's count. The post does not say it sold into its calls.",
+          "sources": [
+            {
+              "t": "Bando on X: callers paid $4.5M by Pump.fun while their copy-traders lost $1.5M",
+              "u": "https://x.com/bandosei/status/2117597322817483012"
+            }
+          ]
+        }
+      ],
+      "align": []
+    },
+    {
+      "id": "decu",
+      "name": "Decu",
+      "x": "notdecu",
+      "role": "Pump.fun caller",
+      "track": true,
+      "incidents": [
+        {
+          "date": "2026-11",
+          "token": "Pump.fun callouts",
+          "harm": "paidloss",
+          "evidence": "reported",
+          "paid": 55926,
+          "lost": 21356,
+          "what": "Paid $55,926 in Pump.fun callout rewards while the traders who copied its callouts lost $21,356 since Oct 12, by Bando's count. The post does not say it sold into its calls.",
+          "sources": [
+            {
+              "t": "Bando on X: callers paid $4.5M by Pump.fun while their copy-traders lost $1.5M",
+              "u": "https://x.com/bandosei/status/2117597322817483012"
+            }
+          ]
+        }
+      ],
+      "align": []
+    },
+    {
+      "id": "lynk0x",
+      "name": "lynk0x_",
+      "x": null,
+      "role": "Pump.fun caller",
+      "track": false,
+      "incidents": [
+        {
+          "date": "2026-11",
+          "token": "Pump.fun callouts",
+          "harm": "paidloss",
+          "evidence": "reported",
+          "paid": 58052,
+          "lost": 8817,
+          "what": "Paid $58,052 in Pump.fun callout rewards while the traders who copied its callouts lost $8,817 since Oct 12, by Bando's count. The post does not say it sold into its calls.",
+          "sources": [
+            {
+              "t": "Bando on X: callers paid $4.5M by Pump.fun while their copy-traders lost $1.5M",
+              "u": "https://x.com/bandosei/status/2117597322817483012"
+            }
+          ]
+        }
+      ],
+      "align": []
+    },
+    {
+      "id": "cupsey",
+      "name": "Cupsey",
+      "x": "Cupseyy",
+      "role": "Pump.fun caller",
+      "track": true,
+      "incidents": [
+        {
+          "date": "2026-11",
+          "token": "Pump.fun callouts",
+          "harm": "paidloss",
+          "evidence": "reported",
+          "paid": 526918,
+          "lost": 4263,
+          "what": "Paid $526,918 in Pump.fun callout rewards while the traders who copied its callouts lost $4,263 since Oct 12, by Bando's count. The post does not say it sold into its calls.",
+          "sources": [
+            {
+              "t": "Bando on X: callers paid $4.5M by Pump.fun while their copy-traders lost $1.5M",
+              "u": "https://x.com/bandosei/status/2117597322817483012"
+            }
+          ]
+        }
+      ],
+      "align": []
+    },
+    {
+      "id": "mitch",
+      "name": "Mitch",
+      "x": null,
+      "role": "Pump.fun caller",
+      "track": false,
+      "incidents": [
+        {
+          "date": "2026-11",
+          "token": "Pump.fun callouts",
+          "harm": "paidloss",
+          "evidence": "reported",
+          "paid": 40148,
+          "lost": 2134,
+          "what": "Paid $40,148 in Pump.fun callout rewards while the traders who copied its callouts lost $2,134 since Oct 12, by Bando's count. The post does not say it sold into its calls.",
+          "sources": [
+            {
+              "t": "Bando on X: callers paid $4.5M by Pump.fun while their copy-traders lost $1.5M",
+              "u": "https://x.com/bandosei/status/2117597322817483012"
+            }
+          ]
+        }
+      ],
+      "align": [],
+      "also": [
+        "idrawline"
       ]
     }
   ]
