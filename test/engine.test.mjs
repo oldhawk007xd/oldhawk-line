@@ -114,6 +114,14 @@ check("Line is low single digits, Deep Winter, Midnight", () => { assert.ok(r.li
 check("bottom board 6 of 8, open", () => { assert.equal(r.boards.bottom.hits, 6); assert.equal(r.boards.bottom.open, true); });
 check("season flag off, no top trigger", () => { assert.equal(r.season.on, false); assert.equal(r.boards.top.lit, 0); });
 check("every rule has a live status", () => [...r.boards.bottom.items, ...r.boards.season.items, ...r.boards.top.items].forEach((i) => assert.notEqual(i.hit, null, i.id)));
+check("a rule's gauge agrees with the rule: same number, same line, same answer", () => {
+  const all = [...r.boards.bottom.items, ...r.boards.season.items, ...r.boards.top.items];
+  const cmp = { le: (x, t) => x <= t, ge: (x, t) => x >= t, gt: (x, t) => x > t };
+  const withG = all.filter((i) => i.g);
+  assert.ok(withG.length >= 20, String(withG.length));
+  withG.forEach((i) => { assert.ok(cmp[i.g.op], i.id); assert.equal(cmp[i.g.op](i.g.x, i.g.th), i.hit, `${i.id} ${JSON.stringify(i.g)}`); assert.ok(i.g.v && i.g.t, i.id); });
+  assert.deepEqual(all.filter((i) => !i.g).map((i) => i.id).sort(), ["S1", "S5"]);
+});
 check("sources all ok, Codex included", () => r.sources.forEach((s) => assert.equal(s.ok, true, s.id)));
 check("no dashes in published strings", () => assert.ok(!/[–—]/.test(JSON.stringify(r))));
 check("daily row has 7 ladder counts", () => { const d = toDaily(r); assert.equal(d.n.length, 7); assert.equal(d.oc, "live"); assert.equal(d.nw, 3); });

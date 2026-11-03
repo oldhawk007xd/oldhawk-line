@@ -221,6 +221,55 @@ section.band > .wrap { padding-block: 96px; }
 .sea-in { position: relative; z-index: 2; grid-column: 1; grid-row: 2; min-width: 0; padding-block: 30px 30px; display: flex; flex-direction: column; align-items: flex-start; gap: 16px; }
 .sea-row { display: flex; flex-wrap: wrap; gap: 8px 30px; font-size: 14.5px; color: #cdd3e0; }
 .sea-row b { color: #fff; }
+.vh { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); clip-path: inset(50%); white-space: nowrap; }
+/* the next reading, counted down beside the live chip */
+.live .nextin { color: #ffb634; font-variant-numeric: tabular-nums; }
+.hero.ink-day .live .nextin { color: #6e4200; }
+/* a returning reader: what moved since the last visit */
+.since { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 14px; margin-top: 14px; padding: 7px 8px 7px 16px; max-width: 100%; border-radius: 18px; background: rgba(5,8,20,0.78); border: 1px solid rgba(20,241,149,0.38); font-size: 14px; line-height: 1.45; color: #cdd3e0; width: fit-content; }
+.since b { color: #fff; font-weight: 700; }
+.since-more { min-height: 32px; padding: 0 10px; border: 0; border-radius: 999px; background: transparent; color: #3dffa0; font-family: var(--text); font-size: 12px; font-weight: 800; letter-spacing: 0.12em; text-transform: uppercase; cursor: pointer; white-space: nowrap; }
+.since-more:hover { background: rgba(20,241,149,0.12); }
+.since-more::after { content: " \2192"; }
+.since-more[aria-expanded="true"]::after { content: " \2191"; }
+.since-list { flex-basis: 100%; list-style: none; margin: 4px 0 4px; padding: 8px 0 0; border-top: 1px solid rgba(237,237,237,0.12); display: grid; grid-template-columns: max-content max-content; gap: 4px 18px; font-size: 13.5px; }
+.since-list b { font-family: var(--mono); font-weight: 500; font-size: 13px; }
+/* how far the sun is from the Line, on its road */
+.dtogo { position: absolute; left: 0; top: 0; z-index: 2; font-size: 12px; font-weight: 800; line-height: 1.2; letter-spacing: 0.14em; text-transform: uppercase; color: #ffb634; white-space: nowrap; pointer-events: none; background: rgba(3,6,18,0.86); border: 1px solid rgba(255,182,52,0.55); border-radius: 999px; padding: 4px 10px 3px; }
+/* the lights under the Line: the board for this hour, and how far the unlit ones are */
+.lamps { width: 100%; max-width: 600px; display: flex; flex-direction: column; gap: 12px; }
+.lamps-hd { margin: 0; font-size: 15px; line-height: 1.5; color: #cdd3e0; text-wrap: pretty; }
+.lamps-hd .n { font-family: var(--mono); font-size: 28px; font-weight: 600; letter-spacing: -0.01em; color: #fff; margin-right: 6px; vertical-align: -2px; }
+.lamps-hd b { color: #fff; } .lamps-hd em { font-style: normal; font-weight: 700; color: #3dffa0; }
+.lamps.b-top .lamps-hd em { color: #ff6b84; }
+.lamp-row { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px; }
+.lamps.six .lamp-row { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.lamp { position: relative; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 6px 8px; min-width: 0; padding: 9px 11px; border-radius: 10px; border: 1px solid rgba(20,241,149,0.42); background: radial-gradient(120% 100% at 30% 0%, rgba(20,241,149,0.2), rgba(20,241,149,0.04) 70%), rgba(4,14,10,0.74); }
+.lamp > b { display: inline-flex; align-items: center; gap: 7px; font: 600 11.5px/1 var(--mono); letter-spacing: 0.06em; color: #3dffa0; }
+.lamp > b i { width: 8px; height: 8px; border-radius: 50%; background: #14F195; box-shadow: 0 0 8px #14F195, 0 0 16px rgba(20,241,149,0.5); }
+.lamp .v { min-width: 0; font: 500 12.5px/1.2 var(--mono); color: #e6e9f0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.lamp .bar { flex-basis: 100%; display: block; height: 4px; border-radius: 2px; background: rgba(255,182,52,0.2); overflow: hidden; text-decoration: none; }
+.lamp .bar u { display: block; height: 100%; border-radius: 2px; background: #ffb634; }
+.lamp.off { border-color: rgba(255,182,52,0.72); background: rgba(22,15,4,0.78); box-shadow: 0 0 0 3px rgba(255,182,52,0.08), 0 0 22px rgba(255,182,52,0.12); }
+.lamp.off > b, .lamp.off .v { color: #ffb634; }
+.lamp.off > b i { background: transparent; border: 1.5px solid #ffb634; box-shadow: 0 0 0 4px rgba(255,182,52,0.14); }
+.lamp.na { border-color: rgba(237,237,237,0.18); background: rgba(8,10,20,0.7); }
+.lamp.na > b, .lamp.na .v { color: #a3abc0; } .lamp.na > b i { background: transparent; border: 1.5px solid #a3abc0; box-shadow: none; }
+/* top triggers: a live one is the warning, an unlit one is quiet */
+.lamps.b-top .lamp.on { border-color: rgba(255,92,122,0.7); background: rgba(26,6,12,0.8); box-shadow: 0 0 22px rgba(255,92,122,0.16); }
+.lamps.b-top .lamp.on > b, .lamps.b-top .lamp.on .v { color: #ff8da1; } .lamps.b-top .lamp.on > b i { background: #ff5c7a; box-shadow: 0 0 8px #ff5c7a, 0 0 16px rgba(255,92,122,0.5); }
+.lamps.b-top .lamp.off { border-color: rgba(237,237,237,0.2); background: rgba(8,10,20,0.72); box-shadow: none; }
+.lamps.b-top .lamp.off > b, .lamps.b-top .lamp.off .v { color: #cdd3e0; } .lamps.b-top .lamp.off > b i { border-color: #a3abc0; box-shadow: none; }
+.lamps.b-top .lamp .bar { background: rgba(255,92,122,0.18); } .lamps.b-top .lamp .bar u { background: #ff6b84; }
+.lamp-days { display: flex; flex-wrap: wrap; align-items: flex-end; gap: 8px 16px; font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; color: #a3abc0; }
+.ld-c { display: inline-flex; align-items: flex-end; gap: 4px; }
+.ld-c > span { display: flex; flex-direction: column-reverse; gap: 2px; }
+.ld-c s { display: block; width: 12px; height: 3px; border-radius: 1px; background: rgba(237,237,237,0.14); text-decoration: none; }
+.ld-c s.on { background: rgba(20,241,149,0.85); }
+.lamps.b-top .ld-c s.on { background: rgba(255,92,122,0.85); }
+.ld-t { font-size: 13.5px; letter-spacing: 0; text-transform: none; color: #cdd3e0; }
+.lamps-rule { margin: 0; font-size: 14px; line-height: 1.5; color: #cdd3e0; }
+.lamps-rule b { color: #fff; }
 .scrollcue { color: #a3abc0; text-decoration: none; font-size: 13px; letter-spacing: 0.14em; text-transform: uppercase; padding: 12px 0; }
 .scrollcue:hover { color: #ededed; }
 
@@ -616,12 +665,23 @@ section.band.numbers > .wrap { padding-block: 64px 84px; }
   .dial { --S: var(--S1); right: auto; left: 50%; margin-left: calc(var(--S1) / -2); }
   .explain { margin-top: calc(var(--S1) / 2 + 30px); }
   .sea-in { grid-row: auto; padding-block: 26px 30px; }
+  .since { order: 1; }
+  .hero.has-lamps .sea-in { display: contents; }
+  .hero.has-lamps .sea-in > * { order: 7; position: relative; z-index: 2; justify-self: start; margin-top: 16px; }
+  .hero.has-lamps .sea-in > #seastats { margin-top: 26px; }
+  .hero.has-lamps .sea-in > .toggle-note { margin-top: 10px; }
+  .hero.has-lamps .sea-in > :last-child { margin-bottom: 30px; }
+  .hero.has-lamps .sea-in > .lamps { order: 3; justify-self: stretch; margin-top: calc(var(--S1) / 2 + 30px); }
+  .hero.has-lamps .explain { margin-top: 26px; }
   /* below the Line the text sits on the dark sea at every hour */
   .hero .explain, .hero .rules-say b { color: #ededed; }
   .hero .rules-say { color: #a3abc0; }
   .hero .btn.ghostbtn { color: #ededed; border-color: rgba(237,237,237,0.7); }
   .scrim.dark { background: linear-gradient(180deg, rgba(4,6,20,0.58) 0%, rgba(4,6,20,0.5) 58%, rgba(4,6,20,0) 86%); }
   .scrim.light { background: linear-gradient(180deg, rgba(255,246,228,0.62) 0%, rgba(255,246,228,0.52) 58%, rgba(255,246,228,0) 86%); }
+}
+@media (max-width: 640px) {
+  .lamp-row, .lamps.six .lamp-row { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
 @media (max-width: 640px) {
   .nav a { display: none; }
@@ -952,7 +1012,8 @@ a.fomo:hover .fm { opacity: 0.18; transform: translateY(-50%) rotate(-6deg) scal
 
   <div class="wrap hero-grid">
     <div class="hero-in" id="heroIn">
-      <div class="live" id="live"><span class="dot late" id="liveDot"></span><span id="liveText">Loading the reading</span><button type="button" class="back" id="backBtn" aria-label="Back to today's reading" hidden>Today</button></div>
+      <div class="live" id="live"><span class="dot late" id="liveDot"></span><span id="liveText">Loading the reading</span><span class="nextin" id="nextIn" hidden></span><button type="button" class="back" id="backBtn" aria-label="Back to today's reading" hidden>Today</button></div>
+      <div class="since" id="since" hidden><span class="since-t" id="sinceT"></span><button type="button" class="since-more" id="sinceMore" aria-expanded="false" aria-controls="sinceList" hidden></button><ul class="since-list" id="sinceList" hidden></ul></div>
       <h1 id="h1">The sun has to cross the Line.</h1>
       <p class="explain" id="explain">0 is the January 2024 bottom, 100 the December 2024 top. Season starts when the sun crosses the Line at 45.</p>
       <p class="rules-say" id="rulesSay"></p>
@@ -1001,10 +1062,12 @@ a.fomo:hover .fm { opacity: 0.18; transform: translateY(-50%) rotate(-6deg) scal
         <div class="dlab line" id="labLine" data-x="300" data-dy="24" data-p="0">The Line<i class="sep"></i>45</div>
         <div class="dlab tag" id="labNoon" data-x="300" data-y="26" data-p="1">Noon<i class="sep"></i>100</div>
         <div class="dlab tag under" id="labMid" data-x="300" data-y="576" data-p="2">Midnight<i class="sep"></i>0</div>
+        <div class="dtogo" id="dtogo" aria-hidden="true" hidden></div>
         <button type="button" class="sunhandle invite" id="sunHandle" role="slider" aria-label="The sun. Drag it, or use the arrow keys, to see what the rules say at any reading." aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"></button>
       </div>
     </div>
     <div class="sea-in" id="seaIn">
+      <div class="lamps" id="lamps" hidden><p class="lamps-hd" id="lampsHd"></p><ol class="lamp-row" id="lampRow"></ol><div class="lamp-days" id="lampDays" hidden><span class="ld-k" id="lampDaysK"></span><span class="ld-c" id="lampDaysC" aria-hidden="true"></span><span class="ld-t" id="lampDaysT"></span></div><p class="lamps-rule" id="lampsRule"></p></div>
       <div class="sea-row" id="seastats"></div>
       <div class="skykey" id="skykey"></div>
       <div class="toggle" role="group" aria-label="See the sky on a given day">
@@ -1343,7 +1406,7 @@ a.fomo:hover .fm { opacity: 0.18; transform: translateY(-50%) rotate(-6deg) scal
   const sunG = $("sun"), handle = $("sunHandle"), prog = $("progress"), rays = $("rays"), ripple = $("ripple");
   const hazepos = $("hazepos"), haze = $("haze"), starsEl = $("stars"), clouds = $("clouds"), horizon = $("horizon");
   const lane = $("lane");
-  const togo = $("togo"), comet = $("comet"), xpt = $("xpt"), arriveRing = $("arrive"), sparkC = $("sparks");
+  const togo = $("togo"), comet = $("comet"), xpt = $("xpt"), arriveRing = $("arrive"), sparkC = $("sparks"), dtogo = $("dtogo"), labLine = $("labLine");
   const sctx = sparkC && sparkC.getContext ? sparkC.getContext("2d") : null;
   const numEl = $("num"), zoneEl = $("zone"), h1El = $("h1"), explainEl = $("explain"), rulesEl = $("rulesSay");
   const skyLayers = [...hero.querySelectorAll(".skyl")];
@@ -2569,7 +2632,7 @@ a.fomo:hover .fm { opacity: 0.18; transform: translateY(-50%) rotate(-6deg) scal
   let R = null, H = [], W = null;
   let view = "now", whatL = 0;
   let shown = null, lastNum = null, lastTone = -1, lastInk = "", lastZone = "", lastCkey = -1, lastDk = null;
-  let geo = null, heroVisible = true, dragging = false, hintGone = false, keyCounts = "";
+  let geo = null, heroVisible = true, dragging = false, hintGone = false, keyCounts = "", colEdge = null;
   let animToken = 0, raf = 0, lastFlash = 0;
 
   const zonesList = () => (R && Array.isArray(R.zones) ? R.zones : ZONES0);
@@ -2635,10 +2698,11 @@ a.fomo:hover .fm { opacity: 0.18; transform: translateY(-50%) rotate(-6deg) scal
   /* the painted sky gets the hero's size, the Line, the dial, the hawk's lane and every box of text to keep clear */
   function layoutSky(hr, hyPx, ln, twoCol) {
     const box = (el, pad) => { if (!el || el.hidden) return null; const r = el.getBoundingClientRect(); if (!r.width || !r.height) return null; return { l: r.left - hr.left - pad, t: r.top - hr.top - pad, r: r.right - hr.left + pad, b: r.bottom - hr.top + pad }; };
-    const els = [$("live"), h1El, explainEl, rulesEl, hero.querySelector(".cta-row"), hero.querySelector(".top .wrap"), $("dread"), ...$("seaIn").children, ...dlabs.filter((d) => !d.classList.contains("clash"))];
+    const els = [$("live"), $("since"), h1El, explainEl, rulesEl, hero.querySelector(".cta-row"), hero.querySelector(".top .wrap"), $("dread"), ...$("seaIn").children, ...dlabs.filter((d) => !d.classList.contains("clash"))];
     const text = els.map((e) => box(e, 4)).filter(Boolean);
-    const col = [$("live"), h1El, explainEl, rulesEl, hero.querySelector(".cta-row"), ...$("seaIn").children].map((e) => box(e, 0)).filter(Boolean);
+    const col = [$("live"), $("since"), h1El, explainEl, rulesEl, hero.querySelector(".cta-row"), ...$("seaIn").children].map((e) => box(e, 0)).filter(Boolean);
     const colRight = col.length ? Math.max(...col.map((r) => r.r)) : 0;
+    colEdge = twoCol ? colRight : null;
     const dpr = Math.min(2, window.devicePixelRatio || 1);
     sky.layout({ W: Math.round(hr.width), H: Math.round(hr.height), hy: Math.round(hyPx), dpr, narrow: !twoCol, dial: { cx: geo.dx + geo.ds / 2, R: geo.ds * 0.4 }, text, colRight, lane: ln, top: 0 });
     if (shown != null) sky.setHour(uOf(shown), shown, sunAt(shown));
@@ -2745,6 +2809,26 @@ a.fomo:hover .fm { opacity: 0.18; transform: translateY(-50%) rotate(-6deg) scal
       togo.setAttribute("d", `M${ax.toFixed(1)},${ay.toFixed(1)} A240,240 0 0 1 60,300`);
       if (togo._v !== 1) { togo.style.display = ""; togo._v = 1; }
     } else if (togo._v !== 0) { togo.style.display = "none"; togo._v = 0; }
+    /* how far below the Line: on the dashed road beside the dial when there is room, else in the Line's own label */
+    if (dtogo) {
+      const gap = L < 45 && 45 - L >= 2.5 && view !== "jan" && view !== "dec" ? Math.round(45 - L) : 0;
+      let onRoad = false;
+      if (gap && geo && geo.twoCol) {
+        const txt = `${gap} to the Line`;
+        if (dtogo.textContent !== txt) { dtogo.textContent = txt; dtogo._w = 0; }
+        if (dtogo.hidden) { dtogo.hidden = false; dtogo._w = 0; }
+        if (!dtogo._w) dtogo._w = dtogo.offsetWidth;
+        const k = geo.ds / 600, [lx, ly] = pt(clamp((phi + 90) / 2, 30, 66), 262);
+        const left = lx * k - 10 - dtogo._w, room = Math.max(8 - geo.dx, colEdge != null ? colEdge - geo.dx + 12 : -1e9);
+        /* never pushed onto the dial's numbers or the sun: no room means it goes in the Line's label */
+        const [sx, sy] = pt(phi, 240), nx = clamp(sx * k, left, left + dtogo._w), ny = clamp(sy * k, ly * k - 12, ly * k + 12);
+        onRoad = left >= room && Math.hypot(sx * k - nx, sy * k - ny) > 38 * k;
+        if (onRoad) dtogo.style.transform = `translate(${left.toFixed(1)}px, ${(ly * k).toFixed(1)}px) translateY(-50%)`;
+      }
+      if (!onRoad && !dtogo.hidden) dtogo.hidden = true;
+      const lab = `The Line${SEP}45${gap && !onRoad ? `${SEP}${gap} to go` : ""}`;
+      if (labLine && labLine._t !== lab) { labLine.innerHTML = lab; labLine._t = lab; }
+    }
     const below = L < 45;
     if (dial._below !== below) { dial.classList.toggle("below", below); dial._below = below; }
     const xv = Math.abs(L - 45) < 4 ? "hidden" : "visible";
@@ -2915,7 +2999,10 @@ a.fomo:hover .fm { opacity: 0.18; transform: translateY(-50%) rotate(-6deg) scal
     rulesEl.style.visibility = rules ? "visible" : "hidden";
     numEl.className = `num ${numCls}`.trim();
     $("seastats").innerHTML = sea.map((s) => `<span>${s}</span>`).join("");
+    try { renderLamps(); } catch (e) { console.warn("renderLamps", e); }
+    try { sinceOnce(); } catch (e) { console.warn("sinceOnce", e); }
     if (chip) setChip(chip[0], chip[1]); else freshness();
+    tickNext();
     const share = shareUrl();
     $("shareBtn").href = share; $("shareBtn2").href = share;
   }
@@ -2926,9 +3013,131 @@ a.fomo:hover .fm { opacity: 0.18; transform: translateY(-50%) rotate(-6deg) scal
     return [
       R.market && R.market.memeMC ? `Memes <b>${usd(R.market.memeMC)}</b>` : "",
       dd != null ? (dd >= 0 ? `<b>${Math.round(dd * 100)}%</b> below the last top` : `<b>${Math.round(-dd * 100)}%</b> above the last top`) : "",
-      n10 != null ? `<b>${n10}</b> runners above $10M` : "",
-      R.boards ? `<b>${R.boards.bottom.hits}</b> of 8 bottom signals on` : ""
+      n10 != null ? `<b>${n10}</b> runners above $10M` : ""
     ].filter(Boolean);
+  }
+  /* ---------- the lights under the Line ---------- */
+  /* The board that matters at this hour: the bottom checklist in the cold, the season confirmations from 30,
+     the top triggers from 60 or as soon as one is live. Each unlit light says how far it is from its line. */
+  const ORDW = ["", "first", "second", "third", "fourth", "fifth", "sixth", "seventh", "eighth", "ninth", "tenth"];
+  const ordw = (n) => ORDW[n] || `${n}th`;
+  const plainV = (v) => String(v || "").replace(/ now$/, "");
+  const lowerFirst = (t) => (/^[A-Z][a-z]/.test(t) ? t[0].toLowerCase() + t.slice(1) : t);
+  const gaugeAway = (g) => { if (!g || !(g.th > 0) || !(g.x > 0)) return null; const a = g.op === "le" ? g.x / g.th - 1 : 1 - g.x / g.th; return a > 0 ? a : null; };
+  const gaugeFill = (g) => (g && g.th > 0 && g.x > 0 ? clamp(g.op === "le" ? g.th / g.x : g.x / g.th, 0.04, 1) : null);
+  const awayTxt = (a) => (a < 0.01 ? "under 1%" : `${Math.round(a * 100)}%`);
+  function boardNow() {
+    const c = current();
+    if (!R || !R.boards || !c || c.ghost) return null;
+    const b = R.boards;
+    if ((b.top.lit || 0) >= 1 || c.line >= 60) return { key: "top", b: b.top, n: b.top.items.length, on: b.top.lit || 0 };
+    if (c.line >= 30) return { key: "season", b: b.season, n: b.season.items.length, on: b.season.hits || 0 };
+    return { key: "bottom", b: b.bottom, n: b.bottom.items.length, on: b.bottom.hits || 0 };
+  }
+  function renderLamps() {
+    const box = $("lamps"), B = view === "jan" || view === "dec" ? null : boardNow();
+    hero.classList.toggle("has-lamps", Boolean(B));
+    if (!B) { box.hidden = true; return; }
+    box.className = `lamps b-${B.key}${B.n === 6 ? " six" : ""}`;
+    const items = B.b.items, off = items.filter((i) => i.hit === false);
+    let hd = `<b class="n">${B.on}/${B.n}</b>`;
+    if (B.key === "top") {
+      hd += B.on ? ` top trigger${B.on === 1 ? "" : "s"} live: <em>${items.filter((i) => i.hit).map((i) => esc(i.id)).join(", ")}.</em>` : " top triggers live.";
+      const near = off.map((i) => ({ i, a: gaugeAway(i.g) })).filter((o) => o.a != null).sort((x, y) => x.a - y.a)[0];
+      if (near) hd += ` Closest: ${esc(lowerFirst(near.i.text))}, ${awayTxt(near.a)} away.`;
+    } else {
+      hd += B.key === "bottom" ? ` bottom light${B.on === 1 ? "" : "s"} on.` : ` season confirmation${B.on === 1 ? "" : "s"} on.`;
+      if (off.length === 1) { const i = off[0], a = gaugeAway(i.g); hd += ` <em>One to go:</em> ${esc(lowerFirst(i.text))}. Now <b>${esc(plainV(i.value))}</b>${a != null ? `, ${awayTxt(a)} away` : ""}.`; }
+      else if (!off.length && B.on === B.n) hd += ` <em>All ${B.n}.</em>`;
+      else if (off.length) hd += ` ${off.length} still off.`;
+    }
+    $("lampsHd").innerHTML = hd;
+    $("lampRow").setAttribute("aria-label", B.b.name || "");
+    $("lampRow").innerHTML = items.map((i) => {
+      const st = i.hit === true ? "on" : i.hit === false ? "off" : "na";
+      const word = B.key === "top" ? { on: "live", off: "not live", na: "no data" }[st] : { on: "on", off: "off", na: "no data" }[st];
+      const say = `${i.id}, ${word}: ${i.text}. ${plainV(i.value)}`.trim();
+      const v = i.g ? i.g.v : plainV(i.value) || "no data";
+      const fill = st === "off" ? gaugeFill(i.g) : null;
+      return `<li class="lamp ${st}" title="${esc(say)}"><span class="vh">${esc(say)}</span><b aria-hidden="true"><i></i>${esc(i.id)}</b><span class="v" aria-hidden="true">${esc(v)}</span>${fill != null ? `<s class="bar" aria-hidden="true"><u style="width:${Math.round(fill * 100)}%"></u></s>` : ""}</li>`;
+    }).join("");
+    /* the same board, day by day, from the public log */
+    const dk = B.key === "season" ? null : B.key;
+    const days = dk ? H.filter((d) => d && d[dk] != null).slice(-14) : [];
+    if (days.length >= 3) {
+      const counts = days.map((d) => d[dk]), mx = Math.max(B.on, ...counts), mn = Math.min(B.on, ...counts), before = Math.max(...counts.slice(0, -1), 0);
+      const first = new Date(`${days[0].d}T12:00:00Z`).toLocaleDateString("en-US", { month: "short", day: "numeric", timeZone: "UTC" });
+      $("lampDaysK").textContent = `${B.key === "top" ? "Live" : "On"}, last ${days.length} days`;
+      $("lampDaysC").innerHTML = days.map((d) => `<span>${Array.from({ length: B.n }, (_, k) => `<s${k < d[dk] ? ' class="on"' : ""}></s>`).join("")}</span>`).join("");
+      let t;
+      if (B.key === "top") t = B.on && !before ? `The first live since ${first}.` : mx ? `Up to ${mx} live since ${first}.` : `None live since ${first}.`;
+      else if (B.on === B.n - 1 && mx < B.n) t = `The ${ordw(B.n)} has not lit once since ${first}.`;
+      else if (B.on === mx && mx > mn) t = `The most since ${first}.`;
+      else t = mn === mx ? `${mx} every day since ${first}.` : `Between ${mn} and ${mx} since ${first}.`;
+      $("lampDaysT").textContent = t;
+      $("lampDays").hidden = false;
+    } else $("lampDays").hidden = true;
+    let rule;
+    if (B.key === "bottom") {
+      const need = B.b.need || 5;
+      rule = B.on >= B.n ? `<b>All ${B.n} are on.</b> The accumulation zone is open.` : B.on >= need ? `<b>The rules don't wait for the ${ordw(B.n)}.</b> ${need} of ${B.n} already opened the accumulation zone.` : `<b>${need} of ${B.n} open the accumulation zone.</b> ${need - B.on} more to go.`;
+    } else if (B.key === "season") rule = R.season && R.season.on ? "<b>The Season Flag is on.</b>" : "<b>The Season Flag needs 4 of 6, with S6 among them,</b> and the Line at 45 or above.";
+    else rule = "<b>1 live trigger stops new buys.</b> 3 live mean Ultra Greed actions now.";
+    $("lampsRule").innerHTML = rule;
+    box.hidden = false;
+  }
+
+  /* ---------- what moved since the last visit (kept on this device only) ---------- */
+  let sinceDone = false;
+  function sinceOnce() {
+    if (sinceDone) return;
+    const c = current();
+    if (!R || R.blank || !c || c.ghost || !R.boards || PREVIEW) return;
+    sinceDone = true;
+    const KEY = "ohl-visit";
+    let prev = null;
+    try { prev = JSON.parse(localStorage.getItem(KEY) || "null"); } catch (e) { prev = null; }
+    const hits = R.boards.bottom.hits, n10 = R.ladder ? R.ladder.counts[0] : null, mc = R.market && R.market.memeMC ? R.market.memeMC : null;
+    try { localStorage.setItem(KEY, JSON.stringify({ v: 1, at: new Date().toISOString(), r: R.at, line: c.line, hits, n10, mc })); } catch (e) { /* no storage here */ }
+    if (!prev || prev.v !== 1 || prev.r === R.at || !isFinite(Date.parse(prev.at)) || Date.now() - Date.parse(prev.at) < 45 * 60000) return;
+    const pl = (n, w) => `<b>${n}</b> ${w}${n === 1 ? "" : "s"}`;
+    const out = [];
+    if (prev.line != null && prev.line !== c.line) { const d = c.line - prev.line; out.push([`the sun ${d < 0 ? "sank" : "rose"} ${pl(Math.abs(d), "point")}`, "The Line", prev.line, c.line]); }
+    if (prev.hits != null && prev.hits !== hits) { const d = hits - prev.hits; out.push([d === 1 ? `a <b>${ordw(hits)}</b> bottom light came on` : d > 0 ? `${pl(d, "more bottom light")} came on` : `${pl(-d, "bottom light")} went off`, "Bottom lights", `${prev.hits}/8`, `${hits}/8`]); }
+    if (prev.n10 != null && n10 != null && prev.n10 !== n10) { const d = n10 - prev.n10; out.push([d < 0 ? `${pl(-d, "runner")} fell under $10M` : `${pl(d, "new runner")} above $10M`, "Runners above $10M", prev.n10, n10]); }
+    if (prev.mc && mc && Math.abs(mc / prev.mc - 1) >= 0.01) { const p = (mc / prev.mc - 1) * 100; out.push([`memes ${p < 0 ? "fell" : "rose"} <b>${Math.abs(p).toFixed(1)}%</b>`, "Meme market", usd(prev.mc), usd(mc)]); }
+    if (!out.length) return;
+    const gap = Date.now() - Date.parse(prev.at), pd = new Date(prev.at);
+    const sw = gap < 20 * 3600000 ? "your last visit" : gap < 6.5 * 86400000 ? pd.toLocaleDateString("en-US", { weekday: "long" }) : pd.toLocaleDateString("en-US", { month: "short", day: "numeric" });
+    $("sinceT").innerHTML = `Welcome back. Since <b>${esc(sw)}</b>: ${out.slice(0, 2).map((o) => o[0]).join(", ")}.`;
+    const more = $("sinceMore"), list = $("sinceList");
+    list.innerHTML = out.map((o) => `<li><span>${esc(o[1])}</span><b>${esc(o[2])} → ${esc(o[3])}</b></li>`).join("");
+    if (out.length >= 2) {
+      more.hidden = false; more.textContent = `All ${out.length}`;
+      more.addEventListener("click", () => { const open = more.getAttribute("aria-expanded") !== "true"; more.setAttribute("aria-expanded", String(open)); list.hidden = !open; });
+    }
+    $("since").hidden = false;
+  }
+
+  /* ---------- the next reading, counted down ---------- */
+  let nextPoll = 0;
+  const nextOn = () => { const c = current(); return Boolean(R && !R.blank && c && !c.ghost && R.at && Date.now() - Date.parse(R.at) < 90 * 60000); };
+  function tickNext() {
+    const el = $("nextIn");
+    if (!nextOn()) { if (!el.hidden) el.hidden = true; return; }
+    /* it keeps its place in every view, so the Line never moves when the sun is dragged */
+    const vis = view === "now" ? "" : "hidden";
+    if (el.style.visibility !== vis) el.style.visibility = vis;
+    const left = Date.parse(R.at) + 30 * 60000 - Date.now();
+    let t;
+    if (left > 0) { const s = Math.ceil(left / 1000); t = `Next reading in ${Math.floor(s / 60)}:${String(s % 60).padStart(2, "0")}`; }
+    else {
+      t = "Next reading any minute";
+      /* past due: look for it every minute instead of every five */
+      if (left < -60000 && Date.now() - nextPoll > 60000) { nextPoll = Date.now(); load(); }
+    }
+    if (el.textContent !== t) el.textContent = t;
+    if (el.hidden) el.hidden = false;
   }
   function methodSea() {
     return [`0 = Jan 22, 2024${SEP}memes <b>$20.0B</b>`, `100 = Dec 9, 2024${SEP}memes <b>$150.6B</b>`, "<b>11</b> live inputs, every 30 minutes"];
@@ -2978,7 +3187,8 @@ a.fomo:hover .fm { opacity: 0.18; transform: translateY(-50%) rotate(-6deg) scal
         "<b>No live data in this preview.</b> Drag the sun to see what the rules say at any hour.",
         "<b>Waiting for the first reading.</b> Drag the sun to see what the rules say at any hour."
       ]],
-      [$("live"), [`<span>Last good reading${SEP}23 Oct, 18:07</span>`, "<span>Waiting for the first reading</span>", `<span>Preview${SEP}no live data</span>`, `<span>What if${SEP}not a reading</span><button class="back">Today</button>`, `<span>December 9, 2024${SEP}the last top</span>`]]
+      /* the chip, with the countdown beside it whenever the reading is fresh enough to have one */
+      [$("live"), ((nx) => [`<span>Live${SEP}updated 59 min ago</span>${nx}`, `<span>Last good reading${SEP}23 Oct, 18:07</span>`, "<span>Waiting for the first reading</span>", `<span>Preview${SEP}no live data</span>`, `<span>What if${SEP}not a reading</span>${nx}<button class="back">Today</button>`, `<span>December 9, 2024${SEP}the last top</span>${nx}`])(nextOn() ? '<span class="nextin">Next reading any minute</span>' : "")]
     ];
     const grid = h1El.parentElement.closest(".hero-grid");
     for (const [el, texts] of sets) {
@@ -4226,6 +4436,7 @@ a.fomo:hover .fm { opacity: 0.18; transform: translateY(-50%) rotate(-6deg) scal
   load();
   setInterval(load, 5 * 60000);
   setInterval(() => { freshness(); tickAgo(); }, 30000);
+  setInterval(tickNext, 1000);
   document.addEventListener("visibilitychange", () => { if (!document.hidden && R && !R.blank && Date.now() - Date.parse(R.at) > 5 * 60000) load(); });
   setTimeout(shootingStar, 2200);
 })();
