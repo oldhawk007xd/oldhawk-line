@@ -72,14 +72,14 @@
     {
       "id": "sahil-arora",
       "name": "Sahil Arora",
-      "x": null,
+      "x": "villainmonkey",
       "also": [
         "Habibi_Comm",
         "sahilsaysol",
         "sahilbuilds"
       ],
       "role": "Celebrity coin launcher",
-      "track": false,
+      "track": true,
       "incidents": [
         {
           "date": "2024-05",
@@ -104,6 +104,23 @@
             {
               "t": "The Block: X bans alleged celebrity memecoin scammer Sahil Arora",
               "u": "https://www.theblock.co/post/298428/x-bans-alleged-celebrity-memecoin-scammer-sahil-arora"
+            }
+          ]
+        },
+        {
+          "date": "2024-05",
+          "token": "MOTHER, JENNER, JASON",
+          "harm": "undisclosed",
+          "evidence": "admitted",
+          "what": "Posting as @villainmonkey in November 2026, he wrote that he paid Ansem about $100K to push MOTHER and that every KOL around his celebrity launches was a paid minion, and posted private chats and transfers he says prove it. Ansem denies it.",
+          "sources": [
+            {
+              "t": "crypto.news: Ansem denies Sahil ties after $100,000 MOTHER payment claim",
+              "u": "https://crypto.news/ansem-sahil-arora-mother-payment-allegations/"
+            },
+            {
+              "t": "Airdrop Alert: the Sahil files explained, Bubblemaps, Ansem and the receipts",
+              "u": "https://airdropalert.com/blogs/sahil-files-bubblemaps-ansem/"
             }
           ]
         }
@@ -199,7 +216,7 @@
           "harm": "dump",
           "evidence": "onchain",
           "usd": 130000,
-          "what": "Bubblemaps found 5 wallets linked to him that bought about 20 seconds before 61% of his 534 calls in two weeks and began selling about 4 minutes later, for about $130K with his callout rewards. His public wallet bought after them and sold last.",
+          "what": "Bubblemaps found 5 wallets linked to him that bought about 20 seconds before 61% of his 534 calls in two weeks and began selling about 4 minutes later, for about $130K with his callout rewards. His public wallet bought after them and sold last. In a November 2026 thread Bubblemaps said he had acknowledged using these methods.",
           "sources": [
             {
               "t": "Bubblemaps: Key Opinion Leaders are leading by example, just not for you",
@@ -208,6 +225,10 @@
             {
               "t": "KuCoin News: KOL Anglio accused of front-running token promotions",
               "u": "https://www.kucoin.com/news/flash/kol-anglio-accused-of-using-linked-wallets-to-front-run-token-promotions-gaining-130k"
+            },
+            {
+              "t": "crypto.news: Bubblemaps alleges hidden-wallet abuse by crypto influencers",
+              "u": "https://crypto.news/bubblemaps-hidden-wallets-crypto-influencers/"
             }
           ]
         }
@@ -425,6 +446,28 @@
             {
               "t": "Bubblemaps: ANSEM lab unlocks",
               "u": "https://blog.bubblemaps.io/onchain-insights-ansem-lab-unlocks-paper-hand-ptsd/"
+            }
+          ]
+        },
+        {
+          "date": "2024-05",
+          "token": "MOTHER, JENNER, JASON",
+          "harm": "undisclosed",
+          "evidence": "reported",
+          "usd": 100000,
+          "what": "In November 2026 Sahil Arora, who ran these celebrity launches, said he paid him about $100K to push MOTHER and paid him for JENNER and JASON too. He posted transfers he says reached his wallets: 129.5 SOL on May 28, 2024, before Iggy Azalea posted MOTHER, and 504.5 SOL through a side wallet after JASON launched. The wallets are not confirmed as his. Ansem replied \"no i have never done anything with sahil\" and said the chats shown are not how he texts. ZachXBT said he had warned about his micro cap and celebrity coin promotions before.",
+          "sources": [
+            {
+              "t": "crypto.news: Ansem denies Sahil ties after $100,000 MOTHER payment claim",
+              "u": "https://crypto.news/ansem-sahil-arora-mother-payment-allegations/"
+            },
+            {
+              "t": "Airdrop Alert: the Sahil files explained, Bubblemaps, Ansem and the receipts",
+              "u": "https://airdropalert.com/blogs/sahil-files-bubblemaps-ansem/"
+            },
+            {
+              "t": "crypto.news: ZachXBT revisits Ansem warnings amid Sahil payment claims",
+              "u": "https://crypto.news/zachxbt-ansem-warnings-sahil-memecoin-payment-claims/"
             }
           ]
         }
