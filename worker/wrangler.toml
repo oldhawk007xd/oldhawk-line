@@ -1,0 +1,18 @@
+# The sky server for the lanterns (see sky.js). Deployed by scripts/sky-deploy.mjs from the update workflow,
+# once the repository has the secrets CLOUDFLARE_API_TOKEN and CLOUDFLARE_ACCOUNT_ID.
+name = "oldhawk-sky"
+main = "sky.js"
+compatibility_date = "2025-09-01"
+workers_dev = true
+
+[vars]
+# the pages allowed to connect, comma separated
+ORIGINS = "https://oldhawkline.com,https://www.oldhawkline.com,https://oldhawk007xd.github.io"
+
+[[durable_objects.bindings]]
+name = "SKY"
+class_name = "Sky"
+
+[[migrations]]
+tag = "v1"
+new_sqlite_classes = ["Sky"]

@@ -37,6 +37,16 @@ jobs:
           key: codex-${{ github.run_id }}-${{ github.run_attempt }}
           restore-keys: codex-
 
+      # The lanterns' sky server on Cloudflare (worker/), put up again only when its code changes.
+      # Off until the repository has the secrets CLOUDFLARE_API_TOKEN and CLOUDFLARE_ACCOUNT_ID.
+      - name: Sky server for the lanterns
+        continue-on-error: true
+        timeout-minutes: 4
+        run: node scripts/sky-deploy.mjs
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+
       - name: Pull live sources and compute the Line
         id: update
         run: node scripts/update.mjs
@@ -62,6 +72,7 @@ jobs:
           git config user.name "oldhawk-line-bot"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add data
+          if [ -f live.json ]; then git add live.json; fi
           if git diff --cached --quiet; then
             echo "No change"
             exit 0

@@ -5,6 +5,7 @@ import { readFile, writeFile, mkdir, appendFile } from "node:fs/promises";
 import { collect, compute, toDaily, alertsFor, blank, slimCodex, watchIds, NEEDS, refreshSocials } from "../lib/engine.mjs";
 import { addReading } from "../lib/memecap.mjs";
 import { refreshCalls, kolBoard } from "../lib/kols.mjs";
+import { liveOk } from "./sky-deploy.mjs";
 
 const DATA = new URL("../data/", import.meta.url);
 const read = async (name, fallback) => {
@@ -90,6 +91,11 @@ if (kolFile) {
   reading.kols = kolBoard(kolFile, calls, Date.now());
   if (calls) await write("calls.json", calls);
 }
+/* the sky server for the lanterns, once scripts/sky-deploy.mjs has put one up */
+try {
+  const live = JSON.parse(await readFile(new URL("../live.json", import.meta.url), "utf8"));
+  if (liveOk(live.ws)) reading.live = { ws: live.ws };
+} catch { /* no sky server: no lanterns */ }
 await write("latest.json", reading);
 
 if (reading.line != null) {

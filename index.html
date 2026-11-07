@@ -225,6 +225,13 @@ section.band > .wrap { padding-block: 96px; }
 /* the next reading, counted down beside the live chip */
 .live .nextin { color: #ffb634; font-variant-numeric: tabular-nums; }
 .hero.ink-day .live .nextin { color: #6e4200; }
+.live .watching { display: inline-flex; align-items: center; gap: 8px; color: #ffd59a; font-variant-numeric: tabular-nums; }
+.live .watching i { width: 7px; height: 7px; border-radius: 50%; background: #ffc46b; box-shadow: 0 0 8px 2px rgba(255,190,100,0.75); flex: none; }
+.hero.ink-day .live .watching { color: #6e4200; }
+.hero.ink-day .live .watching i { background: #d9772a; box-shadow: 0 0 6px 1px rgba(217,119,42,0.6); }
+.liftc { position: absolute; left: 0; top: 0; pointer-events: none; }
+.lifttip { position: absolute; left: 0; top: 0; z-index: 2; font: 500 12.5px/1.2 "IBM Plex Sans", system-ui, sans-serif; letter-spacing: 0; color: #ffe2b0; background: rgba(8,10,26,0.78); border: 1px solid rgba(255,214,150,0.35); padding: 5px 11px; border-radius: 999px; pointer-events: none; white-space: nowrap; opacity: 0; transition: opacity 0.35s ease; }
+.lifttip.on { opacity: 1; }
 /* a returning reader: what moved since the last visit */
 .since { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 14px; margin-top: 14px; padding: 7px 8px 7px 16px; max-width: 100%; border-radius: 18px; background: rgba(5,8,20,0.78); border: 1px solid rgba(20,241,149,0.38); font-size: 14px; line-height: 1.45; color: #cdd3e0; width: fit-content; }
 .since b { color: #fff; font-weight: 700; }
@@ -990,7 +997,9 @@ a.fomo:hover .fm { opacity: 0.18; transform: translateY(-50%) rotate(-6deg) scal
     <canvas class="hawkc" id="hawkC"></canvas>
     <div class="sea"><canvas id="seaC"></canvas></div>
     <div class="horizon" id="horizon"><i></i></div>
+    <canvas class="liftc" id="liftC"></canvas>
     <canvas class="sparks" id="sparks" width="1" height="1"></canvas>
+    <div class="lifttip" id="liftTip" hidden></div>
   </div>
   <div class="skytip" id="skytip" role="status" hidden></div>
 
@@ -1012,7 +1021,7 @@ a.fomo:hover .fm { opacity: 0.18; transform: translateY(-50%) rotate(-6deg) scal
 
   <div class="wrap hero-grid">
     <div class="hero-in" id="heroIn">
-      <div class="live" id="live"><span class="dot late" id="liveDot"></span><span id="liveText">Loading the reading</span><span class="nextin" id="nextIn" hidden></span><button type="button" class="back" id="backBtn" aria-label="Back to today's reading" hidden>Today</button></div>
+      <div class="live" id="live"><span class="dot late" id="liveDot"></span><span id="liveText">Loading the reading</span><span class="nextin" id="nextIn" hidden></span><span class="watching" id="watching" hidden><i aria-hidden="true"></i><span id="watchingN"></span></span><button type="button" class="back" id="backBtn" aria-label="Back to today's reading" hidden>Today</button></div>
       <div class="since" id="since" hidden><span class="since-t" id="sinceT"></span><button type="button" class="since-more" id="sinceMore" aria-expanded="false" aria-controls="sinceList" hidden></button><ul class="since-list" id="sinceList" hidden></ul></div>
       <h1 id="h1">The sun has to cross the Line.</h1>
       <p class="explain" id="explain">0 is the January 2024 bottom, 100 the December 2024 top. Season starts when the sun crosses the Line at 45.</p>
@@ -1769,7 +1778,8 @@ a.fomo:hover .fm { opacity: 0.18; transform: translateY(-50%) rotate(-6deg) scal
       const S = {
         W: 0, H: 0, hy: 0, dpr: 1, narrow: false, u: 0, L: 0, sun: { x: 0, y: 0 }, dial: { cx: 0, R: 1 }, text: [], lane: null, top: 0,
         data: { stars: [], moon: null, light: null, boats: [], fear: null, turnover: null },
-        bg: [], mw: null, dataStars: [], moon: null, land: null, clouds: [], cloudKey: "", boats: [], hawk: null, hawkBox: null, t: 0, landKey: ""
+        bg: [], mw: null, dataStars: [], moon: null, land: null, clouds: [], cloudKey: "", boats: [], hawk: null, hawkBox: null, t: 0, landKey: "",
+        people: { ids: [], you: null }, lanterns: [], lifts: [], liftDirty: false
       };
       const ctx = {};
       for (const k in cv) if (cv[k]) ctx[k] = cv[k].getContext("2d");
@@ -2428,6 +2438,127 @@ a.fomo:hover .fm { opacity: 0.18; transform: translateY(-50%) rotate(-6deg) scal
         }
       }
 
+      /* ---------- people: one floating lantern for everyone on the site right now ----------
+         Each lantern keeps its spot for as long as its page is open: the spot comes from its random name, in the
+         order people arrived. Far ones small near the boats, near ones bigger; never on words, the sun or the dial. */
+      function buildLanterns() {
+        S.lanterns = [];
+        const ids = S.people.ids || [], H = S.H - S.hy;
+        if (!ids.length || !S.W || H < 40) return;
+        const near = Math.min(H, S.narrow ? 240 : 560), band0 = S.narrow ? 24 : 70, cap = S.narrow ? 36 : 150;
+        const sunR = (S.dial ? S.dial.R : 200) * 0.14 + 22;
+        const left = S.narrow ? 8 : Math.min(S.W, ...S.text.filter((r) => r.t > S.hy).map((r) => r.l)) - 10;
+        const extra = S.peopleAvoid || [];
+        const bad = (x, y, pad) => inText(x, S.hy + y, pad) || Math.hypot(x - S.sun.x, S.hy + y - S.sun.y) < sunR ||
+          Math.abs(Math.hypot(x - S.dial.cx, y) - S.dial.R) < 15 || S.boats.some((b) => Math.hypot(x - b.x, y - b.y) < 18) ||
+          extra.some((r) => x > r.l - pad && x < r.r + pad && S.hy + y > r.t - pad && S.hy + y < r.b + pad);
+        let list = ids.slice(0, cap);
+        if (S.people.you && ids.includes(S.people.you) && !list.includes(S.people.you)) list = list.slice(0, cap - 1).concat(S.people.you);
+        for (const id of list) {
+          const r = rng(hash(`lantern:${id}`));
+          for (let k = 0; k < 28; k++) {
+            const d = Math.pow(r(), 0.9), y = band0 + d * (near - band0), x = 8 + r() * (S.W - 16);
+            const sz = (S.narrow ? 0.85 : 1.05) * (0.42 + 1.45 * Math.pow(y / near, 1.1)) * (0.85 + 0.3 * r());
+            /* the lantern's foot and top, and the word under yours, all stay off the words */
+            if (x < left || bad(x, y, 9 + 5 * sz) || bad(x, y - 12 * sz, 8) || (id === S.people.you && bad(x, y + 17 * sz, 10))) continue;
+            if (S.lanterns.some((q) => Math.hypot(q.x - x, (q.y - y) * 1.7) < 8 + 8.5 * Math.max(sz, q.s))) continue;
+            S.lanterns.push({ id, x, y, s: sz, you: id === S.people.you, tint: Math.floor(r() * 3), tilt: (r() - 0.5) * 0.16, ph: r() * TAU });
+            break;
+          }
+        }
+        S.lanterns.sort((p1, p2) => p1.y - p2.y);
+      }
+      /* a lantern is painted once per size, colour and light, then stamped every frame */
+      const LANTERN_TINT = [["#ffc773", "#fff3d0", "#ff9a40"], ["#ffbe8a", "#fff0dc", "#ff8f5a"], ["#ffd98a", "#fff8e0", "#ffb04a"]];
+      const lanternSprites = new Map();
+      function lanternSprite(sz, tint, day, glow) {
+        const key = `${Math.round(sz * 10)}|${tint}|${day}|${glow}|${S.dpr}`;
+        let sp = lanternSprites.get(key);
+        if (sp) return sp;
+        if (lanternSprites.size > 240) lanternSprites.clear();
+        const s0 = Math.round(sz * 10) / 10, g = glow / 4, dpr = Math.min(2, S.dpr || 1);
+        const w = Math.ceil(40 * s0 + 6), h = Math.ceil(46 * s0 + 6), ax = w / 2, ay = Math.ceil(24 * s0 + 3);
+        const cnv = document.createElement("canvas");
+        cnv.width = Math.ceil(w * dpr); cnv.height = Math.ceil(h * dpr);
+        const x = cnv.getContext("2d"); x.scale(dpr, dpr);
+        const rr = (X, Y, W, H2, k) => { x.beginPath(); x.moveTo(X + k, Y); x.arcTo(X + W, Y, X + W, Y + H2, k); x.arcTo(X + W, Y + H2, X, Y + H2, k); x.arcTo(X, Y + H2, X, Y, k); x.arcTo(X, Y, X + W, Y, k); x.closePath(); };
+        const s1 = s0, px = ax, py = ay;
+        for (let i = 1; i < 10; i++) {
+          const yy = py + 1.6 * s1 + i * 1.8 * s1, al = (0.1 + 0.22 * g) * (1 - i / 10);
+          x.fillStyle = `rgba(255,${day ? 205 : 182},${day ? 140 : 96},${al.toFixed(3)})`;
+          const ww = (3 + i * 0.28) * s1, off = Math.sin(i * 1.9) * 1.3 * s1;
+          x.fillRect(px - ww / 2 + off, yy, ww, 0.9 * s1);
+        }
+        const hr = (day ? 9 : 17) * s1, cy = py - 5.5 * s1;
+        let gr = x.createRadialGradient(px, cy, 0, px, cy, hr);
+        gr.addColorStop(0, `rgba(255,198,118,${(0.12 + 0.3 * g).toFixed(3)})`); gr.addColorStop(1, "rgba(255,168,80,0)");
+        x.fillStyle = gr; x.beginPath(); x.arc(px, cy, hr, 0, TAU); x.fill();
+        x.fillStyle = day ? "rgba(96,60,36,0.95)" : "rgba(28,15,10,0.95)";
+        rr(px - 5.6 * s1, py - 1.3 * s1, 11.2 * s1, 2.7 * s1, 1.1 * s1); x.fill();
+        const bw = 8 * s1, bh = 9.6 * s1, bx = px - bw / 2, by = py - 1.3 * s1 - bh, tc = LANTERN_TINT[tint] || LANTERN_TINT[0];
+        gr = x.createLinearGradient(0, by, 0, by + bh);
+        if (day) { gr.addColorStop(0, "#fbefe0"); gr.addColorStop(0.5, "#fffaf2"); gr.addColorStop(1, "#f3dcc0"); }
+        else { gr.addColorStop(0, tc[0]); gr.addColorStop(0.45, tc[1]); gr.addColorStop(1, tc[2]); }
+        x.fillStyle = gr; rr(bx, by, bw, bh, 1.5 * s1); x.fill();
+        if (day) { x.fillStyle = "rgba(214,72,44,0.9)"; x.fillRect(bx, by + 0.5 * s1, bw, 1.7 * s1); x.fillRect(bx, by + bh - 2.2 * s1, bw, 1.7 * s1); }
+        x.strokeStyle = day ? "rgba(112,50,22,0.7)" : "rgba(126,54,20,0.5)"; x.lineWidth = Math.max(0.6, 0.65 * s1);
+        x.beginPath(); x.moveTo(bx + 0.6 * s1, by + 0.4 * s1); x.lineTo(bx + 0.6 * s1, by + bh - 0.4 * s1); x.moveTo(bx + bw - 0.6 * s1, by + 0.4 * s1); x.lineTo(bx + bw - 0.6 * s1, by + bh - 0.4 * s1); x.stroke();
+        x.fillStyle = day ? "rgba(88,40,20,0.92)" : "rgba(36,16,10,0.96)";
+        rr(bx - 0.7 * s1, by - 1.5 * s1, bw + 1.4 * s1, 1.8 * s1, 0.6 * s1); x.fill();
+        gr = x.createRadialGradient(px, by + bh * 0.58, 0, px, by + bh * 0.58, 3.2 * s1);
+        gr.addColorStop(0, `rgba(255,255,236,${(0.35 + 0.6 * g).toFixed(3)})`); gr.addColorStop(1, "rgba(255,222,150,0)");
+        x.fillStyle = gr; x.beginPath(); x.arc(px, by + bh * 0.58, 3.2 * s1, 0, TAU); x.fill();
+        sp = { c: cnv, w, h, ax, ay };
+        lanternSprites.set(key, sp);
+        return sp;
+      }
+      function drawLanterns(c, t) {
+        if (!S.lanterns.length) return;
+        const day = S.u >= 2.9 ? 1 : 0, glow = Math.round((1 - sstep(1.6, 3.2, S.u)) * 4);
+        for (const l of S.lanterns) {
+          const sp = lanternSprite(l.s, l.tint, day, glow);
+          const x = l.x + Math.sin(t * 0.05 + l.ph) * 4, y = l.y + Math.sin(t * 1.2 + l.ph) * 0.7 * l.s;
+          c.save(); c.translate(x, y); c.rotate(l.tilt + Math.sin(t * 0.9 + l.ph) * 0.03);
+          c.drawImage(sp.c, -sp.ax, -sp.ay, sp.w, sp.h);
+          c.restore();
+          if (l.you) {
+            c.strokeStyle = day ? "rgba(90,40,20,0.7)" : "rgba(255,236,204,0.75)"; c.lineWidth = 1.2;
+            c.beginPath(); c.ellipse(x, y + 0.2 * l.s, 10.5 * l.s, 3.6 * l.s, 0, 0, TAU); c.stroke();
+            c.font = `600 ${Math.round(11 + l.s)}px "IBM Plex Sans", sans-serif`; c.textAlign = "center";
+            c.lineWidth = 3; c.strokeStyle = day ? "rgba(255,255,255,0.7)" : "rgba(4,6,16,0.75)"; c.strokeText("You", x, y + 16 * l.s);
+            c.fillStyle = day ? "#5a2a10" : "#ffe6bf"; c.fillText("You", x, y + 16 * l.s);
+          }
+        }
+      }
+      /* a lantern that lifts off and rises into the sky: someone went to buy */
+      function drawLifts(t) {
+        const c = ctx.lift;
+        if (!c) return;
+        c.clearRect(0, 0, S.W, S.H);
+        S.lifts = S.lifts.filter((q) => t - q.t0 < 7 && t >= q.t0 - 0.5);
+        S.liftDirty = S.lifts.length > 0;
+        for (const q of S.lifts) {
+          const k = clamp((t - q.t0) / 7, 0, 1), e = k * k * (3 - 2 * k);
+          const top = S.hy * 0.3, y = q.y - (q.y - top) * e, x = q.x + Math.sin(k * 7 + q.ph) * 10 * k;
+          const fade = k < 0.08 ? k / 0.08 : k > 0.72 ? (1 - k) / 0.28 : 1, s2 = q.s * (1 + 0.5 * e);
+          for (let i = 1; i < 9; i++) {
+            const kk = Math.max(0, k - i * 0.012), ee = kk * kk * (3 - 2 * kk), ey = q.y - (q.y - top) * ee + 10 * s2;
+            c.fillStyle = `rgba(255,${200 - 8 * i},${120 - 6 * i},${(fade * 0.32 * (1 - i / 9)).toFixed(3)})`;
+            c.beginPath(); c.arc(q.x + Math.sin(kk * 7 + q.ph) * 10 * kk, ey + i * 2, 0.6 + 0.9 * (1 - i / 9), 0, TAU); c.fill();
+          }
+          let gr = c.createRadialGradient(x, y, 0, x, y, 30 * s2);
+          gr.addColorStop(0, `rgba(255,206,130,${(0.5 * fade).toFixed(3)})`); gr.addColorStop(1, "rgba(255,160,70,0)");
+          c.fillStyle = gr; c.beginPath(); c.arc(x, y, 30 * s2, 0, TAU); c.fill();
+          c.globalAlpha = fade;
+          c.beginPath(); c.moveTo(x - 6 * s2, y - 9 * s2); c.lineTo(x + 6 * s2, y - 9 * s2); c.lineTo(x + 4.3 * s2, y + 8 * s2); c.lineTo(x - 4.3 * s2, y + 8 * s2); c.closePath();
+          gr = c.createLinearGradient(0, y - 9 * s2, 0, y + 8 * s2); gr.addColorStop(0, "#ffd48a"); gr.addColorStop(0.55, "#fff2cf"); gr.addColorStop(1, "#ff9c3e");
+          c.fillStyle = gr; c.fill(); c.strokeStyle = "rgba(140,62,24,0.6)"; c.lineWidth = 0.9; c.stroke();
+          gr = c.createRadialGradient(x, y + 6 * s2, 0, x, y + 6 * s2, 4 * s2); gr.addColorStop(0, "rgba(255,255,240,0.95)"); gr.addColorStop(1, "rgba(255,210,140,0)");
+          c.fillStyle = gr; c.beginPath(); c.arc(x, y + 6 * s2, 4 * s2, 0, TAU); c.fill();
+          c.globalAlpha = 1;
+        }
+      }
+
       function buildReflection() {
         const W = S.W, H = Math.max(1, S.H - S.hy), d = Math.min(S.dpr, 1.5);
         const c = makeCanvas(W * d, H * d), x = c.getContext("2d");
@@ -2512,23 +2643,27 @@ a.fomo:hover .fm { opacity: 0.18; transform: translateY(-50%) rotate(-6deg) scal
           const col = LIGHT[S.data.light || "none"], vis = at(BEAM_VIS, S.u);
           if (vis > 0.05) drawGlitter(c, t, S.land.lamp.x, Math.min(H, 70), col, vis * 0.5, 16, 0.45, 53);
         }
-        /* boats: a light at night, a small sail by day */
+        /* boats: a sail and a white masthead light at night, a sail by day; the warm lights on the water are people */
         const dayK = sstep(2.6, 3.6, S.u);
         for (const bt of S.boats) {
           const bob = Math.sin(t * 1.3 + bt.ph) * 0.6 * bt.size, x = bt.x + Math.sin(t * 0.07 + bt.ph) * 6, y = bt.y + bob;
           const s = bt.size;
           if (dayK < 1) {
             const a = 1 - dayK;
-            /* a dark hull, a cabin window, a mast light */
+            /* a dark hull, a sail in the moonlight and a small white masthead light: boats are launches, the warm
+               lanterns are people */
             c.fillStyle = `rgba(4,5,12,${(0.85 * a).toFixed(3)})`;
             c.beginPath(); c.moveTo(x - 4.2 * s, y - 1.4 * s); c.lineTo(x + 4.2 * s, y - 1.4 * s); c.lineTo(x + 3 * s, y + 0.6 * s); c.lineTo(x - 3 * s, y + 0.6 * s); c.closePath(); c.fill();
-            c.fillRect(x - 0.25 * s, y - 9 * s, 0.5 * s, 7.6 * s);
-            c.fillStyle = `rgba(255,196,120,${(0.85 * a).toFixed(3)})`; c.fillRect(x - 1.8 * s, y - 2.6 * s, 1.2 * s, 0.9 * s);
-            const lg = c.createRadialGradient(x, y - 9 * s, 0, x, y - 9 * s, 6 * s);
-            lg.addColorStop(0, `rgba(255,244,214,${a.toFixed(3)})`); lg.addColorStop(0.25, `rgba(255,200,120,${(0.5 * a).toFixed(3)})`); lg.addColorStop(1, "rgba(255,170,90,0)");
-            c.fillStyle = lg; c.beginPath(); c.arc(x, y - 9 * s, 6 * s, 0, TAU); c.fill();
-            c.fillStyle = `rgba(255,206,140,${(0.32 * a).toFixed(3)})`;
-            for (let k = 1; k < 8; k++) { const yy = y + 1 + k * 2.1 * s; const w = (2.2 - k * 0.2) * s * (1 + 0.7 * Math.sin(t * 3 + k + bt.ph)); c.fillRect(x - w / 2, yy, w, 0.9); }
+            c.fillRect(x - 0.25 * s, y - 12 * s, 0.5 * s, 10.6 * s);
+            c.fillStyle = `rgba(178,192,232,${(0.5 * a).toFixed(3)})`;
+            c.beginPath(); c.moveTo(x + bt.lean * 5 * s, y - 11.5 * s); c.quadraticCurveTo(x + 2.6 * s, y - 6.5 * s, x + 3.5 * s, y - 1.8 * s); c.lineTo(x - 0.1 * s, y - 1.8 * s); c.closePath(); c.fill();
+            c.fillStyle = `rgba(150,164,208,${(0.36 * a).toFixed(3)})`;
+            c.beginPath(); c.moveTo(x - 0.6 * s + bt.lean * 4 * s, y - 10 * s); c.lineTo(x - 0.6 * s, y - 1.8 * s); c.lineTo(x - 3.3 * s, y - 1.8 * s); c.closePath(); c.fill();
+            const lg = c.createRadialGradient(x, y - 12 * s, 0, x, y - 12 * s, 3.6 * s);
+            lg.addColorStop(0, `rgba(246,250,255,${a.toFixed(3)})`); lg.addColorStop(0.3, `rgba(200,222,255,${(0.45 * a).toFixed(3)})`); lg.addColorStop(1, "rgba(180,205,255,0)");
+            c.fillStyle = lg; c.beginPath(); c.arc(x, y - 12 * s, 3.6 * s, 0, TAU); c.fill();
+            c.fillStyle = `rgba(200,214,250,${(0.18 * a).toFixed(3)})`;
+            for (let k = 1; k < 6; k++) { const yy = y + 1 + k * 2 * s; const w = (2 - k * 0.25) * s * (1 + 0.6 * Math.sin(t * 3 + k + bt.ph)); c.fillRect(x - w / 2, yy, w, 0.8); }
           }
           if (dayK > 0) {
             const a = dayK, hullC = mixc(at(LAND_NEAR, S.u), [20, 22, 30], 0.4);
@@ -2542,6 +2677,7 @@ a.fomo:hover .fm { opacity: 0.18; transform: translateY(-50%) rotate(-6deg) scal
             for (let k = 1; k < 5; k++) { const w = (2.4 - k * 0.4) * s; c.fillRect(x - w / 2, y + 1 + k * 1.8 * s, w, 0.8); }
           }
         }
+        drawLanterns(c, t);
       }
       /* a soft column of light on the water, widening toward us */
       function drawColumn(c, x0, H, col, k, w0) {
@@ -2700,7 +2836,7 @@ a.fomo:hover .fm { opacity: 0.18; transform: translateY(-50%) rotate(-6deg) scal
       function layout(o) {
         const textOnly = o.W === S.W && o.H === S.H && Math.abs(o.hy - S.hy) < 1 && o.narrow === S.narrow && o.dpr === S.dpr && o.dial && Math.abs(o.dial.cx - S.dial.cx) < 1 && Math.abs(o.dial.R - S.dial.R) < 1;
         Object.assign(S, o);
-        if (textOnly && dimKey) { placeDataStars(); buildBoats(); buildReflection(); return; }
+        if (textOnly && dimKey) { placeDataStars(); buildBoats(); buildLanterns(); buildReflection(); return; }
         dimKey = `${S.W}:${S.H}:${S.hy}`;
         const dpr = S.dpr;
         if (cv.stars) { sizeCanvas(cv.stars, S.W + SPX * 2, S.hy + SPY * 2, dpr); cv.stars.style.left = `${-SPX}px`; cv.stars.style.top = `${-SPY}px`; }
@@ -2708,14 +2844,29 @@ a.fomo:hover .fm { opacity: 0.18; transform: translateY(-50%) rotate(-6deg) scal
         if (cv.clouds) sizeCanvas(cv.clouds, S.W + 96, S.hy, Math.min(dpr, 1.5));
         if (cv.hawk) sizeCanvas(cv.hawk, S.W, S.hy, dpr);
         if (cv.sea) sizeCanvas(cv.sea, S.W, Math.max(1, S.H - S.hy), Math.min(dpr, 1.5));
+        if (cv.lift) sizeCanvas(cv.lift, S.W, S.H, Math.min(dpr, 2));
         S.landKey = ""; S.cloudKey = "";
-        buildStars(); buildMoon(); buildLand(); buildClouds(); buildBoats();
+        buildStars(); buildMoon(); buildLand(); buildClouds(); buildBoats(); buildLanterns();
         S.hawkBox = null;
       }
       function setData(d) {
         S.data = Object.assign({ stars: [], moon: null, light: null, boats: [], fear: null, turnover: null }, d || {});
         if (!S.W) return;
-        placeDataStars(); buildMoon(); buildBoats(); S.cloudKey = ""; buildClouds();
+        placeDataStars(); buildMoon(); buildBoats(); buildLanterns(); S.cloudKey = ""; buildClouds();
+      }
+      function setPeople(ids, you, avoid) {
+        S.people = { ids: Array.isArray(ids) ? ids.slice() : [], you: you || null };
+        S.peopleAvoid = Array.isArray(avoid) ? avoid : [];
+        if (S.W) buildLanterns();
+      }
+      /* lift a lantern into the sky; where it starts, in the hero's coordinates */
+      function lift(id) {
+        if (!S.W || S.lifts.length >= 4) return null;
+        const l = S.lanterns.find((q) => q.id === id) || S.lanterns[Math.floor(Math.random() * S.lanterns.length)];
+        if (!l) return null;
+        const q = { x: l.x, y: S.hy + l.y - 6 * l.s, s: Math.max(1.1, l.s * 1.2), ph: Math.random() * TAU, t0: S.t };
+        S.lifts.push(q); S.liftDirty = true;
+        return { x: q.x, y: q.y };
       }
       let cloudAt = 0;
       function setHour(u, L, sun) {
@@ -2735,6 +2886,7 @@ a.fomo:hover .fm { opacity: 0.18; transform: translateY(-50%) rotate(-6deg) scal
         drawLand(t);
         if (!o.skipClouds) drawClouds(dt);
         drawSea(t);
+        if (S.liftDirty) drawLifts(o.still ? Infinity : t);
         return o.still ? drawHawkStill() : drawHawk(t, o.hawk !== false);
       }
       function hit(x, y) {
@@ -2746,6 +2898,7 @@ a.fomo:hover .fm { opacity: 0.18; transform: translateY(-50%) rotate(-6deg) scal
         if (S.land && Math.abs(S.land.lamp.x - x) < 14 && y > S.land.lamp.y - 16 && y < S.hy) best = { kind: "lighthouse", light: S.data.light };
         let bb = 12;
         for (const b of S.boats) { const d = Math.hypot(b.x - x, S.hy + b.y - 5 - y); if (d < bb) { bb = d; best = { kind: "boat", d: b.b }; } }
+        for (const l of S.lanterns) { const d = Math.hypot(l.x - x, S.hy + l.y - 6 * l.s - y); if (d < Math.max(9, 9 * l.s) && d < bb) { bb = d; best = { kind: "lantern", you: l.you }; } }
         return best;
       }
       /* a whole flight, worked out without drawing it: the hawk's box at n moments, for tests */
@@ -2758,14 +2911,14 @@ a.fomo:hover .fm { opacity: 0.18; transform: translateY(-50%) rotate(-6deg) scal
         }
         return { lane: F.L, span: F.span, boxes };
       }
-      const api = { layout, setData, setHour, frame, hit, sweep, state: S, hawkBox: () => S.hawkBox, flyNow: (t) => { S.hawk = planFlight(t); }, onRedraw: null };
+      const api = { layout, setData, setHour, setPeople, lift, frame, hit, sweep, state: S, hawkBox: () => S.hawkBox, flyNow: (t) => { S.hawk = planFlight(t); }, onRedraw: null };
       return api;
     }
 
     return { create: createScene, at, Hawk, SEA_TOP, SEA_BOT };
   })();
 
-  const sky = OhlSky.create({ stars: starsEl, moon: $("moon"), clouds: $("cloudC"), land: $("land"), hawk: $("hawkC"), sea: $("seaC") });
+  const sky = OhlSky.create({ stars: starsEl, moon: $("moon"), clouds: $("cloudC"), land: $("land"), hawk: $("hawkC"), sea: $("seaC"), lift: $("liftC") });
   /* clouds are worked out a few at a time; a still painting is redrawn as each one arrives */
   sky.onRedraw = () => { if (!ambOn) skyStillSoon(); };
 
@@ -3281,10 +3434,139 @@ a.fomo:hover .fm { opacity: 0.18; transform: translateY(-50%) rotate(-6deg) scal
     $("since").hidden = false;
   }
 
+  /* ---------- people in the sky: one lantern for everyone on the site right now ----------
+     A small server (worker/sky.js, on Cloudflare) counts the open pages and passes on Buy clicks. It keeps nothing:
+     no address, no cookie, only a random name per open page that goes when the page closes. Without it, none of
+     this shows. A page left in the background for a minute stops counting until it is looked at again. */
+  const People = (() => {
+    let url = "", ws = null, you = null, ids = [], n = 0, tries = 0, retryT = 0, pingT = 0, awayT = 0, tipT = 0, lastBuy = 0;
+    const el = $("watching"), nEl = $("watchingN"), liftTip = $("liftTip");
+    const on = () => Boolean(url);
+    function paint() {
+      if (!on()) { if (!el.hidden) el.hidden = true; return; }
+      if (el.hidden) el.hidden = false;
+      const t = `${n} watching now`;
+      if (nEl.textContent !== t) nEl.textContent = t;
+      /* it keeps its place in every view, so the Line never moves; it shows from 3 people up */
+      const vis = view === "now" && n >= 3 ? "" : "hidden";
+      if (el.style.visibility !== vis) el.style.visibility = vis;
+    }
+    /* the pill that says how far the Line is moves with the sun: lanterns keep off it too */
+    function avoid() {
+      const d = $("dtogo");
+      if (!d || d.hidden) return [];
+      const base = $("seaC").parentElement.parentElement.getBoundingClientRect(), r = d.getBoundingClientRect();
+      return r.width ? [{ l: r.left - base.left, t: r.top - base.top, r: r.right - base.left, b: r.bottom - base.top }] : [];
+    }
+    function apply() {
+      sky.setPeople(ids, you, avoid());
+      if (!ambOn) skyStillSoon();
+      paint();
+    }
+    function lift(id, mine) {
+      if (reduced || !ambOn) return;
+      const at = sky.lift(id);
+      if (!at || mine || sky.state.narrow) return;
+      liftTip.textContent = `Someone just went to buy on ${BUY ? BUY.name : "the app"}`;
+      liftTip.hidden = false;
+      /* beside the lantern's way up, on open sky, never on words */
+      const w = liftTip.offsetWidth || 230, h = liftTip.offsetHeight || 26, S = sky.state;
+      const free = (x, y) => !S.text.some((r) => x < r.r + 8 && x + w > r.l - 8 && y < r.b + 8 && y + h > r.t - 8) && !(S.moon && Math.hypot(clamp(S.moon.x, x, x + w) - S.moon.x, clamp(S.moon.y, y, y + h) - S.moon.y) < (S.moon.r || 16) + 6)
+        && !(S.land && S.land.lamp && x < S.land.lamp.x + 34 && x + w > S.land.lamp.x - 34 && y + h > S.land.lamp.y - 34);
+      let spot = null, best = Infinity;
+      for (const d of [52, 96, 140, 184, 228]) {
+        const y = S.hy - d;
+        if (y < 70) continue;
+        for (let x = 12; x <= S.W - w - 12; x += 24) {
+          if (!free(x, y)) continue;
+          const cost = Math.abs(x + w / 2 - at.x) + d * 0.8;
+          if (cost < best) { best = cost; spot = [x, y]; }
+        }
+      }
+      if (!spot) { liftTip.hidden = true; return; }
+      liftTip.style.left = `${Math.round(spot[0])}px`; liftTip.style.top = `${Math.round(spot[1])}px`;
+      requestAnimationFrame(() => liftTip.classList.add("on"));
+      clearTimeout(tipT);
+      tipT = setTimeout(() => { liftTip.classList.remove("on"); setTimeout(() => { if (!liftTip.classList.contains("on")) liftTip.hidden = true; }, 400); }, 3200);
+    }
+    function onMsg(e) {
+      if (e.data === "pong") return;
+      let m;
+      try { m = JSON.parse(e.data); } catch (err) { return; }
+      if (!m || typeof m !== "object") return;
+      if (m.t === "hello") {
+        you = String(m.you || "");
+        ids = Array.isArray(m.ids) ? m.ids.map(String).slice(0, 400) : [];
+        if (you && !ids.includes(you)) ids.push(you);
+        n = Number.isFinite(m.n) ? m.n : ids.length;
+        apply();
+      } else if (m.t === "n") {
+        if (Array.isArray(m.del)) { const gone = new Set(m.del.map(String)); ids = ids.filter((x) => !gone.has(x)); }
+        if (Array.isArray(m.add)) for (const x of m.add.map(String)) if (!ids.includes(x) && ids.length < 400) ids.push(x);
+        if (Number.isFinite(m.n)) n = m.n;
+        apply();
+      } else if (m.t === "up") lift(String(m.id || ""), false);
+    }
+    function drop() {
+      if (!ws) return;
+      const s0 = ws;
+      ws = null;
+      clearInterval(pingT);
+      try { s0.close(1000, "bye"); } catch (err) { /* already closed */ }
+      ids = []; n = 0; you = null;
+      apply();
+    }
+    function retry() {
+      clearTimeout(retryT);
+      /* after a few misses in a row it waits for the page to be looked at again */
+      if (!url || document.hidden || tries >= 8) return;
+      retryT = setTimeout(connect, [2, 5, 15, 30, 60][Math.min(tries++, 4)] * 1000);
+    }
+    function connect() {
+      if (!url || ws || !("WebSocket" in window)) return;
+      let s0;
+      try { s0 = new WebSocket(url); } catch (err) { retry(); return; }
+      ws = s0;
+      s0.onopen = () => { tries = 0; clearInterval(pingT); pingT = setInterval(() => { try { s0.send("ping"); } catch (err) { /* closing */ } }, 45000); };
+      s0.onmessage = onMsg;
+      s0.onclose = () => { if (ws !== s0) return; ws = null; clearInterval(pingT); ids = []; n = 0; you = null; apply(); retry(); };
+      s0.onerror = () => { try { s0.close(); } catch (err) { /* already closed */ } };
+    }
+    function start(u) {
+      const ok = /^wss:\/\/[a-z0-9.-]+(:\d+)?\/[a-z0-9/_-]*$/i.test(u || "") || /^ws:\/\/(127\.0\.0\.1|localhost)(:\d+)?\/[a-z0-9/_-]*$/i.test(u || "");
+      const next = ok ? u : "";
+      if (next === url) return;
+      drop();
+      url = next; tries = 0;
+      if (url) connect();
+      paint();
+    }
+    /* someone heads to the app: their lantern rises for everyone */
+    document.addEventListener("click", (e) => {
+      const a = e.target && e.target.closest ? e.target.closest("a[href]") : null;
+      if (!a || !BUY || !ws || ws.readyState !== 1) return;
+      let origin = "";
+      try { origin = new URL(BUY.url).origin; } catch (err) { return; }
+      if (!a.href.startsWith(origin)) return;
+      if (Date.now() - lastBuy < 20000) return;
+      lastBuy = Date.now();
+      try { ws.send(JSON.stringify({ t: "buy" })); } catch (err) { return; }
+      lift(you, true);
+    }, true);
+    document.addEventListener("visibilitychange", () => {
+      clearTimeout(awayT);
+      if (document.hidden) awayT = setTimeout(drop, 60000);
+      else if (url && !ws) { tries = 0; connect(); }
+    });
+    window.addEventListener("pagehide", () => { if (ws) { try { ws.close(1000, "bye"); } catch (err) { /* closing */ } } });
+    return { start, paint, on, count: () => n, sample: () => '<span class="watching"><i></i><span>312 watching now</span></span>' };
+  })();
+
   /* ---------- the next reading, counted down ---------- */
   let nextPoll = 0;
   const nextOn = () => { const c = current(); return Boolean(R && !R.blank && c && !c.ghost && R.at && Date.now() - Date.parse(R.at) < 90 * 60000); };
   function tickNext() {
+    People.paint();
     const el = $("nextIn");
     if (!nextOn()) { if (!el.hidden) el.hidden = true; return; }
     /* it keeps its place in every view, so the Line never moves when the sun is dragged */
@@ -3350,7 +3632,7 @@ a.fomo:hover .fm { opacity: 0.18; transform: translateY(-50%) rotate(-6deg) scal
         "<b>Waiting for the first reading.</b> Drag the sun to see what the rules say at any hour."
       ]],
       /* the chip, with the countdown beside it whenever the reading is fresh enough to have one */
-      [$("live"), ((nx) => [`<span>Live${SEP}updated 59 min ago</span>${nx}`, `<span>Last good reading${SEP}23 Oct, 18:07</span>`, "<span>Waiting for the first reading</span>", `<span>Preview${SEP}no live data</span>`, `<span>What if${SEP}not a reading</span>${nx}<button class="back">Today</button>`, `<span>December 9, 2024${SEP}the last top</span>${nx}`])(nextOn() ? '<span class="nextin">Next reading any minute</span>' : "")]
+      [$("live"), ((nx) => [`<span>Live${SEP}updated 59 min ago</span>${nx}`, `<span>Last good reading${SEP}23 Oct, 18:07</span>`, "<span>Waiting for the first reading</span>", `<span>Preview${SEP}no live data</span>`, `<span>What if${SEP}not a reading</span>${nx}<button class="back">Today</button>`, `<span>December 9, 2024${SEP}the last top</span>${nx}`])((nextOn() ? '<span class="nextin">Next reading any minute</span>' : "") + (People.on() ? People.sample() : ""))]
     ];
     const grid = h1El.parentElement.closest(".hero-grid");
     for (const [el, texts] of sets) {
@@ -3542,13 +3824,14 @@ a.fomo:hover .fm { opacity: 0.18; transform: translateY(-50%) rotate(-6deg) scal
   if ("IntersectionObserver" in window) {
     new IntersectionObserver((es) => { heroVisible = es[0].isIntersecting; hero.classList.toggle("off", !heroVisible); setAmbient(); }).observe(hero);
   }
-  /* point at a star, the moon, the lighthouse or a boat to read it */
+  /* point at a star, the moon, the lighthouse, a boat or a lantern to read it */
   const tip = $("skytip");
   function skyTipText(h) {
     if (h.kind === "star" && h.d.y) return `<b>A coin under 10 days old</b><small>${usd(h.d.m)}${SEP}counted, named once it is 10 days old</small>`;
     if (h.kind === "star") { const x = h.d; return `<b>${esc(x.s)}</b>${x.n ? `${SEP}${esc(x.n)}` : ""}<small>${usd(x.m)}${x.d != null ? `${SEP}${pct(x.d)} in 24h` : ""}${SEP}one star per memecoin from $10M</small>`; }
     if (h.kind === "moon") { const n = Math.round(h.f * 8); return `<b>The moon: ${n} of 8 bottom signs</b><small>Full at 8. From 5 the buy zone is open.</small>`; }
     if (h.kind === "lighthouse") return h.light ? `<b>The lighthouse: ${h.light === "sell" ? "red, sell now" : h.light === "nobuys" ? "amber, no new buys" : "green, quiet"}</b><small>It shows the sell signals: amber at 1, red at 3.</small>` : "<b>The lighthouse</b><small>Shows the sell signals once there is a reading.</small>";
+    if (h.kind === "lantern") return h.you ? "<b>You</b><small>your lantern, while this page is open</small>" : "<b>Someone watching the sky</b><small>one lantern for everyone here right now</small>";
     if (h.kind === "boat") { const x = h.d; return `<b>A launch of this week</b><small>${usd(x.m)}${x.lp ? `${SEP}${esc(x.lp)}` : ""}${x.a != null ? `${SEP}${x.a < 1 ? "launched today" : `${Math.round(x.a)} days old`}` : ""}${SEP}counted, not named</small>`; }
     return "";
   }
@@ -4404,6 +4687,7 @@ a.fomo:hover .fm { opacity: 0.18; transform: translateY(-50%) rotate(-6deg) scal
       + item("wave", turn && turn.status === "live" ? `Waves: turnover <b>${esc(turn.label || fmtIn(turn, turn.x))}</b>` : "Waves: turnover, no data");
   }
   function renderAll() {
+    People.start(R && !isBlank() && R.live && R.live.ws ? R.live.ws : "");
     $("notice").hidden = !(PREVIEW && isBlank());
     reserveHeights();
     [renderNumbers, renderTicker, renderRunners, renderList, renderHours, renderProof, renderWeekly, renderSignals, renderFooter].forEach((fn) => { try { fn(); } catch (e) { console.warn(fn.name, e); } });
