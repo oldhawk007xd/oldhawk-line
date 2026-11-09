@@ -1246,9 +1246,49 @@
       "id": "cupsey",
       "name": "Cupsey",
       "x": "Cupseyy",
-      "role": "Pump.fun caller",
+      "role": "Solana trader, Pump.fun caller",
       "track": true,
       "incidents": [
+        {
+          "date": "2026-11",
+          "token": "About 3,000 tokens",
+          "harm": "dump",
+          "evidence": "onchain",
+          "usd": 1740000,
+          "what": "Bubblemaps found 30 wallets linked to his public Pump.fun wallets. Since May 7, four operational wallets bought and passed the tokens to twelve side wallets, his public wallet bought, copy traders followed, and the side wallets sold, often right after his public buy and while he was posting callouts. The scheme made about $1.74M across about 3,000 tokens, on top of $331K in callout rewards. No public answer found.",
+          "sources": [
+            {
+              "t": "Bubblemaps on X: an investigation into @Cupseyy",
+              "u": "https://x.com/bubblemaps/status/2119823688673751416"
+            },
+            {
+              "t": "Airdrop Alert: Cupsey Bubblemaps exposé, the $1.7M side wallet scheme explained",
+              "u": "https://airdropalert.com/blogs/cupsey-bubblemaps-side-wallets/"
+            },
+            {
+              "t": "Crypto Briefing: Bubblemaps alleges Cupsey pulled $1.74M through 30 linked wallets",
+              "u": "https://cryptobriefing.com/bubblemaps-alleges-cupsey-solana-wallet-scheme/"
+            }
+          ]
+        },
+        {
+          "date": "2026-11",
+          "token": "CUPSEY and 400+ launches",
+          "harm": "dump",
+          "evidence": "onchain",
+          "usd": 1300000,
+          "what": "Bubblemaps found several on-chain links between him and the serial deployer 3z4vj (sadwhale04189 on Pump.fun), which launched and rugged thousands of tokens, CUPSEY among them on Oct 17, 2026, and made about $1.3M trading. His side wallets sniped over 400 of its launches.",
+          "sources": [
+            {
+              "t": "Bubblemaps on X: an investigation into @Cupseyy",
+              "u": "https://x.com/bubblemaps/status/2119823688673751416"
+            },
+            {
+              "t": "Airdrop Alert: Cupsey Bubblemaps exposé, the $1.7M side wallet scheme explained",
+              "u": "https://airdropalert.com/blogs/cupsey-bubblemaps-side-wallets/"
+            }
+          ]
+        },
         {
           "date": "2026-11",
           "token": "Pump.fun callouts",
