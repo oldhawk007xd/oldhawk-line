@@ -118,6 +118,16 @@ jobs:
       - name: Build the site folder
         run: node scripts/site.mjs _site "${{ github.repository }}" "${{ vars.SITE_URL || steps.pages.outputs.base_url }}"
 
+      # The latest reading written into the two pages, for readers that run no JavaScript: search engines,
+      # link previews, AI assistants. Chrome draws each page with its own code. If it fails, the pages go up
+      # as they are and fill themselves in as before.
+      - name: Write the reading into the pages
+        continue-on-error: true
+        timeout-minutes: 3
+        run: |
+          npm install --no-save --no-audit --no-fund playwright-core@1.63.0
+          node scripts/prerender.mjs _site
+
       - uses: actions/upload-pages-artifact@v3
         with:
           path: _site

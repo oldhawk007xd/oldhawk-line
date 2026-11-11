@@ -1062,6 +1062,7 @@ a.fomo:hover .fm { opacity: 0.18; transform: translateY(-50%) rotate(-6deg) scal
           <circle class="xpt" id="xpt" cx="60" cy="300" r="4.5"></circle>
         </svg>
         <div class="dread" id="dread"><div class="num" id="num">0</div><div class="of"><span>/100</span><span class="zone" id="zone">Deep Winter</span></div></div>
+        <script data-dial>/* The published file carries the last reading in these two places for readers without JavaScript (scripts/prerender.mjs). With JavaScript the dial waits at midnight, and the sun brings the live number. */(function () { var n = document.getElementById("num"), z = document.getElementById("zone"); if (n) n.textContent = "0"; if (z) z.textContent = "Deep Winter"; })();</script>
         <div class="dlab line" id="labLine" data-x="300" data-dy="24" data-p="0">The Line<i class="sep"></i>45</div>
         <div class="dlab tag" id="labNoon" data-x="300" data-y="26" data-p="1">Noon<i class="sep"></i>100</div>
         <div class="dlab tag under" id="labMid" data-x="300" data-y="576" data-p="2">Midnight<i class="sep"></i>0</div>
@@ -4576,6 +4577,10 @@ a.fomo:hover .fm { opacity: 0.18; transform: translateY(-50%) rotate(-6deg) scal
   $("listMore").addEventListener("click", () => { listAll = true; renderList(); });
 
 /*@share*/
+  /* The published file carries the last reading in the places this script fills (scripts/prerender.mjs), for
+     readers without JavaScript. Before the live reading is drawn, each of those places goes back to what the
+     page holds without it, so the page ends up exactly as if the file had carried nothing. */
+  const unpre = () => { for (const e of document.querySelectorAll("[data-pre]")) { e.innerHTML = e.getAttribute("data-pre"); e.removeAttribute("data-pre"); } };
   /* ---------- KOL Watch: who is calling, and their record ---------- */
   const KBAND = { risk: "High risk", caution: "Caution", trusted: "Trusted", none: "Not scored yet" };
   const KCOL = { risk: "#ff5c7a", caution: "#ffb020", trusted: "#14F195", none: "#a3abc0" };
@@ -4618,6 +4623,7 @@ a.fomo:hover .fm { opacity: 0.18; transform: translateY(-50%) rotate(-6deg) scal
     if (r && !r.blank) { try { h = await getJSON(HIST); } catch (e) { h = null; } }
     /* the weekly candles: kept from the last good read when one fetch fails */
     if (r && !r.blank && !PREVIEW) { try { const m = await getJSON(MEMECAP); if (m && Array.isArray(m.days) && m.days.length >= 2) W = m; } catch (e) { /* keep the last record */ } }
+    unpre();
     if (!r) { if (!started) { renderHours(); startHero(); } return; }
     const wasBlank = !R || R.blank || !current();
     R = r; H = h && Array.isArray(h.days) ? h.days : [];

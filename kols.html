@@ -1278,6 +1278,10 @@ a.fomo:hover .fm { opacity: 0.18; transform: translateY(-50%) rotate(-6deg) scal
   const textW = (s, size) => [...String(s)].reduce((w, ch) => w + (ch.codePointAt(0) > 0x2e80 ? 1.0 : 0.6) * size, 0);
   const hit = (a, b) => a.l < b.r && a.r > b.l && a.t < b.b && a.b > b.t;
   const pct = (d) => (d == null ? "n/a" : `${d > 0 ? "+" : d < 0 ? "−" : ""}${Math.abs(d).toFixed(1)}%`);
+  /* The published file carries the last reading in the places this script fills (scripts/prerender.mjs), for
+     readers without JavaScript. Before the live reading is drawn, each of those places goes back to what the
+     page holds without it, so the page ends up exactly as if the file had carried nothing. */
+  const unpre = () => { for (const e of document.querySelectorAll("[data-pre]")) { e.innerHTML = e.getAttribute("data-pre"); e.removeAttribute("data-pre"); } };
   /* ---------- KOL Watch: who is calling, and their record ---------- */
   const KBAND = { risk: "High risk", caution: "Caution", trusted: "Trusted", none: "Not scored yet" };
   const KCOL = { risk: "#ff5c7a", caution: "#ffb020", trusted: "#14F195", none: "#a3abc0" };
@@ -1614,6 +1618,7 @@ a.fomo:hover .fm { opacity: 0.18; transform: translateY(-50%) rotate(-6deg) scal
     let r = null;
     if (!PREVIEW) { try { r = await getJSON(DATA); failed = false; } catch (e) { r = null; failed = true; } }
     if (r && typeof r === "object") R = r;
+    unpre();
     try { renderKols(); } catch (e) { console.warn("renderKols", e); }
     stamp();
     follow();
