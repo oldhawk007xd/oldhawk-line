@@ -149,6 +149,12 @@ Chains: `sol`, `bsc`, `base`, `eth`, `monad`, `hood`. Τα νούμερα (marke
 - `ohl-sponsor`: μία γραμμή χορηγού, `Όνομα | https://link | σύντομη φράση`. Φαίνεται κάτω από το «Today in numbers» με την ένδειξη Sponsor, ποτέ μέσα στα δεδομένα ή στα σήματα.
 - `ohl-cf-beacon`: το token του Cloudflare Web Analytics (δωρεάν, χωρίς cookies). *dash.cloudflare.com › Analytics & Logs › Web Analytics › Add a site*, και αντέγραψε το token από το snippet. Έτσι έχεις επισκέπτες και χώρες, που τα θέλει κάθε χορηγός.
 
+## Τι άλλαξε από χθες, αντίρρηση στο KOL Watch, email
+
+- **Από χθες:** κάτω από τον τίτλο η αρχική λέει τι άλλαξε από το χθεσινό κλείσιμο (Line, meme cap, runners, σήματα), από το `data/history.json`. Στο κινητό στέκεται μαζί με το «The rules say» πάνω από το ρολόι, ώστε η πρώτη οθόνη να λέει νούμερο, ζώνη, τι κάνω και τι άλλαξε.
+- **KOL Watch:** ανοίγει με τα μετρημένα calls και κλείνει με τη διαδικασία αντίρρησης («Named here? You can answer.»): 4 βήματα, μέσω X, απάντηση σε 7 μέρες. Το log των αιτημάτων γράφεται στο ίδιο τμήμα του `kols.html`.
+- **Email:** `theoldhawk007@gmail.com`, γραμμένο στο `index.html` σε δύο σημεία: κάτω από τα κουμπιά του «Don't sleep through sunrise» (τα δύο alerts και με mail) και στο footer ως επικοινωνία.
+
 ## Η μέτρηση μέσα στο HTML (prerender)
 
 Χωρίς JavaScript η σελίδα έδειχνε 0, «n/a» και «Loading the record». Έτσι τη διάβαζαν το Google, τα previews και οι AI βοηθοί. Τώρα σε κάθε update το `scripts/prerender.mjs` ανοίγει τις δύο σελίδες σε headless Chrome μέσα στο deploy, τις αφήνει να ζωγραφιστούν με τον δικό τους κώδικα και αντιγράφει το αποτέλεσμα στις ίδιες θέσεις του αρχείου: νούμερο, ζώνη, τι λένε οι κανόνες, τα νούμερα της ημέρας, οι σκάλες, οι 25 πρώτοι runners, τα trending, το playbook, τα σήματα, και στο KOL Watch η κλίμακα, οι κάρτες, τα calls και η μέθοδος. Η περιγραφή για τα shares ξεκινά με τη μέτρηση και την ώρα της.

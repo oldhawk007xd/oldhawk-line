@@ -27,7 +27,7 @@ export const stamp = (iso) => {
 export const PAGES = [
   {
     file: "index.html",
-    slots: ["h1", "explain", "rulesSay", "num", "zone", "stats", "runnersLead", "tiers", "legend", "listTable", "listCount", "trendList", "edge", "srcNote",
+    slots: ["h1", "explain", "sinceY", "rulesSay", "num", "zone", "stats", "runnersLead", "tiers", "legend", "listTable", "listCount", "trendList", "edge", "srcNote",
       "hoursGrid", "proofLead", "trioNow", "wkChg", "wkFromTop", "wkStreak", "wkStreakL", "chartCap", "signalsLead", "oneLine", "verdicts", "gauges", "kills", "sources"],
     ready: () => Boolean(document.querySelector("#listTable tr") && document.querySelector("#verdicts > *") && document.querySelector("#hoursGrid > *") && document.querySelector("#stats > *")),
     /* the places that say how long ago: the file says when instead */

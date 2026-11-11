@@ -198,6 +198,16 @@ section.band > .wrap { padding-block: 96px; }
 .explain { margin: 24px 0 0; font-size: 17px; line-height: 1.6; max-width: 54ch; text-wrap: pretty; }
 .rules-say { margin: 12px 0 0; font-size: 15.5px; color: var(--heroDim); max-width: 56ch; transition: color 1.2s ease; }
 .rules-say b { color: var(--heroInk); transition: color 1.2s ease; }
+/* what changed since yesterday's close: the Line, the meme cap, the runners, the signals */
+.since-y { margin: 12px 0 0; font-size: 15.5px; line-height: 1.5; color: var(--heroDim); max-width: 56ch; text-wrap: pretty; transition: color 1.2s ease, opacity .3s ease; }
+.since-y:empty { display: none; }
+/* it speaks of the live reading: on the other views of the dial it stays in place, so nothing moves, and steps back */
+.since-y.off { opacity: 0.45; }
+.since-y b { color: var(--heroInk); font-weight: 600; transition: color 1.2s ease; }
+.since-y .up { color: #3dffa0; }
+.since-y .dn { color: #ff7b93; }
+.hero.ink-day .since-y .up { color: #0a7a45; }
+.hero.ink-day .since-y .dn { color: #b3122f; }
 .cta-row { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 26px; }
 .hero .btn.ghostbtn { border-color: var(--heroInk); color: var(--heroInk); transition: color 1.2s ease, border-color 1.2s ease; }
 .btn.buy { border-color: var(--green); color: var(--green); background: rgba(3,14,8,0.86); }
@@ -471,6 +481,8 @@ figcaption { margin-top: 10px; font-size: 13px; color: var(--dim); }
 .wake-road { position: absolute; left: 50%; bottom: 2px; z-index: 1; width: 170px; height: 76px; margin-left: -85px; pointer-events: none; background: repeating-linear-gradient(180deg, rgba(255,214,140,0.6) 0 2px, rgba(255,214,140,0) 2px 8px); -webkit-mask-image: radial-gradient(50% 100% at 50% 0%, #000 8%, rgba(0,0,0,0) 100%); mask-image: radial-gradient(50% 100% at 50% 0%, #000 8%, rgba(0,0,0,0) 100%); }
 .wake-in { position: relative; z-index: 2; max-width: 780px; margin: 0 auto; padding-block: 120px 250px; padding-left: max(20px, env(safe-area-inset-left, 0px)); padding-right: max(20px, env(safe-area-inset-right, 0px)); display: flex; flex-direction: column; align-items: center; gap: 22px; text-align: center; }
 .wake-in h2 { margin: 0; font-size: clamp(44px, 6vw, 80px); line-height: 1; }
+.wake-mail { margin: 22px 0 0; text-align: center; font-size: 15px; color: var(--soft); }
+.wake-mail a { color: #fff; text-underline-offset: 3px; }
 .wake-line { position: absolute; z-index: 1; left: 0; right: 0; bottom: 80px; height: 2px; background: linear-gradient(90deg, rgba(20,241,149,0) 0%, var(--green) 20%, var(--green) 80%, rgba(20,241,149,0) 100%); box-shadow: 0 0 24px 2px rgba(20,241,149,0.5); }
 footer { position: relative; }
 footer .wrap { padding-block: 36px 40px; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(360px, 100%), 1fr)); gap: 24px 48px; font-size: 14px; color: var(--dim); }
@@ -678,8 +690,10 @@ section.band.numbers > .wrap { padding-block: 64px 84px; }
   .hero.has-lamps .sea-in > .lamps { order: 3; justify-self: stretch; margin-top: calc(var(--S1) / 2 + 30px); }
   .hero.has-lamps .explain { margin-top: 26px; }
   /* below the Line the text sits on the dark sea at every hour */
-  .hero .explain, .hero .rules-say b { color: #ededed; }
-  .hero .rules-say { color: #a3abc0; }
+  .hero .explain { color: #ededed; }
+  /* what the rules say and what changed stand right under the headline, above the dial, in the sky's own ink */
+  .rules-say { order: 2; margin-top: 14px; }
+  .since-y { order: 3; margin-top: 8px; }
   .hero .btn.ghostbtn { color: #ededed; border-color: rgba(237,237,237,0.7); }
   .scrim.dark { background: linear-gradient(180deg, rgba(4,6,20,0.58) 0%, rgba(4,6,20,0.5) 58%, rgba(4,6,20,0) 86%); }
   .scrim.light { background: linear-gradient(180deg, rgba(255,246,228,0.62) 0%, rgba(255,246,228,0.52) 58%, rgba(255,246,228,0) 86%); }
@@ -979,6 +993,15 @@ a.fomo:hover .fm { opacity: 0.18; transform: translateY(-50%) rotate(-6deg) scal
 .kback:hover { color: var(--ink); }
 .eyebrow { margin: 0 0 18px; color: var(--soft); font-size: 12.5px; font-weight: 600; line-height: 20px; letter-spacing: 0.16em; text-transform: uppercase; }
 .eyebrow::before { content: ""; display: inline-block; width: 14.625px; height: 13px; margin-right: 10px; vertical-align: -0.65px; background: var(--warn) center / contain no-repeat; }
+/* the right of reply: four steps, the same for every account */
+.reply-steps { list-style: none; counter-reset: rp; margin: 28px 0 0; padding: 0; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px; }
+.reply-steps li { counter-increment: rp; padding: 20px 20px 22px; border-radius: 18px; background: rgba(255,255,255,0.035); border: 1px solid rgba(255,255,255,0.1); font-size: 15px; line-height: 1.55; color: var(--soft); }
+.reply-steps li::before { content: "0" counter(rp); display: block; margin-bottom: 12px; font-family: var(--mono); font-size: 12.5px; letter-spacing: 0.14em; color: var(--amber); }
+.reply-steps b { display: block; margin-bottom: 6px; color: #fff; font-weight: 600; font-size: 16px; line-height: 1.35; }
+.reply-steps a { color: #fff; text-underline-offset: 3px; }
+.reply-foot { margin: 18px 0 0; font-size: 14px; color: var(--dim); }
+@media (max-width: 1000px) { .reply-steps { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 560px) { .reply-steps { grid-template-columns: 1fr; } }
 /* the risk scale: one line with a mark per score, the names in three lists under it */
 .rs { padding: 30px 34px 32px; }
 .rs-axis { position: relative; height: 116px; margin: 0 6px; }
@@ -1063,7 +1086,18 @@ a.fomo:hover .fm { opacity: 0.18; transform: translateY(-50%) rotate(-6deg) scal
   </div>
 </section>
 
-<section class="band glow" id="scale" aria-labelledby="scale-h">
+<section class="band glow" id="calls" aria-labelledby="calls-h">
+  <div class="wrap">
+    <div class="head-row">
+      <h2 class="serif" id="calls-h">Latest calls, measured.</h2>
+      <p class="lead">Every coin a tracked account names on X, by contract address or by the ticker of a runner, from the market cap when we first saw the post, followed for 31 days.</p>
+    </div>
+    <div class="tbox" id="kolCallsWrap"><table class="runs kc" id="kolCalls"></table></div>
+    <p class="empty" id="kolCallsEmpty" hidden></p>
+  </div>
+</section>
+
+<section class="band" id="scale" aria-labelledby="scale-h">
   <div class="wrap">
     <div class="head-row">
       <h2 class="serif" id="scale-h">The risk scale.</h2>
@@ -1092,17 +1126,6 @@ a.fomo:hover .fm { opacity: 0.18; transform: translateY(-50%) rotate(-6deg) scal
   </div>
 </section>
 
-<section class="band" id="calls" aria-labelledby="calls-h">
-  <div class="wrap">
-    <div class="head-row">
-      <h2 class="serif" id="calls-h">Latest calls, measured.</h2>
-      <p class="lead">Every coin a tracked account names on X, by contract address or by the ticker of a runner, from the market cap when we first saw the post, followed for 31 days.</p>
-    </div>
-    <div class="tbox" id="kolCallsWrap"><table class="runs kc" id="kolCalls"></table></div>
-    <p class="empty" id="kolCallsEmpty" hidden></p>
-  </div>
-</section>
-
 <section class="band glow" id="method" aria-labelledby="method-h">
   <div class="wrap">
     <div class="head-row">
@@ -1110,7 +1133,23 @@ a.fomo:hover .fm { opacity: 0.18; transform: translateY(-50%) rotate(-6deg) scal
       <p class="lead">One method for every account, published in full, so anyone can check a score against its sources.</p>
     </div>
     <div class="kmethod-open" id="kolMethodBody"></div>
-    <p class="srcnote" id="kolNote">A score describes the risk to buyers when an account promotes a coin, from what is documented. It is not a legal finding: allegations are marked as allegations and answers are quoted. Corrections with a source are welcome on X.</p>
+    <p class="srcnote" id="kolNote">A score describes the risk to buyers when an account promotes a coin, from what is documented. It is not a legal finding: allegations are marked as allegations and answers are quoted. Anyone named can answer: <a href="#reply">how a correction works</a>.</p>
+  </div>
+</section>
+
+<section class="band" id="reply" aria-labelledby="reply-h">
+  <div class="wrap">
+    <div class="head-row">
+      <h2 class="serif" id="reply-h">Named here? You can answer.</h2>
+      <p class="lead">One procedure for every account on this page, and it runs in public.</p>
+    </div>
+    <ol class="reply-steps">
+      <li><b>Send the correction with a source.</b>A post, a court filing or an on-chain link. Reply or send a message to <a href="https://x.com/oldhawksol" target="_blank" rel="noopener">@oldhawksol</a> on X.</li>
+      <li><b>You get an answer within 7 days.</b>The request and the answer are logged here with their dates.</li>
+      <li><b>A wrong record is corrected or removed.</b>The score is computed again the same day, by the same method.</li>
+      <li><b>If we disagree, your answer still goes on your card.</b>Quoted and linked, next to the incident it answers.</li>
+    </ol>
+    <p class="reply-foot">Log of requests: none yet.</p>
   </div>
 </section>
 
@@ -1139,10 +1178,11 @@ a.fomo:hover .fm { opacity: 0.18; transform: translateY(-50%) rotate(-6deg) scal
       <span class="rail-sun" aria-hidden="true"></span>
       <ol class="rail-list" id="railList">
         <li><a class="ri" href="#top"><i class="rd" aria-hidden="true"></i><span class="rl"><em>00</em>Overview</span></a></li>
-        <li><a class="ri" href="#scale"><i class="rd" aria-hidden="true"></i><span class="rl"><em>01</em>Scale</span></a></li>
-        <li><a class="ri" href="#accounts"><i class="rd" aria-hidden="true"></i><span class="rl"><em>02</em>Accounts</span></a></li>
-        <li><a class="ri" href="#calls"><i class="rd" aria-hidden="true"></i><span class="rl"><em>03</em>Calls</span></a></li>
+        <li><a class="ri" href="#calls"><i class="rd" aria-hidden="true"></i><span class="rl"><em>01</em>Calls</span></a></li>
+        <li><a class="ri" href="#scale"><i class="rd" aria-hidden="true"></i><span class="rl"><em>02</em>Scale</span></a></li>
+        <li><a class="ri" href="#accounts"><i class="rd" aria-hidden="true"></i><span class="rl"><em>03</em>Accounts</span></a></li>
         <li><a class="ri" href="#method"><i class="rd" aria-hidden="true"></i><span class="rl"><em>04</em>Method</span></a></li>
+        <li><a class="ri" href="#reply"><i class="rd" aria-hidden="true"></i><span class="rl"><em>05</em>Reply</span></a></li>
       </ol>
     </div>
     <div class="rail-x">

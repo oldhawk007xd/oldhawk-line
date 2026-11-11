@@ -198,6 +198,16 @@ section.band > .wrap { padding-block: 96px; }
 .explain { margin: 24px 0 0; font-size: 17px; line-height: 1.6; max-width: 54ch; text-wrap: pretty; }
 .rules-say { margin: 12px 0 0; font-size: 15.5px; color: var(--heroDim); max-width: 56ch; transition: color 1.2s ease; }
 .rules-say b { color: var(--heroInk); transition: color 1.2s ease; }
+/* what changed since yesterday's close: the Line, the meme cap, the runners, the signals */
+.since-y { margin: 12px 0 0; font-size: 15.5px; line-height: 1.5; color: var(--heroDim); max-width: 56ch; text-wrap: pretty; transition: color 1.2s ease, opacity .3s ease; }
+.since-y:empty { display: none; }
+/* it speaks of the live reading: on the other views of the dial it stays in place, so nothing moves, and steps back */
+.since-y.off { opacity: 0.45; }
+.since-y b { color: var(--heroInk); font-weight: 600; transition: color 1.2s ease; }
+.since-y .up { color: #3dffa0; }
+.since-y .dn { color: #ff7b93; }
+.hero.ink-day .since-y .up { color: #0a7a45; }
+.hero.ink-day .since-y .dn { color: #b3122f; }
 .cta-row { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 26px; }
 .hero .btn.ghostbtn { border-color: var(--heroInk); color: var(--heroInk); transition: color 1.2s ease, border-color 1.2s ease; }
 .btn.buy { border-color: var(--green); color: var(--green); background: rgba(3,14,8,0.86); }
@@ -471,6 +481,8 @@ figcaption { margin-top: 10px; font-size: 13px; color: var(--dim); }
 .wake-road { position: absolute; left: 50%; bottom: 2px; z-index: 1; width: 170px; height: 76px; margin-left: -85px; pointer-events: none; background: repeating-linear-gradient(180deg, rgba(255,214,140,0.6) 0 2px, rgba(255,214,140,0) 2px 8px); -webkit-mask-image: radial-gradient(50% 100% at 50% 0%, #000 8%, rgba(0,0,0,0) 100%); mask-image: radial-gradient(50% 100% at 50% 0%, #000 8%, rgba(0,0,0,0) 100%); }
 .wake-in { position: relative; z-index: 2; max-width: 780px; margin: 0 auto; padding-block: 120px 250px; padding-left: max(20px, env(safe-area-inset-left, 0px)); padding-right: max(20px, env(safe-area-inset-right, 0px)); display: flex; flex-direction: column; align-items: center; gap: 22px; text-align: center; }
 .wake-in h2 { margin: 0; font-size: clamp(44px, 6vw, 80px); line-height: 1; }
+.wake-mail { margin: 22px 0 0; text-align: center; font-size: 15px; color: var(--soft); }
+.wake-mail a { color: #fff; text-underline-offset: 3px; }
 .wake-line { position: absolute; z-index: 1; left: 0; right: 0; bottom: 80px; height: 2px; background: linear-gradient(90deg, rgba(20,241,149,0) 0%, var(--green) 20%, var(--green) 80%, rgba(20,241,149,0) 100%); box-shadow: 0 0 24px 2px rgba(20,241,149,0.5); }
 footer { position: relative; }
 footer .wrap { padding-block: 36px 40px; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(360px, 100%), 1fr)); gap: 24px 48px; font-size: 14px; color: var(--dim); }
@@ -678,8 +690,10 @@ section.band.numbers > .wrap { padding-block: 64px 84px; }
   .hero.has-lamps .sea-in > .lamps { order: 3; justify-self: stretch; margin-top: calc(var(--S1) / 2 + 30px); }
   .hero.has-lamps .explain { margin-top: 26px; }
   /* below the Line the text sits on the dark sea at every hour */
-  .hero .explain, .hero .rules-say b { color: #ededed; }
-  .hero .rules-say { color: #a3abc0; }
+  .hero .explain { color: #ededed; }
+  /* what the rules say and what changed stand right under the headline, above the dial, in the sky's own ink */
+  .rules-say { order: 2; margin-top: 14px; }
+  .since-y { order: 3; margin-top: 8px; }
   .hero .btn.ghostbtn { color: #ededed; border-color: rgba(237,237,237,0.7); }
   .scrim.dark { background: linear-gradient(180deg, rgba(4,6,20,0.58) 0%, rgba(4,6,20,0.5) 58%, rgba(4,6,20,0) 86%); }
   .scrim.light { background: linear-gradient(180deg, rgba(255,246,228,0.62) 0%, rgba(255,246,228,0.52) 58%, rgba(255,246,228,0) 86%); }
@@ -1019,6 +1033,7 @@ a.fomo:hover .fm { opacity: 0.18; transform: translateY(-50%) rotate(-6deg) scal
       <div class="since" id="since" hidden><span class="since-t" id="sinceT"></span><button type="button" class="since-more" id="sinceMore" aria-expanded="false" aria-controls="sinceList" hidden></button><ul class="since-list" id="sinceList" hidden></ul></div>
       <h1 id="h1">The sun has to cross the Line.</h1>
       <p class="explain" id="explain">0 is the January 2024 bottom, 100 the December 2024 top. Season starts when the sun crosses the Line at 45.</p>
+      <p class="since-y" id="sinceY"></p>
       <p class="rules-say" id="rulesSay"></p>
       <div class="cta-row">
         <a class="btn go" id="alertBtn" href="https://x.com/oldhawksol" target="_blank" rel="noopener">Follow for the sunrise alert</a>
@@ -1218,6 +1233,7 @@ a.fomo:hover .fm { opacity: 0.18; transform: translateY(-50%) rotate(-6deg) scal
       <a class="btn" id="shareBtn2" href="https://x.com/intent/post" target="_blank" rel="noopener">Share the sky</a>
       <button class="btn" type="button" data-donate aria-haspopup="dialog" aria-controls="donate">Donate</button>
     </div>
+    <p class="wake-mail">Prefer email? Write to <a href="mailto:theoldhawk007@gmail.com?subject=Sunrise%20alert">theoldhawk007@gmail.com</a> and the same two alerts come by mail.</p>
   </div>
   </div>
   <footer>
@@ -1229,7 +1245,7 @@ a.fomo:hover .fm { opacity: 0.18; transform: translateY(-50%) rotate(-6deg) scal
       <div>
         <div class="label">Read this first</div>
         <p>The Oldhawk Line is a rules-based research framework, published for education. It is not financial advice and not a recommendation to buy or sell any token. Memecoins can go to zero. The anchors come from one past cycle and the next one can behave differently.</p>
-        <p>Built and maintained by <a id="byLink" href="https://x.com/oldhawksol" target="_blank" rel="noopener">@oldhawksol</a>.</p>
+        <p>Built and maintained by <a id="byLink" href="https://x.com/oldhawksol" target="_blank" rel="noopener">@oldhawksol</a>. Contact: <a href="mailto:theoldhawk007@gmail.com">theoldhawk007@gmail.com</a>.</p>
         <p id="tradeNote" hidden>On-chain coin links open a trading terminal through a referral link that supports the site.</p>
         <p id="buyNote" hidden></p>
         <div class="sign">Receipts, not vibes.</div>
@@ -3266,6 +3282,7 @@ a.fomo:hover .fm { opacity: 0.18; transform: translateY(-50%) rotate(-6deg) scal
     const c = current();
     document.querySelectorAll(".toggle button").forEach((b) => b.setAttribute("aria-pressed", String(b.dataset.view === view)));
     $("backBtn").hidden = view !== "what";
+    $("sinceY").classList.toggle("off", view !== "now");
     let h1, explain, rules = "", sea, chip = null, numCls = "";
     if (view === "jan") {
       h1 = "Midnight, January 2024.";
@@ -4415,6 +4432,35 @@ a.fomo:hover .fm { opacity: 0.18; transform: translateY(-50%) rotate(-6deg) scal
   document.querySelectorAll(".chart-tabs button").forEach((b) => b.addEventListener("click", () => setChartTab(b.dataset.chart)));
   function renderWeekly() { renderWeekStats(); setChartTab(chartTab); }
 
+  /* ---------- what changed since yesterday's close, under what the rules say ---------- */
+  function renderSinceY() {
+    const el = $("sinceY");
+    if (!el) return;
+    el.innerHTML = "";
+    const c = current();
+    if (!c || isBlank() || !R.at) return;
+    const today = String(R.at).slice(0, 10);
+    const y = [...H].reverse().find((d) => d && d.d < today && typeof d.line === "number");
+    if (!y) return;
+    const step = (v) => (v > 0 ? `<span class="up">+${v}</span>` : v < 0 ? `<span class="dn">\u2212${Math.abs(v)}</span>` : "no change");
+    const parts = [`<b>Line ${c.line === y.line ? `unchanged at ${c.line}` : `${y.line} to ${c.line}`}</b>`];
+    const mc = R.market && typeof R.market.memeMC === "number" && R.market.memeMC > 0 ? R.market.memeMC / 1e9 : null;
+    if (mc != null && typeof y.mc === "number" && y.mc > 0) {
+      const d = (mc / y.mc - 1) * 100;
+      parts.push(`memes ${Math.abs(d) < 0.05 ? "flat" : `<span class="${d > 0 ? "up" : "dn"}">${d > 0 ? "+" : "\u2212"}${Math.abs(d).toFixed(1)}%</span>`}`);
+    }
+    const n = R.ladder && Array.isArray(R.ladder.counts) ? R.ladder.counts[0] : null;
+    if (n != null && Array.isArray(y.n) && typeof y.n[0] === "number") parts.push(`<b>${n}</b> runners (${step(n - y.n[0])})`);
+    /* below the Line the bottom signals matter, from the Line up the top triggers */
+    const low = c.line < (R.seasonLine || 45);
+    const bd = R.boards && (low ? R.boards.bottom : R.boards.top);
+    const was = low ? y.bottom : y.top;
+    const of = bd && Array.isArray(bd.items) ? bd.items.length : 0;
+    const on = bd ? (low ? bd.hits : bd.lit) : null;
+    if (typeof on === "number" && of) parts.push(`${low ? "bottom signals" : "top triggers"} <b>${on} of ${of}</b>${typeof was === "number" && on !== was ? ` (${step(on - was)})` : ""}`);
+    el.innerHTML = `Since yesterday's close: ${parts.join(", ")}.`;
+  }
+
   /* ---------- signals: what to do, why, and what would change it, in plain words ---------- */
   const PLAIN = {
     "1.1": "Memes' share of all crypto",
@@ -4690,7 +4736,7 @@ a.fomo:hover .fm { opacity: 0.18; transform: translateY(-50%) rotate(-6deg) scal
     People.start(R && !isBlank() && R.live && R.live.ws ? R.live.ws : "");
     $("notice").hidden = !(PREVIEW && isBlank());
     reserveHeights();
-    [renderNumbers, renderTicker, renderRunners, renderList, renderHours, renderProof, renderWeekly, renderSignals, renderFooter].forEach((fn) => { try { fn(); } catch (e) { console.warn(fn.name, e); } });
+    [renderNumbers, renderTicker, renderRunners, renderList, renderHours, renderProof, renderWeekly, renderSignals, renderSinceY, renderFooter].forEach((fn) => { try { fn(); } catch (e) { console.warn(fn.name, e); } });
     try { sky.setData(skyData()); if (!ambOn) skyStill(); } catch (e) { console.warn("sky", e); }
     try { renderSkyKey(); } catch (e) { console.warn("renderSkyKey", e); }
   }
