@@ -153,7 +153,7 @@ Chains: `sol`, `bsc`, `base`, `eth`, `monad`, `hood`. Τα νούμερα (marke
 
 - **Από χθες:** κάτω από τον τίτλο η αρχική λέει τι άλλαξε από το χθεσινό κλείσιμο (Line, meme cap, runners, σήματα), από το `data/history.json`. Στο κινητό στέκεται μαζί με το «The rules say» πάνω από το ρολόι, ώστε η πρώτη οθόνη να λέει νούμερο, ζώνη, τι κάνω και τι άλλαξε.
 - **KOL Watch:** ανοίγει με τα μετρημένα calls και κλείνει με τη διαδικασία αντίρρησης («Named here? You can answer.»): 4 βήματα, μέσω X, απάντηση σε 7 μέρες. Το log των αιτημάτων γράφεται στο ίδιο τμήμα του `kols.html`.
-- **Email:** `theoldhawk007@gmail.com`, γραμμένο στο `index.html` σε δύο σημεία: κάτω από τα κουμπιά του «Don't sleep through sunrise» (τα δύο alerts και με mail) και στο footer ως επικοινωνία.
+- **Email:** `theoldhawk007@gmail.com`, γραμμένο στο footer του `index.html` μόνο ως επικοινωνία. Alerts με mail δεν υπάρχουν.
 
 ## Η μέτρηση μέσα στο HTML (prerender)
 
