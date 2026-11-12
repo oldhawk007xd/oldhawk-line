@@ -35,8 +35,8 @@ const SKY = [
   [[0, "#ff4d5e"], [0.36, "#ff8a3d"], [0.70, "#ffb020"], [1, "#ffe3a3"]]
 ][tone];
 const ZONE_INK = ["#4fd1ff", "#4fd1ff", "#ffd27a", "#14F195", "#9cc8ff", "#ffb27a", "#ff9a8a"][tone];
-const H1 = ["It's midnight in memecoins.", "Still night in memecoins.", "Dawn is breaking in memecoins.", "The sun is on the Line.", "Morning in memecoins.", "Late morning in memecoins.", "High noon in memecoins."];
-const headline = tone === 3 && r.season && r.season.on ? "Sunrise. The season is on." : H1[tone];
+const H1 = ["Late evening in memecoins.", "Midnight in memecoins.", "The small hours in memecoins.", "First light on the Line.", "Before dawn in memecoins.", "Blue hour in memecoins.", "Dawn in memecoins."];
+const headline = tone === 3 && r.season && r.season.on ? "First light. The season is on." : H1[tone];
 
 const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", "\"": "&quot;" }[c]));
 const usd = (n) => (n >= 1e12 ? `$${(n / 1e12).toFixed(2)}T` : n >= 1e9 ? `$${(n / 1e9).toFixed(1)}B` : `$${Math.round(n / 1e6)}M`);
@@ -82,7 +82,7 @@ ${sunY < HZ + 40 ? `<rect x="${sunX - 85}" y="${HZ + 2}" width="170" height="160
 <text x="${zx}" y="272" font-family="IBM Plex Sans" font-size="21" letter-spacing="3" fill="#ededed">${esc(z.name.toUpperCase())}</text>
 <text x="${zx}" y="318" font-family="IBM Plex Mono" font-weight="500" font-size="26" fill="#c9cfdc">/ 100</text>
 <text x="72" y="396" font-family="IBM Plex Sans" font-weight="600" font-size="52" letter-spacing="-1" fill="#ffffff">${esc(headline)}</text>
-<text x="72" y="488" font-family="IBM Plex Sans" font-size="23" fill="#c9cfdc">Season starts when the sun crosses the Line at 45.</text>
+<text x="72" y="488" font-family="IBM Plex Sans" font-size="23" fill="#c9cfdc">Season starts when the reading crosses the Line at 45.</text>
 ${stats ? `<text x="72" y="528" font-family="IBM Plex Sans" font-size="23" fill="#ededed">${stats}</text>` : ""}
 <text x="72" y="594" font-family="IBM Plex Sans" font-size="18" fill="#a3abc0">${esc(stamp)}</text>
 <text x="1128" y="594" text-anchor="end" font-family="IBM Plex Sans" font-size="18" fill="#a3abc0">${[host, "@oldhawksol"].filter(Boolean).map((x, i) => (i ? `<tspan dx="26">${esc(x)}</tspan>` : esc(x))).join("")}</text>

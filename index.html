@@ -5,8 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Oldhawk Line</title>
 <meta name="claude:viewport-fit-sides" content="cover">
-<meta name="description" content="Oldhawk Line: the memecoin cycle as a sky. 0 is the January 2024 bottom, 100 the December 2024 top. Season starts when the sun crosses the Line. Live every 30 minutes, every memecoin from $10M up.">
-<meta property="og:title" content="Oldhawk Line: is it midnight or noon in memecoins?">
+<meta name="description" content="Oldhawk Line: the memecoin cycle as one night sky. 0 is the January 2024 bottom, 100 the December 2024 top. Season starts when the reading crosses the Line at 45. Live every 30 minutes, every memecoin from $10M up as a star.">
+<meta property="og:title" content="Oldhawk Line: what time is it in memecoins?">
 <meta property="og:description" content="A live, rules-based memecoin cycle index. When to buy, when to sell, and every runner from $10M up.">
 <meta property="og:type" content="website">
 <meta property="og:image" content="og.jpg">
@@ -15,8 +15,8 @@
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="og.jpg">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%2305060d'/%3E%3Ccircle cx='32' cy='39' r='16' fill='%23ffb020'/%3E%3Crect y='39' width='64' height='25' fill='%2305060d'/%3E%3Crect x='5' y='37.5' width='54' height='3.5' rx='1.75' fill='%2314F195'/%3E%3C/svg%3E">
-<meta name="theme-color" content="#05060d">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23060a16'/%3E%3Cg stroke-linecap='round' stroke-width='3'%3E%3Cpath d='M17 22v24' stroke='%23ff5c7a'/%3E%3Cpath d='M32 15v32' stroke='%2314F195'/%3E%3Cpath d='M47 8v30' stroke='%2314F195'/%3E%3C/g%3E%3Crect x='11.5' y='28' width='11' height='12' rx='2.5' fill='%23ff5c7a'/%3E%3Crect x='26.5' y='22' width='11' height='18' rx='2.5' fill='%2314F195'/%3E%3Crect x='41.5' y='12' width='11' height='20' rx='2.5' fill='%2314F195'/%3E%3Cpath d='M9 54h46' stroke='%2314F195' stroke-opacity='.55' stroke-width='2.5' stroke-linecap='round'/%3E%3C/svg%3E">
+<meta name="theme-color" content="#060a16">
 <meta name="color-scheme" content="dark">
 
 <!-- Settings: edit these lines only -->
@@ -793,6 +793,87 @@ a.fomo:hover .fm { opacity: 0.18; transform: translateY(-50%) rotate(-6deg) scal
 .rail .rxm { width: 12px; height: 7.6px; fill: #eaedff; filter: drop-shadow(0 0 5px rgba(140,130,255,0.7)); }
 .rail .rx-buy .fw { width: 40px; height: 12.8px; margin-left: 7px; vertical-align: -2px; fill: currentColor; }
 
+/* ---------- the night hero: a real sky drawn live, every memecoin above $10M a star ----------
+   The cycle is one night: 22:00 at the bottom of the last cycle, 06:30 and dawn at its top. The sky and the
+   sea are computed in the browser (#skyGL); the old painted scene and the dial stay in the file, hidden and idle. */
+.hero.nt { --hz: 560px; --lx: 62%; --heroDim: #c6ccdb; min-height: 100svh; }
+.hero.nt .fx > :not(.skygl):not(.nline) { display: none; }
+.hero.nt .fx { background: linear-gradient(180deg, #04060e 0, #0a1124 calc(var(--hz) - 1px), #101a33 var(--hz), #050912 calc(var(--hz) + 2px), #03060c 100%); }
+.skygl { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+.hero.nt .fx::after { content: ""; position: absolute; inset: 0; background: linear-gradient(90deg, rgba(3,5,12,0.46) 0, rgba(3,5,12,0.16) 40%, rgba(3,5,12,0) 60%), linear-gradient(180deg, rgba(3,5,12,0) calc(var(--hz) + 18px), rgba(3,5,12,0.72) calc(var(--hz) + 120px), rgba(3,5,12,0.84) 100%); }
+/* toward dawn the sky lightens: the side of the words darkens with it and the soft ink brightens */
+.hero.nt.late { --heroDim: #e4e8f3; }
+.hero.nt.late .fx::after { background: linear-gradient(90deg, rgba(3,5,12,0.7) 0, rgba(3,5,12,0.56) 36%, rgba(3,5,12,0) 64%), linear-gradient(180deg, rgba(3,5,12,0) calc(var(--hz) + 18px), rgba(3,5,12,0.78) calc(var(--hz) + 120px), rgba(3,5,12,0.88) 100%); }
+.hero.nt .toggle-note { color: #c9cfdd; }
+.nline { position: absolute; left: 0; right: 0; top: var(--hz); height: 1px; z-index: 1; background: linear-gradient(90deg, rgba(20,241,149,0) 0, rgba(20,241,149,0.9) 12%, rgba(20,241,149,0.9) 88%, rgba(20,241,149,0) 100%); box-shadow: 0 0 14px rgba(20,241,149,0.55); }
+.nline i { position: absolute; top: 0; left: var(--lx); transform: translate(-50%, -50%); padding: 0 12px; font: 600 11px/24px var(--text); font-style: normal; letter-spacing: 0.16em; text-transform: uppercase; white-space: nowrap; color: #06130d; background: var(--green); border-radius: 999px; }
+.hero.nt .dialcol, .hero.nt .lamps, .hero.nt #seastats, .hero.nt .skykey, .hero.nt .skytip { display: none !important; }
+.hero.nt .hero-grid { grid-template-rows: auto minmax(150px, auto); }
+.hero.nt .hero-in { padding-bottom: 8px; }
+.reading { display: flex; align-items: flex-end; gap: 18px; margin-top: 16px; max-width: 470px; }
+.hero.nt .dread { position: static; transform: none; flex-direction: row; align-items: flex-end; gap: 14px; text-align: left; }
+.hero.nt .dread .num { font-family: var(--text); font-weight: 600; font-size: clamp(66px, 7.4vw, 98px); line-height: 0.84; letter-spacing: -0.03em; }
+.hero.nt .dread .of { flex-direction: column; align-items: flex-start; gap: 9px; padding: 0 0 7px; background: none; border-radius: 0; }
+.hero.nt .dread .of span:first-child { font-size: 12px; }
+.hclock { margin-left: auto; padding-bottom: 6px; text-align: right; }
+.hclock span { display: block; font: 600 10.5px/1 var(--text); letter-spacing: 0.18em; text-transform: uppercase; color: var(--heroDim); }
+.hclock b { display: block; margin-top: 8px; font: 500 26px/1 var(--mono); letter-spacing: 0.02em; font-variant-numeric: tabular-nums; }
+.hero.nt h1 { margin-top: 24px; font-size: clamp(34px, 3.7vw, 50px); }
+.hero.nt .explain { max-width: 470px; }
+.lstrip { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px; max-width: 470px; margin-top: 24px; padding: 14px 20px 13px; border-radius: 18px; background: rgba(6,9,20,0.58); border: 1px solid rgba(255,255,255,0.13); -webkit-backdrop-filter: blur(14px); backdrop-filter: blur(14px); }
+.lstrip:empty { display: none; }
+.lstrip span { display: block; white-space: nowrap; font: 600 9.5px/1.25 var(--text); letter-spacing: 0.1em; text-transform: uppercase; color: #aab2c5; }
+.lstrip b { display: block; margin-top: 8px; font: 500 22px/1 var(--mono); font-variant-numeric: tabular-nums; color: #f1f3f8; }
+.starmap { position: relative; z-index: 1; grid-column: 2; grid-row: 1; align-self: start; min-width: 0; height: clamp(300px, 46vh, 440px); margin-top: 26px; }
+.sm-stars { position: absolute; inset: 0; }
+.sm-cap { position: absolute; left: 0; right: 0; top: -26px; margin: 0; font-size: 12px; line-height: 1.45; color: rgba(255,255,255,0.66); }
+.starmap.empty .sm-cap { display: none; }
+.sm-alt { position: absolute; left: 0; right: 0; height: 1px; background: linear-gradient(90deg, rgba(255,255,255,0) 0, rgba(255,255,255,0.10) 30%, rgba(255,255,255,0.16) 100%); }
+.sm-alt span { position: absolute; right: 0; top: -17px; font: 500 10.5px/1 var(--mono); letter-spacing: 0.08em; color: rgba(255,255,255,0.55); }
+.sm-star { position: absolute; width: var(--s); height: var(--s); margin: calc(var(--s) / -2) 0 0 calc(var(--s) / -2); border-radius: 50%; background: var(--c); box-shadow: 0 0 calc(var(--s) * 2.2) calc(var(--s) * 0.5) var(--g1), 0 0 calc(var(--s) * 7) var(--s) var(--g2); cursor: pointer; }
+.sm-star::after { content: ""; position: absolute; inset: -11px; border-radius: 50%; }
+.sm-star.on { outline: 1px solid rgba(255,255,255,0.9); outline-offset: 5px; }
+.sm-star.new::before { content: ""; position: absolute; inset: -7px; border-radius: 50%; border: 1px solid rgba(20,241,149,0.85); }
+.sm-lab { position: absolute; transform: translate(10px, -50%); font: 500 11px/1 var(--mono); color: rgba(255,255,255,0.8); white-space: nowrap; text-shadow: 0 1px 8px #000; pointer-events: none; }
+.sm-lab.l { transform: translate(calc(-100% - 10px), -50%); }
+.sm-lab span { color: rgba(255,255,255,0.5); }
+.smcard { position: absolute; z-index: 3; width: 232px; padding: 14px 16px 6px; border-radius: 16px; background: rgba(6,9,20,0.86); border: 1px solid rgba(255,255,255,0.15); -webkit-backdrop-filter: blur(14px); backdrop-filter: blur(14px); box-shadow: 0 20px 60px rgba(0,0,0,0.45); pointer-events: none; }
+.smcard .k { font: 600 10.5px/1 var(--text); letter-spacing: 0.18em; text-transform: uppercase; color: #aab2c5; }
+.smcard .n { margin: 8px 0 10px; font-size: 19px; font-weight: 600; letter-spacing: -0.01em; color: #fff; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.smcard .r { display: flex; justify-content: space-between; gap: 14px; padding: 8px 0; border-top: 1px solid rgba(255,255,255,0.09); font-size: 13.5px; color: #aab2c5; }
+.smcard .r b { font: 500 13px/1.4 var(--mono); color: #f1f3f8; }
+.smcard .r b.up { color: #3dffa0; } .smcard .r b.dn { color: #ff7b93; }
+@media (prefers-reduced-motion: no-preference) {
+  .sm-star.new::before { animation: smNew 2.6s ease-out infinite; }
+  @keyframes smNew { 0% { transform: scale(0.6); opacity: 0.9; } 100% { transform: scale(2.1); opacity: 0; } }
+}
+@media (max-width: 1079px) {
+  .hero.nt .hero-grid { grid-template-rows: none; }
+  .hero.nt .reading { order: 2; max-width: 640px; }
+  .hero.nt .starmap { order: 3; grid-column: 1; grid-row: auto; height: 250px; margin-top: 46px; }
+  .hero.nt .explain { margin-top: 86px; }
+  .hero.nt .lstrip { order: 5; max-width: 640px; margin-top: 18px; }
+  /* the words under the horizon stand on the water: the sea darkens below its first band of light */
+  .hero.nt .fx::after { background: linear-gradient(180deg, rgba(3,5,12,0.5) 0, rgba(3,5,12,0.42) 380px, rgba(3,5,12,0) 540px), linear-gradient(180deg, rgba(3,5,12,0) calc(var(--hz) + 12px), rgba(3,5,12,0.78) calc(var(--hz) + 74px), rgba(3,5,12,0.86) 100%); }
+  .hero.nt.late .fx::after { background: linear-gradient(180deg, rgba(3,5,12,0.66) 0, rgba(3,5,12,0.56) 330px, rgba(3,5,12,0) 520px), linear-gradient(180deg, rgba(3,5,12,0) calc(var(--hz) + 12px), rgba(3,5,12,0.8) calc(var(--hz) + 74px), rgba(3,5,12,0.88) 100%); }
+}
+@media (max-width: 480px) {
+  .hero.nt h1 { font-size: 31px; }
+  .lstrip span { font-size: 8.5px; letter-spacing: 0.06em; }
+  .hclock b { font-size: 22px; }
+  .lstrip { gap: 10px; padding: 12px 14px 11px; }
+  .lstrip b { font-size: 19px; }
+  .hero.nt .starmap { height: 230px; }
+}
+/* ---------- the Playbook: try any reading ---------- */
+.tryit { margin: 0 0 22px; padding: 18px 22px 16px; border-radius: 18px; background: rgba(255,255,255,0.035); border: 1px solid rgba(255,255,255,0.1); }
+.try-k { display: block; font: 600 11px/1 var(--text); letter-spacing: 0.18em; text-transform: uppercase; color: var(--soft); }
+.tryit input[type="range"] { display: block; width: 100%; height: 30px; margin: 8px 0 4px; accent-color: var(--green); cursor: pointer; }
+.try-out { margin: 0; min-height: 3em; font-size: 15.5px; line-height: 1.5; color: var(--soft); }
+.try-out b { color: #fff; font-weight: 600; }
+.hour.try { outline: 2px solid var(--green); outline-offset: 2px; }
+.hour .mini .s { display: none; }
+
 /* ---------- the header bar: every part of the page in one capsule, on one line of type ----------
    Every item is a segment of the same height, type and padding, with a thin divider between two segments.
    The line height is the segment height, so every word stands on one baseline. The fomo wordmark stands on it
@@ -983,8 +1064,10 @@ a.fomo:hover .fm { opacity: 0.18; transform: translateY(-50%) rotate(-6deg) scal
 <div class="notice" id="notice" hidden><div class="wrap"><b>Preview</b><span>This copy has no data connection, so it shows the method without numbers. The live site reads real numbers every 30 minutes.</span></div></div>
 
 <main>
-<section class="hero" id="top" aria-label="The reading">
+<section class="hero nt" id="top" aria-label="The reading">
   <div class="fx" aria-hidden="true">
+    <canvas class="skygl" id="skyGL"></canvas>
+    <div class="nline" id="nline"><i>The Line 45</i></div>
     <div class="skyl" style="background:linear-gradient(180deg, #010208 0%, #050816 42%, #0c1233 74%, #1a2350 100%)"></div>
     <div class="skyl" style="opacity:0;background:linear-gradient(180deg, #02040f 0%, #081032 45%, #16205a 78%, #26306b 100%)"></div>
     <div class="skyl" style="opacity:0;background:linear-gradient(180deg, #0b1236 0%, #2c2a6b 45%, #7a4a8c 75%, #c9707a 100%)"></div>
@@ -1029,15 +1112,26 @@ a.fomo:hover .fm { opacity: 0.18; transform: translateY(-50%) rotate(-6deg) scal
     <div class="hero-in" id="heroIn">
       <div class="live" id="live"><span class="dot late" id="liveDot"></span><span id="liveText">Loading the reading</span><span class="nextin" id="nextIn" hidden></span><span class="watching" id="watching" hidden><i aria-hidden="true"></i><span id="watchingN"></span></span><button type="button" class="back" id="backBtn" aria-label="Back to today's reading" hidden>Today</button></div>
       <div class="since" id="since" hidden><span class="since-t" id="sinceT"></span><button type="button" class="since-more" id="sinceMore" aria-expanded="false" aria-controls="sinceList" hidden></button><ul class="since-list" id="sinceList" hidden></ul></div>
-      <h1 id="h1">The sun has to cross the Line.</h1>
-      <p class="explain" id="explain">0 is the January 2024 bottom, 100 the December 2024 top. Season starts when the sun crosses the Line at 45.</p>
+      <div class="reading" id="reading">
+        <div class="dread" id="dread"><div class="num" id="num">0</div><div class="of"><span>/100</span><span class="zone" id="zone">Deep Winter</span></div></div>
+        <div class="hclock"><span>The hour of the sky</span><b id="clock">22:00</b></div>
+      </div>
+      <script data-dial>/* The published file carries the last reading in these places for readers without JavaScript (scripts/prerender.mjs). With JavaScript the night starts at 22:00, and the reading brings the hour. */(function () { var n = document.getElementById("num"), z = document.getElementById("zone"), c = document.getElementById("clock"); if (n) n.textContent = "0"; if (z) z.textContent = "Deep Winter"; if (c) c.textContent = "22:00"; })();</script>
+      <h1 id="h1">The season starts at the Line.</h1>
+      <p class="explain" id="explain">0 is the January 2024 bottom, 100 the December 2024 top. Season starts when the reading crosses the Line at 45.</p>
       <p class="since-y" id="sinceY"></p>
       <p class="rules-say" id="rulesSay"></p>
+      <div class="lstrip" id="lstrip"></div>
       <div class="cta-row">
-        <a class="btn go" id="alertBtn" href="https://x.com/oldhawksol" target="_blank" rel="noopener">Follow for the sunrise alert</a>
+        <a class="btn go" id="alertBtn" href="https://x.com/oldhawksol" target="_blank" rel="noopener">Follow for the first light alert</a>
         <a class="btn buy" data-buy href="#" target="_blank" rel="noopener sponsored" hidden>Buy on Fomo</a>
         <a class="btn ghostbtn" id="shareBtn" href="https://x.com/intent/post" target="_blank" rel="noopener">Share the sky</a>
       </div>
+    </div>
+    <div class="starmap" id="starmap" role="img" aria-label="Every memecoin above $10M drawn as a star: the higher it sits, the bigger it is. The same coins are listed in the table below.">
+      <p class="sm-cap">Every star is a memecoin above $10M. The higher it sits, the bigger it is.</p>
+      <div class="sm-stars" id="smStars"></div>
+      <div class="smcard" id="smCard" hidden></div>
     </div>
     <div class="dialcol" id="dialcol">
       <div class="dial" id="dial">
@@ -1074,8 +1168,6 @@ a.fomo:hover .fm { opacity: 0.18; transform: translateY(-50%) rotate(-6deg) scal
           <path class="togo" id="togo" d=""></path>
           <circle class="xpt" id="xpt" cx="60" cy="300" r="4.5"></circle>
         </svg>
-        <div class="dread" id="dread"><div class="num" id="num">0</div><div class="of"><span>/100</span><span class="zone" id="zone">Deep Winter</span></div></div>
-        <script data-dial>/* The published file carries the last reading in these two places for readers without JavaScript (scripts/prerender.mjs). With JavaScript the dial waits at midnight, and the sun brings the live number. */(function () { var n = document.getElementById("num"), z = document.getElementById("zone"); if (n) n.textContent = "0"; if (z) z.textContent = "Deep Winter"; })();</script>
         <div class="dlab line" id="labLine" data-x="300" data-dy="24" data-p="0">The Line<i class="sep"></i>45</div>
         <div class="dlab tag" id="labNoon" data-x="300" data-y="26" data-p="1">Noon<i class="sep"></i>100</div>
         <div class="dlab tag under" id="labMid" data-x="300" data-y="576" data-p="2">Midnight<i class="sep"></i>0</div>
@@ -1093,7 +1185,7 @@ a.fomo:hover .fm { opacity: 0.18; transform: translateY(-50%) rotate(-6deg) scal
         <button type="button" data-view="dec" aria-pressed="false">Dec 2024</button>
         <button type="button" data-view="now" aria-pressed="true">Today</button>
       </div>
-      <div class="toggle-note">0 and 100 are fixed to the last cycle's bottom and top. Drag the sun to see any hour.</div>
+      <div class="toggle-note">0 and 100 are fixed to the last cycle's bottom and top. Try any reading in the <a href="#hours">Playbook</a>.</div>
       <a class="scrollcue" href="#runners">Every runner from $10M <span class="arr" aria-hidden="true">↓</span></a>
     </div>
   </div>
@@ -1156,7 +1248,12 @@ a.fomo:hover .fm { opacity: 0.18; transform: translateY(-50%) rotate(-6deg) scal
   <div class="wrap">
     <div class="head-row">
       <h2 class="serif" id="hours-h">What to do at each hour.</h2>
-      <p class="lead">Seven hours, seven zones, one rule each. Buy in the dark, hold at dawn, sell into the light. Act on the daily close at 00:00 UTC, not on a feeling.</p>
+      <p class="lead">Seven hours, seven zones, one rule each. Buy in the dark, hold at first light, sell into the dawn. Act on the daily close at 00:00 UTC, not on a feeling.</p>
+    </div>
+    <div class="tryit" id="tryit">
+      <label class="try-k" for="tryR">Drag to any reading</label>
+      <input type="range" id="tryR" min="0" max="100" step="1" value="0" aria-describedby="tryOut">
+      <p class="try-out" id="tryOut" aria-live="polite"></p>
     </div>
     <div class="hours" id="hoursGrid"></div>
   </div>
@@ -1166,11 +1263,11 @@ a.fomo:hover .fm { opacity: 0.18; transform: translateY(-50%) rotate(-6deg) scal
   <div class="wrap">
     <div class="proof">
       <div class="txt">
-        <h2 class="serif" id="proof-h">The last day took eleven months.</h2>
+        <h2 class="serif" id="proof-h">The last night took eleven months.</h2>
         <p class="lead" id="proofLead">On the Line, 0 is January 22, 2024 and 100 is December 9, 2024. In between, memes went from $20.0B to $150.6B.</p>
         <div class="trio">
           <div><b data-cv="7.53" data-cf="x1">7.5x</b><span>bottom to top</span></div>
-          <div><b data-cv="11" data-cf="int">11</b><span>months, midnight to noon</span></div>
+          <div><b data-cv="11" data-cf="int">11</b><span>months, 22:00 to dawn</span></div>
           <div><b id="trioNow" style="color: var(--green)">n/a</b><span>today's Line</span></div>
         </div>
         <div class="trio wk" id="trioWeek" hidden>
@@ -1199,7 +1296,7 @@ a.fomo:hover .fm { opacity: 0.18; transform: translateY(-50%) rotate(-6deg) scal
 <section class="band glow" id="signals" aria-labelledby="signals-h">
   <div class="wrap">
     <div class="head-row">
-      <h2 class="serif" id="signals-h">Why the sun is here.</h2>
+      <h2 class="serif" id="signals-h">Why the reading is here.</h2>
       <p class="lead" id="signalsLead"></p>
     </div>
     <p class="oneline" id="oneLine" hidden></p>
@@ -1224,10 +1321,10 @@ a.fomo:hover .fm { opacity: 0.18; transform: translateY(-50%) rotate(-6deg) scal
   <div class="wake-line" aria-hidden="true"></div>
   <div class="wake-road" aria-hidden="true"></div>
   <div class="wake-in">
-    <h2 class="serif" id="wake-h">Don't sleep through sunrise.</h2>
-    <p class="lead" style="text-align:center">The last season paid 7.5x from midnight to noon. One alert the moment the sun crosses the Line, one when the top triggers fire. Nothing else.</p>
+    <h2 class="serif" id="wake-h">Don't sleep through first light.</h2>
+    <p class="lead" style="text-align:center">The last season paid 7.5x from 22:00 to dawn. One alert the moment the reading crosses the Line, one when the top triggers fire. Nothing else.</p>
     <div class="cta-row" style="justify-content:center;margin-top:6px">
-      <a class="btn go" id="alertBtn2" href="https://x.com/oldhawksol" target="_blank" rel="noopener">Follow for the sunrise alert</a>
+      <a class="btn go" id="alertBtn2" href="https://x.com/oldhawksol" target="_blank" rel="noopener">Follow for the first light alert</a>
       <a class="btn" id="shareBtn2" href="https://x.com/intent/post" target="_blank" rel="noopener">Share the sky</a>
       <button class="btn" type="button" data-donate aria-haspopup="dialog" aria-controls="donate">Donate</button>
     </div>
@@ -1373,16 +1470,216 @@ a.fomo:hover .fm { opacity: 0.18; transform: translateY(-50%) rotate(-6deg) scal
 
   /* The method's seven hours. The data files carry the same list; this copy only covers a missing file. */
   const ZONES0 = [
-    { from: 0, to: 15, name: "Deep Winter", hour: "Midnight", spot: "Weekly DCA, 1/12 of target, blue-chip memes only" },
-    { from: 15, to: 30, name: "Winter", hour: "Night", spot: "Weekly DCA at half pace, 1/24 of target" },
-    { from: 30, to: 45, name: "Thaw", hour: "Dawn", spot: "Hold. New buys only with 3 of 6 season confirmations" },
-    { from: 45, to: 60, name: "Season On", hour: "Sunrise", spot: "Hold. No adding above 55" },
-    { from: 60, to: 75, name: "Greed", hour: "Morning", spot: "Sell 20% at 60 and 20% at 70" },
-    { from: 75, to: 90, name: "Extreme Greed", hour: "Late morning", spot: "Sell 20% at 80 and 20% at 85" },
-    { from: 90, to: 100, name: "Ultra Greed", hour: "Noon", spot: "Sell 10% at 90, keep a 10% moonbag" }
+    { from: 0, to: 15, name: "Deep Winter", hour: "Late evening", spot: "Weekly DCA, 1/12 of target, blue-chip memes only" },
+    { from: 15, to: 30, name: "Winter", hour: "Midnight", spot: "Weekly DCA at half pace, 1/24 of target" },
+    { from: 30, to: 45, name: "Thaw", hour: "Small hours", spot: "Hold. New buys only with 3 of 6 season confirmations" },
+    { from: 45, to: 60, name: "Season On", hour: "First light", spot: "Hold. No adding above 55" },
+    { from: 60, to: 75, name: "Greed", hour: "Before dawn", spot: "Sell 20% at 60 and 20% at 70" },
+    { from: 75, to: 90, name: "Extreme Greed", hour: "Blue hour", spot: "Sell 20% at 80 and 20% at 85" },
+    { from: 90, to: 100, name: "Ultra Greed", hour: "Dawn", spot: "Sell 10% at 90, keep a 10% moonbag" }
   ];
-  const H1 = ["It's midnight in memecoins.", "Still night in memecoins.", "Dawn is breaking in memecoins.", "The sun is on the Line.", "Morning in memecoins.", "Late morning in memecoins.", "High noon in memecoins."];
-  const THESIS = "The sun has to cross the Line.";
+  const H1 = ["Late evening in memecoins.", "Midnight in memecoins.", "The small hours in memecoins.", "First light on the Line.", "Before dawn in memecoins.", "Blue hour in memecoins.", "Dawn in memecoins."];
+  const THESIS = "The season starts at the Line.";
+
+  /* ---------- the night hero ----------
+     The cycle is one night: 22:00 at the bottom of the last cycle (Line 0), 06:30 and dawn at its top (Line 100).
+     NightSky draws the sky and the sea in WebGL from that hour; without WebGL the hero keeps a plain night gradient. */
+  const NIGHT = true;
+  const clockOf = (L) => { const m = 22 * 60 + Math.max(0, Math.min(100, L)) * 5.1; return `${String(Math.floor(m / 60) % 24).padStart(2, "0")}:${String(Math.floor(m % 60)).padStart(2, "0")}`; };
+  const NightSky = (() => {
+    const FS = `precision highp float;
+uniform float uZoom;
+uniform vec2 uRes; uniform float uTime, uHoriz, uAz, uStars, uClouds, uSea;
+const float FOCAL = 1.2;
+uniform vec3 uMoon; uniform float uElev, uMoonK;
+float hash(vec2 p) { vec3 q = fract(vec3(p.xyx) * 0.1031); q += dot(q, q.yzx + 33.33); return fract((q.x + q.y) * q.z); }
+float noise(vec2 p) { vec2 i = floor(p), f = fract(p); vec2 u = f * f * (3.0 - 2.0 * f);
+  return mix(mix(hash(i), hash(i + vec2(1.0, 0.0)), u.x), mix(hash(i + vec2(0.0, 1.0)), hash(i + vec2(1.0, 1.0)), u.x), u.y); }
+float fbm(vec2 p) { float a = 0.5, s = 0.0; for (int i = 0; i < 5; i++) { s += a * noise(p); p = p * 2.02 + vec2(13.1, 7.7); a *= 0.5; } return s; }
+
+vec3 skyCol(vec3 rd, vec3 sun, float day, float twi) {
+  float h = clamp(rd.y, 0.0, 1.0);
+  float k = pow(1.0 - h, 3.2);
+  float dz = smoothstep(0.0, 0.26, sun.y), dh = smoothstep(-0.03, 0.20, sun.y);
+  vec3 col = mix(mix(vec3(0.0030, 0.0055, 0.0170), vec3(0.050, 0.180, 0.540), dz), mix(vec3(0.0085, 0.0170, 0.0420), vec3(0.430, 0.630, 0.880), dh), k);
+  vec2 a = normalize(rd.xz + vec2(0.0, 1e-5)), b = normalize(sun.xz);
+  float toward = pow(max(dot(a, b), 0.0), 2.0);
+  float band = exp(-h * 9.0);
+  float bh = smoothstep(-0.34, -0.10, sun.y) * (1.0 - smoothstep(-0.02, 0.18, sun.y)), up = smoothstep(-0.15, 0.0, sun.y);
+  col += vec3(0.012, 0.034, 0.090) * bh * (0.55 + 0.45 * k);
+  col += twi * (vec3(1.00, 0.34, 0.07) * band * (0.22 + 1.3 * toward) * (0.4 + 0.6 * up) + vec3(0.95, 0.42, 0.33) * exp(-h * 3.4) * 0.15 * (0.35 + toward) * (0.15 + 0.85 * up));
+  col = mix(col, col * vec3(0.52, 0.60, 0.92), twi * (1.0 - band) * 0.35);
+  float mu = max(dot(rd, sun), 0.0);
+  float vis = smoothstep(-0.05, 0.02, sun.y);
+  col += vec3(1.0, 0.70, 0.40) * pow(mu, 10.0) * 0.30 * (twi + day * 0.55) + vec3(1.0, 0.62, 0.28) * pow(mu, 34.0) * 0.55 * twi * vis + vec3(1.0, 0.86, 0.62) * pow(mu, 160.0) * 0.9 * vis;
+  return col;
+}
+float starLayer(vec3 rd, float scale, float thr, float rad) {
+  vec2 p = vec2(atan(rd.x, rd.z), rd.y) * scale;
+  vec2 i = floor(p), f = fract(p);
+  float h = hash(i);
+  vec2 o = 0.2 + 0.6 * vec2(hash(i + 7.1), hash(i + 3.7));
+  float tw = 0.78 + 0.22 * sin(uTime * (1.5 + h * 3.0) + h * 40.0);
+  return smoothstep(thr, 1.0, h) * tw * smoothstep(rad, 0.0, length(f - o));
+}
+vec3 clouds(vec3 col, vec3 rd, vec3 sun, float day, float twi, float night) {
+  if (rd.y <= 0.004) return col;
+  vec2 uv = rd.xz / (rd.y + 0.13) * 0.85 + vec2(uTime * 0.004, 0.0);
+  float d = fbm(uv * 1.25 + fbm(uv * 0.55 + 4.0) * 0.9);
+  float cov = smoothstep(0.66 - uClouds * 0.24, 0.90, d) * smoothstep(0.0, 0.05, rd.y) * (1.0 - smoothstep(0.26, 0.5, rd.y) * 0.7);
+  vec3 lit = mix(vec3(0.010, 0.014, 0.028), vec3(0.86, 0.89, 0.95), day);
+  float toward = pow(max(dot(normalize(rd.xz), normalize(sun.xz)), 0.0), 3.0);
+  lit += twi * vec3(1.0, 0.40, 0.18) * (0.22 + 0.95 * toward) * smoothstep(-0.14, 0.0, sun.y) + vec3(0.016, 0.030, 0.065) * smoothstep(-0.34, -0.10, sun.y) * (1.0 - smoothstep(-0.02, 0.18, sun.y));
+  lit += night * vec3(0.05, 0.065, 0.10) * pow(max(dot(rd, uMoon), 0.0), 6.0) * 2.5;
+  return mix(col, lit, cov * 0.78);
+}
+vec3 waterNormal(vec2 p, float t) {
+  vec2 g = vec2(0.0);
+  float amp = 0.85 * uSea, fr = 0.33; vec2 dir = normalize(vec2(1.0, 0.35));
+  for (int i = 0; i < 6; i++) {
+    float ph = dot(p, dir) * fr + uTime * (0.6 + float(i) * 0.17);
+    g += dir * (amp * fr * cos(ph));
+    amp *= 0.62; fr *= 1.83; dir = normalize(vec2(dir.x * 0.64 - dir.y * 0.77, dir.x * 0.77 + dir.y * 0.64));
+  }
+  float e = 0.35, n0 = fbm(p * 1.7 + uTime * 0.08);
+  g += vec2(fbm(p * 1.7 + vec2(e, 0.0) + uTime * 0.08) - n0, fbm(p * 1.7 + vec2(0.0, e) + uTime * 0.08) - n0) * (1.5 * uSea);
+  float att = 1.0 / (1.0 + t * 0.045);
+  return normalize(vec3(-g.x * att, 1.0, -g.y * att));
+}
+void main() {
+  vec2 uv = (gl_FragCoord.xy - 0.5 * uRes) / uRes.y * uZoom;
+  float yH = (0.5 - uHoriz) * uZoom;
+  vec3 rd = normalize(vec3(uv.x, uv.y - yH, FOCAL));
+  float e = uElev;
+  vec3 sun = normalize(vec3(sin(uAz) * cos(e), sin(e), cos(uAz) * cos(e)));
+  float day = smoothstep(-0.01, 0.24, e);
+  float twi = smoothstep(-0.30, -0.02, e) * (1.0 - smoothstep(0.03, 0.20, e));
+  float night = 1.0 - smoothstep(-0.22, 0.0, e);
+  vec3 col;
+  if (rd.y > 0.0) {
+    col = skyCol(rd, sun, day, twi);
+    float ext = smoothstep(0.015, 0.22, rd.y);
+    float st = starLayer(rd, 150.0, 0.93, 0.15) * 0.8 + starLayer(rd, 70.0, 0.962, 0.10) * 1.7 + starLayer(rd, 260.0, 0.90, 0.20) * 0.22;
+    col += vec3(0.82, 0.88, 1.0) * st * ext * pow(1.0 - day, 3.0) * uStars * (0.35 + 0.65 * night);
+    float mwb = exp(-pow((rd.y - 0.30 - rd.x * 0.55) * 4.2, 2.0));
+    col += vec3(0.040, 0.048, 0.075) * mwb * fbm(vec2(atan(rd.x, rd.z) * 5.0, rd.y * 9.0)) * night * uStars;
+    float md = acos(clamp(dot(rd, uMoon), -1.0, 1.0)), mr = 0.027;
+    col += vec3(0.50, 0.60, 0.82) * (exp(-md * 16.0) * 0.07 + exp(-md * 55.0) * 0.22) * max(night, uMoonK * 0.6);
+    if (md < mr) {
+      vec2 q = (rd.xy - uMoon.xy) / mr;
+      float alb = 0.70 + 0.30 * fbm(q * 2.3 + 3.0) - 0.26 * smoothstep(0.46, 0.72, fbm(q * 1.2 + 9.0));
+      float limb = sqrt(max(1.0 - dot(q, q) * 0.92, 0.0));
+      col = mix(col, vec3(0.97, 0.95, 0.88) * alb * (0.5 + 0.5 * limb) * 1.9, smoothstep(mr, mr * 0.93, md) * max(night, uMoonK));
+    }
+    float sd = acos(clamp(dot(rd, sun), -1.0, 1.0));
+    col += vec3(1.0, 0.93, 0.80) * smoothstep(0.024, 0.019, sd) * 12.0;
+    col = clouds(col, rd, sun, day, twi, night);
+  } else {
+    float t = 3.0 / max(-rd.y, 1e-4);
+    vec2 p = rd.xz * t;
+    vec3 n = waterNormal(p, t);
+    vec3 r = reflect(rd, n); r.y = abs(r.y) + 0.012; r = normalize(r);
+    vec3 refl = skyCol(r, sun, day, twi);
+    refl = clouds(refl, r, sun, day, twi, night);
+    float sv = smoothstep(-0.03, 0.03, sun.y);
+    float rs = max(dot(r, sun), 0.0), rm = max(dot(r, uMoon), 0.0);
+    refl += vec3(1.0, 0.80, 0.55) * (pow(rs, 900.0) * 26.0 + pow(rs, 90.0) * 1.1) * sv;
+    refl += vec3(0.76, 0.83, 1.0) * (pow(rm, 700.0) * 5.0 + pow(rm, 60.0) * 0.22) * max(night, uMoonK * 0.5);
+    float F = 0.02 + 0.98 * pow(1.0 - max(dot(n, -rd), 0.0), 5.0);
+    vec3 deep = mix(vec3(0.0012, 0.0040, 0.0100), vec3(0.006, 0.070, 0.110), day) + twi * vec3(0.020, 0.012, 0.020);
+    col = mix(deep, refl, F);
+    vec3 hor = skyCol(normalize(vec3(rd.x, 0.004, rd.z)), sun, day, twi);
+    col = mix(col, hor, exp(-abs(rd.y) * 55.0) * 0.55);
+  }
+  col = 1.0 - exp(-col * mix(2.7, 1.2, smoothstep(-0.10, 0.22, sun.y)));
+  col = pow(col, vec3(1.0 / 2.2));
+  col *= 1.0 - 0.18 * dot(uv, uv) / (uZoom * uZoom);
+  col += (hash(gl_FragCoord.xy + fract(uTime) * 91.7) - 0.5) * 0.014;
+  gl_FragColor = vec4(col, 1.0);
+}`;
+    const FOCAL = 1.2;
+    let cv = null, gl = null, U = null, L = 0, geo = null, on = false, raf = 0, stillT = 0, last = 0, scale = 1, slow = 0, n = 0, drawn = 0;
+    const t0 = performance.now();
+    /* the first light shows at the Line; the top of the cycle is dawn, the sun still under the horizon */
+    const lightOf = (l) => (l <= 45 ? -0.55 + l / 45 * 0.25 : -0.30 + (l - 45) / 55 * 0.185);
+    function build() {
+      const sh = (type, src) => { const s = gl.createShader(type); gl.shaderSource(s, src); gl.compileShader(s); if (!gl.getShaderParameter(s, gl.COMPILE_STATUS)) throw new Error(gl.getShaderInfoLog(s) || "shader"); return s; };
+      const pr = gl.createProgram();
+      gl.attachShader(pr, sh(gl.VERTEX_SHADER, "attribute vec2 a; void main(){ gl_Position = vec4(a, 0.0, 1.0); }"));
+      gl.attachShader(pr, sh(gl.FRAGMENT_SHADER, FS));
+      gl.linkProgram(pr);
+      if (!gl.getProgramParameter(pr, gl.LINK_STATUS)) throw new Error("link");
+      gl.useProgram(pr);
+      gl.bindBuffer(gl.ARRAY_BUFFER, gl.createBuffer());
+      gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1, -1, 1, -1, -1, 1, 1, 1]), gl.STATIC_DRAW);
+      const loc = gl.getAttribLocation(pr, "a");
+      gl.enableVertexAttribArray(loc); gl.vertexAttribPointer(loc, 2, gl.FLOAT, false, 0, 0);
+      U = {};
+      for (const k of ["uRes", "uTime", "uHoriz", "uAz", "uStars", "uClouds", "uSea", "uMoon", "uElev", "uMoonK", "uZoom"]) U[k] = gl.getUniformLocation(pr, k);
+    }
+    function init() {
+      cv = $("skyGL");
+      if (!cv) return;
+      try {
+        gl = cv.getContext("webgl", { antialias: false, alpha: false, powerPreference: "low-power" });
+        if (gl) build();
+      } catch (e) { gl = null; }
+      if (!gl) { cv.style.display = "none"; return; }
+      cv.addEventListener("webglcontextlost", (e) => { e.preventDefault(); cancelAnimationFrame(raf); raf = 0; });
+      cv.addEventListener("webglcontextrestored", () => { try { build(); size(); if (on) raf = requestAnimationFrame(loop); else still(); } catch (e) { gl = null; cv.style.display = "none"; } });
+    }
+    /* under a megapixel on a desktop and half of that on a phone: the scene is soft by nature, and it stays light */
+    function size() {
+      if (!gl || !geo) return;
+      const cap = geo.hw < 700 ? 420000 : 900000;
+      const k = Math.min(Math.min(window.devicePixelRatio || 1, 1.5), Math.sqrt(cap / (geo.hw * geo.hh))) * scale;
+      const w = Math.max(2, Math.round(geo.hw * k)), h = Math.max(2, Math.round(geo.hh * k));
+      if (cv.width !== w || cv.height !== h) { cv.width = w; cv.height = h; gl.viewport(0, 0, w, h); }
+    }
+    function draw(t) {
+      if (!gl || !geo || gl.isContextLost()) return;
+      /* the moon climbs through the night beside the stars */
+      /* a tall hero (a phone) sees more sky and more sea, not a bigger moon: the scale stops growing at 860px */
+      const zoom = Math.max(1, geo.hh / 860), ppu = geo.hh / zoom * FOCAL;
+      const mxp = geo.sl + geo.sw * (geo.hw < 700 ? 0.1 : 0.04), myp = geo.sh * (0.38 + 0.42 * L / 100);
+      const x = (mxp - geo.hw / 2) / ppu, y = myp / ppu, m = Math.hypot(x, y, 1);
+      gl.uniform1f(U.uZoom, zoom);
+      gl.uniform2f(U.uRes, cv.width, cv.height);
+      gl.uniform1f(U.uTime, ((t - t0) / 1000) % 3600);
+      gl.uniform1f(U.uHoriz, geo.hy / geo.hh);
+      gl.uniform1f(U.uAz, 0.47);
+      gl.uniform1f(U.uStars, 0.55);
+      gl.uniform1f(U.uClouds, 0.15);
+      gl.uniform1f(U.uSea, 1);
+      gl.uniform3f(U.uMoon, x / m, y / m, 1 / m);
+      gl.uniform1f(U.uElev, lightOf(L));
+      gl.uniform1f(U.uMoonK, 0.4);
+      gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
+      drawn++;
+    }
+    function loop(t) {
+      raf = 0;
+      if (!on) return;
+      const dt = t - last;
+      if (dt >= 30) {
+        /* a device that cannot keep 20 frames a second gets a smaller picture, down to under half */
+        if (last && dt < 400) { slow += dt > 50 ? 1 : 0; if (++n >= 40) { if (slow > 24 && scale > 0.45) { scale *= 0.8; size(); } n = 0; slow = 0; } }
+        last = t;
+        draw(t);
+      }
+      raf = requestAnimationFrame(loop);
+    }
+    function still() { if (!gl || on || stillT) return; stillT = requestAnimationFrame((t) => { stillT = 0; draw(t); }); }
+    return {
+      init,
+      get ok() { return Boolean(gl); },
+      get frames() { return drawn; },
+      get running() { return on; },
+      setLine(l) { L = l; still(); },
+      layout(g) { geo = g; size(); still(); },
+      run(v) { v = Boolean(v && gl); if (v === on) return; on = v; if (on) { last = 0; raf = requestAnimationFrame(loop); } else { cancelAnimationFrame(raf); raf = 0; still(); } }
+    };
+  })();
   const ZONE_INK = ["#4fd1ff", "#4fd1ff", "#ffd27a", "#14F195", "#9cc8ff", "#ffb27a", "#ff9a8a"];
   const ZONE_INK_DK = ["#0b4f7a", "#0b4f7a", "#6b3a00", "#04502c", "#0d3277", "#5a1a00", "#5a1a00"];
   const SKYSTOPS = [
@@ -1394,7 +1691,7 @@ a.fomo:hover .fm { opacity: 0.18; transform: translateY(-50%) rotate(-6deg) scal
     [[0, "#ff7a3d"], [0.45, "#ffa233"], [0.75, "#ffcf6e"], [1, "#ffe9b8"]],
     [[0, "#ff4d5e"], [0.36, "#ff8a3d"], [0.70, "#ffb020"], [1, "#ffe3a3"]]
   ];
-  const MINI = [["#020309", "#0d1233", 94], ["#04061a", "#1a2350", 86], ["#141a45", "#8a4a7a", 78], ["#2b2a6b", "#ff8a3d", 70], ["#1550b0", "#ffd27a", 44], ["#ff8a3d", "#ffd27a", 24], ["#ff4d5e", "#ffb020", 12]];
+  const MINI = [["#020309", "#0a1024", 0], ["#03050f", "#0c1430", 0], ["#050817", "#101a3a", 0], ["#070b1f", "#1a2748", 0], ["#0a1030", "#2a3a66", 0], ["#0f1840", "#5a4a78", 0], ["#1a2456", "#c98a6a", 0]];
   /* Per hour, interpolated as the sun moves: glow around the sun, tint on the sea */
   const HAZE = [[153, 69, 255, 0.30], [120, 90, 255, 0.24], [255, 120, 96, 0.38], [255, 196, 120, 0.46], [255, 248, 228, 0.3], [255, 244, 214, 0.42], [255, 240, 205, 0.5]];
   const SEAT = [[26, 35, 80, 0.24], [38, 48, 107, 0.24], [201, 112, 122, 0.22], [255, 207, 138, 0.18], [143, 193, 242, 0.16], [255, 207, 110, 0.18], [255, 176, 32, 0.18]];
@@ -2954,7 +3251,7 @@ a.fomo:hover .fm { opacity: 0.18; transform: translateY(-50%) rotate(-6deg) scal
   /* ---------- state ---------- */
   let R = null, H = [], W = null;
   let view = "now", whatL = 0;
-  let shown = null, lastNum = null, lastTone = -1, lastInk = "", lastZone = "", lastCkey = -1, lastDk = null;
+  let shown = null, lastNum = null, lastTone = -1, lastInk = "", lastZone = "", lastCkey = -1, lastDk = null, lastClock = "", nightGeo = null, tryTouched = false;
   let geo = null, heroVisible = true, dragging = false, hintGone = false, keyCounts = "", colEdge = null;
   let animToken = 0, raf = 0, lastFlash = 0;
 
@@ -3180,7 +3477,13 @@ a.fomo:hover .fm { opacity: 0.18; transform: translateY(-50%) rotate(-6deg) scal
       hero.style.setProperty("--seaB", `rgb(${sb.map(Math.round).join(",")})`);
     }
     if (geo) { sky.setHour(u, L, sunAt(L)); if (!ambOn) skyStillSoon(); }
-    const ink = u >= 4.5 ? "day" : u >= 1.5 ? "dawn" : "night";
+    const ink = NIGHT ? "night" : u >= 4.5 ? "day" : u >= 1.5 ? "dawn" : "night";
+    if (NIGHT) {
+      const ck = clockOf(L);
+      if (ck !== lastClock) { const ce = $("clock"); if (ce) ce.textContent = ck; lastClock = ck; }
+      NightSky.setLine(L);
+      hero.classList.toggle("late", NIGHT && L >= 62);
+    }
     if (ink !== lastInk) { if (lastInk) hero.classList.remove(`ink-${lastInk}`); hero.classList.add(`ink-${ink}`); lastInk = ink; }
     const tone = toneOf(L);
     if (tone !== lastTone) { hero.style.setProperty("--zoneInk", ZONE_INK[tone]); hero.style.setProperty("--zoneInkDk", ZONE_INK_DK[tone]); lastTone = tone; if (view === "what") heroText(); }
@@ -3282,12 +3585,12 @@ a.fomo:hover .fm { opacity: 0.18; transform: translateY(-50%) rotate(-6deg) scal
     $("sinceY").classList.toggle("off", view !== "now");
     let h1, explain, rules = "", sea, chip = null, numCls = "";
     if (view === "jan") {
-      h1 = "Midnight, January 2024.";
+      h1 = "22:00, January 2024.";
       explain = "The bottom of the last cycle, 0 by design. Memes were worth $20.0B and almost nobody was watching.";
       sea = ["Memes <b>$20.0B</b>", "The last cycle starts here", "Eleven months to the top"];
       chip = [["January 22, 2024", "the last bottom"], "late"];
     } else if (view === "dec") {
-      h1 = "High noon, December 2024.";
+      h1 = "Dawn, December 2024.";
       explain = "The top of the last cycle, 100 by design. Memes hit $150.6B, 7.5x the bottom. The rules sold.";
       sea = ["Memes <b>$150.6B</b>", "7.5x in eleven months", "Then down 80%"];
       chip = [["December 9, 2024", "the last top"], "late"];
@@ -3301,17 +3604,18 @@ a.fomo:hover .fm { opacity: 0.18; transform: translateY(-50%) rotate(-6deg) scal
       numCls = "what";
     } else if (c) {
       const L = c.line, tone = toneOf(L);
-      h1 = tone === 3 && R.season && R.season.on ? "Sunrise. The season is on." : H1[tone];
+      const n10 = R.ladder && Array.isArray(R.ladder.counts) ? R.ladder.counts[0] : null;
+      h1 = NIGHT && n10 ? `${n10} stars tonight.` : tone === 3 && R.season && R.season.on ? "First light. The season is on." : H1[tone];
       explain = L < 45
-        ? `Season starts when the sun crosses the Line at 45. Right now it sits ${45 - L} point${45 - L === 1 ? "" : "s"} below it.`
-        : `The sun is ${L - 45} point${L - 45 === 1 ? "" : "s"} above the Line. ${R.season.on ? "The Season Flag is on." : `The Season Flag is off: ${R.season.confirms} of 6 confirmations.`}`;
+        ? `Season starts when the reading crosses the Line at 45. Right now it sits ${45 - L} point${45 - L === 1 ? "" : "s"} below it.`
+        : `The reading is ${L - 45} point${L - 45 === 1 ? "" : "s"} above the Line. ${R.season.on ? "The Season Flag is on." : `The Season Flag is off: ${R.season.confirms} of 6 confirmations.`}`;
       rules = `<b>The rules say:</b> ${esc(c.action)}`;
       sea = liveSea(c);
       numCls = c.ghost ? "ghost" : "";
     } else {
       h1 = THESIS;
       explain = "0 is the January 2024 bottom, 100 the December 2024 top. Season starts above the Line at 45.";
-      rules = PREVIEW ? "<b>No live data in this preview.</b> Drag the sun to see what the rules say at any hour." : "<b>Waiting for the first reading.</b> Drag the sun to see what the rules say at any hour.";
+      rules = PREVIEW ? "<b>No live data in this preview.</b> The Playbook below shows what the rules say at any hour." : "<b>Waiting for the first reading.</b> The Playbook below shows what the rules say at any hour.";
       sea = methodSea();
       chip = PREVIEW ? [["Preview", "no live data"], "late"] : R && R.blank ? ["Waiting for the first reading", "late"] : ["No reading yet", "stale"];
       numCls = "what";
@@ -3426,7 +3730,7 @@ a.fomo:hover .fm { opacity: 0.18; transform: translateY(-50%) rotate(-6deg) scal
     if (!prev || prev.v !== 1 || prev.r === R.at || !isFinite(Date.parse(prev.at)) || Date.now() - Date.parse(prev.at) < 45 * 60000) return;
     const pl = (n, w) => `<b>${n}</b> ${w}${n === 1 ? "" : "s"}`;
     const out = [];
-    if (prev.line != null && prev.line !== c.line) { const d = c.line - prev.line; out.push([`the sun ${d < 0 ? "sank" : "rose"} ${pl(Math.abs(d), "point")}`, "The Line", prev.line, c.line]); }
+    if (prev.line != null && prev.line !== c.line) { const d = c.line - prev.line; out.push([`the Line ${d < 0 ? "fell" : "rose"} ${pl(Math.abs(d), "point")}`, "The Line", prev.line, c.line]); }
     if (prev.hits != null && prev.hits !== hits) { const d = hits - prev.hits; out.push([d === 1 ? `a <b>${ordw(hits)}</b> bottom light came on` : d > 0 ? `${pl(d, "more bottom light")} came on` : `${pl(-d, "bottom light")} went off`, "Bottom lights", `${prev.hits}/8`, `${hits}/8`]); }
     if (prev.n10 != null && n10 != null && prev.n10 !== n10) { const d = n10 - prev.n10; out.push([d < 0 ? `${pl(-d, "runner")} fell under $10M` : `${pl(d, "new runner")} above $10M`, "Runners above $10M", prev.n10, n10]); }
     if (prev.mc && mc && Math.abs(mc / prev.mc - 1) >= 0.01) { const p = (mc / prev.mc - 1) * 100; out.push([`memes ${p < 0 ? "fell" : "rose"} <b>${Math.abs(p).toFixed(1)}%</b>`, "Meme market", usd(prev.mc), usd(mc)]); }
@@ -3599,8 +3903,8 @@ a.fomo:hover .fm { opacity: 0.18; transform: translateY(-50%) rotate(-6deg) scal
     const c = current();
     const n10 = R && R.ladder ? R.ladder.counts[0] : null;
     const t = c && !c.ghost
-      ? `Oldhawk Line: ${c.line}/100, ${c.zone.name}. Memecoin season starts when the sun crosses 45.${n10 != null ? ` ${n10} memes above $10M right now.` : ""} Live, rules only:`
-      : "Oldhawk Line: memecoin season starts when the sun crosses the Line at 45. Live, rules only:";
+      ? `Oldhawk Line: ${c.line}/100, ${c.zone.name}. Memecoin season starts when the reading crosses 45.${n10 != null ? ` ${n10} memes above $10M right now.` : ""} Live, rules only:`
+      : "Oldhawk Line: memecoin season starts when the reading crosses the Line at 45. Live, rules only:";
     /* the day in the link makes X fetch a fresh card, with today's Line on it */
     const base = /^https?:/.test(location.href) ? location.href.split("#")[0].split("?")[0] : "";
     const url = base && c && !c.ghost && R.at ? `${base}?d=${R.at.slice(0, 10)}` : base;
@@ -3624,10 +3928,11 @@ a.fomo:hover .fm { opacity: 0.18; transform: translateY(-50%) rotate(-6deg) scal
     const oneCol = window.innerWidth < 1080;
     const zs = zonesList();
     const sets = [
-      [h1El, [...H1, THESIS, "Sunrise. The season is on.", "Midnight, January 2024.", "High noon, December 2024."].map(esc)],
+      /* the night headline is one short line: only the lines it can actually show hold its place */
+      [h1El, (NIGHT ? ["888 stars tonight.", "22:00, January 2024.", "Dawn, December 2024."] : [...H1, THESIS, "First light. The season is on."]).map(esc)],
       [explainEl, [
-        "Season starts when the sun crosses the Line at 45. Right now it sits 44 points below it.",
-        "The sun is 55 points above the Line. The Season Flag is off: 3 of 6 confirmations.",
+        "Season starts when the reading crosses the Line at 45. Right now it sits 44 points below it.",
+        "The reading is 55 points above the Line. The Season Flag is off: 3 of 6 confirmations.",
         "The bottom of the last cycle, 0 by design. Memes were worth $20.0B and almost nobody was watching.",
         "The top of the last cycle, 100 by design. Memes hit $150.6B, 7.5x the bottom. The rules sold.",
         "What if the Line read 100? That is late morning, Extreme Greed. The live reading stays where it is.",
@@ -3637,8 +3942,8 @@ a.fomo:hover .fm { opacity: 0.18; transform: translateY(-50%) rotate(-6deg) scal
         ...zs.map((z) => `<b>At late morning, the rules say:</b> ${esc(z.spot)}.`),
         `<b>The rules say:</b> No new buys while a top trigger is live. ${esc(zs[6].spot)}`,
         "<b>The rules say:</b> Kill switch K2: cut the meme book in half.",
-        "<b>No live data in this preview.</b> Drag the sun to see what the rules say at any hour.",
-        "<b>Waiting for the first reading.</b> Drag the sun to see what the rules say at any hour."
+        "<b>No live data in this preview.</b> The Playbook below shows what the rules say at any hour.",
+        "<b>Waiting for the first reading.</b> The Playbook below shows what the rules say at any hour."
       ]],
       /* the chip, with the countdown beside it whenever the reading is fresh enough to have one */
       [$("live"), ((nx) => [`<span>Live${SEP}updated 59 min ago</span>${nx}`, `<span>Last good reading${SEP}23 Oct, 18:07</span>`, "<span>Waiting for the first reading</span>", `<span>Preview${SEP}no live data</span>`, `<span>What if${SEP}not a reading</span>${nx}<button class="back">Today</button>`, `<span>December 9, 2024${SEP}the last top</span>${nx}`])((nextOn() ? '<span class="nextin">Next reading any minute</span>' : "") + (People.on() ? People.sample() : ""))]
@@ -3646,7 +3951,8 @@ a.fomo:hover .fm { opacity: 0.18; transform: translateY(-50%) rotate(-6deg) scal
     const grid = h1El.parentElement.closest(".hero-grid");
     for (const [el, texts] of sets) {
       el.style.minHeight = "";
-      if (oneCol && el !== h1El && el.id !== "live") continue;
+      /* in the night hero the rules stand above the stars on a phone too: their place is held, so the Line never moves */
+      if (oneCol && el !== h1El && el.id !== "live" && !(NIGHT && el === rulesEl)) continue;
       const clone = el.cloneNode(false);
       clone.removeAttribute("id"); clone.hidden = false;
       clone.style.cssText = `position:absolute;visibility:hidden;left:0;top:0;width:${w}px;min-height:0;margin:0;pointer-events:none;`;
@@ -3782,6 +4088,7 @@ a.fomo:hover .fm { opacity: 0.18; transform: translateY(-50%) rotate(-6deg) scal
     ambRaf = requestAnimationFrame(ambient);
   }
   function setAmbient() {
+    NightSky.run(NIGHT && !reduced && heroVisible && !document.hidden);
     const on = !reduced && heroVisible && !document.hidden && geo != null;
     if (on === ambOn) return;
     ambOn = on;
@@ -3860,6 +4167,7 @@ a.fomo:hover .fm { opacity: 0.18; transform: translateY(-50%) rotate(-6deg) scal
   hero.addEventListener("click", (e) => { if (e.pointerType !== "mouse") showSkyTip(e); });
   /* for tests and the curious: where the hawk is, and a flight on demand */
   window.__ohlSky = { hawkBox: () => sky.hawkBox(), fly: () => sky.flyNow(performance.now() / 1000), sweep: (n) => sky.sweep(n || 200), frames: () => sky.state.frames || 0, state: sky.state };
+  window.__ohlNight = NightSky; /* for the tests: is it drawing, and how many pictures so far */
   if (mq && mq.addEventListener) mq.addEventListener("change", (e) => { reduced = e.matches; setAmbient(); });
   document.addEventListener("visibilitychange", setAmbient);
 
@@ -3930,8 +4238,8 @@ a.fomo:hover .fm { opacity: 0.18; transform: translateY(-50%) rotate(-6deg) scal
       return [
         { key: "cold", k: "Last bottom", v: cold, f: "b1", s: "Meme market cap on January 22, 2024. Line 0." },
         { key: "hot", k: "Last top", v: hot, f: "b1", s: "Meme market cap on December 9, 2024. Line 100." },
-        { key: "x", k: "Bottom to top", v: hot / cold, f: "x1", s: "In eleven months, from midnight to noon." },
-        { key: "cross", k: "Season starts at", v: 45, f: "int", s: "The day the sun crosses the Line." },
+        { key: "x", k: "Bottom to top", v: hot / cold, f: "x1", s: "In eleven months, from 22:00 to dawn." },
+        { key: "cross", k: "Season starts at", v: 45, f: "int", s: "The moment the reading crosses the Line." },
         { key: "inputs", k: "Live readings", v: R.inputs.length, f: "int", s: `Pulled from ${nSrc} public sources on every update.` },
         { key: "floors", k: "Runner floors", v: 7, f: "int", s: "From $10M to $10B, every coin counted." },
         { key: "chains", k: "Chains watched", v: oc.length, f: "int", s: oc.length > 1 ? `${oc.slice(0, -1).join(", ")} and ${oc[oc.length - 1]}, plus the exchanges.` : "Plus the exchanges." },
@@ -4190,7 +4498,7 @@ a.fomo:hover .fm { opacity: 0.18; transform: translateY(-50%) rotate(-6deg) scal
     if (pts.length < 4) { $("cycleChart").innerHTML = ""; return; }
     const logPts = H.filter((d) => d.mc != null).map((d) => ({ t: yearFrac(`${d.d}T12:00:00Z`), mc: d.mc }));
     const nowPt = !R.blank && R.market && R.market.memeMC ? { t: yearFrac(R.at), mc: R.market.memeMC / 1e9 } : null;
-    $("proofLead").textContent = `On the Line, 0 is January 22, 2024 and 100 is December 9, 2024. In between, memes went from $20.0B to $150.6B.${nowPt ? (R.market.drawdown >= 0 ? ` Then the sun set: down ${Math.round(R.market.drawdown * 100)}% to ${usd(R.market.memeMC)} today.` : ` Today they are above that top, at ${usd(R.market.memeMC)}.`) : ""}`;
+    $("proofLead").textContent = `On the Line, 0 is January 22, 2024 and 100 is December 9, 2024. In between, memes went from $20.0B to $150.6B.${nowPt ? (R.market.drawdown >= 0 ? ` Then it went dark again: down ${Math.round(R.market.drawdown * 100)}% to ${usd(R.market.memeMC)} today.` : ` Today they are above that top, at ${usd(R.market.memeMC)}.`) : ""}`;
     const box = $("cycleChart");
     const W = clamp(Math.round(box.clientWidth || 760), 320, 900), Hh = W < 520 ? 320 : 380;
     const x0 = 52, x1 = W - 16, yb = Hh - 46, y0 = 26, tmin = 2021.5;
@@ -4240,8 +4548,8 @@ a.fomo:hover .fm { opacity: 0.18; transform: translateY(-50%) rotate(-6deg) scal
       return "";
     };
     if (q) s += place([`Now${cur ? `   Line ${cur.line}` : ""}   $${nowPt.mc.toFixed(1)}B`, `Now   $${nowPt.mc.toFixed(1)}B`, "Now"], q.x, q.y, 7, "#14F195", 700);
-    s += place(["Noon   Line 100   $150.6B", "Line 100   $150.6B", "Line 100"], p[3].x, p[3].y, 10, "#ffd27a");
-    s += place(["Midnight   Line 0   $20.0B", "Line 0   $20.0B", "Line 0"], p[1].x, p[1].y, 7, "#ededed");
+    s += place(["Dawn   Line 100   $150.6B", "Line 100   $150.6B", "Line 100"], p[3].x, p[3].y, 10, "#ffd27a");
+    s += place(["22:00   Line 0   $20.0B", "Line 0   $20.0B", "Line 0"], p[1].x, p[1].y, 7, "#ededed");
     s += place(["2021 top $88B", "2021 top"], p[0].x, p[0].y, 4, "#a3abc0");
     const gx = X(2022.9), gy = Y(118), gt = W < 520 ? "no data 2022, 2023" : "no points 2022 and 2023", gw = textW(gt, 11);
     const grect = { l: gx - gw / 2 - 2, r: gx + gw / 2 + 2, t: gy - 12, b: gy + 4 };
@@ -4429,6 +4737,107 @@ a.fomo:hover .fm { opacity: 0.18; transform: translateY(-50%) rotate(-6deg) scal
   document.querySelectorAll(".chart-tabs button").forEach((b) => b.addEventListener("click", () => setChartTab(b.dataset.chart)));
   function renderWeekly() { renderWeekStats(); setChartTab(chartTab); }
 
+
+  /* ---------- the night hero: where the horizon is, the ladder strip, and every runner as a star ---------- */
+  function nightLayout() {
+    const sm = $("starmap");
+    if (!NIGHT || !sm) return;
+    const hr = hero.getBoundingClientRect(), r = sm.getBoundingClientRect();
+    if (!hr.height || !r.width) return;
+    const hy = r.bottom - hr.top + 28;
+    const g = { hy, hh: hr.height, hw: hr.width, sl: r.left - hr.left, sw: r.width, sh: r.height };
+    const moved = !nightGeo || Math.abs(nightGeo.hy - g.hy) > 0.5 || Math.abs(nightGeo.hh - g.hh) > 0.5 || Math.abs(nightGeo.hw - g.hw) > 0.5 || Math.abs(nightGeo.sw - g.sw) > 0.5 || Math.abs(nightGeo.sh - g.sh) > 0.5;
+    nightGeo = g;
+    hero.style.setProperty("--hz", `${hy.toFixed(1)}px`);
+    hero.style.setProperty("--lx", `${(g.sl + g.sw * 0.5).toFixed(1)}px`);
+    NightSky.layout(g);
+    if (moved) renderStars();
+  }
+  function renderStrip() {
+    const el = $("lstrip");
+    if (!el) return;
+    const Ld = R && R.ladder, c = Ld && Array.isArray(Ld.counts) ? Ld.counts : null;
+    if (!c || isBlank()) { el.innerHTML = ""; return; }
+    const n7 = typeof Ld.newWeekCount === "number" ? Ld.newWeekCount : Array.isArray(Ld.newWeek) ? Ld.newWeek.length : null;
+    el.innerHTML = [["$10M and up", c[0]], ["$100M and up", c[2]], ["$1B and up", c[4]], ["New, 7 days", n7]].filter((x) => x[1] != null).map(([k, v]) => `<div><span>${k}</span><b>${v}</b></div>`).join("");
+  }
+  const STAR_TINT = { sol: "#d2c4ff", base: "#b9d2ff", bsc: "#ffe7b5", hood: "#c9f5d9" };
+  const CHAIN_NAME = { listed: "Listed on exchanges", sol: "Solana", base: "Base", bsc: "BNB Chain", hood: "Robinhood Chain", eth: "Ethereum" };
+  let starList = [];
+  function renderStars() {
+    const box = $("smStars"), sm = $("starmap");
+    if (!box || !sm) return;
+    const rs = R && !isBlank() && R.ladder && Array.isArray(R.ladder.runners) ? R.ladder.runners.filter((r) => r && r.s && r.m >= 1e7) : [];
+    $("smCard").hidden = true;
+    sm.classList.toggle("empty", !rs.length);
+    const W = box.clientWidth, Hh = box.clientHeight;
+    if (!rs.length || !W || !Hh) { box.innerHTML = ""; starList = []; return; }
+    const lo = 7, hi = Math.max(10.3, Math.log10(rs[0].m) + 0.14), top = 16, bot = Hh - 8;
+    const yOf = (m) => bot - (Math.log10(m) - lo) / (hi - lo) * (bot - top);
+    const hsh = (t) => { let h = 2166136261; for (let i = 0; i < t.length; i++) h = Math.imul(h ^ t.charCodeAt(i), 16777619); return ((h >>> 0) % 10000) / 10000; };
+    const fresh = new Set((Array.isArray(R.ladder.newWeek) ? R.ladder.newWeek : []).map((r) => `${r.s}|${r.c}`));
+    let html = "";
+    for (const [m, lab] of [[1e7, "$10M"], [1e8, "$100M"], [1e9, "$1B"], [1e10, "$10B"]]) html += `<div class="sm-alt" style="top:${yOf(m).toFixed(1)}px"><span>${lab}</span></div>`;
+    const placed = [], labels = W < 520 ? 7 : 12;
+    starList = rs.map((r, i) => {
+      const x = W * (0.11 + 0.84 * hsh(`${r.s}${r.n || ""}${r.c || ""}`)), y = yOf(r.m), sz = 1.6 + Math.max(0, Math.log10(r.m) - 7) * 1.7, c = STAR_TINT[r.c] || "#ffffff";
+      html += `<i class="sm-star${fresh.has(`${r.s}|${r.c}`) ? " new" : ""}" data-i="${i}" style="left:${x.toFixed(1)}px;top:${y.toFixed(1)}px;--s:${sz.toFixed(1)}px;--c:${c};--g1:${c}66;--g2:${c}22"></i>`;
+      if (i < labels && /^[\x20-\x7e]+$/.test(r.s)) {
+        const w = 14 + (r.s.length + 7) * 6.8, left = x + 8 + w > W - 44;
+        const b = left ? [x - 8 - w, y - 8, x - 8, y + 8] : [x + 8, y - 8, x + 8 + w, y + 8];
+        if (b[0] >= 0 && !placed.some((q) => b[0] < q[2] && b[2] > q[0] && b[1] < q[3] && b[3] > q[1])) {
+          placed.push(b);
+          html += `<div class="sm-lab${left ? " l" : ""}" style="left:${x.toFixed(1)}px;top:${y.toFixed(1)}px">${esc(r.s)} <span>${usd(r.m)}</span></div>`;
+        }
+      }
+      return { r, x, y };
+    });
+    box.innerHTML = html;
+  }
+  function starCard(i) {
+    const card = $("smCard"), box = $("smStars"), st = starList[i];
+    box.querySelectorAll(".sm-star.on").forEach((e) => e.classList.remove("on"));
+    if (!st) { card.hidden = true; return; }
+    const r = st.r, el = box.querySelector(`.sm-star[data-i="${i}"]`);
+    if (el) el.classList.add("on");
+    const d = typeof r.d === "number" ? `<div class="r"><span>Today</span><b class="${r.d < 0 ? "dn" : "up"}">${r.d < 0 ? "−" : "+"}${Math.abs(r.d)}%</b></div>` : "";
+    const v = typeof r.v === "number" && r.v > 0 ? `<div class="r"><span>Volume 24h</span><b>${usd(r.v)}</b></div>` : "";
+    card.innerHTML = `<div class="k">${esc(CHAIN_NAME[r.c] || r.c || "")}</div><div class="n">${esc(r.n || r.s)}${r.n && r.n !== r.s ? ` <span style="color:#aab2c5;font-weight:500;font-size:13px">${esc(r.s)}</span>` : ""}</div><div class="r"><span>Market cap</span><b>${usd(r.m)}</b></div>${d}${v}`;
+    card.hidden = false;
+    const W = box.clientWidth, Hh = box.clientHeight, cw = card.offsetWidth, ch = card.offsetHeight;
+    const left = st.x + 16 + cw <= W ? st.x + 16 : Math.max(0, st.x - 16 - cw);
+    const topp = st.y + 16 + ch <= Hh + 120 ? st.y + 16 : Math.max(0, st.y - 16 - ch);
+    card.style.left = `${left.toFixed(1)}px`; card.style.top = `${topp.toFixed(1)}px`;
+  }
+  function wireStars() {
+    const box = $("smStars");
+    if (!box) return;
+    const idx = (e) => { const t = e.target.closest ? e.target.closest(".sm-star") : null; return t ? Number(t.dataset.i) : -1; };
+    box.addEventListener("pointerover", (e) => { if (e.pointerType === "mouse") { const i = idx(e); if (i >= 0) starCard(i); } });
+    box.addEventListener("pointerout", (e) => { if (e.pointerType === "mouse" && idx(e) >= 0) starCard(-1); });
+    box.addEventListener("click", (e) => { const i = idx(e); starCard(i >= 0 && !(box.querySelector(`.sm-star.on[data-i="${i}"]`) && e.detail && matchMedia("(hover: none)").matches) ? i : -1); });
+    document.addEventListener("pointerdown", (e) => { if (!box.contains(e.target)) starCard(-1); });
+  }
+  /* ---------- the Playbook: try any reading ---------- */
+  function tryAt(L, user) {
+    const out = $("tryOut");
+    if (!out) return;
+    const z = zoneOf(L), tone = toneOf(L);
+    out.innerHTML = `<b>${L}</b> of 100, ${esc(z.name)}. The hour of the sky: <b>${clockOf(L)}</b>, ${esc(String(z.hour).toLowerCase())}. <b>The rules say:</b> ${esc(z.spot)}.`;
+    document.querySelectorAll("#hoursGrid .hour").forEach((el, i) => el.classList.toggle("try", Boolean(user) && i === tone));
+  }
+  function wireTry() {
+    const r = $("tryR");
+    if (!r) return;
+    r.addEventListener("input", () => { tryTouched = true; tryAt(Number(r.value), true); });
+  }
+  function syncTry() {
+    const r = $("tryR");
+    if (!r || tryTouched) return;
+    const c = current();
+    r.value = c ? c.line : 0;
+    tryAt(Number(r.value), false);
+  }
   /* ---------- what changed since yesterday's close, under what the rules say ---------- */
   function renderSinceY() {
     const el = $("sinceY");
@@ -4733,13 +5142,14 @@ a.fomo:hover .fm { opacity: 0.18; transform: translateY(-50%) rotate(-6deg) scal
     People.start(R && !isBlank() && R.live && R.live.ws ? R.live.ws : "");
     $("notice").hidden = !(PREVIEW && isBlank());
     reserveHeights();
-    [renderNumbers, renderTicker, renderRunners, renderList, renderHours, renderProof, renderWeekly, renderSignals, renderSinceY, renderFooter].forEach((fn) => { try { fn(); } catch (e) { console.warn(fn.name, e); } });
+    [renderNumbers, renderTicker, renderRunners, renderList, renderHours, renderProof, renderWeekly, renderSignals, renderSinceY, renderStrip, renderStars, syncTry, nightLayout, renderFooter].forEach((fn) => { try { fn(); } catch (e) { console.warn(fn.name, e); } });
     try { sky.setData(skyData()); if (!ambOn) skyStill(); } catch (e) { console.warn("sky", e); }
     try { renderSkyKey(); } catch (e) { console.warn("renderSkyKey", e); }
   }
   function startHero() {
     started = true;
     measure();
+    nightLayout();
     setAmbient();
     const qs = new URLSearchParams(location.search);
     const sky = qs.get("sky");
@@ -4775,7 +5185,9 @@ a.fomo:hover .fm { opacity: 0.18; transform: translateY(-50%) rotate(-6deg) scal
 
   /* Alerts link: Telegram channel when set, else X */
   const alertHref = TG || XURL;
-  ["alertBtn", "alertBtn2"].forEach((id) => { $(id).href = alertHref; $(id).textContent = TG ? "Get the sunrise alert" : "Follow for the sunrise alert"; });
+  ["alertBtn", "alertBtn2"].forEach((id) => { $(id).href = alertHref; $(id).textContent = TG ? "Get the first light alert" : "Follow for the first light alert"; });
+  /* the night hero: the sky, the stars and the Playbook's slider are ready before the first reading */
+  NightSky.init(); wireStars(); wireTry(); nightLayout();
   if (XHANDLE) { $("byLink").href = `https://x.com/${XHANDLE}`; $("byLink").textContent = `@${XHANDLE}`; }
 
 /*@share*/
@@ -4916,7 +5328,7 @@ a.fomo:hover .fm { opacity: 0.18; transform: translateY(-50%) rotate(-6deg) scal
   window.addEventListener("resize", onResize);
   if ("ResizeObserver" in window) {
     let roPending = false;
-    new ResizeObserver(() => { if (roPending) return; roPending = true; requestAnimationFrame(() => { roPending = false; measure(); }); }).observe(hero.querySelector(".hero-grid"));
+    new ResizeObserver(() => { if (roPending) return; roPending = true; requestAnimationFrame(() => { roPending = false; measure(); nightLayout(); }); }).observe(hero.querySelector(".hero-grid"));
   }
   if (document.fonts && document.fonts.ready) document.fonts.ready.then(() => { if (R) { reserveHeights(); sizeTicker(); } measure(); if (dlg.open) evenWallets(); });
 

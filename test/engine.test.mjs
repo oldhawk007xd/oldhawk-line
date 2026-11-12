@@ -110,7 +110,7 @@ check("by launchpad lists Pump.fun first or tied", () => assert.ok(L.byLaunchpad
 check("fresh above $100M stays 0 (DEMOH is $85M)", () => assert.equal(L.fresh, 0));
 check("pump.fun 7d avg $1.36M", () => assert.ok(Math.abs(r.inputs[5].x - 1.3636) < 0.001, r.inputs[5].x));
 check("HL meme funding near baseline", () => assert.ok(r.market.hl.f8h <= 0.0105 && r.market.hl.f8h > 0.004, r.market.hl.f8h));
-check("Line is low single digits, Deep Winter, Midnight", () => { assert.ok(r.line >= 1 && r.line <= 9, String(r.line)); assert.equal(r.zone.name, "Deep Winter"); assert.equal(r.zone.hour, "Midnight"); });
+check("Line is low single digits, Deep Winter, late evening", () => { assert.ok(r.line >= 1 && r.line <= 9, String(r.line)); assert.equal(r.zone.name, "Deep Winter"); assert.equal(r.zone.hour, "Late evening"); });
 check("bottom board 6 of 8, open", () => { assert.equal(r.boards.bottom.hits, 6); assert.equal(r.boards.bottom.open, true); });
 check("season flag off, no top trigger", () => { assert.equal(r.season.on, false); assert.equal(r.boards.top.lit, 0); });
 check("every rule has a live status", () => [...r.boards.bottom.items, ...r.boards.season.items, ...r.boards.top.items].forEach((i) => assert.notEqual(i.hit, null, i.id)));

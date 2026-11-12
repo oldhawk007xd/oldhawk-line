@@ -15,8 +15,8 @@
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="og.jpg">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%2305060d'/%3E%3Ccircle cx='32' cy='39' r='16' fill='%23ffb020'/%3E%3Crect y='39' width='64' height='25' fill='%2305060d'/%3E%3Crect x='5' y='37.5' width='54' height='3.5' rx='1.75' fill='%2314F195'/%3E%3C/svg%3E">
-<meta name="theme-color" content="#05060d">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23060a16'/%3E%3Cg stroke-linecap='round' stroke-width='3'%3E%3Cpath d='M17 22v24' stroke='%23ff5c7a'/%3E%3Cpath d='M32 15v32' stroke='%2314F195'/%3E%3Cpath d='M47 8v30' stroke='%2314F195'/%3E%3C/g%3E%3Crect x='11.5' y='28' width='11' height='12' rx='2.5' fill='%23ff5c7a'/%3E%3Crect x='26.5' y='22' width='11' height='18' rx='2.5' fill='%2314F195'/%3E%3Crect x='41.5' y='12' width='11' height='20' rx='2.5' fill='%2314F195'/%3E%3Cpath d='M9 54h46' stroke='%2314F195' stroke-opacity='.55' stroke-width='2.5' stroke-linecap='round'/%3E%3C/svg%3E">
+<meta name="theme-color" content="#060a16">
 <meta name="color-scheme" content="dark">
 
 <!-- Settings: edit these lines only -->
@@ -792,6 +792,87 @@ a.fomo:hover .fm { opacity: 0.18; transform: translateY(-50%) rotate(-6deg) scal
 .rail .rx-buy.brand .rxi::before { content: none; }
 .rail .rxm { width: 12px; height: 7.6px; fill: #eaedff; filter: drop-shadow(0 0 5px rgba(140,130,255,0.7)); }
 .rail .rx-buy .fw { width: 40px; height: 12.8px; margin-left: 7px; vertical-align: -2px; fill: currentColor; }
+
+/* ---------- the night hero: a real sky drawn live, every memecoin above $10M a star ----------
+   The cycle is one night: 22:00 at the bottom of the last cycle, 06:30 and dawn at its top. The sky and the
+   sea are computed in the browser (#skyGL); the old painted scene and the dial stay in the file, hidden and idle. */
+.hero.nt { --hz: 560px; --lx: 62%; --heroDim: #c6ccdb; min-height: 100svh; }
+.hero.nt .fx > :not(.skygl):not(.nline) { display: none; }
+.hero.nt .fx { background: linear-gradient(180deg, #04060e 0, #0a1124 calc(var(--hz) - 1px), #101a33 var(--hz), #050912 calc(var(--hz) + 2px), #03060c 100%); }
+.skygl { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+.hero.nt .fx::after { content: ""; position: absolute; inset: 0; background: linear-gradient(90deg, rgba(3,5,12,0.46) 0, rgba(3,5,12,0.16) 40%, rgba(3,5,12,0) 60%), linear-gradient(180deg, rgba(3,5,12,0) calc(var(--hz) + 18px), rgba(3,5,12,0.72) calc(var(--hz) + 120px), rgba(3,5,12,0.84) 100%); }
+/* toward dawn the sky lightens: the side of the words darkens with it and the soft ink brightens */
+.hero.nt.late { --heroDim: #e4e8f3; }
+.hero.nt.late .fx::after { background: linear-gradient(90deg, rgba(3,5,12,0.7) 0, rgba(3,5,12,0.56) 36%, rgba(3,5,12,0) 64%), linear-gradient(180deg, rgba(3,5,12,0) calc(var(--hz) + 18px), rgba(3,5,12,0.78) calc(var(--hz) + 120px), rgba(3,5,12,0.88) 100%); }
+.hero.nt .toggle-note { color: #c9cfdd; }
+.nline { position: absolute; left: 0; right: 0; top: var(--hz); height: 1px; z-index: 1; background: linear-gradient(90deg, rgba(20,241,149,0) 0, rgba(20,241,149,0.9) 12%, rgba(20,241,149,0.9) 88%, rgba(20,241,149,0) 100%); box-shadow: 0 0 14px rgba(20,241,149,0.55); }
+.nline i { position: absolute; top: 0; left: var(--lx); transform: translate(-50%, -50%); padding: 0 12px; font: 600 11px/24px var(--text); font-style: normal; letter-spacing: 0.16em; text-transform: uppercase; white-space: nowrap; color: #06130d; background: var(--green); border-radius: 999px; }
+.hero.nt .dialcol, .hero.nt .lamps, .hero.nt #seastats, .hero.nt .skykey, .hero.nt .skytip { display: none !important; }
+.hero.nt .hero-grid { grid-template-rows: auto minmax(150px, auto); }
+.hero.nt .hero-in { padding-bottom: 8px; }
+.reading { display: flex; align-items: flex-end; gap: 18px; margin-top: 16px; max-width: 470px; }
+.hero.nt .dread { position: static; transform: none; flex-direction: row; align-items: flex-end; gap: 14px; text-align: left; }
+.hero.nt .dread .num { font-family: var(--text); font-weight: 600; font-size: clamp(66px, 7.4vw, 98px); line-height: 0.84; letter-spacing: -0.03em; }
+.hero.nt .dread .of { flex-direction: column; align-items: flex-start; gap: 9px; padding: 0 0 7px; background: none; border-radius: 0; }
+.hero.nt .dread .of span:first-child { font-size: 12px; }
+.hclock { margin-left: auto; padding-bottom: 6px; text-align: right; }
+.hclock span { display: block; font: 600 10.5px/1 var(--text); letter-spacing: 0.18em; text-transform: uppercase; color: var(--heroDim); }
+.hclock b { display: block; margin-top: 8px; font: 500 26px/1 var(--mono); letter-spacing: 0.02em; font-variant-numeric: tabular-nums; }
+.hero.nt h1 { margin-top: 24px; font-size: clamp(34px, 3.7vw, 50px); }
+.hero.nt .explain { max-width: 470px; }
+.lstrip { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px; max-width: 470px; margin-top: 24px; padding: 14px 20px 13px; border-radius: 18px; background: rgba(6,9,20,0.58); border: 1px solid rgba(255,255,255,0.13); -webkit-backdrop-filter: blur(14px); backdrop-filter: blur(14px); }
+.lstrip:empty { display: none; }
+.lstrip span { display: block; white-space: nowrap; font: 600 9.5px/1.25 var(--text); letter-spacing: 0.1em; text-transform: uppercase; color: #aab2c5; }
+.lstrip b { display: block; margin-top: 8px; font: 500 22px/1 var(--mono); font-variant-numeric: tabular-nums; color: #f1f3f8; }
+.starmap { position: relative; z-index: 1; grid-column: 2; grid-row: 1; align-self: start; min-width: 0; height: clamp(300px, 46vh, 440px); margin-top: 26px; }
+.sm-stars { position: absolute; inset: 0; }
+.sm-cap { position: absolute; left: 0; right: 0; top: -26px; margin: 0; font-size: 12px; line-height: 1.45; color: rgba(255,255,255,0.66); }
+.starmap.empty .sm-cap { display: none; }
+.sm-alt { position: absolute; left: 0; right: 0; height: 1px; background: linear-gradient(90deg, rgba(255,255,255,0) 0, rgba(255,255,255,0.10) 30%, rgba(255,255,255,0.16) 100%); }
+.sm-alt span { position: absolute; right: 0; top: -17px; font: 500 10.5px/1 var(--mono); letter-spacing: 0.08em; color: rgba(255,255,255,0.55); }
+.sm-star { position: absolute; width: var(--s); height: var(--s); margin: calc(var(--s) / -2) 0 0 calc(var(--s) / -2); border-radius: 50%; background: var(--c); box-shadow: 0 0 calc(var(--s) * 2.2) calc(var(--s) * 0.5) var(--g1), 0 0 calc(var(--s) * 7) var(--s) var(--g2); cursor: pointer; }
+.sm-star::after { content: ""; position: absolute; inset: -11px; border-radius: 50%; }
+.sm-star.on { outline: 1px solid rgba(255,255,255,0.9); outline-offset: 5px; }
+.sm-star.new::before { content: ""; position: absolute; inset: -7px; border-radius: 50%; border: 1px solid rgba(20,241,149,0.85); }
+.sm-lab { position: absolute; transform: translate(10px, -50%); font: 500 11px/1 var(--mono); color: rgba(255,255,255,0.8); white-space: nowrap; text-shadow: 0 1px 8px #000; pointer-events: none; }
+.sm-lab.l { transform: translate(calc(-100% - 10px), -50%); }
+.sm-lab span { color: rgba(255,255,255,0.5); }
+.smcard { position: absolute; z-index: 3; width: 232px; padding: 14px 16px 6px; border-radius: 16px; background: rgba(6,9,20,0.86); border: 1px solid rgba(255,255,255,0.15); -webkit-backdrop-filter: blur(14px); backdrop-filter: blur(14px); box-shadow: 0 20px 60px rgba(0,0,0,0.45); pointer-events: none; }
+.smcard .k { font: 600 10.5px/1 var(--text); letter-spacing: 0.18em; text-transform: uppercase; color: #aab2c5; }
+.smcard .n { margin: 8px 0 10px; font-size: 19px; font-weight: 600; letter-spacing: -0.01em; color: #fff; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.smcard .r { display: flex; justify-content: space-between; gap: 14px; padding: 8px 0; border-top: 1px solid rgba(255,255,255,0.09); font-size: 13.5px; color: #aab2c5; }
+.smcard .r b { font: 500 13px/1.4 var(--mono); color: #f1f3f8; }
+.smcard .r b.up { color: #3dffa0; } .smcard .r b.dn { color: #ff7b93; }
+@media (prefers-reduced-motion: no-preference) {
+  .sm-star.new::before { animation: smNew 2.6s ease-out infinite; }
+  @keyframes smNew { 0% { transform: scale(0.6); opacity: 0.9; } 100% { transform: scale(2.1); opacity: 0; } }
+}
+@media (max-width: 1079px) {
+  .hero.nt .hero-grid { grid-template-rows: none; }
+  .hero.nt .reading { order: 2; max-width: 640px; }
+  .hero.nt .starmap { order: 3; grid-column: 1; grid-row: auto; height: 250px; margin-top: 46px; }
+  .hero.nt .explain { margin-top: 86px; }
+  .hero.nt .lstrip { order: 5; max-width: 640px; margin-top: 18px; }
+  /* the words under the horizon stand on the water: the sea darkens below its first band of light */
+  .hero.nt .fx::after { background: linear-gradient(180deg, rgba(3,5,12,0.5) 0, rgba(3,5,12,0.42) 380px, rgba(3,5,12,0) 540px), linear-gradient(180deg, rgba(3,5,12,0) calc(var(--hz) + 12px), rgba(3,5,12,0.78) calc(var(--hz) + 74px), rgba(3,5,12,0.86) 100%); }
+  .hero.nt.late .fx::after { background: linear-gradient(180deg, rgba(3,5,12,0.66) 0, rgba(3,5,12,0.56) 330px, rgba(3,5,12,0) 520px), linear-gradient(180deg, rgba(3,5,12,0) calc(var(--hz) + 12px), rgba(3,5,12,0.8) calc(var(--hz) + 74px), rgba(3,5,12,0.88) 100%); }
+}
+@media (max-width: 480px) {
+  .hero.nt h1 { font-size: 31px; }
+  .lstrip span { font-size: 8.5px; letter-spacing: 0.06em; }
+  .hclock b { font-size: 22px; }
+  .lstrip { gap: 10px; padding: 12px 14px 11px; }
+  .lstrip b { font-size: 19px; }
+  .hero.nt .starmap { height: 230px; }
+}
+/* ---------- the Playbook: try any reading ---------- */
+.tryit { margin: 0 0 22px; padding: 18px 22px 16px; border-radius: 18px; background: rgba(255,255,255,0.035); border: 1px solid rgba(255,255,255,0.1); }
+.try-k { display: block; font: 600 11px/1 var(--text); letter-spacing: 0.18em; text-transform: uppercase; color: var(--soft); }
+.tryit input[type="range"] { display: block; width: 100%; height: 30px; margin: 8px 0 4px; accent-color: var(--green); cursor: pointer; }
+.try-out { margin: 0; min-height: 3em; font-size: 15.5px; line-height: 1.5; color: var(--soft); }
+.try-out b { color: #fff; font-weight: 600; }
+.hour.try { outline: 2px solid var(--green); outline-offset: 2px; }
+.hour .mini .s { display: none; }
 
 /* ---------- the header bar: every part of the page in one capsule, on one line of type ----------
    Every item is a segment of the same height, type and padding, with a thin divider between two segments.
