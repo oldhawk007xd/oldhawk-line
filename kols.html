@@ -806,8 +806,57 @@ a.fomo:hover .fm { opacity: 0.18; transform: translateY(-50%) rotate(-6deg) scal
 .hero.nt.late .fx::after { background: linear-gradient(90deg, rgba(3,5,12,0.7) 0, rgba(3,5,12,0.56) 36%, rgba(3,5,12,0) 64%), linear-gradient(180deg, rgba(3,5,12,0) calc(var(--hz) + 18px), rgba(3,5,12,0.78) calc(var(--hz) + 120px), rgba(3,5,12,0.88) 100%); }
 .hero.nt .toggle-note { color: #c9cfdd; }
 .nline { position: absolute; left: 0; right: 0; top: var(--hz); height: 1px; z-index: 1; background: linear-gradient(90deg, rgba(20,241,149,0) 0, rgba(20,241,149,0.9) 12%, rgba(20,241,149,0.9) 88%, rgba(20,241,149,0) 100%); box-shadow: 0 0 14px rgba(20,241,149,0.55); }
-.nline i { position: absolute; top: 0; left: var(--lx); transform: translate(-50%, -50%); padding: 0 12px; font: 600 11px/24px var(--text); font-style: normal; letter-spacing: 0.16em; text-transform: uppercase; white-space: nowrap; color: #06130d; background: var(--green); border-radius: 999px; }
+.nline:not(.fuse) i { position: absolute; top: 0; left: var(--lx); transform: translate(-50%, -50%); padding: 0 12px; font: 600 11px/24px var(--text); font-style: normal; letter-spacing: 0.16em; text-transform: uppercase; white-space: nowrap; color: #06130d; background: var(--green); border-radius: 999px; }
 .hero.nt .dialcol, .hero.nt .lamps, .hero.nt #seastats, .hero.nt .skykey, .hero.nt .skytip { display: none !important; }
+/* the Line as a fuse: it lights from 0 to the gate at 45, the six season checks sit past the gate as lamps, and the
+   whole horizon lights only when both keys are turned (the Season Flag). Drawn in #nline (inside the sky, behind the
+   words); the lamps you can point at, the flag in words and the card live in #lnKeys, above the words. */
+.nline.fuse { height: 0; background: none; box-shadow: none; }
+.nline.fuse > * { position: absolute; }
+.ln-base { left: 0; right: 0; top: -0.5px; height: 1px; background: linear-gradient(90deg, rgba(207,216,238,0) 0, rgba(207,216,238,0.3) var(--x0), rgba(207,216,238,0.42) var(--x0), rgba(207,216,238,0.42) var(--xg), rgba(207,216,238,0.3) var(--xg), rgba(207,216,238,0) 100%); }
+.ln-lit { left: var(--x0); top: -1px; height: 2px; width: 0; border-radius: 2px; background: #7dffc8; box-shadow: 0 0 6px 1px rgba(20,241,149,0.85), 0 0 18px 3px rgba(20,241,149,0.42); }
+.ln-spark { left: 0; top: 0; width: 7px; height: 7px; margin: -3.5px 0 0 -3.5px; border-radius: 50%; background: #fff; box-shadow: 0 0 0 2px rgba(125,255,200,0.4), 0 0 12px 5px rgba(20,241,149,0.6), 0 0 34px 12px rgba(20,241,149,0.22); }
+.ln-tick { top: -5px; width: 1px; height: 10px; margin-left: -0.5px; background: rgba(225,232,246,0.6); }
+.ln-tl, .ln-now, .ln-go, .ln-ck, .ln-lamp b { white-space: nowrap; font: 500 10px/1 var(--mono); letter-spacing: 0.08em; text-transform: uppercase; color: rgba(222,229,243,0.62); text-shadow: 0 0 6px rgba(3,5,12,0.95), 0 0 2px rgba(3,5,12,0.95), 0 1px 2px #000; }
+.ln-tl { top: 15px; transform: translate(-50%, -50%); }
+.ln-now { top: -22px; transform: translateY(-50%); font-size: 11px; font-weight: 600; letter-spacing: 0.1em; color: #f4f7fc; }
+.ln-now b { margin-left: 6px; font-size: 17px; letter-spacing: 0; color: #fff; }
+.nline.fuse.over .ln-now { transform: translate(-100%, -50%); }
+.ln-go { top: -14px; transform: translate(-50%, -50%); font-weight: 600; color: #3dffaa; }
+.ln-go.row { top: -22px; transform: translateY(-50%); }
+.ln-gate { top: 0; transform: translate(-50%, -50%); padding: 0 13px; font: 600 11px/25px var(--text); font-style: normal; letter-spacing: 0.16em; text-transform: uppercase; white-space: nowrap; color: #3dffaa; background: rgba(8,14,22,0.86); border-radius: 999px; box-shadow: 0 0 0 1px rgba(20,241,149,0.75), 0 0 22px rgba(20,241,149,0.3); }
+.nline.fuse.over .ln-gate { color: #06130d; background: var(--green); box-shadow: 0 0 26px rgba(20,241,149,0.5); }
+.ln-ck { top: -20px; transform: translateY(-50%); font-size: 11px; font-weight: 600; color: #f4f7fc; }
+.ln-ck.r { transform: translate(-100%, -50%); }
+.ln-lamp { top: 0; width: 0; height: 0; }
+.ln-lamp i { position: absolute; left: -5px; top: -5px; width: 10px; height: 10px; box-sizing: border-box; border-radius: 50%; background: #0a0f1c; border: 1.3px solid rgba(230,236,248,0.62); transition: transform .2s ease; }
+.ln-lamp.on i { background: var(--green); border-color: var(--green); box-shadow: 0 0 10px 2px rgba(20,241,149,0.55); }
+.ln-lamp.req::after { content: ""; position: absolute; left: -9px; top: -9px; width: 18px; height: 18px; box-sizing: border-box; border-radius: 50%; border: 1px dashed rgba(230,236,248,0.55); }
+.ln-lamp.req.on::after { border-color: var(--green); }
+.ln-lamp.sel i { transform: scale(1.35); }
+.ln-lamp b { position: absolute; left: 0; top: 16px; transform: translate(-50%, -50%); }
+.ln-lamp.on b { color: #3dffaa; font-weight: 600; }
+.nline.fuse.over .ln-spark, .nline.fuse.none .ln-lit, .nline.fuse.none .ln-spark, .nline.fuse.none .ln-now, .nline.fuse.none .ln-go,
+.nline.fuse.past .ln-ck, .nline.fuse.past .ln-lamp, .nline.fuse.none .ln-ck, .nline.fuse.none .ln-lamp { display: none; }
+.nline.fuse.ignite .ln-base { top: -1px; height: 2px; background: linear-gradient(90deg, rgba(157,255,210,0.35) 0, #9dffd2 12%, #9dffd2 88%, rgba(157,255,210,0.35) 100%); box-shadow: 0 0 8px 2px rgba(20,241,149,0.8), 0 0 26px 6px rgba(20,241,149,0.35); }
+.lnkeys { position: absolute; inset: 0; z-index: 4; pointer-events: none; }
+.lnkeys.past { display: none; }
+.lnk { position: absolute; width: 30px; height: 30px; margin: -15px 0 0 -15px; padding: 0; border: 0; border-radius: 50%; background: transparent; cursor: pointer; pointer-events: auto; }
+.lnk:focus-visible { outline: 2px solid var(--green); outline-offset: 2px; }
+.lnflag { position: absolute; box-sizing: border-box; margin: 0; padding: 10px 14px; border-radius: 12px; background: rgba(6,9,20,0.66); border: 1px solid rgba(255,255,255,0.12); -webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px); font: 400 12.5px/1.5 var(--text); color: rgba(225,231,243,0.86); }
+.lnflag b { margin-right: 10px; font: 600 10.5px/1 var(--mono); letter-spacing: 0.12em; text-transform: uppercase; color: #fff; }
+.lnflag b i { font-style: normal; color: #ff8a8a; }
+.lnflag b i.on { color: #3dffaa; }
+.lnflag em { font-style: normal; font-weight: 600; color: #fff; }
+.lncard { position: absolute; width: 262px; box-sizing: border-box; padding: 12px 14px 13px; border-radius: 12px; transform: translateY(-100%); background: rgba(6,9,20,0.88); border: 1px solid rgba(255,255,255,0.16); -webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px); box-shadow: 0 10px 30px rgba(0,0,0,0.35); font: 400 12.5px/1.45 var(--text); color: #e9edf6; pointer-events: none; }
+.lncard .k { display: block; margin-bottom: 8px; font: 600 10px/1 var(--mono); letter-spacing: 0.1em; text-transform: uppercase; color: rgba(222,229,243,0.62); }
+.lncard .v { display: block; margin-top: 6px; font-weight: 600; color: #fff; }
+.lncard .v.on { color: #3dffaa; }
+@media (prefers-reduced-motion: no-preference) {
+  .ln-spark { animation: lnSpark 2.6s ease-in-out infinite; }
+  @keyframes lnSpark { 0%, 100% { box-shadow: 0 0 0 2px rgba(125,255,200,0.4), 0 0 12px 5px rgba(20,241,149,0.6), 0 0 34px 12px rgba(20,241,149,0.22); } 50% { box-shadow: 0 0 0 3px rgba(125,255,200,0.5), 0 0 16px 7px rgba(20,241,149,0.72), 0 0 44px 16px rgba(20,241,149,0.28); } }
+}
+@media (max-width: 1079px) { .lncard { width: 236px; } }
 .hero.nt .hero-grid { grid-template-rows: auto minmax(150px, auto); }
 .hero.nt .hero-in { padding-bottom: 8px; }
 .reading { display: flex; align-items: flex-end; gap: 18px; margin-top: 16px; max-width: 470px; }
@@ -851,7 +900,7 @@ a.fomo:hover .fm { opacity: 0.18; transform: translateY(-50%) rotate(-6deg) scal
   .hero.nt .hero-grid { grid-template-rows: none; }
   .hero.nt .reading { order: 2; max-width: 640px; }
   .hero.nt .starmap { order: 3; grid-column: 1; grid-row: auto; height: 250px; margin-top: 46px; }
-  .hero.nt .explain { margin-top: 86px; }
+  .hero.nt .explain { margin-top: 136px; }
   .hero.nt .lstrip { order: 5; max-width: 640px; margin-top: 18px; }
   /* the words under the horizon stand on the water: the sea darkens below its first band of light */
   .hero.nt .fx::after { background: linear-gradient(180deg, rgba(3,5,12,0.5) 0, rgba(3,5,12,0.42) 380px, rgba(3,5,12,0) 540px), linear-gradient(180deg, rgba(3,5,12,0) calc(var(--hz) + 12px), rgba(3,5,12,0.78) calc(var(--hz) + 74px), rgba(3,5,12,0.86) 100%); }

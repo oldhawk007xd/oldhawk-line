@@ -806,8 +806,57 @@ a.fomo:hover .fm { opacity: 0.18; transform: translateY(-50%) rotate(-6deg) scal
 .hero.nt.late .fx::after { background: linear-gradient(90deg, rgba(3,5,12,0.7) 0, rgba(3,5,12,0.56) 36%, rgba(3,5,12,0) 64%), linear-gradient(180deg, rgba(3,5,12,0) calc(var(--hz) + 18px), rgba(3,5,12,0.78) calc(var(--hz) + 120px), rgba(3,5,12,0.88) 100%); }
 .hero.nt .toggle-note { color: #c9cfdd; }
 .nline { position: absolute; left: 0; right: 0; top: var(--hz); height: 1px; z-index: 1; background: linear-gradient(90deg, rgba(20,241,149,0) 0, rgba(20,241,149,0.9) 12%, rgba(20,241,149,0.9) 88%, rgba(20,241,149,0) 100%); box-shadow: 0 0 14px rgba(20,241,149,0.55); }
-.nline i { position: absolute; top: 0; left: var(--lx); transform: translate(-50%, -50%); padding: 0 12px; font: 600 11px/24px var(--text); font-style: normal; letter-spacing: 0.16em; text-transform: uppercase; white-space: nowrap; color: #06130d; background: var(--green); border-radius: 999px; }
+.nline:not(.fuse) i { position: absolute; top: 0; left: var(--lx); transform: translate(-50%, -50%); padding: 0 12px; font: 600 11px/24px var(--text); font-style: normal; letter-spacing: 0.16em; text-transform: uppercase; white-space: nowrap; color: #06130d; background: var(--green); border-radius: 999px; }
 .hero.nt .dialcol, .hero.nt .lamps, .hero.nt #seastats, .hero.nt .skykey, .hero.nt .skytip { display: none !important; }
+/* the Line as a fuse: it lights from 0 to the gate at 45, the six season checks sit past the gate as lamps, and the
+   whole horizon lights only when both keys are turned (the Season Flag). Drawn in #nline (inside the sky, behind the
+   words); the lamps you can point at, the flag in words and the card live in #lnKeys, above the words. */
+.nline.fuse { height: 0; background: none; box-shadow: none; }
+.nline.fuse > * { position: absolute; }
+.ln-base { left: 0; right: 0; top: -0.5px; height: 1px; background: linear-gradient(90deg, rgba(207,216,238,0) 0, rgba(207,216,238,0.3) var(--x0), rgba(207,216,238,0.42) var(--x0), rgba(207,216,238,0.42) var(--xg), rgba(207,216,238,0.3) var(--xg), rgba(207,216,238,0) 100%); }
+.ln-lit { left: var(--x0); top: -1px; height: 2px; width: 0; border-radius: 2px; background: #7dffc8; box-shadow: 0 0 6px 1px rgba(20,241,149,0.85), 0 0 18px 3px rgba(20,241,149,0.42); }
+.ln-spark { left: 0; top: 0; width: 7px; height: 7px; margin: -3.5px 0 0 -3.5px; border-radius: 50%; background: #fff; box-shadow: 0 0 0 2px rgba(125,255,200,0.4), 0 0 12px 5px rgba(20,241,149,0.6), 0 0 34px 12px rgba(20,241,149,0.22); }
+.ln-tick { top: -5px; width: 1px; height: 10px; margin-left: -0.5px; background: rgba(225,232,246,0.6); }
+.ln-tl, .ln-now, .ln-go, .ln-ck, .ln-lamp b { white-space: nowrap; font: 500 10px/1 var(--mono); letter-spacing: 0.08em; text-transform: uppercase; color: rgba(222,229,243,0.62); text-shadow: 0 0 6px rgba(3,5,12,0.95), 0 0 2px rgba(3,5,12,0.95), 0 1px 2px #000; }
+.ln-tl { top: 15px; transform: translate(-50%, -50%); }
+.ln-now { top: -22px; transform: translateY(-50%); font-size: 11px; font-weight: 600; letter-spacing: 0.1em; color: #f4f7fc; }
+.ln-now b { margin-left: 6px; font-size: 17px; letter-spacing: 0; color: #fff; }
+.nline.fuse.over .ln-now { transform: translate(-100%, -50%); }
+.ln-go { top: -14px; transform: translate(-50%, -50%); font-weight: 600; color: #3dffaa; }
+.ln-go.row { top: -22px; transform: translateY(-50%); }
+.ln-gate { top: 0; transform: translate(-50%, -50%); padding: 0 13px; font: 600 11px/25px var(--text); font-style: normal; letter-spacing: 0.16em; text-transform: uppercase; white-space: nowrap; color: #3dffaa; background: rgba(8,14,22,0.86); border-radius: 999px; box-shadow: 0 0 0 1px rgba(20,241,149,0.75), 0 0 22px rgba(20,241,149,0.3); }
+.nline.fuse.over .ln-gate { color: #06130d; background: var(--green); box-shadow: 0 0 26px rgba(20,241,149,0.5); }
+.ln-ck { top: -20px; transform: translateY(-50%); font-size: 11px; font-weight: 600; color: #f4f7fc; }
+.ln-ck.r { transform: translate(-100%, -50%); }
+.ln-lamp { top: 0; width: 0; height: 0; }
+.ln-lamp i { position: absolute; left: -5px; top: -5px; width: 10px; height: 10px; box-sizing: border-box; border-radius: 50%; background: #0a0f1c; border: 1.3px solid rgba(230,236,248,0.62); transition: transform .2s ease; }
+.ln-lamp.on i { background: var(--green); border-color: var(--green); box-shadow: 0 0 10px 2px rgba(20,241,149,0.55); }
+.ln-lamp.req::after { content: ""; position: absolute; left: -9px; top: -9px; width: 18px; height: 18px; box-sizing: border-box; border-radius: 50%; border: 1px dashed rgba(230,236,248,0.55); }
+.ln-lamp.req.on::after { border-color: var(--green); }
+.ln-lamp.sel i { transform: scale(1.35); }
+.ln-lamp b { position: absolute; left: 0; top: 16px; transform: translate(-50%, -50%); }
+.ln-lamp.on b { color: #3dffaa; font-weight: 600; }
+.nline.fuse.over .ln-spark, .nline.fuse.none .ln-lit, .nline.fuse.none .ln-spark, .nline.fuse.none .ln-now, .nline.fuse.none .ln-go,
+.nline.fuse.past .ln-ck, .nline.fuse.past .ln-lamp, .nline.fuse.none .ln-ck, .nline.fuse.none .ln-lamp { display: none; }
+.nline.fuse.ignite .ln-base { top: -1px; height: 2px; background: linear-gradient(90deg, rgba(157,255,210,0.35) 0, #9dffd2 12%, #9dffd2 88%, rgba(157,255,210,0.35) 100%); box-shadow: 0 0 8px 2px rgba(20,241,149,0.8), 0 0 26px 6px rgba(20,241,149,0.35); }
+.lnkeys { position: absolute; inset: 0; z-index: 4; pointer-events: none; }
+.lnkeys.past { display: none; }
+.lnk { position: absolute; width: 30px; height: 30px; margin: -15px 0 0 -15px; padding: 0; border: 0; border-radius: 50%; background: transparent; cursor: pointer; pointer-events: auto; }
+.lnk:focus-visible { outline: 2px solid var(--green); outline-offset: 2px; }
+.lnflag { position: absolute; box-sizing: border-box; margin: 0; padding: 10px 14px; border-radius: 12px; background: rgba(6,9,20,0.66); border: 1px solid rgba(255,255,255,0.12); -webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px); font: 400 12.5px/1.5 var(--text); color: rgba(225,231,243,0.86); }
+.lnflag b { margin-right: 10px; font: 600 10.5px/1 var(--mono); letter-spacing: 0.12em; text-transform: uppercase; color: #fff; }
+.lnflag b i { font-style: normal; color: #ff8a8a; }
+.lnflag b i.on { color: #3dffaa; }
+.lnflag em { font-style: normal; font-weight: 600; color: #fff; }
+.lncard { position: absolute; width: 262px; box-sizing: border-box; padding: 12px 14px 13px; border-radius: 12px; transform: translateY(-100%); background: rgba(6,9,20,0.88); border: 1px solid rgba(255,255,255,0.16); -webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px); box-shadow: 0 10px 30px rgba(0,0,0,0.35); font: 400 12.5px/1.45 var(--text); color: #e9edf6; pointer-events: none; }
+.lncard .k { display: block; margin-bottom: 8px; font: 600 10px/1 var(--mono); letter-spacing: 0.1em; text-transform: uppercase; color: rgba(222,229,243,0.62); }
+.lncard .v { display: block; margin-top: 6px; font-weight: 600; color: #fff; }
+.lncard .v.on { color: #3dffaa; }
+@media (prefers-reduced-motion: no-preference) {
+  .ln-spark { animation: lnSpark 2.6s ease-in-out infinite; }
+  @keyframes lnSpark { 0%, 100% { box-shadow: 0 0 0 2px rgba(125,255,200,0.4), 0 0 12px 5px rgba(20,241,149,0.6), 0 0 34px 12px rgba(20,241,149,0.22); } 50% { box-shadow: 0 0 0 3px rgba(125,255,200,0.5), 0 0 16px 7px rgba(20,241,149,0.72), 0 0 44px 16px rgba(20,241,149,0.28); } }
+}
+@media (max-width: 1079px) { .lncard { width: 236px; } }
 .hero.nt .hero-grid { grid-template-rows: auto minmax(150px, auto); }
 .hero.nt .hero-in { padding-bottom: 8px; }
 .reading { display: flex; align-items: flex-end; gap: 18px; margin-top: 16px; max-width: 470px; }
@@ -851,7 +900,7 @@ a.fomo:hover .fm { opacity: 0.18; transform: translateY(-50%) rotate(-6deg) scal
   .hero.nt .hero-grid { grid-template-rows: none; }
   .hero.nt .reading { order: 2; max-width: 640px; }
   .hero.nt .starmap { order: 3; grid-column: 1; grid-row: auto; height: 250px; margin-top: 46px; }
-  .hero.nt .explain { margin-top: 86px; }
+  .hero.nt .explain { margin-top: 136px; }
   .hero.nt .lstrip { order: 5; max-width: 640px; margin-top: 18px; }
   /* the words under the horizon stand on the water: the sea darkens below its first band of light */
   .hero.nt .fx::after { background: linear-gradient(180deg, rgba(3,5,12,0.5) 0, rgba(3,5,12,0.42) 380px, rgba(3,5,12,0) 540px), linear-gradient(180deg, rgba(3,5,12,0) calc(var(--hz) + 12px), rgba(3,5,12,0.78) calc(var(--hz) + 74px), rgba(3,5,12,0.86) 100%); }
@@ -1091,6 +1140,7 @@ a.fomo:hover .fm { opacity: 0.18; transform: translateY(-50%) rotate(-6deg) scal
     <div class="lifttip" id="liftTip" hidden></div>
   </div>
   <div class="skytip" id="skytip" role="status" hidden></div>
+  <div class="lnkeys" id="lnKeys"></div>
 
   <header class="top">
     <div class="wrap">
@@ -3251,6 +3301,9 @@ void main() {
   /* ---------- state ---------- */
   let R = null, H = [], W = null;
   let view = "now", whatL = 0;
+  /* the Line as a fuse on the horizon (fuseLayout, fuseAt) */
+  let fuse = null, fuseKey = "", fuseL = null, fuseLast = null, fuseCls = "", fuseN = null, lampPinned = -1;
+  const LAMP_REQ = "S6";
   let shown = null, lastNum = null, lastTone = -1, lastInk = "", lastZone = "", lastCkey = -1, lastDk = null, lastClock = "", nightGeo = null, tryTouched = false;
   let geo = null, heroVisible = true, dragging = false, hintGone = false, keyCounts = "", colEdge = null;
   let animToken = 0, raf = 0, lastFlash = 0;
@@ -3482,6 +3535,7 @@ void main() {
       const ck = clockOf(L);
       if (ck !== lastClock) { const ce = $("clock"); if (ce) ce.textContent = ck; lastClock = ck; }
       NightSky.setLine(L);
+      fuseAt(L);
       hero.classList.toggle("late", NIGHT && L >= 62);
     }
     if (ink !== lastInk) { if (lastInk) hero.classList.remove(`ink-${lastInk}`); hero.classList.add(`ink-${ink}`); lastInk = ink; }
@@ -3583,6 +3637,7 @@ void main() {
     document.querySelectorAll(".toggle button").forEach((b) => b.setAttribute("aria-pressed", String(b.dataset.view === view)));
     $("backBtn").hidden = view !== "what";
     $("sinceY").classList.toggle("off", view !== "now");
+    if (fuseLast != null) fuseAt(fuseLast, true);
     let h1, explain, rules = "", sea, chip = null, numCls = "";
     if (view === "jan") {
       h1 = "22:00, January 2024.";
@@ -4752,6 +4807,123 @@ void main() {
     hero.style.setProperty("--lx", `${(g.sl + g.sw * 0.5).toFixed(1)}px`);
     NightSky.layout(g);
     if (moved) renderStars();
+    fuseLayout(g);
+  }
+  /* ---------- the Line on the horizon: a fuse from 0 to the gate at 45, and past the gate the second key, the six
+     season checks. The Season Flag needs both (lib/engine.mjs: a Line of 45 or more, and 4 of 6 checks with S6
+     among them); when it is on, the whole horizon lights. Past days and "what if" readings show the fuse only. ---------- */
+  function lampNote(it) {
+    const g = it.g, need = g && (g.op === "ge" || g.op === "le") && g.t ? `, needs ${g.t}${g.op === "le" ? " or less" : ""}` : "";
+    return `${it.hit ? "On" : "Off"}${it.value ? `: ${it.value}${need}` : ""}.`;
+  }
+  function flagSay(S, narrow) {
+    const on = Boolean(R.season && R.season.on), n = R.line, of = S.items.length, hits = S.items.filter((i) => i.hit).length;
+    const s6 = S.items.some((i) => i.id === LAMP_REQ && i.hit), keys = n >= 45 && hits >= S.need && s6;
+    const head = `<b>Season flag <i${on ? ' class="on"' : ""}>${on ? "on" : "off"}</i></b>`;
+    if (on) return `${head}Both keys turned: the Line at <em>${n}</em> and <em>${hits} of ${of}</em> checks, ${LAMP_REQ} among them.`;
+    if (keys) return `${head}Both keys are turned, but the DOGE kill switch (K3) holds it off.`;
+    if (narrow) return `${head}Line <em>${n}</em> of 45. Checks <em>${hits}</em> of ${of}, need ${S.need} with ${LAMP_REQ}.`;
+    return `${head}It turns on with two keys: the Line at 45 or more, <em>${n}</em> now, and ${S.need} of ${of} checks with ${LAMP_REQ}, <em>${hits}</em> now, ${LAMP_REQ} ${s6 ? "on" : "off"}.`;
+  }
+  function fuseLayout(g) {
+    const el = $("nline"), keys = $("lnKeys");
+    if (!el || !keys || !g) return;
+    const narrow = g.sw < 520;
+    const x0 = g.sl, xg = g.sl + g.sw * (narrow ? 0.56 : 0.58), xe = g.sl + g.sw;
+    const S = R && !isBlank() && R.boards && R.boards.season && Array.isArray(R.boards.season.items) && R.boards.season.items.length > 1 ? R.boards.season : null;
+    const key = [x0, xg, xe, g.hy, g.hw, S ? S.items.map((i) => `${i.id}${i.hit ? 1 : 0}${i.value}`).join() : "", R && R.season ? R.season.on : "", R ? R.line : ""].join("|");
+    if (key === fuseKey) return;
+    fuseKey = key;
+    const items = S ? S.items : [];
+    const la = xg + (narrow ? 64 : 80), lb = xe - (narrow ? 2 : 6), step = (lb - la) / Math.max(1, items.length - 1);
+    const xs = (v) => (x0 + v / 45 * (xg - x0)).toFixed(1);
+    let h = '<span class="ln-base"></span><span class="ln-lit"></span><span class="ln-spark"></span>';
+    for (const v of [0, 15, 30]) h += `${v ? `<span class="ln-tick" style="left:${xs(v)}px"></span>` : ""}<span class="ln-tl" style="left:${xs(v)}px">${v}</span>`;
+    h += `<span class="ln-now"></span><span class="ln-go"></span><i class="ln-gate" style="left:${xg.toFixed(1)}px">The Line 45</i>`;
+    let k = "";
+    if (S) {
+      const hits = items.filter((i) => i.hit).length;
+      h += `<span class="ln-ck${narrow ? " r" : ""}" style="left:${(narrow ? xe : la - 6).toFixed(1)}px">${narrow ? "Checks" : "Season checks"} ${hits} of ${items.length}</span>`;
+      items.forEach((it, i) => {
+        const x = (la + i * step).toFixed(1), req = it.id === LAMP_REQ;
+        h += `<span class="ln-lamp${it.hit ? " on" : ""}${req ? " req" : ""}" data-i="${i}" style="left:${x}px"><i></i><b>${esc(it.id)}</b></span>`;
+        k += `<button type="button" class="lnk" data-i="${i}" style="left:${x}px;top:${g.hy.toFixed(1)}px" aria-label="${esc(`${it.id}${req ? ", required" : ""}. ${it.text}. ${lampNote(it)}`)}"></button>`;
+      });
+      k += `<p class="lnflag" id="lnFlag" style="left:${x0.toFixed(1)}px;top:${(g.hy + (narrow ? 30 : 34)).toFixed(1)}px;width:${(xe - x0).toFixed(1)}px">${flagSay(S, narrow)}</p>`;
+    }
+    k += '<div class="lncard" id="lnCard" aria-hidden="true" hidden></div>';
+    el.innerHTML = h;
+    el.classList.add("fuse");
+    el.style.setProperty("--x0", `${x0.toFixed(1)}px`);
+    el.style.setProperty("--xg", `${xg.toFixed(1)}px`);
+    keys.innerHTML = k;
+    lampPinned = -1;
+    fuse = { x0, xg, la, step, narrow, hy: g.hy, hw: g.hw, items, lit: el.querySelector(".ln-lit"), spark: el.querySelector(".ln-spark"), now: el.querySelector(".ln-now"), go: el.querySelector(".ln-go") };
+    fuseL = null; fuseN = null; fuseCls = "";
+    if (fuseLast != null) fuseAt(fuseLast);
+  }
+  function fuseAt(L, force) {
+    fuseLast = L;
+    const el = $("nline");
+    if (!fuse || !el) return;
+    const past = view !== "now", none = view === "now" && !current(), over = L >= 45;
+    const on = !past && !none && Boolean(R && R.season && R.season.on);
+    const cls = `${past}${none}${on}${over}`;
+    if (cls !== fuseCls) {
+      fuseCls = cls;
+      el.classList.toggle("past", past); el.classList.toggle("none", none); el.classList.toggle("ignite", on); el.classList.toggle("over", over);
+      $("lnKeys").classList.toggle("past", past || none);
+      if (past || none) lampCard(-1);
+      force = true;
+    }
+    if (L === fuseL && !force) return;
+    fuseL = L;
+    const xf = fuse.x0 + Math.max(0, Math.min(45, L)) / 45 * (fuse.xg - fuse.x0);
+    fuse.lit.style.width = `${(xf - fuse.x0).toFixed(1)}px`;
+    fuse.spark.style.transform = `translateX(${xf.toFixed(1)}px)`;
+    const n = Math.round(L), tag = view === "jan" ? "Jan 2024" : view === "dec" ? "Dec 2024" : view === "what" ? "What if" : "Now";
+    const nk = `${tag}|${n}`;
+    if (nk !== fuseN || force) {
+      fuseN = nk;
+      fuse.now.innerHTML = `${tag}<b>${n}</b>`;
+      fuse.go.textContent = n < 45 ? `${45 - n} to the Line` : "";
+      fuse._nw = fuse.now.offsetWidth;
+      fuse._gw = fuse.go.offsetWidth;
+    }
+    const nx = over ? fuse.xg - 64 : xf - 4;
+    fuse.now.style.left = `${nx.toFixed(1)}px`;
+    /* the distance sits between the reading and the gate, and steps aside when there is no room for it */
+    const a = xf - 4 + (fuse._nw || 0) + 12, b = fuse.xg - 62, gw = fuse._gw || 0;
+    const mid = !fuse.narrow && b - a >= gw + 4, row = !mid && a + gw <= fuse.xg + 60, show = n < 45 && (mid || row);
+    fuse.go.style.visibility = show ? "visible" : "hidden";
+    fuse.go.classList.toggle("row", row);
+    if (show) fuse.go.style.left = `${(mid ? (a + b) / 2 : a).toFixed(1)}px`;
+  }
+  function lampCard(i) {
+    const card = $("lnCard");
+    document.querySelectorAll("#nline .ln-lamp.sel").forEach((e) => e.classList.remove("sel"));
+    if (!card) return;
+    const it = fuse && fuse.items[i];
+    if (!it) { card.hidden = true; return; }
+    card.innerHTML = `<span class="k">${esc(it.id)}${it.id === LAMP_REQ ? ", required" : ""}</span>${esc(it.text)}.<span class="v${it.hit ? " on" : ""}">${esc(lampNote(it))}</span>`;
+    card.hidden = false;
+    const x = fuse.la + i * fuse.step, w = card.offsetWidth;
+    card.style.left = `${Math.max(12, Math.min(fuse.hw - w - 12, x - w + 24)).toFixed(1)}px`;
+    card.style.top = `${(fuse.hy - 30).toFixed(1)}px`;
+    const lamp = document.querySelector(`#nline .ln-lamp[data-i="${i}"]`);
+    if (lamp) lamp.classList.add("sel");
+  }
+  function wireFuse() {
+    const keys = $("lnKeys");
+    if (!keys) return;
+    const idx = (e) => { const b = e.target.closest && e.target.closest(".lnk"); return b ? Number(b.dataset.i) : -1; };
+    keys.addEventListener("mouseover", (e) => { const i = idx(e); if (i >= 0 && lampPinned < 0) lampCard(i); });
+    keys.addEventListener("mouseout", (e) => { if (idx(e) >= 0 && lampPinned < 0) lampCard(-1); });
+    keys.addEventListener("focusin", (e) => { const i = idx(e); if (i >= 0) lampCard(i); });
+    keys.addEventListener("focusout", () => { if (lampPinned < 0) lampCard(-1); });
+    keys.addEventListener("click", (e) => { const i = idx(e); if (i < 0) return; lampPinned = lampPinned === i ? -1 : i; lampCard(lampPinned); });
+    document.addEventListener("click", (e) => { if (lampPinned >= 0 && idx(e) < 0) { lampPinned = -1; lampCard(-1); } });
+    document.addEventListener("keydown", (e) => { if (e.key === "Escape" && !$("lnCard")?.hidden) { lampPinned = -1; lampCard(-1); } });
   }
   function renderStrip() {
     const el = $("lstrip");
@@ -5187,7 +5359,7 @@ void main() {
   const alertHref = TG || XURL;
   ["alertBtn", "alertBtn2"].forEach((id) => { $(id).href = alertHref; $(id).textContent = TG ? "Get the first light alert" : "Follow for the first light alert"; });
   /* the night hero: the sky, the stars and the Playbook's slider are ready before the first reading */
-  NightSky.init(); wireStars(); wireTry(); nightLayout();
+  NightSky.init(); wireStars(); wireTry(); wireFuse(); nightLayout();
   if (XHANDLE) { $("byLink").href = `https://x.com/${XHANDLE}`; $("byLink").textContent = `@${XHANDLE}`; }
 
 /*@share*/
