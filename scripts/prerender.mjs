@@ -1,4 +1,4 @@
-/* Writes the latest reading into the two pages, so a reader that runs no JavaScript (a search engine, a link
+/* Writes the latest reading into the pages, so a reader that runs no JavaScript (a search engine, a link
    preview, an AI assistant) gets the number, the zone, the runners and the KOL record instead of empty places.
    Runs in the deploy job on the built folder (scripts/site.mjs): it opens each page in headless Chrome with the
    page's own code, waits for it to draw, and copies what the code wrote into the same places in the file.
@@ -38,6 +38,14 @@ export const PAGES = [
     slots: ["kolStats", "kolSpectrum", "kolGrid", "kolMore", "kolCalls", "kolMethodBody"],
     ready: () => Boolean(document.querySelector("#kolGrid .kcard") && document.querySelector("#kolStats > *") && document.querySelector("#kolMethodBody > *")),
     fixed: (r) => ({ kolAt: `Record of ${esc(stamp(r.kols && r.kols.at ? r.kols.at : r.at))}, ${r.kols && Array.isArray(r.kols.people) ? r.kols.people.length : 0} accounts` })
+  },
+  {
+    /* the Record: every daily close (data/history.json). Its line under the title names the last close and
+       counts no minutes, so it is written like the rest. */
+    file: "record.html",
+    slots: ["recLead", "recAt", "recStats", "recDaysLead", "recChart", "recSignals", "recTable", "recVer"],
+    ready: () => Boolean(document.querySelector("#recTable tr") && document.querySelector("#recStats > *") && document.querySelector("#recChart svg")),
+    fixed: () => ({})
   }
 ];
 

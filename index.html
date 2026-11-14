@@ -356,6 +356,10 @@ section.band > .wrap { padding-block: 96px; }
 .trio b { font-family: var(--display); font-weight: 600; letter-spacing: -0.02em; font-size: clamp(32px, 10vw, 48px); line-height: 1; color: var(--amber); }
 .trio span { font-size: 13px; color: var(--dim); }
 .risk { margin: 8px 0 0; font-size: 14px; color: var(--dim); border-top: 1px solid var(--rule); padding-top: 14px; max-width: 54ch; }
+.rec-link { margin: 16px 0 0; font-size: 15px; }
+.rec-link a { color: var(--green); font-weight: 600; text-decoration: none; }
+.rec-link a::after { content: " \2192"; }
+.rec-link a:hover, .rec-link a:focus-visible { text-decoration: underline; text-underline-offset: 3px; }
 #cycleChart svg { display: block; width: 100%; height: auto; }
 figcaption { margin-top: 10px; font-size: 13px; color: var(--dim); }
 
@@ -1326,6 +1330,7 @@ a.fomo:hover .fm { opacity: 0.18; transform: translateY(-50%) rotate(-6deg) scal
           <div><b id="wkStreak">n/a</b><span id="wkStreakL">weeks in a row</span></div>
         </div>
         <p class="risk">One cycle is not a promise. That is why the rules buy slowly and sell in steps, whatever the next day brings.</p>
+        <p class="rec-link"><a href="record.html">The Record: every daily close, as it was published</a></p>
       </div>
       <figure>
         <div class="chart-tabs" role="group" aria-label="Chart">
@@ -1390,6 +1395,7 @@ a.fomo:hover .fm { opacity: 0.18; transform: translateY(-50%) rotate(-6deg) scal
         <div class="label">Read this first</div>
         <p>The Oldhawk Line is a rules-based research framework, published for education. It is not financial advice and not a recommendation to buy or sell any token. Memecoins can go to zero. The anchors come from one past cycle and the next one can behave differently.</p>
         <p>Built and maintained by <a id="byLink" href="https://x.com/oldhawksol" target="_blank" rel="noopener">@oldhawksol</a>. Contact: <a href="mailto:theoldhawk007@gmail.com">theoldhawk007@gmail.com</a>.</p>
+        <p>Also here: <a href="record.html">the Record</a>, every daily close as it was published, and <a href="kols.html">KOL Watch</a>, who is calling and their record.</p>
         <p id="tradeNote" hidden>On-chain coin links open a trading terminal through a referral link that supports the site.</p>
         <p id="buyNote" hidden></p>
         <div class="sign">Receipts, not vibes.</div>

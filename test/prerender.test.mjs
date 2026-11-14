@@ -49,14 +49,16 @@ check("the share text leads with the reading and its time, once", () => {
 
 const index = await readFile(new URL("../index.html", import.meta.url), "utf8");
 const kols = await readFile(new URL("../kols.html", import.meta.url), "utf8");
-check("every place named for the two pages is in their markup, before the script", () => {
+const record = await readFile(new URL("../record.html", import.meta.url), "utf8");
+check("every place named for the pages is in their markup, before the script", () => {
+  assert.deepEqual(PAGES.map((pg) => pg.file), ["index.html", "kols.html", "record.html"]);
   for (const pg of PAGES) {
-    const html = pg.file === "index.html" ? index : kols;
+    const html = { "index.html": index, "kols.html": kols, "record.html": record }[pg.file];
     for (const id of [...pg.slots, ...Object.keys(pg.fixed({ at: "2026-11-11T08:30:00Z", kols: { people: [] } }))]) assert.notEqual(setInner(html, id, "x"), null, `${pg.file} #${id}`);
   }
 });
-check("both pages put back what they held before they draw", () => {
-  for (const html of [index, kols]) { assert.ok(html.includes("const unpre = ")); assert.ok(/\n\s+unpre\(\);\n/.test(html)); }
+check("every page puts back what it held before it draws", () => {
+  for (const html of [index, kols, record]) { assert.ok(html.includes("const unpre = ")); assert.ok(/\n\s+unpre\(\);\n/.test(html)); }
   assert.ok(index.includes("<script data-dial>"));
 });
 check("no dashes or middle dots in what the file is given", () => {

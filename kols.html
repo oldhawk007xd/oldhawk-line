@@ -356,6 +356,10 @@ section.band > .wrap { padding-block: 96px; }
 .trio b { font-family: var(--display); font-weight: 600; letter-spacing: -0.02em; font-size: clamp(32px, 10vw, 48px); line-height: 1; color: var(--amber); }
 .trio span { font-size: 13px; color: var(--dim); }
 .risk { margin: 8px 0 0; font-size: 14px; color: var(--dim); border-top: 1px solid var(--rule); padding-top: 14px; max-width: 54ch; }
+.rec-link { margin: 16px 0 0; font-size: 15px; }
+.rec-link a { color: var(--green); font-weight: 600; text-decoration: none; }
+.rec-link a::after { content: " \2192"; }
+.rec-link a:hover, .rec-link a:focus-visible { text-decoration: underline; text-underline-offset: 3px; }
 #cycleChart svg { display: block; width: 100%; height: auto; }
 figcaption { margin-top: 10px; font-size: 13px; color: var(--dim); }
 
@@ -1292,6 +1296,7 @@ a.fomo:hover .fm { opacity: 0.18; transform: translateY(-50%) rotate(-6deg) scal
     <div>
       <div class="label">The rest of the Line</div>
       <p><a href="./">The memecoin cycle, live</a>: where the market is between the January 2024 bottom and the December 2024 top, every runner from $10M, and what to do at each hour.</p>
+      <p><a href="record.html">The Record</a>: every daily close of the Line, as it was published.</p>
       <div class="sign">Receipts, not vibes.</div>
     </div>
   </div>
