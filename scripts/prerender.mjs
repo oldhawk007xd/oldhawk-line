@@ -27,7 +27,7 @@ export const stamp = (iso) => {
 export const PAGES = [
   {
     file: "index.html",
-    slots: ["h1", "explain", "sinceY", "rulesSay", "num", "zone", "clock", "lstrip", "stats", "runnersLead", "tiers", "legend", "listTable", "listCount", "trendList", "edge", "srcNote",
+    slots: ["h1", "explain", "sinceY", "rulesSay", "num", "zone", "clock", "lstrip", "stats", "runnersLead", "tiers", "legend", "ladLead", "ladBody", "listTable", "listCount", "trendList", "edge", "srcNote",
       "hoursGrid", "proofLead", "trioNow", "wkChg", "wkFromTop", "wkStreak", "wkStreakL", "chartCap", "signalsLead", "oneLine", "verdicts", "gauges", "kills", "sources"],
     ready: () => Boolean(document.querySelector("#listTable tr") && document.querySelector("#verdicts > *") && document.querySelector("#hoursGrid > *") && document.querySelector("#stats > *")),
     /* the places that say how long ago: the file says when instead */
@@ -43,7 +43,7 @@ export const PAGES = [
     /* the Record: every daily close (data/history.json). Its line under the title names the last close and
        counts no minutes, so it is written like the rest. */
     file: "record.html",
-    slots: ["recLead", "recAt", "recStats", "recDaysLead", "recChart", "recSignals", "recTable", "recVer"],
+    slots: ["recLead", "recAt", "recStats", "recDaysLead", "recChart", "recSignals", "recLadder", "recTable", "recVer"],
     ready: () => Boolean(document.querySelector("#recTable tr") && document.querySelector("#recStats > *") && document.querySelector("#recChart svg")),
     fixed: () => ({})
   }

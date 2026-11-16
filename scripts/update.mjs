@@ -1,9 +1,11 @@
 /* Runs every 30 minutes in GitHub Actions (see .github/workflows/update.yml).
-   Pulls the live sources, writes data/latest.json, keeps one close per UTC day in data/history.json,
+   Pulls the live sources, writes data/latest.json, keeps one close per UTC day in data/history.json and the
+   floor of every runner at each close in data/ladder.json,
    logs alerts in data/alerts.json and, if a Telegram bot is set up, posts them to the channel. */
 import { readFile, writeFile, mkdir, appendFile } from "node:fs/promises";
 import { collect, compute, toDaily, alertsFor, blank, slimCodex, watchIds, NEEDS, refreshSocials } from "../lib/engine.mjs";
 import { addReading } from "../lib/memecap.mjs";
+import { ladderStep } from "../lib/ladder.mjs";
 import { refreshCalls, kolBoard } from "../lib/kols.mjs";
 import { liveOk } from "./sky-deploy.mjs";
 
@@ -105,6 +107,18 @@ if (reading.line != null) {
   days.sort((a, b) => (a.d < b.d ? -1 : 1));
   await write("history.json", { v: 2, days });
 }
+
+/* The runner ladder's own record (data/ladder.json): the floor of every coin above $10M at each daily close, and
+   from it the week's climbs, slips, joins and exits. It never stops the update: if it fails, the file stays. */
+try {
+  const ladderFile = await read("ladder.json", null);
+  const next = ladderStep(ladderFile, reading);
+  if (next && next !== ladderFile) {
+    await write("ladder.json", next);
+    const w = next.out && next.out.week;
+    console.log(`ladder: close of ${next.closes[next.closes.length - 1].d}${w ? `, week ${w.up.length} up, ${w.down.length} down, ${w.joined.length} joined, ${w.left.length} off` : ""}`);
+  } else console.log("ladder: no close taken this run");
+} catch (e) { console.log("ladder record failed:", e.message); }
 
 /* The meme market cap by day (data/memecap.json), values in $B: every update moves today's row with the
    CoinGecko Meme category total. The days before the site went live come from scripts/memecap-backfill.mjs. */

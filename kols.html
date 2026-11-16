@@ -437,6 +437,85 @@ figcaption { margin-top: 10px; font-size: 13px; color: var(--dim); }
 .list-head { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; gap: 6px 24px; }
 .list-head h3 { margin: 0; font-family: var(--display); font-weight: 600; letter-spacing: -0.02em; font-size: 30px; line-height: 1.05; }
 .list-head p { margin: 0; font-size: 13.5px; color: var(--dim); max-width: 64ch; }
+/* ---------- the ladder this week: the floor every runner stands on, against a week ago (data/ladder.json).
+   The rail and the rungs breathe and a soft light travels along the lines, only while the block is on screen
+   and only when motion is allowed. ---------- */
+.lad-sum { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; margin: 18px 0 22px; }
+.lad-sum div { padding: 14px 16px; border: 1px solid var(--rule); border-radius: 14px; background: rgba(255,255,255,0.02); }
+.lad-sum b { display: block; font: 600 30px/1.05 var(--mono); color: #fff; letter-spacing: -0.02em; }
+.lad-sum span { display: block; margin-top: 6px; font-size: 13.5px; color: var(--soft); }
+.lad-sum .up b { color: var(--green); }
+.lad-sum .down b, .lad-sum .off b { color: #ff8da0; }
+.lad-rows { position: relative; border-top: 1px solid var(--rule); --rail: 92px; }
+.lad-rail { position: absolute; left: var(--rail); top: 0; bottom: var(--ground, 0px); width: 2px; border-radius: 2px; overflow: hidden; background: linear-gradient(180deg, rgba(20,241,149,0.7), rgba(255,255,255,0.2)); box-shadow: 0 0 12px rgba(20,241,149,0.28); pointer-events: none; }
+.lad-rail::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 110px; background: linear-gradient(0deg, rgba(190,255,228,0), rgba(214,255,238,0.95) 50%, rgba(190,255,228,0)); opacity: 0; transform: translateY(110px); }
+.lad-row { position: relative; display: grid; grid-template-columns: var(--rail) 156px minmax(0, 1fr); align-items: start; min-height: 52px; border-bottom: 1px solid var(--rule); overflow: hidden; }
+.lad-row::before { content: ""; position: absolute; left: calc(var(--rail) - 6px); top: 22px; width: 14px; height: 2px; border-radius: 2px; background: rgba(255,255,255,0.5); }
+.lad-row.has::before { background: var(--green); box-shadow: 0 0 8px rgba(20,241,149,0.6); }
+.lad-row::after { content: ""; position: absolute; left: 0; bottom: 0; width: 28%; height: 1px; background: linear-gradient(90deg, rgba(255,255,255,0), rgba(255,255,255,0.5), rgba(255,255,255,0)); opacity: 0; transform: translateX(-110%); pointer-events: none; }
+.lad-f { padding: 14px 0 0; font: 600 14px/1.2 var(--mono); letter-spacing: 0.04em; color: var(--ink); }
+.lad-n { padding: 9px 0 0 26px; font: 600 24px/1.2 var(--mono); color: #fff; white-space: nowrap; }
+.lad-n small { margin-left: 8px; font: 500 12px var(--mono); color: var(--dim); }
+.lad-n small.up { color: var(--green); }
+.lad-n small.down { color: #ff8da0; }
+.lad-n.zero { color: var(--dim); }
+.lad-m { display: flex; flex-wrap: wrap; align-items: center; gap: 7px 8px; padding: 11px 0 12px; font-size: 13.5px; color: var(--dim); min-width: 0; }
+.lad-m i { font-style: normal; margin-right: 2px; color: var(--soft); }
+.lad-m i.gone { flex-basis: 100%; color: var(--dim); }
+.lad-m i.only { flex-basis: auto; }
+.lad-c { display: inline-flex; align-items: baseline; gap: 6px; max-width: 100%; padding: 4px 9px; border: 1px solid var(--rule); border-radius: 999px; font: 600 12.5px/1.2 var(--mono); color: var(--ink); white-space: nowrap; }
+.lad-c b { font-weight: 600; overflow: hidden; text-overflow: ellipsis; }
+.lad-c em { font-style: normal; font-weight: 500; color: var(--dim); }
+.lad-c.up { border-color: rgba(20,241,149,0.6); color: #b9ffe0; }
+.lad-c.up::before { content: "\25B2"; font-size: 9px; color: var(--green); }
+.lad-c.down { border-color: rgba(255,141,160,0.5); color: #ffd3da; }
+.lad-c.down::before { content: "\25BC"; font-size: 9px; color: #ff8da0; }
+.lad-c.new { border-style: dashed; border-color: rgba(255,255,255,0.4); }
+.lad-c.new::before { content: "+"; color: #fff; }
+.lad-c.off { color: var(--soft); }
+button.lad-c.more { border-style: dotted; background: none; color: var(--soft); font-weight: 500; cursor: pointer; }
+button.lad-c.more:hover, button.lad-c.more:focus-visible { color: #fff; border-color: rgba(255,255,255,0.5); }
+.lad-row.ground { border-bottom: 0; }
+.lad-row.ground::before, .lad-row.ground::after { display: none; }
+.lad-row.ground .lad-f { color: var(--dim); font-weight: 500; white-space: nowrap; }
+.lad-since { margin-top: 22px; padding: 18px 20px; border: 1px solid var(--rule); border-radius: 14px; background: rgba(255,255,255,0.02); }
+.lad-since h4 { margin: 0 0 10px; font: 600 12px var(--mono); letter-spacing: 0.12em; text-transform: uppercase; color: var(--soft); }
+.lad-bar { display: flex; height: 10px; border-radius: 6px; overflow: hidden; background: rgba(255,255,255,0.06); }
+.lad-bar span { display: block; height: 100%; }
+.lad-bar .b-up, .lad-key .b-up { background: var(--green); }
+.lad-bar .b-same, .lad-key .b-same { background: rgba(255,255,255,0.42); }
+.lad-bar .b-down, .lad-key .b-down { background: #ff8da0; }
+.lad-bar .b-off, .lad-key .b-off { background: rgba(255,141,160,0.28); }
+.lad-key { display: flex; flex-wrap: wrap; gap: 6px 22px; margin: 12px 0 0; font-size: 14px; color: var(--soft); }
+.lad-key b { margin-right: 6px; font: 600 15px var(--mono); color: #fff; }
+.lad-key i { display: inline-block; width: 9px; height: 9px; margin-right: 8px; border-radius: 2px; }
+.lad-climbs { margin: 14px 0 0; font-size: 14px; line-height: 1.6; color: var(--soft); }
+.lad-climbs b { color: #fff; font-weight: 600; }
+.lad-climbs a { color: var(--green); font-weight: 600; text-decoration: none; white-space: nowrap; }
+.lad-climbs a::after { content: " \2192"; }
+.lad-climbs a:hover, .lad-climbs a:focus-visible { text-decoration: underline; text-underline-offset: 3px; }
+@media (prefers-reduced-motion: no-preference) {
+  .lad.lad-on .lad-rail { animation: ladBreath 5.6s ease-in-out infinite; }
+  .lad.lad-on .lad-rail::after { animation: ladRise 7.5s cubic-bezier(.45,.05,.3,1) infinite; }
+  .lad.lad-on .lad-row.has::before { animation: ladBreath 5.6s ease-in-out infinite; animation-delay: calc(var(--i, 0) * -0.7s); }
+  .lad.lad-on .lad-row::after { animation: ladSheen 9s ease-in-out infinite; animation-delay: calc(var(--i, 0) * 0.55s); }
+  @keyframes ladBreath { 0%, 100% { opacity: 0.5; } 50% { opacity: 1; } }
+  @keyframes ladRise { 0% { opacity: 0; transform: translateY(110px); } 12% { opacity: 0.7; } 70% { opacity: 0.7; } 86%, 100% { opacity: 0; transform: translateY(calc(-1 * var(--h, 600px))); } }
+  @keyframes ladSheen { 0%, 8% { opacity: 0; transform: translateX(-110%); } 16% { opacity: 0.75; } 44% { opacity: 0.75; } 56%, 100% { opacity: 0; transform: translateX(380%); } }
+}
+@media (max-width: 720px) {
+  .lad-sum { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+  .lad-sum b { font-size: 26px; }
+  .lad-rows { --rail: 64px; }
+  .lad-row { grid-template-columns: var(--rail) minmax(0, 1fr); }
+  .lad-f { font-size: 13px; }
+  .lad-n { padding-left: 22px; font-size: 21px; }
+  .lad-m { grid-column: 2; padding: 4px 0 12px 22px; }
+  .lad-row.ground { grid-template-columns: minmax(0, 1fr); padding-top: 6px; }
+  .lad-row.ground .lad-n { display: none; }
+  .lad-row.ground .lad-m { grid-column: 1; padding: 8px 0 4px; }
+  .lad-since { padding: 16px; }
+}
 .list-tools { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 14px; margin: 16px 0 4px; }
 .list-tools input { min-height: 44px; width: min(320px, 100%); padding: 0 14px; border-radius: 12px; border: 1px solid var(--rule2); background: rgba(255,255,255,0.03); color: var(--ink); font-family: var(--text); font-size: 15px; }
 .list-tools input::placeholder { color: #8a92a8; }
@@ -1379,6 +1458,7 @@ a.fomo:hover .fm { opacity: 0.18; transform: translateY(-50%) rotate(-6deg) scal
   const HIST = setting("ohl-history", "data/history.json");
   const METHOD = setting("ohl-method", "data/method.json");
   const MEMECAP = setting("ohl-memecap", "data/memecap.json");
+  const LADDER = setting("ohl-ladder", "data/ladder.json");
   const REPO = setting("ohl-repo", "");
   const TG = setting("ohl-telegram", "");
   const XURL = setting("ohl-x", "https://x.com/oldhawksol");

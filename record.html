@@ -437,6 +437,85 @@ figcaption { margin-top: 10px; font-size: 13px; color: var(--dim); }
 .list-head { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; gap: 6px 24px; }
 .list-head h3 { margin: 0; font-family: var(--display); font-weight: 600; letter-spacing: -0.02em; font-size: 30px; line-height: 1.05; }
 .list-head p { margin: 0; font-size: 13.5px; color: var(--dim); max-width: 64ch; }
+/* ---------- the ladder this week: the floor every runner stands on, against a week ago (data/ladder.json).
+   The rail and the rungs breathe and a soft light travels along the lines, only while the block is on screen
+   and only when motion is allowed. ---------- */
+.lad-sum { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; margin: 18px 0 22px; }
+.lad-sum div { padding: 14px 16px; border: 1px solid var(--rule); border-radius: 14px; background: rgba(255,255,255,0.02); }
+.lad-sum b { display: block; font: 600 30px/1.05 var(--mono); color: #fff; letter-spacing: -0.02em; }
+.lad-sum span { display: block; margin-top: 6px; font-size: 13.5px; color: var(--soft); }
+.lad-sum .up b { color: var(--green); }
+.lad-sum .down b, .lad-sum .off b { color: #ff8da0; }
+.lad-rows { position: relative; border-top: 1px solid var(--rule); --rail: 92px; }
+.lad-rail { position: absolute; left: var(--rail); top: 0; bottom: var(--ground, 0px); width: 2px; border-radius: 2px; overflow: hidden; background: linear-gradient(180deg, rgba(20,241,149,0.7), rgba(255,255,255,0.2)); box-shadow: 0 0 12px rgba(20,241,149,0.28); pointer-events: none; }
+.lad-rail::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 110px; background: linear-gradient(0deg, rgba(190,255,228,0), rgba(214,255,238,0.95) 50%, rgba(190,255,228,0)); opacity: 0; transform: translateY(110px); }
+.lad-row { position: relative; display: grid; grid-template-columns: var(--rail) 156px minmax(0, 1fr); align-items: start; min-height: 52px; border-bottom: 1px solid var(--rule); overflow: hidden; }
+.lad-row::before { content: ""; position: absolute; left: calc(var(--rail) - 6px); top: 22px; width: 14px; height: 2px; border-radius: 2px; background: rgba(255,255,255,0.5); }
+.lad-row.has::before { background: var(--green); box-shadow: 0 0 8px rgba(20,241,149,0.6); }
+.lad-row::after { content: ""; position: absolute; left: 0; bottom: 0; width: 28%; height: 1px; background: linear-gradient(90deg, rgba(255,255,255,0), rgba(255,255,255,0.5), rgba(255,255,255,0)); opacity: 0; transform: translateX(-110%); pointer-events: none; }
+.lad-f { padding: 14px 0 0; font: 600 14px/1.2 var(--mono); letter-spacing: 0.04em; color: var(--ink); }
+.lad-n { padding: 9px 0 0 26px; font: 600 24px/1.2 var(--mono); color: #fff; white-space: nowrap; }
+.lad-n small { margin-left: 8px; font: 500 12px var(--mono); color: var(--dim); }
+.lad-n small.up { color: var(--green); }
+.lad-n small.down { color: #ff8da0; }
+.lad-n.zero { color: var(--dim); }
+.lad-m { display: flex; flex-wrap: wrap; align-items: center; gap: 7px 8px; padding: 11px 0 12px; font-size: 13.5px; color: var(--dim); min-width: 0; }
+.lad-m i { font-style: normal; margin-right: 2px; color: var(--soft); }
+.lad-m i.gone { flex-basis: 100%; color: var(--dim); }
+.lad-m i.only { flex-basis: auto; }
+.lad-c { display: inline-flex; align-items: baseline; gap: 6px; max-width: 100%; padding: 4px 9px; border: 1px solid var(--rule); border-radius: 999px; font: 600 12.5px/1.2 var(--mono); color: var(--ink); white-space: nowrap; }
+.lad-c b { font-weight: 600; overflow: hidden; text-overflow: ellipsis; }
+.lad-c em { font-style: normal; font-weight: 500; color: var(--dim); }
+.lad-c.up { border-color: rgba(20,241,149,0.6); color: #b9ffe0; }
+.lad-c.up::before { content: "\25B2"; font-size: 9px; color: var(--green); }
+.lad-c.down { border-color: rgba(255,141,160,0.5); color: #ffd3da; }
+.lad-c.down::before { content: "\25BC"; font-size: 9px; color: #ff8da0; }
+.lad-c.new { border-style: dashed; border-color: rgba(255,255,255,0.4); }
+.lad-c.new::before { content: "+"; color: #fff; }
+.lad-c.off { color: var(--soft); }
+button.lad-c.more { border-style: dotted; background: none; color: var(--soft); font-weight: 500; cursor: pointer; }
+button.lad-c.more:hover, button.lad-c.more:focus-visible { color: #fff; border-color: rgba(255,255,255,0.5); }
+.lad-row.ground { border-bottom: 0; }
+.lad-row.ground::before, .lad-row.ground::after { display: none; }
+.lad-row.ground .lad-f { color: var(--dim); font-weight: 500; white-space: nowrap; }
+.lad-since { margin-top: 22px; padding: 18px 20px; border: 1px solid var(--rule); border-radius: 14px; background: rgba(255,255,255,0.02); }
+.lad-since h4 { margin: 0 0 10px; font: 600 12px var(--mono); letter-spacing: 0.12em; text-transform: uppercase; color: var(--soft); }
+.lad-bar { display: flex; height: 10px; border-radius: 6px; overflow: hidden; background: rgba(255,255,255,0.06); }
+.lad-bar span { display: block; height: 100%; }
+.lad-bar .b-up, .lad-key .b-up { background: var(--green); }
+.lad-bar .b-same, .lad-key .b-same { background: rgba(255,255,255,0.42); }
+.lad-bar .b-down, .lad-key .b-down { background: #ff8da0; }
+.lad-bar .b-off, .lad-key .b-off { background: rgba(255,141,160,0.28); }
+.lad-key { display: flex; flex-wrap: wrap; gap: 6px 22px; margin: 12px 0 0; font-size: 14px; color: var(--soft); }
+.lad-key b { margin-right: 6px; font: 600 15px var(--mono); color: #fff; }
+.lad-key i { display: inline-block; width: 9px; height: 9px; margin-right: 8px; border-radius: 2px; }
+.lad-climbs { margin: 14px 0 0; font-size: 14px; line-height: 1.6; color: var(--soft); }
+.lad-climbs b { color: #fff; font-weight: 600; }
+.lad-climbs a { color: var(--green); font-weight: 600; text-decoration: none; white-space: nowrap; }
+.lad-climbs a::after { content: " \2192"; }
+.lad-climbs a:hover, .lad-climbs a:focus-visible { text-decoration: underline; text-underline-offset: 3px; }
+@media (prefers-reduced-motion: no-preference) {
+  .lad.lad-on .lad-rail { animation: ladBreath 5.6s ease-in-out infinite; }
+  .lad.lad-on .lad-rail::after { animation: ladRise 7.5s cubic-bezier(.45,.05,.3,1) infinite; }
+  .lad.lad-on .lad-row.has::before { animation: ladBreath 5.6s ease-in-out infinite; animation-delay: calc(var(--i, 0) * -0.7s); }
+  .lad.lad-on .lad-row::after { animation: ladSheen 9s ease-in-out infinite; animation-delay: calc(var(--i, 0) * 0.55s); }
+  @keyframes ladBreath { 0%, 100% { opacity: 0.5; } 50% { opacity: 1; } }
+  @keyframes ladRise { 0% { opacity: 0; transform: translateY(110px); } 12% { opacity: 0.7; } 70% { opacity: 0.7; } 86%, 100% { opacity: 0; transform: translateY(calc(-1 * var(--h, 600px))); } }
+  @keyframes ladSheen { 0%, 8% { opacity: 0; transform: translateX(-110%); } 16% { opacity: 0.75; } 44% { opacity: 0.75; } 56%, 100% { opacity: 0; transform: translateX(380%); } }
+}
+@media (max-width: 720px) {
+  .lad-sum { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+  .lad-sum b { font-size: 26px; }
+  .lad-rows { --rail: 64px; }
+  .lad-row { grid-template-columns: var(--rail) minmax(0, 1fr); }
+  .lad-f { font-size: 13px; }
+  .lad-n { padding-left: 22px; font-size: 21px; }
+  .lad-m { grid-column: 2; padding: 4px 0 12px 22px; }
+  .lad-row.ground { grid-template-columns: minmax(0, 1fr); padding-top: 6px; }
+  .lad-row.ground .lad-n { display: none; }
+  .lad-row.ground .lad-m { grid-column: 1; padding: 8px 0 4px; }
+  .lad-since { padding: 16px; }
+}
 .list-tools { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 14px; margin: 16px 0 4px; }
 .list-tools input { min-height: 44px; width: min(320px, 100%); padding: 0 14px; border-radius: 12px; border: 1px solid var(--rule2); background: rgba(255,255,255,0.03); color: var(--ink); font-family: var(--text); font-size: 15px; }
 .list-tools input::placeholder { color: #8a92a8; }
@@ -1216,13 +1295,26 @@ a.fomo:hover .fm { opacity: 0.18; transform: translateY(-50%) rotate(-6deg) scal
 .runs.rt .rec-l { font: 600 16px var(--mono); color: #fff; }
 .runs.rt .rec-p a { color: var(--green); text-decoration: none; font-size: 13.5px; white-space: nowrap; }
 .runs.rt .rec-p a:hover, .runs.rt .rec-p a:focus-visible { text-decoration: underline; text-underline-offset: 3px; }
+.rec-lad h3 { margin: 0 0 4px; font-family: var(--display); font-weight: 600; font-size: 22px; letter-spacing: -0.01em; color: var(--ink); }
+.rec-lad h3 + p { margin: 0 0 14px; font-size: 14.5px; color: var(--dim); max-width: 70ch; }
+.rec-lad .tbox + h3 { margin-top: 34px; }
+.rec-lad-sum { display: flex; flex-wrap: wrap; gap: 8px 28px; margin: 0 0 26px; font-size: 15px; color: var(--soft); }
+.rec-lad-sum b { margin-right: 7px; font: 600 20px var(--mono); color: #fff; }
+.runs.rt .rec-mv { white-space: nowrap; font-family: var(--mono); font-size: 13.5px; }
+.runs.rt .rec-mv.up { color: #b9ffe0; } .runs.rt .rec-mv.down { color: #ffd3da; }
+.runs.rt .rec-mv i { font-style: normal; margin-right: 7px; font-size: 10px; }
+.runs.rt .rec-mv.up i { color: var(--green); } .runs.rt .rec-mv.down i { color: #ff8da0; }
+.runs.rt .rec-coin b { font-weight: 600; color: var(--ink); }
+.runs.rt .rec-coin small { margin-left: 8px; color: var(--dim); font-size: 12.5px; }
+.runs.rt .rec-coin.young { color: var(--dim); }
 .rec-foot { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 20px; margin-top: 18px; color: var(--dim); font-size: 14px; }
 @media (max-width: 720px) {
   .rec-fig { padding: 14px 10px 8px; }
   .rc-ax, .rc-ln { font-size: 9.5px; }
   .rec-none { padding: 18px; font-size: 15px; }
   .runs.rt { font-size: 14px; }
-  .runs.rt .hide-s, .runs.rt .rec-d small { display: none; }
+  .runs.rt .hide-s, .runs.rt .rec-d small, .runs.rt .rec-coin small { display: none; }
+  .rec-lad-sum { gap: 6px 20px; font-size: 14px; }
   .rec-sigs li { grid-template-columns: minmax(0, 1fr) auto; }
   .rec-sigs .st { grid-column: 1 / -1; }
   .rec-sigs .ss { grid-column: 1 / -1; text-align: left; }
@@ -1235,6 +1327,9 @@ a.fomo:hover .fm { opacity: 0.18; transform: translateY(-50%) rotate(-6deg) scal
   .runs.rt .rec-l { font-size: 14.5px; }
   .runs.rt .rec-p a { font-size: 12.5px; }
   .runs.rt .rec-p a span { display: none; }
+  .runs.rt .hide-xs { display: none; }
+  .runs.rt .rec-mv { font-size: 12.5px; }
+  .runs.rt .rec-mv i { margin-right: 4px; }
 }
 </style>
 </head>
@@ -1288,7 +1383,17 @@ a.fomo:hover .fm { opacity: 0.18; transform: translateY(-50%) rotate(-6deg) scal
   </div>
 </section>
 
-<section class="band glow" id="closes" aria-labelledby="closes-h">
+<section class="band glow" id="ladder" aria-labelledby="lad-h">
+  <div class="wrap">
+    <div class="head-row">
+      <h2 class="serif" id="lad-h">The ladder.</h2>
+      <p class="lead">Every time a runner changed floor between two daily closes, and every climb to a floor a coin had not stood on before. A coin stands on the highest floor it has cleared: $10M, $50M, $100M, $500M, $1B, $5B, $10B.</p>
+    </div>
+    <div id="recLadder"></div>
+  </div>
+</section>
+
+<section class="band" id="closes" aria-labelledby="closes-h">
   <div class="wrap">
     <div class="head-row">
       <h2 class="serif" id="closes-h">Daily closes.</h2>
@@ -1299,7 +1404,7 @@ a.fomo:hover .fm { opacity: 0.18; transform: translateY(-50%) rotate(-6deg) scal
   </div>
 </section>
 
-<section class="band" id="check" aria-labelledby="check-h">
+<section class="band glow" id="check" aria-labelledby="check-h">
   <div class="wrap">
     <div class="head-row">
       <h2 class="serif" id="check-h">Check it yourself.</h2>
@@ -1343,8 +1448,9 @@ a.fomo:hover .fm { opacity: 0.18; transform: translateY(-50%) rotate(-6deg) scal
         <li><a class="ri" href="#top"><i class="rd" aria-hidden="true"></i><span class="rl"><em>00</em>Overview</span></a></li>
         <li><a class="ri" href="#days"><i class="rd" aria-hidden="true"></i><span class="rl"><em>01</em>Day by day</span></a></li>
         <li><a class="ri" href="#signals"><i class="rd" aria-hidden="true"></i><span class="rl"><em>02</em>Signals</span></a></li>
-        <li><a class="ri" href="#closes"><i class="rd" aria-hidden="true"></i><span class="rl"><em>03</em>Closes</span></a></li>
-        <li><a class="ri" href="#check"><i class="rd" aria-hidden="true"></i><span class="rl"><em>04</em>Check</span></a></li>
+        <li><a class="ri" href="#ladder"><i class="rd" aria-hidden="true"></i><span class="rl"><em>03</em>Ladder</span></a></li>
+        <li><a class="ri" href="#closes"><i class="rd" aria-hidden="true"></i><span class="rl"><em>04</em>Closes</span></a></li>
+        <li><a class="ri" href="#check"><i class="rd" aria-hidden="true"></i><span class="rl"><em>05</em>Check</span></a></li>
       </ol>
     </div>
     <div class="rail-x">
@@ -1408,6 +1514,7 @@ a.fomo:hover .fm { opacity: 0.18; transform: translateY(-50%) rotate(-6deg) scal
   const HIST = setting("ohl-history", "data/history.json");
   const METHOD = setting("ohl-method", "data/method.json");
   const MEMECAP = setting("ohl-memecap", "data/memecap.json");
+  const LADDER = setting("ohl-ladder", "data/ladder.json");
   const REPO = setting("ohl-repo", "");
   const TG = setting("ohl-telegram", "");
   const XURL = setting("ohl-x", "https://x.com/oldhawksol");
@@ -1623,7 +1730,8 @@ a.fomo:hover .fm { opacity: 0.18; transform: translateY(-50%) rotate(-6deg) scal
   /* The Record draws from three files the update job writes: data/history.json (one close per UTC day, never
      filled in afterwards), data/alerts.json (the log of signals) and data/latest.json (the zones, the method's
      version). Each day's proof is that day's commits to data/history.json in the public repository. */
-  let H = null, A = null, R = null, failed = false, showAll = false, drawnW = 0;
+  let H = null, A = null, R = null, LAD = null, failed = false, showAll = false, showMoves = false, drawnW = 0;
+  const FLOORS = ["$10M", "$50M", "$100M", "$500M", "$1B", "$5B", "$10B"];
   const KEEP = 31;
   const MON = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
   const day = (d, year) => { const [y, m, dd] = String(d).split("-"); return `${Number(dd)} ${MON[Number(m) - 1]}${year ? ` ${y}` : ""}`; };
@@ -1709,14 +1817,36 @@ a.fomo:hover .fm { opacity: 0.18; transform: translateY(-50%) rotate(-6deg) scal
     $("recCount").textContent = all.length > KEEP && !showAll ? `Showing the last ${KEEP} of ${all.length}.` : "";
   }
 
+  /* the ladder: every floor change between two closes and every climb, worked out by the update job
+     (lib/ladder.mjs, data/ladder.json). A coin too young to be named comes without a name. */
+  function renderLadderRec() {
+    const box = $("recLadder"), o = LAD;
+    if (!o || !o.base) { box.innerHTML = `<p class="empty">${PREVIEW ? "The ladder's record lives on the live site." : "The ladder's record starts with the next close."}</p>`; return; }
+    const coin = (x) => (x.s ? `<td class="rec-coin"><b>${esc(x.s)}</b>${x.n ? `<small>${esc(x.n)}</small>` : ""}</td>` : '<td class="rec-coin young">Not named, under 10 days old</td>');
+    const b = o.base, cl = o.climbs || [], mv = o.moves || [], FIRST = 12, shown = showMoves ? mv : mv.slice(0, FIRST);
+    let h = `<div class="rec-lad"><p class="rec-lad-sum"><span><b>${o.moveCount || 0}</b>floor changes since ${day(o.since, true)}</span><span><b>${o.climbCount || 0}</b>climbs to a new floor</span><span><b>${b.off}</b>of the first day's ${b.n} coins fell off</span></p>`;
+    h += "<h3>Climbs</h3><p>The first close a coin stood on a floor higher than any it had stood on before in the record.</p>";
+    h += cl.length
+      ? `<div class="tbox"><table class="runs rt" id="recClimbs"><thead><tr><th>Coin</th><th>Reached</th><th>On</th><th class="num hide-s">Days after first seen</th><th class="chg">Now</th></tr></thead><tbody>${cl.map((c) => `<tr>${coin(c)}<td class="rec-mv up"><i aria-hidden="true">\u25B2</i>${FLOORS[c.to]}</td><td class="rec-d"><b>${day(c.on)}</b><small>${esc(String(c.on).slice(0, 4))}</small></td><td class="num hide-s">${esc(c.days)}</td><td class="chg ${c.held ? "up" : "down"}">${c.held ? "holding" : c.m == null ? "fell off" : "slipped back"}</td></tr>`).join("")}</tbody></table></div>`
+      : '<p class="empty">No coin has climbed to a new floor in the record yet.</p>';
+    h += "<h3>Every floor change</h3><p>Between one daily close and the next, newest first, with the market cap at that close.</p>";
+    h += mv.length
+      ? `<div class="tbox"><table class="runs rt" id="recMoves"><thead><tr><th>Close</th><th>Coin</th><th>Move</th><th class="num hide-xs">Market cap</th></tr></thead><tbody>${shown.map((m) => `<tr><td class="rec-d"><b>${day(m.d)}</b><small>${esc(String(m.d).slice(0, 4))}</small></td>${coin(m)}<td class="rec-mv ${m.to > m.from ? "up" : "down"}"><i aria-hidden="true">${m.to > m.from ? "\u25B2" : "\u25BC"}</i>${FLOORS[m.from]} to ${FLOORS[m.to]}</td><td class="num hide-xs">${usd(m.m)}</td></tr>`).join("")}</tbody></table></div>`
+        + (mv.length > FIRST ? `<div class="rec-foot"><button type="button" class="btn" id="recMovesMore">${showMoves ? `Show the last ${FIRST}` : `Show all ${mv.length}`}</button><span>${showMoves ? "" : `Showing the last ${FIRST} of ${mv.length}.`}</span></div>` : "")
+      : '<p class="empty">No runner has changed floor between two closes yet.</p>';
+    box.innerHTML = `${h}</div>`;
+  }
+
   function render() {
     const ds = days();
     if (!ds.length) {
       const msg = PREVIEW ? "The record lives on the live site." : failed ? "The record could not load. It retries every 5 minutes." : "The record starts with the first close.";
+      $("recLadder").innerHTML = `<p class="empty">${msg}</p>`;
       $("recStats").innerHTML = ""; $("recChart").innerHTML = `<p class="empty">${msg}</p>`; $("recSignals").innerHTML = `<p class="empty">${msg}</p>`; $("recTable").innerHTML = ""; $("recMore").hidden = true; $("recCount").textContent = "";
       return;
     }
     renderStats(ds); renderChart(ds); renderSignals(ds); renderTable(ds);
+    try { renderLadderRec(); } catch (e) { console.warn("ladder", e); }
     if (R && R.version) $("recVer").textContent = `The method is at version ${R.version}.`;
   }
 
@@ -1740,16 +1870,19 @@ a.fomo:hover .fm { opacity: 0.18; transform: translateY(-50%) rotate(-6deg) scal
   }
   async function load() {
     if (!PREVIEW) {
-      const [h, a, r] = await Promise.all([getJSON(HIST).catch(() => null), getJSON(HIST.replace(/history\.json(\?.*)?$/, "alerts.json")).catch(() => null), getJSON(DATA).catch(() => null)]);
+      const side = (name) => getJSON(HIST.replace(/history\.json(\?.*)?$/, name)).catch(() => null);
+      const [h, a, r, l] = await Promise.all([getJSON(HIST).catch(() => null), side("alerts.json"), getJSON(DATA).catch(() => null), side("ladder.json")]);
       failed = !h;
       if (h && typeof h === "object") H = h;
       if (a && typeof a === "object") A = a;
       if (r && typeof r === "object") R = r;
+      if (l && l.out && l.out.base) LAD = l.out;
     }
     unpre();
     try { render(); } catch (e) { console.warn("render", e); }
     stamp();
   }
+  $("recLadder").addEventListener("click", (e) => { if (e.target.closest("#recMovesMore")) { showMoves = !showMoves; renderLadderRec(); } });
   $("recMore").addEventListener("click", () => { showAll = !showAll; const ds = days(); if (ds.length) renderTable(ds); });
   let rsT = 0;
   window.addEventListener("resize", () => {
