@@ -1070,10 +1070,28 @@
     {
       "id": "daumen",
       "name": "Daumen",
-      "x": "daumeneth",
+      "x": "daumenxyz",
       "role": "Pump.fun caller",
       "track": true,
       "incidents": [
+        {
+          "date": "2026-11",
+          "token": "760 tokens",
+          "harm": "dump",
+          "evidence": "onchain",
+          "usd": 340000,
+          "what": "Bubblemaps found nine wallets linked to his public wallet, trading next to it across more than 5,000 tokens since April. They often bought in the same block as his public wallet and sold before it after he promoted the token. On 760 tokens the linked wallets made about $340K while his public wallet made about $50K. His public wallet also funded a buy-sequence deployment address for a developer who has launched more than 400 tokens since October and sold them fast. Bubblemaps opened the thread by pointing out that he calls out other KOLs for using side wallets. No public answer found.",
+          "sources": [
+            {
+              "t": "TokenPost: Bubblemaps links nine wallets to Daumen’s token trades",
+              "u": "https://www.tokenpost.com/news/investing/61850"
+            },
+            {
+              "t": "TokenPost: Bubblemaps alleges Daumen’s linked wallets made $340,000",
+              "u": "https://www.tokenpost.com/news/people/61852"
+            }
+          ]
+        },
         {
           "date": "2026-11",
           "token": "Pump.fun callouts",

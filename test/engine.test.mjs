@@ -83,6 +83,16 @@ check("rigged markets, measured on the coins in the screenshots", () => {
   assert.equal(rigged({ a: 64, q: { ub: 53, us: 57, tx: 1292, sus: 10.6, flags: ["SuspiciousWalletActivity", "BundledLaunch"] } }), "bundled", "CIGR: Codex marks a bundled launch");
   assert.equal(rigged({ a: 2.7, q: { ub: 717, us: 689, tx: 25892, sus: 1, flags: ["SuspiciousWalletActivity", "BundledLaunch"] } }), "bundled", "JOB: a bundled launch");
   assert.equal(rigged({ a: 109, q: { ub: 675, us: 680, tx: 5190, sus: 0, flags: ["SuspiciousWalletActivity"] } }), null, "PONS: the wide wallet flag alone is not enough");
+  /* the supply never left the pool: the Clanker launches named after AI companies, 21 Nov 2026 */
+  assert.equal(rigged({ a: 75, q: { ub: 208, us: 203, tx: 2868, t10: 0.999, sus: 0, flags: ["SuspiciousWalletActivity"] } }), "pooled", "OPENAI on Base: 99% of the supply in the pool");
+  assert.equal(rigged({ a: 16, q: { ub: 225, us: 209, tx: 4861, t10: 1, sus: 0.79, flags: ["SuspiciousWalletActivity"] } }), "pooled", "CLAUDE on Robinhood Chain: 1% outside the pool");
+  assert.equal(rigged({ a: 16, q: { ub: 600, us: 580, tx: 4000, t10: 1.119, sus: 0 } }), null, "just above 1%: judged by the other checks");
+  assert.equal(rigged({ a: 16, q: { ub: 217, us: 206, tx: 6814, t10: 100, snp: 0.999, sus: 0.999, flags: ["SuspiciousWalletActivity"] } }), "pooled", "ANTHROPIC on Robinhood Chain: pool counted in, ten wallets hold it all");
+  assert.equal(rigged({ a: 16, q: { ub: 300, us: 280, tx: 3000, t10: 89.039, sus: 0 } }), null, "OPG on Virtuals: concentrated but real");
+  assert.equal(rigged({ a: 15, q: { ub: 300, us: 290, tx: 3000, t10: 0.998, sus: 0 } }), "pooled", "ANTHROPIC on Base");
+  assert.equal(rigged({ a: 1, q: { ub: 40, us: 38, tx: 300, t10: 0.515, sus: 0 } }), "pooled", "GODF: $11.5M with 0.5% outside the pool");
+  assert.equal(rigged({ a: 131, q: { ub: 678, us: 687, tx: 5241, t10: 19.955, sus: 0 } }), null, "PONS: 20% in its top ten");
+  assert.equal(rigged({ a: 70, q: { ub: 500, us: 480, tx: 4000, t10: 12.921, sus: 0 } }), null, "GATO: 13% in its top ten");
 });
 check("radar: the rigged launch is left out, and nothing younger than a day shows a 24h move", () => {
   assert.ok(!r.ladder.radar.tokens.some((x) => x.s === "DEMORIG"));
