@@ -420,6 +420,28 @@
       "track": true,
       "incidents": [
         {
+          "date": "2026-11",
+          "token": "ANSEM, MIHAO and 120+ more",
+          "harm": "dump",
+          "evidence": "reported",
+          "usd": 2570000,
+          "what": "On 24 Nov 2026 his main wallet, the one that got 65% of the ANSEM supply, sold about $2.1M of memecoins in a few hours, 87.5M ANSEM among them, and ANSEM fell 57% in under an hour. $2.57M in USDC went to one Arbitrum address. On-chain analyst MLM said it \"looks nothing like a hack\": an hour before the selling, a wallet he had labelled as Ansem’s a year earlier funded the wallet that received the proceeds. Ansem says his key was stolen through his Bullpen account (\"It is not me, would appreciate you not spreading misinformation\"). Bullpen confirmed unauthorized transfers on 18 to 19 accounts, his among them. Bitquery found the same thief draining other accounts on Hyperliquid, Polygon and Ethereum and rates a theft as highly likely; it says only one post ties the funding wallet to Ansem.",
+          "sources": [
+            {
+              "t": "The Block: Ansem denies involvement in $2.57 million wallet drain",
+              "u": "https://www.theblock.co/news/defi/2026-11-24-ansem-denies-involvement-2-57-million-wallet-drain-black-bull-creator-coin-plummets-55-445705"
+            },
+            {
+              "t": "Bitquery: Ansem wallet hack, $2.57M swapped into 42 BTC",
+              "u": "https://www.bitquery.io/investigations/ansem-solana-wallet-drain"
+            },
+            {
+              "t": "Altcoin Buzz: Ansem’s wallet drained of $2.57 million as Bullpen confirms breach",
+              "u": "https://www.altcoinbuzz.io/ansem-s-wallet-drained-of-2-57-million-as-bullpen-confirms-breach"
+            }
+          ]
+        },
+        {
           "date": "2024-10",
           "token": "BODEN, HOBBES, ZEUS, WYNN",
           "harm": "collapse",
@@ -476,7 +498,7 @@
         {
           "date": "2026-06",
           "kind": "holds",
-          "what": "The main ANSEM wallet kept its tokens through the launch and the run.",
+          "what": "The main ANSEM wallet kept its tokens through the launch and the run. On 24 Nov 2026 it sold 87.5M ANSEM (see above: he says a thief did).",
           "sources": [
             {
               "t": "Bitquery: The Black Bull (ANSEM) investigation",
